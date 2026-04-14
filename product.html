@@ -369,7 +369,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   <div class="fb"><div><a href="#">Privacy Notice</a><a href="#">Terms &amp; Conditions</a><a href="#">Cookie Settings</a><a href="#">Accessibility</a><a href="#">Site Map</a></div><span class="fc">&copy; 2026 Ford Motor Company</span></div>
 </footer>
 <script>
-function openE360(){document.getElementById('e360modal').classList.add('open')}
+function openE360(){document.getElementById('e360modal').classList.add('open');}
 function closeE360(e){if(e.target===document.getElementById('e360modal'))document.getElementById('e360modal').classList.remove('open')}
 function setColor(el){document.querySelectorAll('.e360-color').forEach(c=>c.classList.remove('on'));el.classList.add('on')}
 
@@ -380,6 +380,7 @@ function e360Tab(el, idx) {
     var panel = document.getElementById('e360-panel-'+i);
     panel.style.display = (i===idx) ? 'flex' : 'none';
   }
+  if(idx===1){ startAutoRotate(); } else { stopAutoRotate(); }
 }
 );
   el.classList.add('on');
@@ -390,6 +391,16 @@ function e360Tab(el, idx) {
   if(!isAR) setView(idx === 1 ? 1 : e360Current);
 }
 
+
+var e360AutoRotate = null;
+function startAutoRotate(){
+  stopAutoRotate();
+  e360AutoRotate = setInterval(function(){ rotateView(1); }, 2500);
+}
+function stopAutoRotate(){
+  if(e360AutoRotate){ clearInterval(e360AutoRotate); e360AutoRotate=null; }
+}
+// Start auto-rotate when On Vehicle tab is shown, stop on others
 var e360Views = ['images/bronco-kayak-3d.jpg','images/bronco-kayak.jpg','images/bronco-kayak-rear.jpg'];
 var e360Current = 0;
 function setView(n){
@@ -442,7 +453,7 @@ function togA(h){var b=h.nextElementSibling,i=h.querySelector('.abt-ico'),hi=b.s
             <div class="e360-tab on" onclick="e360Tab(this,1)">On Vehicle</div>
             <div class="e360-tab" onclick="e360Tab(this,2)">AR</div>
           </div>
-          <img id="e360-viewer-img" src="images/bronco-kayak-3d.jpg" alt="On Vehicle" style="max-width:100%;max-height:calc(100% - 60px);object-fit:contain;padding:16px;transition:opacity .2s;flex:1">
+          <img id="e360-viewer-img" src="images/bronco-kayak-3d.jpg" onmouseenter="stopAutoRotate()" onmouseleave="startAutoRotate()" alt="On Vehicle" style="max-width:100%;max-height:calc(100% - 60px);object-fit:contain;padding:16px;transition:opacity .2s;flex:1">
           <div class="e360-rot-controls">
             <button class="e360-rot-btn" onclick="rotateView(-1)">&#8592;</button>
             <div class="e360-rot-dots">
