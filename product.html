@@ -7,128 +7,132 @@
 <link rel="stylesheet" href="https://www.ford.com/shared/fonts/ford.css">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:FordMotion,FordAntenna,'Helvetica Neue',Arial,sans-serif;background:#fff;color:#000;font-size:15px;-webkit-font-smoothing:antialiased}
+body{font-family:FordAntenna,'Helvetica Neue',Arial,sans-serif;background:#fff;color:#000;font-size:14px;-webkit-font-smoothing:antialiased}
 a{text-decoration:none;color:inherit}
 button{font-family:inherit;cursor:pointer;border:none;background:none}
 
-.promo{background:#f2f2f2;text-align:center;padding:9px 24px;font-size:13px}
-.promo a{color:#003478;font-weight:600}
+/* PROMO BAR */
+.promo{background:#f2f2f2;text-align:center;padding:8px 40px;font-size:12px;color:#000;display:flex;align-items:center;justify-content:center;gap:8px}
+.promo a{color:#10599b;text-decoration:underline}
+.promo-arrow{color:#555;font-size:16px;cursor:pointer}
 
-.nav{height:56px;border-bottom:1px solid #e5e5e5;display:flex;align-items:center;padding:0 32px;justify-content:space-between}
-.nav-l{display:flex;align-items:center;gap:0}
-.nl{padding:0 14px;height:56px;display:inline-flex;align-items:center;font-size:14px;font-weight:500;border-bottom:3px solid transparent;white-space:nowrap}
+/* MAIN NAV */
+.nav{height:70px;border-bottom:1px solid #e0e0e0;display:flex;align-items:center;padding:0 48px;justify-content:space-between;background:#fff}
+.nav-left{display:flex;align-items:center;gap:30px}
+.nl{font-size:14px;font-weight:500;color:#000;padding:0 2px;height:70px;display:inline-flex;align-items:center;border-bottom:3px solid transparent}
 .nl:hover{border-bottom-color:#003478}
-.nav-r{display:flex;align-items:center;gap:18px}
+.nav-icons{display:flex;align-items:center;gap:20px}
 .cart-w{position:relative}
-.cart-dot{position:absolute;top:-1px;right:-1px;width:8px;height:8px;background:#003478;border-radius:50%}
+.cart-dot{position:absolute;top:0;right:0;width:8px;height:8px;background:#10599b;border-radius:50%}
 
-.srow{border-bottom:1px solid #e5e5e5;padding:10px 32px;display:flex;align-items:center;gap:14px}
-.vtag{display:inline-flex;align-items:center;gap:6px;border:1.5px solid #000;border-radius:4px;padding:6px 12px;font-size:14px;font-weight:700;white-space:nowrap}
-.vtag button{font-size:16px;line-height:1}
-.sw{flex:1;position:relative}
-.sw svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#999}
-.si{width:100%;border:1px solid #ccc;border-radius:4px;padding:9px 14px 9px 38px;font-size:14px;font-family:inherit;outline:none}
-.si::placeholder{color:#aaa}
-.rwd{text-align:right;font-size:12px;line-height:1.6;white-space:nowrap}
-.rwd a{color:#003478;font-weight:600}
+/* SEARCH ROW */
+.srow{border-bottom:1px solid #e0e0e0;padding:10px 48px;display:flex;align-items:center;gap:16px}
+.vtag{display:inline-flex;align-items:center;gap:6px;border:1px solid #d9d9d9;border-radius:4px;padding:6px 12px;font-size:13px;white-space:nowrap}
+.vtag button{font-size:15px;color:#000;line-height:1}
+.sw{flex:1;max-width:450px;position:relative}
+.sw svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:#888}
+.si{width:100%;border:1px solid #d9d9d9;border-radius:4px;padding:8px 12px 8px 36px;font-size:14px;font-family:inherit;outline:none}
+.si::placeholder{color:#888}
+.rwd{margin-left:auto;text-align:right;font-size:11px;line-height:1.6}
+.rwd a{color:#10599b;font-weight:700}
 
-.wrap{max-width:1280px;margin:0 auto;padding:20px 32px 80px}
+/* PAGE WRAP */
+.page{max-width:1280px;margin:0 auto;padding:20px 64px 80px}
 
-.bc{display:flex;align-items:center;gap:5px;font-size:12px;color:#999;flex-wrap:wrap;margin-bottom:24px}
-.bc a{color:#003478}
+/* BREADCRUMB */
+.bc{display:flex;align-items:center;gap:4px;font-size:12px;color:#10599b;flex-wrap:wrap;margin-bottom:24px}
+.bc a{color:#10599b}
 .bc a:hover{text-decoration:underline}
+.bc-sep{color:#999;margin:0 2px}
 
-/* TWO COLUMN LAYOUT — responsive */
-.pdp{display:flex;flex-direction:row;gap:40px;align-items:flex-start;width:100%}
+/* PDP 2-COL */
+.pdp{display:flex;flex-direction:row;gap:48px;align-items:flex-start}
 .col-l{flex:1 1 0%;min-width:0}
-.col-r{width:360px;flex:0 0 360px;min-width:0}
-@media(max-width:768px){
-  .pdp{flex-direction:column}
-  .col-r{width:100%;flex:none}
-}
+.col-r{width:360px;flex:0 0 360px}
+@media(max-width:860px){.pdp{flex-direction:column}.col-r{width:100%;flex:none}}
 
-/* GALLERY */
-.hero{position:relative;aspect-ratio:1/1;border-radius:12px;overflow:hidden;background:#fff;display:flex;align-items:center;justify-content:center}
-.hero img{max-width:100%;max-height:100%;object-fit:contain;padding:16px}
-.e360{position:absolute;top:14px;left:14px;z-index:10;display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border:1.5px solid #333;border-radius:50px;background:rgba(255,255,255,.96);color:#003478;font-size:12px;font-weight:700;box-shadow:0 2px 10px rgba(0,0,0,.15);transition:all .18s}
-.e360:hover{background:#003478;color:#fff;border-color:#003478}
-.heart-btn{position:absolute;top:12px;right:12px;z-index:10}
+/* HERO */
+.hero{position:relative;aspect-ratio:1/1;background:#f6f6f6;border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.hero img{max-width:100%;max-height:100%;object-fit:contain;padding:20px}
+.e360-btn{position:absolute;top:14px;left:14px;z-index:10;display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border:1.5px solid #333;border-radius:50px;background:rgba(255,255,255,.97);color:#003478;font-size:12px;font-weight:700;box-shadow:0 2px 10px rgba(0,0,0,.14);transition:all .18s;cursor:pointer}
+.e360-btn:hover{background:#003478;color:#fff;border-color:#003478}
+.hero-heart{position:absolute;top:12px;right:12px;z-index:10;width:36px;height:36px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.15);display:flex;align-items:center;justify-content:center;cursor:pointer}
 
-.thumbs{display:flex;gap:8px;margin-top:10px}
-.th{width:72px;height:72px;border:1.5px solid #ddd;border-radius:8px;background:#fff;cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:4px;flex-shrink:0;transition:border-color .15s}
-.th:hover{border-color:#999}
-.th.on{border-bottom:3px solid #003478;border-radius:8px 8px 0 0}
+/* THUMBNAILS */
+.thumbs{display:flex;gap:12px;margin-top:12px}
+.th{width:120px;height:90px;border:1px solid #e0e0e0;border-radius:4px;background:#f6f6f6;cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:4px;flex-shrink:0;transition:border-color .15s}
+.th:hover{border-color:#aaa}
+.th.on{border:2px solid #10599b}
 .th img{max-width:100%;max-height:100%;object-fit:contain}
 
 /* LEFT ACCORDIONS */
-.lacc{border-top:1px solid #e5e5e5;margin-top:24px}
-.ai{border-bottom:1px solid #e5e5e5}
+.lacc{border-top:1px solid #e0e0e0;margin-top:28px}
+.ai{border-bottom:1px solid #e0e0e0}
 .ah{display:flex;justify-content:space-between;align-items:center;padding:14px 0;font-size:15px;font-weight:700;cursor:pointer;user-select:none}
-.aico{font-size:20px;color:#999}
+.aico{font-size:22px;color:#999;line-height:1}
 .ab{padding:0 0 14px;font-size:14px;color:#444;line-height:1.75;display:none}
 .ab.open{display:block}
 .ab p{margin-bottom:8px}
 .ab ul{padding-left:20px}
 .ab li{margin-bottom:5px}
 .stbl{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px}
-.stbl th{background:#f6f6f6;padding:8px 12px;text-align:left;font-weight:600;border:1px solid #e5e5e5}
-.stbl td{padding:8px 12px;border:1px solid #e5e5e5}
+.stbl th{background:#f6f6f6;padding:8px 12px;text-align:left;font-weight:600;border:1px solid #e0e0e0}
+.stbl td{padding:8px 12px;border:1px solid #e0e0e0}
 .stbl tr:nth-child(even) td{background:#fafafa}
 
-/* RIGHT INFO */
-.ptitle{font-size:22px;font-weight:700;line-height:1.3;margin-bottom:6px}
-.psku{font-size:12px;color:#999;margin-bottom:8px}
-.prat{display:flex;align-items:center;gap:8px;margin-bottom:14px}
-.stars{color:#ccc;font-size:16px;letter-spacing:1px}
-.revs{font-size:13px;color:#003478}
-.price{font-size:26px;font-weight:500;margin-bottom:4px}
-.pts{font-size:13px;color:#003478;margin-bottom:3px}
-.klarna{font-size:12px;color:#666;margin-bottom:16px}
-.klarna a{color:#003478}
+/* RIGHT COL */
+.ptitle{font-size:24px;font-weight:700;line-height:1.3;color:#000;margin-bottom:6px}
+.psku{font-size:13px;color:#666;margin-bottom:10px}
+.prat{display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.stars{color:#ccc;font-size:16px;letter-spacing:2px}
+.revs{font-size:13px;color:#10599b}
+.price{font-size:32px;font-weight:700;color:#000;margin-bottom:4px}
+.pts{font-size:13px;color:#10599b;margin-bottom:3px}
+.klarna{font-size:12px;color:#555;margin-bottom:18px}
+.klarna a{color:#10599b}
 
-.fitbox{background:#f5f5f5;border-radius:8px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.fitbox{background:#f6f6f6;border:1px solid #e0e0e0;border-radius:4px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
 .fitl{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600}
 .fck{color:#2d7d46;font-size:16px}
-.fchg{font-size:13px;color:#003478;text-decoration:underline;cursor:pointer;white-space:nowrap}
+.fchg{font-size:13px;color:#10599b;text-decoration:underline;cursor:pointer;white-space:nowrap}
 
-.fulbox{background:#f5f5f5;border-radius:8px;padding:12px 16px;margin-bottom:10px}
-.fulrow{display:flex;align-items:center;gap:8px;font-size:13px;margin-bottom:5px}
-.fulrow:last-child{margin-bottom:0}
+.fulbox{border:1px solid #e0e0e0;border-radius:4px;padding:12px 16px;margin-bottom:10px}
+.fulrow{display:flex;align-items:center;gap:8px;font-size:13px;padding:3px 0}
 .fck2{color:#2d7d46;font-weight:700}
 
-.instbox{border:1px solid #e5e5e5;border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:10px;margin-bottom:14px}
-.instbox input{width:16px;height:16px;accent-color:#003478;cursor:pointer;flex-shrink:0}
+.instbox{background:#f6f6f6;border-radius:4px;padding:12px 16px;display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.instbox input{width:16px;height:16px;border:1px solid #ccc;cursor:pointer;flex-shrink:0;accent-color:#003478}
 .instlbl{font-size:14px}
 .instp{font-weight:700}
+.instpts{color:#10599b;font-weight:700}
 
-.atcrow{display:flex;align-items:center;gap:10px;margin-bottom:12px}
-.qty{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;flex-shrink:0}
-.qsel{border:1px solid #ccc;border-radius:6px;padding:8px 10px;font-size:14px;font-family:inherit;background:#fff;width:64px}
-.atcbtn{flex:1;background:#003478;color:#fff;border:none;border-radius:50px;height:46px;font-size:15px;font-weight:700;letter-spacing:.2px;transition:background .18s;font-family:inherit}
-.atcbtn:hover{background:#002060}
+.atcrow{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.qty{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:500;flex-shrink:0}
+.qsel{border:1px solid #d9d9d9;border-radius:4px;padding:8px 10px;font-size:14px;font-family:inherit;background:#fff;width:70px}
+.atcbtn{flex:1;background:#10599b;color:#fff;border:none;border-radius:20px;height:48px;font-size:16px;font-weight:700;letter-spacing:.2px;transition:background .18s;font-family:inherit}
+.atcbtn:hover{background:#0d4a85}
 
-.shopmore{font-size:13px;color:#003478;text-decoration:underline;display:block;text-align:center;margin-bottom:12px;cursor:pointer}
-.nonret{display:flex;align-items:center;gap:8px;font-size:13px;color:#555;padding-top:12px;border-top:1px solid #e5e5e5}
-.nonret a{color:#000}
+.shopmore{font-size:13px;color:#10599b;text-decoration:underline;display:block;text-align:center;margin-bottom:14px;cursor:pointer}
+.nonret{background:#f1f5f8;border-radius:4px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:13px}
+.nonret-l{display:flex;align-items:center;gap:8px;color:#333}
+.nonret a{color:#10599b;font-weight:700}
 
 /* YMAL */
-.ymal{margin-top:48px;padding-top:32px;border-top:1px solid #e5e5e5}
-.ymal h2{font-size:20px;font-weight:700;margin-bottom:20px}
+.ymal{margin-top:48px;padding-top:32px;border-top:1px solid #e0e0e0}
+.ymal h2{font-size:20px;font-weight:700;margin-bottom:24px}
 .ygrid{display:flex;gap:16px}
-.yc{flex:1;border:1px solid #e5e5e5;border-radius:10px;padding:14px;position:relative;display:flex;flex-direction:column;cursor:pointer;transition:box-shadow .2s}
-.yc:hover{box-shadow:0 4px 16px rgba(0,0,0,.08)}
-.ych{position:absolute;top:10px;right:10px;width:26px;height:26px;border-radius:50%;border:1.5px solid #003478;background:#fff;display:flex;align-items:center;justify-content:center}
-.ycimg{aspect-ratio:1/1;background:#f8f8f8;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;overflow:hidden}
-.ycimg img{max-width:80%;max-height:80%;object-fit:contain}
-.ycname{font-size:13px;font-weight:600;line-height:1.35;margin-bottom:6px;flex:1}
-.ycprice{font-size:15px;font-weight:700;margin-bottom:10px}
-.ycatc{display:inline-block;background:#003478;color:#fff;border:none;border-radius:50px;padding:7px 16px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit}
-.ycatc:hover{background:#002060}
+.yc{flex:1;cursor:pointer;transition:box-shadow .2s;position:relative}
+.yc:hover .yc-img{box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.yc-heart{position:absolute;top:10px;right:10px;z-index:2;width:28px;height:28px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.yc-img{aspect-ratio:1/1;background:#f6f6f6;border-radius:4px;display:flex;align-items:center;justify-content:center;overflow:hidden;margin-bottom:10px;position:relative;transition:box-shadow .2s}
+.yc-img img{max-width:75%;max-height:75%;object-fit:contain}
+.yc-name{font-size:14px;font-weight:700;color:#10599b;line-height:1.35;margin-bottom:6px}
+.yc-price{font-size:15px;font-weight:700;color:#000}
 
 /* ABOUT */
-.about{margin-top:40px;padding-top:32px;border-top:1px solid #e5e5e5}
+.about{margin-top:40px;padding-top:32px;border-top:1px solid #e0e0e0}
 .about h2{font-size:20px;font-weight:700;margin-bottom:0}
-.abt-item{border-bottom:1px solid #e5e5e5}
+.abt-item{border-bottom:1px solid #e0e0e0}
 .abt-hdr{display:flex;justify-content:space-between;align-items:center;padding:14px 0;font-size:15px;font-weight:700;cursor:pointer;user-select:none}
 .abt-ico{font-size:20px;color:#999}
 .abt-body{padding:0 0 16px;font-size:14px;color:#444;line-height:1.75}
@@ -138,36 +142,43 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 
 /* FOOTER */
 .footer{background:#1a1a1a;margin-top:60px}
-.fg{max-width:1280px;margin:0 auto;padding:48px 32px;display:flex;gap:24px;justify-content:space-between}
-.fg div h4{color:#fff;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:14px}
-.fg div a{display:block;font-size:13px;color:#666;margin-bottom:7px}
-.fg div a:hover{color:#ccc}
-.fb{border-top:1px solid #2a2a2a;max-width:1280px;margin:0 auto;padding:16px 32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.fg{max-width:1280px;margin:0 auto;padding:48px 64px;display:flex;gap:32px;justify-content:space-between}
+.fg>div>h4{color:#fff;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:14px}
+.fg>div>a{display:block;font-size:13px;color:#666;margin-bottom:7px}
+.fg>div>a:hover{color:#ccc}
+.fb{border-top:1px solid #2a2a2a;max-width:1280px;margin:0 auto;padding:16px 64px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
 .fb a{font-size:12px;color:#555;margin-right:14px}
 .fc{font-size:12px;color:#444}
 </style>
 </head>
 <body>
 
-<div class="promo">&#8249;&nbsp; 20% Off Mustang&#174; Accessories Purchase up to $1,000*. <a href="#">Offer Details.</a> &nbsp;&#8250;</div>
+<!-- PROMO -->
+<div class="promo">
+  <span class="promo-arrow">&#8249;</span>
+  20% Off Mustang&#174; Accessories Purchase up to $1,000*. <a href="#">Offer Details.</a>
+  <span class="promo-arrow">&#8250;</span>
+</div>
 
+<!-- NAV -->
 <nav class="nav">
-  <div class="nav-l">
-    <a href="index.html" style="margin-right:20px"><img src="images/ford-logo.jpg" alt="Ford" style="height:34px;width:auto;display:block"></a>
+  <div class="nav-left">
+    <a href="index.html" style="margin-right:4px"><img src="images/ford-logo.jpg" alt="Ford" style="height:40px;width:auto;display:block"></a>
     <a href="#" class="nl">Vehicles</a>
     <a href="#" class="nl">Shop</a>
     <a href="#" class="nl">Support &amp; Service</a>
     <a href="#" class="nl">For Business</a>
   </div>
-  <div class="nav-r">
-    <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+  <div class="nav-icons">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
     <div class="cart-w">
-      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#003478" stroke-width="1.8"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#10599b" stroke-width="1.8"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
       <div class="cart-dot"></div>
     </div>
   </div>
 </nav>
 
+<!-- SEARCH ROW -->
 <div class="srow">
   <span class="vtag">2025 Ford Bronco <button>&#215;</button></span>
   <div class="sw">
@@ -177,25 +188,28 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   <div class="rwd">Ford Rewards<br><a href="#">Learn More</a></div>
 </div>
 
-<div class="wrap">
+<!-- PAGE -->
+<div class="page">
   <div class="bc">
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#003478" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-    &nbsp;&#8250;&nbsp;<a href="#">Accessories</a>
-    &nbsp;&#8250;&nbsp;<a href="#">Exterior</a>
-    &nbsp;&#8250;&nbsp;<a href="index.html">Racks and Carriers</a>
-    &nbsp;&#8250;&nbsp;<span>Yakima&#174; Rack Mounted Kayak Carrier w/o Lock</span>
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#10599b" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span class="bc-sep">/</span><a href="#">Accessories</a>
+    <span class="bc-sep">/</span><a href="#">Exterior</a>
+    <span class="bc-sep">/</span><a href="index.html">Racks and Carriers</a>
+    <span class="bc-sep">/</span><span style="color:#333">Yakima&#174; Rack Mounted Kayak Carrier w/o Lock</span>
   </div>
 
   <div class="pdp">
+
+    <!-- LEFT: GALLERY -->
     <div class="col-l">
       <div class="hero">
-        <button class="e360">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        <button class="e360-btn">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
           View in 3D / AR
         </button>
-        <button class="heart-btn">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#003478" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        </button>
+        <div class="hero-heart">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10599b" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
         <img id="main-img" src="https://www.ford.com/accessories/product/images/NA/VKB3Z7855100EB_0.jpg" alt="Yakima Rack Mounted Kayak Carrier">
       </div>
       <div class="thumbs">
@@ -223,37 +237,50 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
       </div>
     </div>
 
+    <!-- RIGHT: PRODUCT INFO -->
     <div class="col-r">
       <h1 class="ptitle">Yakima&#174; Rack Mounted Kayak Carrier w/o Lock</h1>
       <div class="psku">SKU: VKB3Z7855100EB</div>
       <div class="prat"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><a href="#" class="revs">0 (No Reviews)</a></div>
       <div class="price">$249.00</div>
       <div class="pts">Sign In to redeem up to 49,800 Points</div>
-      <div class="klarna">From $22/month, or 4 payments at 0% with Klarna &mdash; <a href="#">Check purchase power</a></div>
+      <div class="klarna">From $22/month, or 4 payments at 0% interest with Klarna &mdash; <a href="#">Check purchase power</a></div>
       <div class="fitbox"><div class="fitl"><span class="fck">&#10003;</span> Fits Most: (i) 2025 Ford Bronco</div><span class="fchg">Change Vehicle</span></div>
       <div class="fulbox">
-        <div class="fulrow"><span class="fck2">&#10003;</span> Shipping: Ships by Apr 17</div>
-        <div class="fulrow"><span class="fck2">&#10003;</span> Pickup: Free at Dealer by Apr 19</div>
+        <div class="fulrow"><span class="fck2">&#10003;</span>&nbsp; Shipping: Ships by Apr 17</div>
+        <div class="fulrow"><span class="fck2">&#10003;</span>&nbsp; Pickup: Free at Dealer by Apr 19</div>
       </div>
-      <div class="instbox"><input type="checkbox" id="inst"><label for="inst" class="instlbl">Add Installation <span class="instp">$42.00</span> or redeem up to 8,400 Points</label></div>
+      <div class="instbox">
+        <input type="checkbox" id="inst">
+        <label for="inst" class="instlbl">Add Installation $42.00 or redeem up to <span class="instpts">8,400 Points</span></label>
+      </div>
       <div class="atcrow">
         <div class="qty"><span>Qty:</span><select class="qsel"><option>1</option><option>2</option><option>3</option></select></div>
         <button class="atcbtn">Add to Cart</button>
       </div>
       <a href="#" class="shopmore">Shop More Yakima Products</a>
-      <div class="nonret"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg> Non-Returnable Item &mdash; <a href="#">Learn more</a></div>
+      <div class="nonret">
+        <div class="nonret-l">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+          Non-Returnable Item
+        </div>
+        <a href="#">Learn More</a>
+      </div>
     </div>
+
   </div>
 
+  <!-- YMAL -->
   <div class="ymal">
     <h2>You May Also Like</h2>
     <div class="ygrid">
-      <div class="yc"><div class="ych"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#003478" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><div class="ycimg"><img src="https://www.ford.com/accessories/product/images/NA/VM1PZ7855100A_0.jpg" alt=""></div><div class="ycname">Yakima&#174; Hitch Mounted Tilting Bike Carrier</div><div class="ycprice">$1,139.00</div><button class="ycatc">Add to Cart</button></div>
-      <div class="yc"><div class="ych"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#003478" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><div class="ycimg"><img src="https://www.ford.com/accessories/product/images/NA/VKB3Z7821984A_0.jpg" alt=""></div><div class="ycname">Yakima&#174; Roof Mounted Fishing Rod Carrier</div><div class="ycprice">$279.00</div><button class="ycatc">Add to Cart</button></div>
-      <div class="yc"><div class="ych"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#003478" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><div class="ycimg"><img src="https://www.ford.com/accessories/product/images/NA/VKB3Z7855100E_0.jpg" alt=""></div><div class="ycname">Thule&#174; Upright Roof Mounted Bike Carrier</div><div class="ycprice">$649.00</div><button class="ycatc">Add to Cart</button></div>
+      <div class="yc"><div class="yc-heart"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#10599b" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><div class="yc-img"><img src="https://www.ford.com/accessories/product/images/NA/VM1PZ7855100A_0.jpg" alt=""></div><div class="yc-name">Yakima&#174; Hitch Mounted Tilting Bike Carrier</div><div class="yc-price">$1,139.00</div></div>
+      <div class="yc"><div class="yc-heart"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#10599b" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><div class="yc-img"><img src="https://www.ford.com/accessories/product/images/NA/VKB3Z7821984A_0.jpg" alt=""></div><div class="yc-name">Yakima&#174; Roof Mounted Fishing Rod Carrier</div><div class="yc-price">$279.00</div></div>
+      <div class="yc"><div class="yc-heart"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#10599b" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><div class="yc-img"><img src="https://www.ford.com/accessories/product/images/NA/VKB3Z7855100E_0.jpg" alt=""></div><div class="yc-name">Thule&#174; Upright Roof Mounted Bike Carrier</div><div class="yc-price">$649.00</div></div>
     </div>
   </div>
 
+  <!-- ABOUT -->
   <div class="about">
     <h2>About This Item</h2>
     <div class="abt-item">
@@ -271,7 +298,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
     <div><h4>Experience Ford</h4><a href="#">Corporate</a><a href="#">Careers</a><a href="#">FordPass</a></div>
     <div><h4>Follow Ford</h4><a href="#">Facebook</a><a href="#">Instagram</a><a href="#">YouTube</a><a href="#">TikTok</a></div>
   </div>
-  <div class="fb"><div><a href="#">Privacy Notice</a><a href="#">Terms &amp; Conditions</a><a href="#">Cookie Settings</a><a href="#">Accessibility</a></div><span class="fc">&copy; 2026 Ford Motor Company</span></div>
+  <div class="fb"><div><a href="#">Privacy Notice</a><a href="#">Terms &amp; Conditions</a><a href="#">Cookie Settings</a><a href="#">Accessibility</a><a href="#">Site Map</a></div><span class="fc">&copy; 2026 Ford Motor Company</span></div>
 </footer>
 <script>
 function setImg(el,url){document.getElementById('main-img').src=url;document.querySelectorAll('.th').forEach(t=>t.classList.remove('on'));el.classList.add('on')}
