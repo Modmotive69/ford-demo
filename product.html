@@ -189,6 +189,11 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .e360-dot{width:7px;height:7px;border-radius:50%;background:#ccc;cursor:pointer;transition:background .15s}
 .e360-dot.on{background:#10599b}
 .e360-spin-hint{font-size:11px;color:#999;display:flex;align-items:center;gap:4px;white-space:nowrap}
+
+.e360-ar-panel{display:none;flex-direction:column;align-items:center;justify-content:center;height:100%;padding:40px;gap:20px;background:#f8f8f8}
+.e360-ar-panel.show{display:flex}
+.e360-ar-panel img{max-width:220px;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,.12)}
+.e360-ar-panel p{font-size:14px;color:#555;text-align:center;max-width:280px;line-height:1.6}
 </style>
 </head>
 <body>
@@ -345,6 +350,17 @@ function openE360(){document.getElementById('e360modal').classList.add('open')}
 function closeE360(e){if(e.target===document.getElementById('e360modal'))document.getElementById('e360modal').classList.remove('open')}
 function setColor(el){document.querySelectorAll('.e360-color').forEach(c=>c.classList.remove('on'));el.classList.add('on')}
 
+
+function e360Tab(el, idx) {
+  document.querySelectorAll('.e360-tab').forEach(function(t){t.classList.remove('on')});
+  el.classList.add('on');
+  var isAR = idx === 2;
+  document.getElementById('e360-ar-panel').classList.toggle('show', isAR);
+  document.getElementById('e360-viewer-img').style.display = isAR ? 'none' : 'block';
+  document.querySelector('.e360-rot-controls').style.display = isAR ? 'none' : 'flex';
+  if(!isAR) setView(idx === 1 ? 1 : e360Current);
+}
+
 var e360Views = ['images/bronco-kayak-3d.jpg','images/bronco-kayak.jpg','images/bronco-kayak-rear.jpg'];
 var e360Current = 0;
 function setView(n){
@@ -374,9 +390,13 @@ function togA(h){var b=h.nextElementSibling,i=h.querySelector('.abt-ico'),hi=b.s
     <div class="e360-body">
       <div class="e360-viewer">
         <div class="e360-tabs">
-          <div class="e360-tab on">3D View</div>
-          <div class="e360-tab">On Vehicle</div>
-          <div class="e360-tab">AR</div>
+          <div class="e360-tab on" onclick="e360Tab(this,0)">3D View</div>
+          <div class="e360-tab" onclick="e360Tab(this,1)">On Vehicle</div>
+          <div class="e360-tab" onclick="e360Tab(this,2)">AR</div>
+        </div>
+        <div class="e360-ar-panel" id="e360-ar-panel">
+          <img src="images/ar-qr.jpg" alt="Scan to view in AR">
+          <p>Scan this QR code with your phone to see the Yakima&#174; Kayak Carrier installed on your Bronco in <strong>Augmented Reality</strong>.</p>
         </div>
         <img id="e360-viewer-img" src="images/bronco-kayak-3d.jpg" alt="Yakima Kayak Carrier 3D View" style="transition:opacity .2s">
         <div class="e360-rot-controls">
