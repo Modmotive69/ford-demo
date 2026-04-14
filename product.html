@@ -50,8 +50,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 
 /* GALLERY */
 .gallery{display:flex;flex-direction:column;gap:0}
-.gallery-main{position:relative;background:#fff;border-radius:12px;aspect-ratio:1/1;overflow:visible;display:flex;align-items:center;justify-content:center}
+.gallery-main{position:relative;background:#fff;border-radius:12px;aspect-ratio:1/1;overflow:hidden;display:flex;align-items:center;justify-content:center}
 .gallery-main img{max-width:100%;max-height:100%;object-fit:contain;padding:20px}
+.gallery-main .e360-pill,.gallery-main .gallery-heart{position:absolute;z-index:20}
 
 /* E360 — top-left inside hero */
 .e360-pill{
@@ -213,7 +214,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   <div class="pdp">
     <!-- GALLERY LEFT -->
     <div class="gallery">
-      <div class="gallery-main">
+      <div class="gallery-wrap">
         <button class="e360-pill">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
           View in 3D / AR
@@ -221,7 +222,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
         <button class="gallery-heart">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#003478" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
         </button>
-        <img id="main-img" src="https://www.ford.com/accessories/product/images/NA/VKB3Z7855100EB_0.jpg" alt="Yakima Rack Mounted Kayak Carrier">
+        <div class="gallery-main">
+          <img id="main-img" src="https://www.ford.com/accessories/product/images/NA/VKB3Z7855100EB_0.jpg" alt="Yakima Rack Mounted Kayak Carrier">
+        </div>
       </div>
       <div class="gallery-thumbs">
         <div class="thumb active" onclick="setImg(this,'https://www.ford.com/accessories/product/images/NA/VKB3Z7855100EB_0.jpg')">
