@@ -374,7 +374,10 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   <div class="fb"><div><a href="#">Privacy Notice</a><a href="#">Terms &amp; Conditions</a><a href="#">Cookie Settings</a><a href="#">Accessibility</a><a href="#">Site Map</a></div><span class="fc">&copy; 2026 Ford Motor Company</span></div>
 </footer>
 <script>
-function openE360(){document.getElementById('e360modal').classList.add('open');e360Tab(null,0);}
+function openE360(){
+  document.getElementById('e360modal').classList.add('open');
+  for(var i=0;i<3;i++) document.getElementById('e360-panel-'+i).style.display=(i===0)?'flex':'none';
+}
 function closeE360(e){if(e.target===document.getElementById('e360modal'))document.getElementById('e360modal').classList.remove('open')}
 function setColor(el){document.querySelectorAll('.e360-color').forEach(c=>c.classList.remove('on'));el.classList.add('on')}
 
