@@ -390,14 +390,7 @@ function e360Tab(el, idx) {
   }
   if(idx===1){ startAutoRotate(); } else { stopAutoRotate(); }
 }
-);
-  el.classList.add('on');
-  var isAR = idx === 2;
-  document.getElementById('e360-ar-panel').classList.toggle('show', isAR);
-  document.getElementById('e360-viewer-img').style.display = isAR ? 'none' : 'block';
-  document.querySelector('.e360-rot-controls').style.display = isAR ? 'none' : 'flex';
-  if(!isAR) setView(idx === 1 ? 1 : e360Current);
-}
+
 
 
 var e360AutoRotate = null;
