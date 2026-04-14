@@ -181,6 +181,14 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .e360-atc{width:100%;background:#fff;color:#10599b;border:1.5px solid #10599b;border-radius:50px;height:44px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .18s}
 .e360-atc:hover{background:#10599b;color:#fff}
 .e360-note{font-size:11px;color:#999;text-align:center;line-height:1.5}
+
+.e360-rot-controls{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.9);border-radius:50px;padding:8px 16px;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.e360-rot-btn{width:32px;height:32px;border-radius:50%;border:1.5px solid #ccc;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;font-size:16px}
+.e360-rot-btn:hover{border-color:#10599b;color:#10599b}
+.e360-rot-dots{display:flex;gap:6px;align-items:center}
+.e360-dot{width:7px;height:7px;border-radius:50%;background:#ccc;cursor:pointer;transition:background .15s}
+.e360-dot.on{background:#10599b}
+.e360-spin-hint{font-size:11px;color:#999;display:flex;align-items:center;gap:4px;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -336,6 +344,18 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 function openE360(){document.getElementById('e360modal').classList.add('open')}
 function closeE360(e){if(e.target===document.getElementById('e360modal'))document.getElementById('e360modal').classList.remove('open')}
 function setColor(el){document.querySelectorAll('.e360-color').forEach(c=>c.classList.remove('on'));el.classList.add('on')}
+
+var e360Views = ['images/bronco-kayak-3d.jpg','images/bronco-kayak.jpg','images/bronco-kayak-rear.jpg'];
+var e360Current = 0;
+function setView(n){
+  e360Current = n;
+  var img = document.getElementById('e360-viewer-img');
+  img.style.opacity='0';
+  setTimeout(function(){img.src=e360Views[n];img.style.opacity='1'},150);
+  document.querySelectorAll('.e360-dot').forEach(function(d,i){d.classList.toggle('on',i===n)});
+}
+function rotateView(dir){setView((e360Current+dir+e360Views.length)%e360Views.length)}
+
 function setImg(el,url){document.getElementById('main-img').src=url;document.querySelectorAll('.th').forEach(t=>t.classList.remove('on'));el.classList.add('on')}
 function tog(h){var b=h.nextElementSibling,i=h.querySelector('.aico'),o=b.classList.toggle('open');i.textContent=o?'−':'+'}
 function togA(h){var b=h.nextElementSibling,i=h.querySelector('.abt-ico'),hi=b.style.display==='none';b.style.display=hi?'block':'none';i.innerHTML=hi?'&minus;':'+'}
@@ -358,7 +378,20 @@ function togA(h){var b=h.nextElementSibling,i=h.querySelector('.abt-ico'),hi=b.s
           <div class="e360-tab">On Vehicle</div>
           <div class="e360-tab">AR</div>
         </div>
-        <img id="e360-viewer-img" src="images/bronco-kayak-3d.jpg" alt="Yakima Kayak Carrier on Bronco 3D View">
+        <img id="e360-viewer-img" src="images/bronco-kayak-3d.jpg" alt="Yakima Kayak Carrier 3D View" style="transition:opacity .2s">
+        <div class="e360-rot-controls">
+          <button class="e360-rot-btn" onclick="rotateView(-1)">&#8592;</button>
+          <div class="e360-rot-dots">
+            <div class="e360-dot on" onclick="setView(0)"></div>
+            <div class="e360-dot" onclick="setView(1)"></div>
+            <div class="e360-dot" onclick="setView(2)"></div>
+          </div>
+          <button class="e360-rot-btn" onclick="rotateView(1)">&#8594;</button>
+          <span class="e360-spin-hint">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.95"/></svg>
+            Drag to rotate
+          </span>
+        </div>
       </div>
       <div class="e360-sidebar">
         <div class="e360-pname">Yakima&#174; Rack Mounted Kayak Carrier w/o Lock</div>
