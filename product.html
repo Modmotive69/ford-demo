@@ -44,26 +44,27 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 
 /* GALLERY */
 .gallery{display:flex;flex-direction:column;gap:12px}
-.gallery-main{background:#f6f6f6;border-radius:4px;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
-.gallery-main img{max-width:100%;max-height:100%;object-fit:contain;padding:24px}
+.gallery-main{background:#fff;border:1px solid #ededed;border-radius:4px;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+.gallery-main img{max-width:100%;max-height:100%;object-fit:contain;padding:16px}
 .gallery-main .heart{position:absolute;top:14px;right:14px;background:none;border:none;cursor:pointer}
-.gallery-thumbs{display:flex;gap:8px}
-.thumb{width:80px;height:80px;border:1.5px solid #ededed;border-radius:4px;background:#f6f6f6;cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:4px;transition:border-color .15s}
-.thumb.active,.thumb:hover{border-color:#003478}
+.gallery-thumbs{display:flex;gap:8px;margin-top:10px}
+.thumb{width:76px;height:76px;border:1.5px solid #ededed;border-radius:4px;background:#fff;cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:4px;transition:border-color .15s}
+.thumb.active{border-bottom:3px solid #003478;border-radius:4px 4px 0 0}
+.thumb:hover{border-color:#003478}
 .thumb img{max-width:100%;max-height:100%;object-fit:contain}
 
 /* E360 OVERLAY BUTTON — top-left of hero */
 .e360-overlay{
-  position:absolute;
-  top:14px;
-  left:14px;
-  display:inline-flex;
+  position:absolute !important;
+  top:14px !important;
+  left:14px !important;
+  display:inline-flex !important;
   align-items:center;
   gap:8px;
   padding:9px 18px;
   border:1.5px solid #333;
   border-radius:50px;
-  background:#fff;
+  background:rgba(255,255,255,0.95);
   color:#003478;
   font-size:13px;
   font-weight:700;
@@ -72,7 +73,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   cursor:pointer;
   font-family:inherit;
   transition:all .18s;
-  z-index:2;
+  z-index:10;
 }
 .e360-overlay:hover{background:#003478;color:#fff;border-color:#003478}
 
