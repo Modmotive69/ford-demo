@@ -194,6 +194,18 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .e360-ar-panel.show{display:flex}
 .e360-ar-panel img{max-width:220px;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,.12)}
 .e360-ar-panel p{font-size:14px;color:#555;text-align:center;max-width:280px;line-height:1.6}
+
+@media(max-width:700px){
+  .e360-modal{max-height:100vh;border-radius:0;height:100%}
+  .e360-body{flex-direction:column}
+  .e360-viewer{min-height:260px}
+  .e360-sidebar{width:100%;border-left:none;border-top:1px solid #e5e5e5;padding:16px;gap:12px}
+  .e360-price{font-size:18px}
+  .e360-modal-top h2{font-size:13px}
+  .e360-tabs{top:10px}
+  .e360-tab{padding:6px 14px;font-size:12px}
+  .e360-overlay{padding:0}
+}
 </style>
 </head>
 <body>
