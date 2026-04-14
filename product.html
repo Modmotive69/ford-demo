@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Yakima Rack Mounted Kayak Carrier w/o Lock | Accessories | Ford.com</title>
+<link rel="stylesheet" href="https://www.ford.com/shared/fonts/ford.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:FordMotion,FordAntenna,'Helvetica Neue',Helvetica,Arial,sans-serif;background:#fff;color:#000;font-size:15px;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+
+/* NAV */
+.nav{background:#fff;border-bottom:1px solid #ededed;height:56px;display:flex;align-items:center;padding:0 24px;justify-content:space-between}
+.nav-left{display:flex;align-items:center;gap:32px}
+.nav-links{display:flex;align-items:center;height:56px}
+.nl{padding:0 14px;height:100%;display:flex;align-items:center;font-size:14px;font-weight:500;color:#000;border-bottom:3px solid transparent}
+.nl:hover{border-bottom-color:#003478}
+.nav-right{display:flex;align-items:center;gap:18px}
+.cart-wrap{position:relative}
+.cart-badge{position:absolute;top:-6px;right:-8px;background:#003478;color:#fff;border-radius:50%;width:17px;height:17px;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center}
+
+/* SEARCH ROW */
+.search-row{background:#fff;border-bottom:1px solid #ededed;padding:10px 24px;display:flex;align-items:center;gap:12px}
+.vehicle-tag{display:inline-flex;align-items:center;gap:8px;border:1px solid #000;border-radius:4px;padding:7px 14px;font-size:14px;font-weight:700;white-space:nowrap}
+.vehicle-tag button{font-size:18px;line-height:1;color:#000;padding:0 0 0 4px}
+.search-input-wrap{flex:1;position:relative}
+.search-input-wrap svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#707070}
+.search-input{width:100%;border:1px solid #d1d1d1;border-radius:4px;padding:10px 15px 10px 40px;font-size:14px;font-family:inherit;outline:none}
+.search-input::placeholder{color:#707070}
+.rewards-stack{text-align:right;font-size:12px;line-height:1.4}
+.rewards-stack a{color:#003478;font-weight:600}
+
+/* BREADCRUMB */
+.bc-wrap{max-width:1320px;margin:0 auto;padding:16px 24px 0}
+.bc{font-size:11px;color:#707070;display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.bc a{color:#003478}
+.bc-sep{color:#bbb}
+
+/* PRODUCT LAYOUT */
+.product-wrap{max-width:1320px;margin:0 auto;padding:24px 24px 60px;display:grid;grid-template-columns:1fr 440px;gap:48px}
+@media(max-width:960px){.product-wrap{grid-template-columns:1fr}}
+
+/* GALLERY */
+.gallery{display:flex;flex-direction:column;gap:12px}
+.gallery-main{background:#f6f6f6;border-radius:4px;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+.gallery-main img{max-width:100%;max-height:100%;object-fit:contain;padding:24px}
+.gallery-main .heart{position:absolute;top:14px;right:14px;background:none;border:none;cursor:pointer}
+.gallery-thumbs{display:flex;gap:8px}
+.thumb{width:80px;height:80px;border:1.5px solid #ededed;border-radius:4px;background:#f6f6f6;cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:4px;transition:border-color .15s}
+.thumb.active,.thumb:hover{border-color:#003478}
+.thumb img{max-width:100%;max-height:100%;object-fit:contain}
+
+/* E360 BUTTON */
+.e360-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:13px 20px;border:1.5px solid #333;border-radius:50px;background:#fff;color:#003478;font-size:14px;font-weight:700;letter-spacing:.2px;transition:all .18s;margin-top:4px;font-family:inherit}
+.e360-btn:hover{background:#003478;color:#fff;border-color:#003478}
+.e360-btn svg{flex-shrink:0}
+
+/* PRODUCT INFO */
+.pinfo{display:flex;flex-direction:column;gap:16px}
+.pinfo-brand{font-size:12px;color:#003478;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.pinfo-title{font-size:28px;font-weight:700;line-height:1.25;color:#000}
+.pinfo-sku{font-size:12px;color:#707070}
+.pinfo-rating{display:flex;align-items:center;gap:8px;font-size:14px}
+.pinfo-stars{color:#f5a623;font-size:16px}
+.pinfo-reviews{font-size:13px;color:#003478}
+.pinfo-price{font-size:32px;font-weight:500;color:#000}
+.pinfo-price-note{font-size:13px;color:#707070;margin-top:4px}
+
+/* VEHICLE FIT */
+.fit-box{background:#f6f6f6;border-radius:4px;padding:16px}
+.fit-box label{font-size:13px;font-weight:700;display:block;margin-bottom:8px}
+.fit-select{width:100%;border:1px solid #d1d1d1;border-radius:4px;padding:10px 12px;font-size:14px;font-family:inherit;background:#fff;outline:none}
+.fit-confirm{font-size:12px;color:#2d6a4f;font-weight:600;margin-top:8px;display:none}
+.fit-confirm.show{display:block}
+
+/* BUTTONS */
+.btn-atc{width:100%;border:1.5px solid #333;border-radius:50px;background:#fff;color:#003478;font-size:15px;font-weight:700;height:48px;letter-spacing:.2px;transition:all .18s;font-family:inherit}
+.btn-atc:hover{background:#003478;color:#fff;border-color:#003478}
+.ship-info{display:flex;flex-direction:column;gap:5px;font-size:13px;color:#4d4d4d}
+.chk{color:#2d6a4f;font-weight:700;margin-right:5px}
+
+/* ACCORDION */
+.accordion{border-top:1px solid #ededed}
+.acc-item{border-bottom:1px solid #ededed}
+.acc-header{display:flex;justify-content:space-between;align-items:center;padding:16px 0;font-size:15px;font-weight:600;cursor:pointer;user-select:none}
+.acc-icon{font-size:20px;color:#707070;transition:transform .2s}
+.acc-body{padding:0 0 16px;font-size:14px;color:#4d4d4d;line-height:1.7;display:none}
+.acc-body.open{display:block}
+.acc-body ul{padding-left:20px;margin-top:8px}
+.acc-body li{margin-bottom:6px}
+.spec-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+.spec-table th{background:#f6f6f6;padding:8px 12px;text-align:left;font-weight:600;border:1px solid #ededed}
+.spec-table td{padding:8px 12px;border:1px solid #ededed}
+
+/* FOOTER */
+.footer{background:#1a1a1a;color:#999;margin-top:40px}
+.footer-main{max-width:1320px;margin:0 auto;padding:48px 24px;display:grid;grid-template-columns:repeat(5,1fr);gap:24px}
+.footer-main h4{color:#fff;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:16px}
+.footer-main a{display:block;font-size:13px;color:#777;margin-bottom:8px}
+.footer-main a:hover{color:#ddd}
+.footer-bottom{border-top:1px solid #2a2a2a;max-width:1320px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.footer-bottom-links{display:flex;gap:16px;flex-wrap:wrap}
+.footer-bottom-links a{font-size:12px;color:#555}
+.footer-copy{font-size:12px;color:#444}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-left">
+    <img src="images/ford-logo.jpg" alt="Ford" style="height:36px;width:auto">
+    <div class="nav-links">
+      <a href="#" class="nl">Vehicles</a>
+      <a href="#" class="nl">Shop</a>
+      <a href="#" class="nl">Support &amp; Service</a>
+      <a href="#" class="nl">For Business</a>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    </div>
+    <div class="cart-wrap">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#003478" stroke-width="1.8"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+      <span class="cart-badge">0</span>
+    </div>
+  </div>
+</nav>
+
+<!-- SEARCH ROW -->
+<div class="search-row">
+  <span class="vehicle-tag">2025 Ford Bronco <button>&#215;</button></span>
+  <div class="search-input-wrap">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input class="search-input" type="text" placeholder="Search keyword(s) / part number">
+  </div>
+  <div class="rewards-stack">
+    <div>Ford Rewards</div>
+    <div><a href="#">Learn More</a></div>
+  </div>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="bc-wrap">
+  <div class="bc">
+    <a href="#">Home</a><span class="bc-sep">&#8250;</span>
+    <a href="#">Accessories</a><span class="bc-sep">&#8250;</span>
+    <a href="#">2025 Ford Bronco</a><span class="bc-sep">&#8250;</span>
+    <a href="index.html">Exterior</a><span class="bc-sep">&#8250;</span>
+    <span>Yakima&#174; Rack Mounted Kayak Carrier w/o Lock</span>
+  </div>
+</div>
+
+<!-- PRODUCT -->
+<div class="product-wrap">
+
+  <!-- GALLERY -->
+  <div class="gallery">
+    <div class="gallery-main">
+      <button class="heart">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#003478" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </button>
+      <img id="main-img" src="https://www.ford.com/accessories/product/images/NA/VKB3Z7855100EB_0.jpg" alt="Yakima Rack Mounted Kayak Carrier">
+    </div>
+    <div class="gallery-thumbs">
+      <div class="thumb active" onclick="setImg(this,'https://www.ford.com/accessories/product/images/NA/VKB3Z7855100EB_0.jpg')">
+        <img src="https://www.ford.com/accessories/product/images/NA/VKB3Z7855100EB_0.jpg" alt="View 1">
+      </div>
+      <div class="thumb" onclick="setImg(this,'https://placehold.co/600x600/f6f6f6/ccc?text=View+2')">
+        <img src="https://placehold.co/80x80/f6f6f6/ccc?text=2" alt="View 2">
+      </div>
+      <div class="thumb" onclick="setImg(this,'https://placehold.co/600x600/f6f6f6/ccc?text=View+3')">
+        <img src="https://placehold.co/80x80/f6f6f6/ccc?text=3" alt="View 3">
+      </div>
+      <div class="thumb" onclick="setImg(this,'https://placehold.co/600x600/f6f6f6/ccc?text=Installed')">
+        <img src="https://placehold.co/80x80/f6f6f6/ccc?text=4" alt="View 4">
+      </div>
+    </div>
+    <!-- ENGAGE360 BUTTON -->
+    <button class="e360-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      View in 3D / AR
+    </button>
+  </div>
+
+  <!-- PRODUCT INFO -->
+  <div class="pinfo">
+    <div class="pinfo-brand">Yakima</div>
+    <h1 class="pinfo-title">Yakima&#174; Rack Mounted Kayak Carrier w/o Lock</h1>
+    <div class="pinfo-sku">SKU: VKB3Z7855100EB</div>
+    <div class="pinfo-rating">
+      <span class="pinfo-stars"><span style="color:#f5a623">&#9733;&#9733;&#9733;&#9733;&#9733;</span></span>
+      <a href="#" class="pinfo-reviews">4.9 (45 Reviews)</a>
+    </div>
+    <div>
+      <div class="pinfo-price">$279.00</div>
+      <div class="pinfo-price-note">Free shipping on orders over $50 &nbsp;&middot;&nbsp; 30-day returns</div>
+    </div>
+
+    <!-- VEHICLE FIT -->
+    <div class="fit-box">
+      <label>Select Your Vehicle</label>
+      <select class="fit-select" onchange="checkFit(this)">
+        <option value="">-- Choose Year / Model --</option>
+        <option>2025 Ford Bronco 2-Door</option>
+        <option>2025 Ford Bronco 4-Door</option>
+        <option>2024 Ford Bronco 2-Door</option>
+        <option>2024 Ford Bronco 4-Door</option>
+        <option>2023 Ford Bronco 2-Door</option>
+        <option>2023 Ford Bronco 4-Door</option>
+        <option>2022 Ford Bronco 2-Door</option>
+        <option>2022 Ford Bronco 4-Door</option>
+        <option>2021 Ford Bronco 2-Door</option>
+        <option>2021 Ford Bronco 4-Door</option>
+      </select>
+      <div class="fit-confirm" id="fit-confirm">&#10003; Confirmed fit for your selected vehicle</div>
+    </div>
+
+    <button class="btn-atc">Add to Cart</button>
+
+    <div class="ship-info">
+      <div><span class="chk">&#10003;</span> Shipping: Ships in 3-5 business days</div>
+      <div><span class="chk">&#10003;</span> Pickup: Free at Dealer</div>
+    </div>
+
+    <!-- ACCORDION -->
+    <div class="accordion">
+      <div class="acc-item">
+        <div class="acc-header" onclick="toggleAcc(this)">
+          About This Item <span class="acc-icon">+</span>
+        </div>
+        <div class="acc-body open">
+          <p>Take to the water with Yakima's versatile roof-mounted kayak carrier. Designed for easy single-person loading with a adjustable foam cradles that hold any kayak shape securely.</p>
+          <ul>
+            <li>Fits most kayaks, canoes, and paddleboards</li>
+            <li>Adjustable foam cradles protect hull</li>
+            <li>Folds flat when not in use</li>
+            <li>Fits Yakima round, square, and factory bars</li>
+            <li>Compatible with SKS lock cores (sold separately)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="acc-item">
+        <div class="acc-header" onclick="toggleAcc(this)">
+          Technical Specifications <span class="acc-icon">+</span>
+        </div>
+        <div class="acc-body">
+          <table class="spec-table">
+            <tr><th>Specification</th><th>Value</th></tr>
+            <tr><td>SKU</td><td>VKB3Z7855100EB</td></tr>
+            <tr><td>Max Load</td><td>75 lbs</td></tr>
+            <tr><td>Bar Fit</td><td>Round, Square, Factory</td></tr>
+            <tr><td>Quantity</td><td>1 Carrier</td></tr>
+            <tr><td>Lock</td><td>Not Included (SKS Compatible)</td></tr>
+            <tr><td>Warranty</td><td>Lifetime</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="acc-item">
+        <div class="acc-header" onclick="toggleAcc(this)">
+          Fits These Vehicles <span class="acc-icon">+</span>
+        </div>
+        <div class="acc-body">
+          <table class="spec-table">
+            <tr><th>Year</th><th>Model</th><th>Trim</th></tr>
+            <tr><td>2021–2025</td><td>Ford Bronco</td><td>All Trims, 2-Door &amp; 4-Door</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="acc-item">
+        <div class="acc-header" onclick="toggleAcc(this)">
+          Return Policy <span class="acc-icon">+</span>
+        </div>
+        <div class="acc-body">
+          <p>Ford Accessories accepts returns within 30 days of purchase. Items must be unused and in original packaging. Free return shipping on all orders.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-main">
+    <div><h4>All Vehicles</h4><a href="#">SUVs &amp; Crossovers</a><a href="#">Trucks &amp; Vans</a><a href="#">Cars</a><a href="#">Electrified</a></div>
+    <div><h4>Shop</h4><a href="#">Build &amp; Price</a><a href="#">Accessories Store</a><a href="#">Ford Parts</a></div>
+    <div><h4>Support</h4><a href="#">Support Home</a><a href="#">Locate a Dealer</a><a href="#">Contact Us</a><a href="#">Returns</a></div>
+    <div><h4>Experience Ford</h4><a href="#">Corporate</a><a href="#">Careers</a><a href="#">FordPass</a></div>
+    <div><h4>Follow Ford</h4><a href="#">Facebook</a><a href="#">Instagram</a><a href="#">YouTube</a><a href="#">TikTok</a></div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-bottom-links">
+      <a href="#">Privacy Notice</a><a href="#">Terms &amp; Conditions</a><a href="#">Cookie Settings</a><a href="#">Accessibility</a>
+    </div>
+    <span class="footer-copy">&copy; 2026 Ford Motor Company</span>
+  </div>
+</footer>
+
+<script>
+function setImg(el, url) {
+  document.getElementById('main-img').src = url;
+  document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+function checkFit(sel) {
+  document.getElementById('fit-confirm').classList.toggle('show', sel.value !== '');
+}
+function toggleAcc(header) {
+  const body = header.nextElementSibling;
+  const icon = header.querySelector('.acc-icon');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  icon.textContent = isOpen ? '+' : '−';
+}
+</script>
+</body>
+</html>
