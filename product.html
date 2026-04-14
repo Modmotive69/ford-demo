@@ -317,4 +317,18 @@ function toggleAcc(header) {
 }
 </script>
 </body>
+</html><script>
+function setImg(el, url) {
+  document.getElementById('main-img').src = url;
+  document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+function toggleAcc(hdr) {
+  const body = hdr.nextElementSibling;
+  const icon = hdr.querySelector('.acc-icon');
+  const open = body.classList.toggle('open');
+  icon.textContent = open ? '−' : '+';
+}
+</script>
+</body>
 </html>
