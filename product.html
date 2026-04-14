@@ -50,9 +50,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 
 /* GALLERY */
 .gallery{display:flex;flex-direction:column;gap:0}
-.gallery-main{position:relative;background:#fff;border-radius:12px;aspect-ratio:1/1;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.gallery-wrap{position:relative;width:100%}
+.gallery-main{width:100%;aspect-ratio:1/1;border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#fff}
 .gallery-main img{max-width:100%;max-height:100%;object-fit:contain;padding:20px}
-.gallery-main .e360-pill,.gallery-main .gallery-heart{position:absolute;z-index:20}
 
 /* E360 — top-left inside hero */
 .e360-pill{
@@ -83,7 +83,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .gallery-heart svg{display:block}
 
 /* THUMBNAILS — horizontal below hero */
-.gallery-thumbs{display:flex;gap:8px;margin-top:10px}
+.gallery-thumbs{display:flex;gap:8px;margin-top:12px}
 .thumb{width:74px;height:74px;border:1.5px solid #ededed;border-radius:8px;background:#fff;cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:4px;flex-shrink:0;transition:border-color .15s}
 .thumb:hover{border-color:#aaa}
 .thumb.active{border-bottom:3px solid #003478;border-radius:8px 8px 0 0;border-color:#ededed;border-bottom-color:#003478}
