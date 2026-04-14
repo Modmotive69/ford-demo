@@ -38,10 +38,14 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .bc a{color:#003478}
 .bc a:hover{text-decoration:underline}
 
-/* TWO COLUMN LAYOUT */
-.pdp{display:table;width:100%;border-collapse:separate;border-spacing:40px 0}
-.col-l{display:table-cell;vertical-align:top;width:55%}
-.col-r{display:table-cell;vertical-align:top;width:45%;padding-left:0}
+/* TWO COLUMN LAYOUT — responsive */
+.pdp{display:flex;flex-direction:row;gap:40px;align-items:flex-start;width:100%}
+.col-l{flex:1 1 0%;min-width:0}
+.col-r{width:360px;flex:0 0 360px;min-width:0}
+@media(max-width:768px){
+  .pdp{flex-direction:column}
+  .col-r{width:100%;flex:none}
+}
 
 /* GALLERY */
 .hero{position:relative;aspect-ratio:1/1;border-radius:12px;overflow:hidden;background:#fff;display:flex;align-items:center;justify-content:center}
