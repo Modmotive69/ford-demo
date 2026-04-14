@@ -163,9 +163,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .e360-close{width:32px;height:32px;border-radius:50%;background:#f2f2f2;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;color:#555;flex-shrink:0}
 .e360-close:hover{background:#e0e0e0}
 .e360-body{display:flex;flex:1;overflow:hidden}
-.e360-viewer{flex:1;background:#f8f8f8;display:flex;align-items:center;justify-content:center;position:relative;min-height:400px}
+.e360-viewer{flex:1;background:#f8f8f8;display:flex;flex-direction:column;align-items:stretch;position:relative;min-height:400px}
 .e360-viewer img{max-width:100%;max-height:100%;object-fit:contain;padding:20px}
-.e360-tabs{display:flex;gap:0;position:absolute;top:16px;left:50%;transform:translateX(-50%);background:#fff;border-radius:50px;border:1px solid #e0e0e0;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.e360-tabs{display:flex;gap:0;background:#fff;border-radius:50px;border:1px solid #e0e0e0;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.1);margin:12px auto 0;width:fit-content}
 .e360-tab{padding:8px 20px;font-size:13px;font-weight:600;cursor:pointer;color:#666;transition:all .18s;white-space:nowrap}
 .e360-tab.on{background:#10599b;color:#fff}
 .e360-sidebar{width:280px;border-left:1px solid #e5e5e5;display:flex;flex-direction:column;padding:20px;gap:16px;overflow-y:auto}
@@ -384,10 +384,10 @@ function setColor(el){document.querySelectorAll('.e360-color').forEach(c=>c.clas
 
 
 
-function e360Tab(el, idx) {
+function e360Tab(idx) {
   for(var i=0;i<3;i++){
-    var panel = document.getElementById('e360-panel-'+i);
-    panel.style.display = (i===idx) ? 'flex' : 'none';
+    document.getElementById('e360-panel-'+i).style.display=(i===idx)?'flex':'none';
+    document.getElementById('e360-tab-'+i).classList.toggle('on',i===idx);
   }
   if(idx===1){ startAutoRotate(); } else { stopAutoRotate(); }
 }
@@ -431,13 +431,15 @@ function togA(h){var b=h.nextElementSibling,i=h.querySelector('.abt-ico'),hi=b.s
     </div>
     <div class="e360-body">
       <div class="e360-viewer">
+        <div class="e360-tabs" id="e360-tabs-bar">
+            <div class="e360-tab on" id="e360-tab-0" onclick="e360Tab(0)">3D View</div>
+            <div class="e360-tab" id="e360-tab-1" onclick="e360Tab(1)">On Vehicle</div>
+            <div class="e360-tab" id="e360-tab-2" onclick="e360Tab(2)">AR</div>
+          </div>
         <!-- TAB PANELS -->
 
         <!-- 3D VIEW: WebGL placeholder -->
-        <div class="e360-panel" id="e360-panel-0" style="display:flex;flex-direction:column">
-          <div class="e360-tabs">
-            <div class="e360-tab on" onclick="e360Tab(this,0)">3D View</div>
-            <div class="e360-tab" onclick="e360Tab(this,1)">On Vehicle</div>
+        <div class="e360-panel" id="e360-panel-0" style="display:flex;flex-direction:column"><div class="e360-tab" onclick="e360Tab(this,1)">On Vehicle</div>
             <div class="e360-tab" onclick="e360Tab(this,2)">AR</div>
           </div>
           <div style="flex:1;display:flex;align-items:center;justify-content:center;position:relative;background:linear-gradient(135deg,#e8f0fb 0%,#f5f5f5 100%)">
@@ -457,10 +459,7 @@ function togA(h){var b=h.nextElementSibling,i=h.querySelector('.abt-ico'),hi=b.s
         </div>
 
         <!-- ON VEHICLE<!-- ON VEHICLE: 3 angle rotation -->
-        <div class="e360-panel" id="e360-panel-1" style="flex-direction:column">
-          <div class="e360-tabs">
-            <div class="e360-tab" onclick="e360Tab(this,0)">3D View</div>
-            <div class="e360-tab on" onclick="e360Tab(this,1)">On Vehicle</div>
+        <div class="e360-panel" id="e360-panel-1" style="flex-direction:column"><div class="e360-tab on" onclick="e360Tab(this,1)">On Vehicle</div>
             <div class="e360-tab" onclick="e360Tab(this,2)">AR</div>
           </div>
           <img id="e360-viewer-img" src="images/bronco-kayak-3d.jpg" onmouseenter="stopAutoRotate()" onmouseleave="startAutoRotate()" alt="On Vehicle" style="max-width:100%;max-height:calc(100% - 60px);object-fit:contain;padding:16px;transition:opacity .2s;flex:1">
@@ -477,10 +476,7 @@ function togA(h){var b=h.nextElementSibling,i=h.querySelector('.abt-ico'),hi=b.s
         </div>
 
         <!-- AR: QR + infographic -->
-        <div class="e360-panel" id="e360-panel-2" style="flex-direction:column">
-          <div class="e360-tabs">
-            <div class="e360-tab" onclick="e360Tab(this,0)">3D View</div>
-            <div class="e360-tab" onclick="e360Tab(this,1)">On Vehicle</div>
+        <div class="e360-panel" id="e360-panel-2" style="flex-direction:column"><div class="e360-tab" onclick="e360Tab(this,1)">On Vehicle</div>
             <div class="e360-tab on" onclick="e360Tab(this,2)">AR</div>
           </div>
           <div class="e360-ar-inner" style="flex:1">
