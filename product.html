@@ -11,122 +11,164 @@ body{font-family:FordMotion,FordAntenna,'Helvetica Neue',Helvetica,Arial,sans-se
 a{text-decoration:none;color:inherit}
 button{font-family:inherit;cursor:pointer;border:none;background:none}
 
+/* PROMO BAR */
+.promo-bar{background:#f2f2f2;text-align:center;padding:9px 40px;font-size:13px;color:#333;display:flex;align-items:center;justify-content:center;gap:6px}
+.promo-bar a{color:#003478;font-weight:600}
+
 /* NAV */
 .nav{background:#fff;border-bottom:1px solid #ededed;height:56px;display:flex;align-items:center;padding:0 24px;justify-content:space-between}
-.nav-left{display:flex;align-items:center;gap:32px}
+.nav-left{display:flex;align-items:center;gap:28px}
 .nav-links{display:flex;align-items:center;height:56px}
-.nl{padding:0 14px;height:100%;display:flex;align-items:center;font-size:14px;font-weight:500;color:#000;border-bottom:3px solid transparent}
+.nl{padding:0 13px;height:100%;display:flex;align-items:center;font-size:14px;font-weight:500;color:#000;border-bottom:3px solid transparent}
 .nl:hover{border-bottom-color:#003478}
 .nav-right{display:flex;align-items:center;gap:18px}
 .cart-wrap{position:relative}
-.cart-badge{position:absolute;top:-6px;right:-8px;background:#003478;color:#fff;border-radius:50%;width:17px;height:17px;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.cart-dot{position:absolute;top:-2px;right:-2px;width:8px;height:8px;background:#003478;border-radius:50%}
 
 /* SEARCH ROW */
 .search-row{background:#fff;border-bottom:1px solid #ededed;padding:10px 24px;display:flex;align-items:center;gap:12px}
 .vehicle-tag{display:inline-flex;align-items:center;gap:8px;border:1px solid #000;border-radius:4px;padding:7px 14px;font-size:14px;font-weight:700;white-space:nowrap}
-.vehicle-tag button{font-size:18px;line-height:1;color:#000;padding:0 0 0 4px}
-.search-input-wrap{flex:1;position:relative}
-.search-input-wrap svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#707070}
-.search-input{width:100%;border:1px solid #d1d1d1;border-radius:4px;padding:10px 15px 10px 40px;font-size:14px;font-family:inherit;outline:none}
-.search-input::placeholder{color:#707070}
-.rewards-stack{text-align:right;font-size:12px;line-height:1.4}
-.rewards-stack a{color:#003478;font-weight:600}
+.vehicle-tag button{font-size:17px;line-height:1;color:#000;padding:0 0 0 4px}
+.search-wrap{flex:1;position:relative}
+.search-wrap svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#707070}
+.search-inp{width:100%;border:1px solid #d1d1d1;border-radius:4px;padding:10px 15px 10px 40px;font-size:14px;font-family:inherit;outline:none}
+.search-inp::placeholder{color:#707070}
+.rewards-txt{text-align:right;font-size:12px;line-height:1.5;white-space:nowrap}
+.rewards-txt a{color:#003478;font-weight:600}
+
+/* PAGE */
+.page{max-width:1320px;margin:0 auto;padding:18px 24px 60px}
 
 /* BREADCRUMB */
-.bc-wrap{max-width:1320px;margin:0 auto;padding:16px 24px 0}
-.bc{font-size:11px;color:#707070;display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.bc{font-size:12px;color:#707070;display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin-bottom:20px}
 .bc a{color:#003478}
-.bc-sep{color:#bbb}
+.bc a:hover{text-decoration:underline}
+.bc-sep{color:#ccc}
 
-/* PRODUCT LAYOUT */
-.product-wrap{max-width:1320px;margin:0 auto;padding:24px 24px 60px;display:grid;grid-template-columns:1fr 440px;gap:48px}
-@media(max-width:960px){.product-wrap{grid-template-columns:1fr}}
+/* PDP GRID */
+.pdp{display:grid;grid-template-columns:1fr 400px;gap:48px;align-items:start}
 
 /* GALLERY */
-.gallery{display:flex;flex-direction:column;gap:12px}
-.gallery-main{background:#fff;border:1px solid #ededed;border-radius:4px;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
-.gallery-main img{max-width:100%;max-height:100%;object-fit:contain;padding:16px}
-.gallery-main .heart{position:absolute;top:14px;right:14px;background:none;border:none;cursor:pointer}
-.gallery-thumbs{display:flex;gap:8px;margin-top:10px}
-.thumb{width:76px;height:76px;border:1.5px solid #ededed;border-radius:4px;background:#fff;cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:4px;transition:border-color .15s}
-.thumb.active{border-bottom:3px solid #003478;border-radius:4px 4px 0 0}
-.thumb:hover{border-color:#003478}
-.thumb img{max-width:100%;max-height:100%;object-fit:contain}
+.gallery{display:flex;flex-direction:column;gap:0}
+.gallery-main{position:relative;background:#fff;border-radius:12px;aspect-ratio:1/1;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.gallery-main img{max-width:100%;max-height:100%;object-fit:contain;padding:20px}
 
-/* E360 OVERLAY BUTTON — top-left of hero */
-.e360-overlay{
-  position:absolute !important;
-  top:14px !important;
-  left:14px !important;
-  display:inline-flex !important;
+/* E360 — top-left inside hero */
+.e360-pill{
+  position:absolute;
+  top:16px;
+  left:16px;
+  z-index:10;
+  display:inline-flex;
   align-items:center;
-  gap:8px;
-  padding:9px 18px;
+  gap:7px;
+  padding:8px 16px;
   border:1.5px solid #333;
   border-radius:50px;
-  background:rgba(255,255,255,0.95);
+  background:rgba(255,255,255,0.96);
   color:#003478;
-  font-size:13px;
+  font-size:12px;
   font-weight:700;
   letter-spacing:.2px;
-  box-shadow:0 2px 10px rgba(0,0,0,.15);
+  box-shadow:0 2px 8px rgba(0,0,0,.12);
   cursor:pointer;
   font-family:inherit;
   transition:all .18s;
-  z-index:10;
 }
-.e360-overlay:hover{background:#003478;color:#fff;border-color:#003478}
+.e360-pill:hover{background:#003478;color:#fff;border-color:#003478}
+
+/* heart — top-right inside hero */
+.gallery-heart{position:absolute;top:14px;right:14px;z-index:10;padding:4px}
+.gallery-heart svg{display:block}
+
+/* THUMBNAILS — horizontal below hero */
+.gallery-thumbs{display:flex;gap:8px;margin-top:10px}
+.thumb{width:74px;height:74px;border:1.5px solid #ededed;border-radius:8px;background:#fff;cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:4px;flex-shrink:0;transition:border-color .15s}
+.thumb:hover{border-color:#aaa}
+.thumb.active{border-bottom:3px solid #003478;border-radius:8px 8px 0 0;border-color:#ededed;border-bottom-color:#003478}
+.thumb img{max-width:100%;max-height:100%;object-fit:contain}
 
 /* PRODUCT INFO */
-.pinfo{display:flex;flex-direction:column;gap:16px}
-.pinfo-brand{font-size:12px;color:#003478;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
-.pinfo-title{font-size:28px;font-weight:700;line-height:1.25;color:#000}
+.pinfo{display:flex;flex-direction:column;gap:14px}
+.pinfo-title{font-size:22px;font-weight:700;line-height:1.3;color:#000}
 .pinfo-sku{font-size:12px;color:#707070}
-.pinfo-rating{display:flex;align-items:center;gap:8px;font-size:14px}
-.pinfo-stars{color:#f5a623;font-size:16px}
+.pinfo-rating{display:flex;align-items:center;gap:8px}
+.pinfo-stars{color:#ccc;font-size:15px;letter-spacing:1px}
 .pinfo-reviews{font-size:13px;color:#003478}
-.pinfo-price{font-size:32px;font-weight:500;color:#000}
-.pinfo-price-note{font-size:13px;color:#707070;margin-top:4px}
+.pinfo-price{font-size:24px;font-weight:500;color:#000;line-height:1}
+.pinfo-points{font-size:13px;color:#003478;margin-top:3px}
+.pinfo-klarna{font-size:12px;color:#555;margin-top:2px}
+.pinfo-klarna a{color:#003478}
 
-/* VEHICLE FIT */
-.fit-box{background:#f6f6f6;border-radius:4px;padding:16px}
-.fit-box label{font-size:13px;font-weight:700;display:block;margin-bottom:8px}
-.fit-select{width:100%;border:1px solid #d1d1d1;border-radius:4px;padding:10px 12px;font-size:14px;font-family:inherit;background:#fff;outline:none}
-.fit-confirm{font-size:12px;color:#2d6a4f;font-weight:600;margin-top:8px;display:none}
-.fit-confirm.show{display:block}
+/* FITMENT */
+.fit-box{background:#f6f6f6;border-radius:8px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.fit-left{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600}
+.fit-chk{color:#2d7d46;font-size:17px;font-weight:700}
+.fit-change{font-size:13px;color:#003478;text-decoration:underline;white-space:nowrap;cursor:pointer}
 
-/* BUTTONS */
-.btn-atc{width:100%;border:1.5px solid #333;border-radius:50px;background:#fff;color:#003478;font-size:15px;font-weight:700;height:48px;letter-spacing:.2px;transition:all .18s;font-family:inherit}
-.btn-atc:hover{background:#003478;color:#fff;border-color:#003478}
-.ship-info{display:flex;flex-direction:column;gap:5px;font-size:13px;color:#4d4d4d}
-.chk{color:#2d6a4f;font-weight:700;margin-right:5px}
+/* FULFILLMENT */
+.fulfill-box{background:#f6f6f6;border-radius:8px;padding:12px 16px;display:flex;flex-direction:column;gap:6px}
+.fulfill-row{display:flex;align-items:center;gap:8px;font-size:13px;color:#333}
+.fchk{color:#2d7d46;font-weight:700;font-size:15px}
+
+/* INSTALLATION */
+.install-box{border:1px solid #ededed;border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:10px}
+.install-box input{width:17px;height:17px;accent-color:#003478;cursor:pointer;flex-shrink:0}
+.install-label{font-size:14px}
+.install-price{font-weight:700}
+
+/* QTY + ATC */
+.atc-row{display:flex;align-items:center;gap:12px}
+.qty-wrap{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;flex-shrink:0}
+.qty-sel{border:1px solid #ccc;border-radius:6px;padding:9px 10px;font-size:14px;font-family:inherit;background:#fff;width:68px}
+.btn-atc{flex:1;background:#003478;color:#fff;border:none;border-radius:50px;height:48px;font-size:15px;font-weight:700;letter-spacing:.2px;transition:background .18s;font-family:inherit}
+.btn-atc:hover{background:#002060}
+
+.shop-more{font-size:13px;color:#003478;text-decoration:underline;text-align:center;cursor:pointer}
+.nonreturn{display:flex;align-items:center;gap:8px;font-size:13px;color:#555;padding:10px 0;border-top:1px solid #ededed}
+.nonreturn a{color:#003478}
 
 /* ACCORDION */
-.accordion{border-top:1px solid #ededed}
+.accordion{border-top:1px solid #ededed;margin-top:4px}
 .acc-item{border-bottom:1px solid #ededed}
-.acc-header{display:flex;justify-content:space-between;align-items:center;padding:16px 0;font-size:15px;font-weight:600;cursor:pointer;user-select:none}
-.acc-icon{font-size:20px;color:#707070;transition:transform .2s}
-.acc-body{padding:0 0 16px;font-size:14px;color:#4d4d4d;line-height:1.7;display:none}
+.acc-hdr{display:flex;justify-content:space-between;align-items:center;padding:15px 0;font-size:15px;font-weight:600;cursor:pointer;user-select:none}
+.acc-icon{font-size:22px;color:#707070;line-height:1}
+.acc-body{padding:0 0 14px;font-size:14px;color:#4d4d4d;line-height:1.7;display:none}
 .acc-body.open{display:block}
 .acc-body ul{padding-left:20px;margin-top:8px}
-.acc-body li{margin-bottom:6px}
+.acc-body li{margin-bottom:5px}
 .spec-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
 .spec-table th{background:#f6f6f6;padding:8px 12px;text-align:left;font-weight:600;border:1px solid #ededed}
 .spec-table td{padding:8px 12px;border:1px solid #ededed}
+.spec-table tr:nth-child(even) td{background:#fafafa}
+
+/* YMAL */
+.ymal{margin-top:48px;padding-top:32px;border-top:1px solid #ededed}
+.ymal h2{font-size:20px;font-weight:700;margin-bottom:20px}
+.ymal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.ymal-card{border:1px solid #ededed;border-radius:10px;padding:14px;cursor:pointer;transition:box-shadow .2s;position:relative;background:#fff}
+.ymal-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.08)}
+.ymal-img{aspect-ratio:1/1;background:#f8f8f8;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;overflow:hidden}
+.ymal-img img{max-width:80%;max-height:80%;object-fit:contain}
+.ymal-heart{position:absolute;top:12px;right:12px}
+.ymal-name{font-size:13px;font-weight:600;color:#000;line-height:1.35;margin-bottom:6px}
+.ymal-price{font-size:15px;font-weight:700;color:#000}
 
 /* FOOTER */
-.footer{background:#1a1a1a;color:#999;margin-top:40px}
+.footer{background:#1a1a1a;color:#999;margin-top:60px}
 .footer-main{max-width:1320px;margin:0 auto;padding:48px 24px;display:grid;grid-template-columns:repeat(5,1fr);gap:24px}
 .footer-main h4{color:#fff;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:16px}
 .footer-main a{display:block;font-size:13px;color:#777;margin-bottom:8px}
 .footer-main a:hover{color:#ddd}
 .footer-bottom{border-top:1px solid #2a2a2a;max-width:1320px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
-.footer-bottom-links{display:flex;gap:16px;flex-wrap:wrap}
-.footer-bottom-links a{font-size:12px;color:#555}
+.footer-bottom a{font-size:12px;color:#555;margin-right:16px}
 .footer-copy{font-size:12px;color:#444}
 </style>
 </head>
 <body>
+
+<!-- PROMO BAR -->
+<div class="promo-bar">&#8249; 20% Off Mustang&#174; Accessories Purchase up to $1,000*. <a href="#">Offer Details.</a> &#8250;</div>
 
 <!-- NAV -->
 <nav class="nav">
@@ -140,12 +182,10 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
     </div>
   </div>
   <div class="nav-right">
-    <div>
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-    </div>
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
     <div class="cart-wrap">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#003478" stroke-width="1.8"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-      <span class="cart-badge">0</span>
+      <div class="cart-dot"></div>
     </div>
   </div>
 </nav>
@@ -153,150 +193,159 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 <!-- SEARCH ROW -->
 <div class="search-row">
   <span class="vehicle-tag">2025 Ford Bronco <button>&#215;</button></span>
-  <div class="search-input-wrap">
+  <div class="search-wrap">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-    <input class="search-input" type="text" placeholder="Search keyword(s) / part number">
+    <input class="search-inp" type="text" placeholder="Search keyword(s) / part number">
   </div>
-  <div class="rewards-stack">
-    <div>Ford Rewards</div>
-    <div><a href="#">Learn More</a></div>
-  </div>
+  <div class="rewards-txt">Ford Rewards<br><a href="#">Learn More</a></div>
 </div>
 
-<!-- BREADCRUMB -->
-<div class="bc-wrap">
+<!-- PAGE -->
+<div class="page">
   <div class="bc">
-    <a href="#">Home</a><span class="bc-sep">&#8250;</span>
-    <a href="#">Accessories</a><span class="bc-sep">&#8250;</span>
-    <a href="#">2025 Ford Bronco</a><span class="bc-sep">&#8250;</span>
-    <a href="index.html">Exterior</a><span class="bc-sep">&#8250;</span>
-    <span>Yakima&#174; Rack Mounted Kayak Carrier w/o Lock</span>
-  </div>
-</div>
-
-<!-- PRODUCT -->
-<div class="product-wrap">
-
-  <!-- GALLERY -->
-  <div class="gallery">
-    <div class="gallery-main">
-      <button class="e360-overlay">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-        View in 3D / AR
-      </button>
-      <button class="heart">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#003478" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-      </button>
-      <img id="main-img" src="https://www.ford.com/accessories/product/images/NA/VKB3Z7855100EB_0.jpg" alt="Yakima Rack Mounted Kayak Carrier">
-    </div>
-    <div class="gallery-thumbs">
-      <div class="thumb active" onclick="setImg(this,'https://www.ford.com/accessories/product/images/NA/VKB3Z7855100EB_0.jpg')">
-        <img src="https://www.ford.com/accessories/product/images/NA/VKB3Z7855100EB_0.jpg" alt="View 1">
-      </div>
-      <div class="thumb" onclick="setImg(this,'https://placehold.co/600x600/f6f6f6/ccc?text=View+2')">
-        <img src="https://placehold.co/80x80/f6f6f6/ccc?text=2" alt="View 2">
-      </div>
-      <div class="thumb" onclick="setImg(this,'https://placehold.co/600x600/f6f6f6/ccc?text=View+3')">
-        <img src="https://placehold.co/80x80/f6f6f6/ccc?text=3" alt="View 3">
-      </div>
-      <div class="thumb" onclick="setImg(this,'https://placehold.co/600x600/f6f6f6/ccc?text=Installed')">
-        <img src="https://placehold.co/80x80/f6f6f6/ccc?text=4" alt="View 4">
-      </div>
-    </div>
-
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#003478" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span class="bc-sep">&#8250;</span><a href="#">Accessories</a>
+    <span class="bc-sep">&#8250;</span><a href="#">Exterior</a>
+    <span class="bc-sep">&#8250;</span><a href="index.html">Racks and Carriers</a>
+    <span class="bc-sep">&#8250;</span><span>Yakima&#174; Rack Mounted Kayak Carrier w/o Lock</span>
   </div>
 
-  <!-- PRODUCT INFO -->
-  <div class="pinfo">
-    <div class="pinfo-brand">Yakima</div>
-    <h1 class="pinfo-title">Yakima&#174; Rack Mounted Kayak Carrier w/o Lock</h1>
-    <div class="pinfo-sku">SKU: VKB3Z7855100EB</div>
-    <div class="pinfo-rating">
-      <span class="pinfo-stars"><span style="color:#f5a623">&#9733;&#9733;&#9733;&#9733;&#9733;</span></span>
-      <a href="#" class="pinfo-reviews">4.9 (45 Reviews)</a>
-    </div>
-    <div>
-      <div class="pinfo-price">$279.00</div>
-      <div class="pinfo-price-note">Free shipping on orders over $50 &nbsp;&middot;&nbsp; 30-day returns</div>
-    </div>
-
-    <!-- VEHICLE FIT -->
-    <div class="fit-box">
-      <label>Select Your Vehicle</label>
-      <select class="fit-select" onchange="checkFit(this)">
-        <option value="">-- Choose Year / Model --</option>
-        <option>2025 Ford Bronco 2-Door</option>
-        <option>2025 Ford Bronco 4-Door</option>
-        <option>2024 Ford Bronco 2-Door</option>
-        <option>2024 Ford Bronco 4-Door</option>
-        <option>2023 Ford Bronco 2-Door</option>
-        <option>2023 Ford Bronco 4-Door</option>
-        <option>2022 Ford Bronco 2-Door</option>
-        <option>2022 Ford Bronco 4-Door</option>
-        <option>2021 Ford Bronco 2-Door</option>
-        <option>2021 Ford Bronco 4-Door</option>
-      </select>
-      <div class="fit-confirm" id="fit-confirm">&#10003; Confirmed fit for your selected vehicle</div>
-    </div>
-
-    <button class="btn-atc">Add to Cart</button>
-
-    <div class="ship-info">
-      <div><span class="chk">&#10003;</span> Shipping: Ships in 3-5 business days</div>
-      <div><span class="chk">&#10003;</span> Pickup: Free at Dealer</div>
-    </div>
-
-    <!-- ACCORDION -->
-    <div class="accordion">
-      <div class="acc-item">
-        <div class="acc-header" onclick="toggleAcc(this)">
-          About This Item <span class="acc-icon">+</span>
+  <div class="pdp">
+    <!-- GALLERY LEFT -->
+    <div class="gallery">
+      <div class="gallery-main">
+        <button class="e360-pill">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          View in 3D / AR
+        </button>
+        <button class="gallery-heart">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#003478" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </button>
+        <img id="main-img" src="https://www.ford.com/accessories/product/images/NA/VKB3Z7855100EB_0.jpg" alt="Yakima Rack Mounted Kayak Carrier">
+      </div>
+      <div class="gallery-thumbs">
+        <div class="thumb active" onclick="setImg(this,'https://www.ford.com/accessories/product/images/NA/VKB3Z7855100EB_0.jpg')">
+          <img src="https://www.ford.com/accessories/product/images/NA/VKB3Z7855100EB_0.jpg" alt="1">
         </div>
-        <div class="acc-body open">
-          <p>Take to the water with Yakima's versatile roof-mounted kayak carrier. Designed for easy single-person loading with a adjustable foam cradles that hold any kayak shape securely.</p>
-          <ul>
-            <li>Fits most kayaks, canoes, and paddleboards</li>
-            <li>Adjustable foam cradles protect hull</li>
-            <li>Folds flat when not in use</li>
-            <li>Fits Yakima round, square, and factory bars</li>
-            <li>Compatible with SKS lock cores (sold separately)</li>
-          </ul>
+        <div class="thumb" onclick="setImg(this,'https://placehold.co/600x600/f8f8f8/aaa?text=View+2')">
+          <img src="https://placehold.co/74x74/f8f8f8/bbb?text=2" alt="2">
+        </div>
+        <div class="thumb" onclick="setImg(this,'https://placehold.co/600x600/f8f8f8/aaa?text=View+3')">
+          <img src="https://placehold.co/74x74/f8f8f8/bbb?text=3" alt="3">
+        </div>
+        <div class="thumb" onclick="setImg(this,'https://placehold.co/600x600/f8f8f8/aaa?text=View+4')">
+          <img src="https://placehold.co/74x74/f8f8f8/bbb?text=4" alt="4">
         </div>
       </div>
-      <div class="acc-item">
-        <div class="acc-header" onclick="toggleAcc(this)">
-          Technical Specifications <span class="acc-icon">+</span>
+
+      <!-- ACCORDION below gallery -->
+      <div class="accordion" style="margin-top:24px">
+        <div class="acc-item">
+          <div class="acc-hdr" onclick="toggleAcc(this)">About This Item <span class="acc-icon">+</span></div>
+          <div class="acc-body open">
+            <p>Take to the water with Yakima's versatile roof-mounted kayak carrier. Designed for easy single-person loading with adjustable foam cradles that hold any kayak shape securely.</p>
+            <ul>
+              <li>Fits most kayaks, canoes, and paddleboards</li>
+              <li>Adjustable foam cradles protect hull</li>
+              <li>Folds flat when not in use</li>
+              <li>Fits Yakima round, square, and factory bars</li>
+              <li>Compatible with SKS lock cores (sold separately)</li>
+            </ul>
+          </div>
         </div>
-        <div class="acc-body">
-          <table class="spec-table">
-            <tr><th>Specification</th><th>Value</th></tr>
-            <tr><td>SKU</td><td>VKB3Z7855100EB</td></tr>
-            <tr><td>Max Load</td><td>75 lbs</td></tr>
-            <tr><td>Bar Fit</td><td>Round, Square, Factory</td></tr>
-            <tr><td>Quantity</td><td>1 Carrier</td></tr>
-            <tr><td>Lock</td><td>Not Included (SKS Compatible)</td></tr>
-            <tr><td>Warranty</td><td>Lifetime</td></tr>
-          </table>
+        <div class="acc-item">
+          <div class="acc-hdr" onclick="toggleAcc(this)">Technical Specifications <span class="acc-icon">+</span></div>
+          <div class="acc-body">
+            <table class="spec-table">
+              <tr><th>Specification</th><th>Value</th></tr>
+              <tr><td>SKU</td><td>VKB3Z7855100EB</td></tr>
+              <tr><td>Max Load</td><td>75 lbs</td></tr>
+              <tr><td>Bar Fit</td><td>Round, Square, Factory</td></tr>
+              <tr><td>Quantity</td><td>1 Carrier</td></tr>
+              <tr><td>Lock</td><td>Not Included (SKS Compatible)</td></tr>
+              <tr><td>Warranty</td><td>Lifetime</td></tr>
+            </table>
+          </div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-hdr" onclick="toggleAcc(this)">Fits These Vehicles <span class="acc-icon">+</span></div>
+          <div class="acc-body">
+            <table class="spec-table">
+              <tr><th>Year</th><th>Model</th><th>Trim</th></tr>
+              <tr><td>2021–2025</td><td>Ford Bronco</td><td>All Trims, 2-Door &amp; 4-Door</td></tr>
+            </table>
+          </div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-hdr" onclick="toggleAcc(this)">Return Policy <span class="acc-icon">+</span></div>
+          <div class="acc-body">
+            <p>Ford Accessories accepts returns within 30 days of purchase. Items must be unused and in original packaging.</p>
+          </div>
         </div>
       </div>
-      <div class="acc-item">
-        <div class="acc-header" onclick="toggleAcc(this)">
-          Fits These Vehicles <span class="acc-icon">+</span>
-        </div>
-        <div class="acc-body">
-          <table class="spec-table">
-            <tr><th>Year</th><th>Model</th><th>Trim</th></tr>
-            <tr><td>2021–2025</td><td>Ford Bronco</td><td>All Trims, 2-Door &amp; 4-Door</td></tr>
-          </table>
-        </div>
+    </div>
+
+    <!-- RIGHT: PRODUCT INFO -->
+    <div class="pinfo">
+      <h1 class="pinfo-title">Yakima&#174; Rack Mounted Kayak Carrier w/o Lock</h1>
+      <div class="pinfo-sku">SKU: VKB3Z7855100EB</div>
+      <div class="pinfo-rating">
+        <span class="pinfo-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+        <a href="#" class="pinfo-reviews">0 (No Reviews)</a>
       </div>
-      <div class="acc-item">
-        <div class="acc-header" onclick="toggleAcc(this)">
-          Return Policy <span class="acc-icon">+</span>
+      <div>
+        <div class="pinfo-price">$249.00</div>
+        <div class="pinfo-points">Sign In to redeem up to 49,800 Points</div>
+        <div class="pinfo-klarna">From $22/month, or 4 payments at 0% with Klarna &mdash; <a href="#">Check purchase power</a></div>
+      </div>
+      <div class="fit-box">
+        <div class="fit-left"><span class="fit-chk">&#10003;</span> Fits Most: 2025 Ford Bronco</div>
+        <span class="fit-change">Change Vehicle</span>
+      </div>
+      <div class="fulfill-box">
+        <div class="fulfill-row"><span class="fchk">&#10003;</span> Shipping: Ships by Apr 17</div>
+        <div class="fulfill-row"><span class="fchk">&#10003;</span> Pickup: Free at Dealer by Apr 19</div>
+      </div>
+      <div class="install-box">
+        <input type="checkbox" id="install">
+        <label for="install" class="install-label">Add Installation <span class="install-price">$42.00</span> or redeem up to 8,400 Points</label>
+      </div>
+      <div class="atc-row">
+        <div class="qty-wrap">
+          <span>Qty:</span>
+          <select class="qty-sel"><option>1</option><option>2</option><option>3</option><option>4</option></select>
         </div>
-        <div class="acc-body">
-          <p>Ford Accessories accepts returns within 30 days of purchase. Items must be unused and in original packaging. Free return shipping on all orders.</p>
-        </div>
+        <button class="btn-atc">Add to Cart</button>
+      </div>
+      <a href="#" class="shop-more">Shop More Yakima Products</a>
+      <div class="nonreturn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+        Non-Returnable Item &mdash; <a href="#">Learn More</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- YMAL -->
+  <div class="ymal">
+    <h2>You May Also Like</h2>
+    <div class="ymal-grid">
+      <div class="ymal-card">
+        <button class="ymal-heart"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#003478" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+        <div class="ymal-img"><img src="https://www.ford.com/accessories/product/images/NA/VM1PZ7855100A_0.jpg" alt="HD Crossbar"></div>
+        <div class="ymal-name">Yakima HD Crossbar Kit</div>
+        <div class="ymal-price">$399.00</div>
+      </div>
+      <div class="ymal-card">
+        <button class="ymal-heart"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#003478" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+        <div class="ymal-img"><img src="https://www.ford.com/accessories/product/images/NA/VKB3Z7821984A_0.jpg" alt="SKS Lock"></div>
+        <div class="ymal-name">Yakima SKS Lock System Kit</div>
+        <div class="ymal-price">$89.00</div>
+      </div>
+      <div class="ymal-card">
+        <button class="ymal-heart"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#003478" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+        <div class="ymal-img"><img src="https://www.ford.com/accessories/product/images/NA/VKB3Z7855100E_0.jpg" alt="Ski Rack"></div>
+        <div class="ymal-name">Yakima Roof Mounted Ski/Snowboard Rack</div>
+        <div class="ymal-price">$219.00</div>
       </div>
     </div>
   </div>
@@ -307,14 +356,12 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   <div class="footer-main">
     <div><h4>All Vehicles</h4><a href="#">SUVs &amp; Crossovers</a><a href="#">Trucks &amp; Vans</a><a href="#">Cars</a><a href="#">Electrified</a></div>
     <div><h4>Shop</h4><a href="#">Build &amp; Price</a><a href="#">Accessories Store</a><a href="#">Ford Parts</a></div>
-    <div><h4>Support</h4><a href="#">Support Home</a><a href="#">Locate a Dealer</a><a href="#">Contact Us</a><a href="#">Returns</a></div>
+    <div><h4>Support</h4><a href="#">Support Home</a><a href="#">Locate a Dealer</a><a href="#">Contact Us</a></div>
     <div><h4>Experience Ford</h4><a href="#">Corporate</a><a href="#">Careers</a><a href="#">FordPass</a></div>
-    <div><h4>Follow Ford</h4><a href="#">Facebook</a><a href="#">Instagram</a><a href="#">YouTube</a><a href="#">TikTok</a></div>
+    <div><h4>Follow Ford</h4><a href="#">Facebook</a><a href="#">Instagram</a><a href="#">YouTube</a></div>
   </div>
   <div class="footer-bottom">
-    <div class="footer-bottom-links">
-      <a href="#">Privacy Notice</a><a href="#">Terms &amp; Conditions</a><a href="#">Cookie Settings</a><a href="#">Accessibility</a>
-    </div>
+    <div><a href="#">Privacy Notice</a><a href="#">Terms &amp; Conditions</a><a href="#">Cookie Settings</a><a href="#">Accessibility</a></div>
     <span class="footer-copy">&copy; 2026 Ford Motor Company</span>
   </div>
 </footer>
@@ -325,15 +372,11 @@ function setImg(el, url) {
   document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
 }
-function checkFit(sel) {
-  document.getElementById('fit-confirm').classList.toggle('show', sel.value !== '');
-}
-function toggleAcc(header) {
-  const body = header.nextElementSibling;
-  const icon = header.querySelector('.acc-icon');
-  const isOpen = body.classList.contains('open');
-  body.classList.toggle('open', !isOpen);
-  icon.textContent = isOpen ? '+' : '−';
+function toggleAcc(hdr) {
+  const body = hdr.nextElementSibling;
+  const icon = hdr.querySelector('.acc-icon');
+  const open = body.classList.toggle('open');
+  icon.textContent = open ? '−' : '+';
 }
 </script>
 </body>
