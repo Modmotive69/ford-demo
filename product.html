@@ -52,10 +52,29 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .thumb.active,.thumb:hover{border-color:#003478}
 .thumb img{max-width:100%;max-height:100%;object-fit:contain}
 
-/* E360 BUTTON */
-.e360-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:13px 20px;border:1.5px solid #333;border-radius:50px;background:#fff;color:#003478;font-size:14px;font-weight:700;letter-spacing:.2px;transition:all .18s;margin-top:4px;font-family:inherit}
-.e360-btn:hover{background:#003478;color:#fff;border-color:#003478}
-.e360-btn svg{flex-shrink:0}
+/* E360 OVERLAY BUTTON — top-left of hero */
+.e360-overlay{
+  position:absolute;
+  top:14px;
+  left:14px;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:9px 18px;
+  border:1.5px solid #333;
+  border-radius:50px;
+  background:#fff;
+  color:#003478;
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:.2px;
+  box-shadow:0 2px 10px rgba(0,0,0,.15);
+  cursor:pointer;
+  font-family:inherit;
+  transition:all .18s;
+  z-index:2;
+}
+.e360-overlay:hover{background:#003478;color:#fff;border-color:#003478}
 
 /* PRODUCT INFO */
 .pinfo{display:flex;flex-direction:column;gap:16px}
@@ -160,6 +179,10 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   <!-- GALLERY -->
   <div class="gallery">
     <div class="gallery-main">
+      <button class="e360-overlay">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        View in 3D / AR
+      </button>
       <button class="heart">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#003478" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
       </button>
@@ -179,11 +202,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
         <img src="https://placehold.co/80x80/f6f6f6/ccc?text=4" alt="View 4">
       </div>
     </div>
-    <!-- ENGAGE360 BUTTON -->
-    <button class="e360-btn">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-      View in 3D / AR
-    </button>
+
   </div>
 
   <!-- PRODUCT INFO -->
@@ -314,20 +333,6 @@ function toggleAcc(header) {
   const isOpen = body.classList.contains('open');
   body.classList.toggle('open', !isOpen);
   icon.textContent = isOpen ? '+' : '−';
-}
-</script>
-</body>
-</html><script>
-function setImg(el, url) {
-  document.getElementById('main-img').src = url;
-  document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
-}
-function toggleAcc(hdr) {
-  const body = hdr.nextElementSibling;
-  const icon = hdr.querySelector('.acc-icon');
-  const open = body.classList.toggle('open');
-  icon.textContent = open ? '−' : '+';
 }
 </script>
 </body>
