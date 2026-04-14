@@ -151,6 +151,36 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .fb{border-top:1px solid #2a2a2a;max-width:1280px;margin:0 auto;padding:16px 64px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
 .fb a{font-size:12px;color:#555;margin-right:14px}
 .fc{font-size:12px;color:#444}
+
+/* ENGAGE360 MODAL */
+.e360-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px}
+.e360-overlay.open{display:flex}
+.e360-modal{background:#fff;border-radius:12px;width:100%;max-width:900px;max-height:90vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.e360-modal-top{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;border-bottom:1px solid #e5e5e5}
+.e360-modal-top h2{font-size:16px;font-weight:700;color:#000}
+.e360-logo{font-size:13px;font-weight:700;color:#10599b;letter-spacing:.5px;display:flex;align-items:center;gap:6px}
+.e360-logo span{background:#10599b;color:#fff;border-radius:4px;padding:2px 8px;font-size:11px}
+.e360-close{width:32px;height:32px;border-radius:50%;background:#f2f2f2;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;color:#555;flex-shrink:0}
+.e360-close:hover{background:#e0e0e0}
+.e360-body{display:flex;flex:1;overflow:hidden}
+.e360-viewer{flex:1;background:#f8f8f8;display:flex;align-items:center;justify-content:center;position:relative;min-height:400px}
+.e360-viewer img{max-width:100%;max-height:100%;object-fit:contain;padding:20px}
+.e360-tabs{display:flex;gap:0;position:absolute;top:16px;left:50%;transform:translateX(-50%);background:#fff;border-radius:50px;border:1px solid #e0e0e0;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.e360-tab{padding:8px 20px;font-size:13px;font-weight:600;cursor:pointer;color:#666;transition:all .18s;white-space:nowrap}
+.e360-tab.on{background:#10599b;color:#fff}
+.e360-sidebar{width:280px;border-left:1px solid #e5e5e5;display:flex;flex-direction:column;padding:20px;gap:16px;overflow-y:auto}
+.e360-pname{font-size:14px;font-weight:700;color:#000;line-height:1.35}
+.e360-price{font-size:22px;font-weight:700;color:#000}
+.e360-divider{border:none;border-top:1px solid #e5e5e5}
+.e360-section-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#999;margin-bottom:8px}
+.e360-colors{display:flex;gap:8px;flex-wrap:wrap}
+.e360-color{width:28px;height:28px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:border-color .15s}
+.e360-color.on{border-color:#10599b}
+.e360-ar-btn{width:100%;background:#10599b;color:#fff;border:none;border-radius:50px;height:44px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .18s}
+.e360-ar-btn:hover{background:#0d4a85}
+.e360-atc{width:100%;background:#fff;color:#10599b;border:1.5px solid #10599b;border-radius:50px;height:44px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .18s}
+.e360-atc:hover{background:#10599b;color:#fff}
+.e360-note{font-size:11px;color:#999;text-align:center;line-height:1.5}
 </style>
 </head>
 <body>
@@ -206,7 +236,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
     <!-- LEFT: GALLERY -->
     <div class="col-l">
       <div class="hero-wrap"><div class="hero">
-        <button class="e360-btn">
+        <button class="e360-btn" onclick="openE360()">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
           View in 3D / AR
         </button>
@@ -303,9 +333,63 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   <div class="fb"><div><a href="#">Privacy Notice</a><a href="#">Terms &amp; Conditions</a><a href="#">Cookie Settings</a><a href="#">Accessibility</a><a href="#">Site Map</a></div><span class="fc">&copy; 2026 Ford Motor Company</span></div>
 </footer>
 <script>
+function openE360(){document.getElementById('e360modal').classList.add('open')}
+function closeE360(e){if(e.target===document.getElementById('e360modal'))document.getElementById('e360modal').classList.remove('open')}
+function setColor(el){document.querySelectorAll('.e360-color').forEach(c=>c.classList.remove('on'));el.classList.add('on')}
 function setImg(el,url){document.getElementById('main-img').src=url;document.querySelectorAll('.th').forEach(t=>t.classList.remove('on'));el.classList.add('on')}
 function tog(h){var b=h.nextElementSibling,i=h.querySelector('.aico'),o=b.classList.toggle('open');i.textContent=o?'−':'+'}
 function togA(h){var b=h.nextElementSibling,i=h.querySelector('.abt-ico'),hi=b.style.display==='none';b.style.display=hi?'block':'none';i.innerHTML=hi?'&minus;':'+'}
 </script>
+
+<!-- ENGAGE360 MODAL -->
+<div class="e360-overlay" id="e360modal" onclick="closeE360(event)">
+  <div class="e360-modal">
+    <div class="e360-modal-top">
+      <h2>Yakima&#174; Rack Mounted Kayak Carrier w/o Lock</h2>
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="e360-logo"><span>ENGAGE360</span> 3D &amp; AR Viewer</div>
+        <button class="e360-close" onclick="document.getElementById('e360modal').classList.remove('open')">&#215;</button>
+      </div>
+    </div>
+    <div class="e360-body">
+      <div class="e360-viewer">
+        <div class="e360-tabs">
+          <div class="e360-tab on">3D View</div>
+          <div class="e360-tab">On Vehicle</div>
+          <div class="e360-tab">AR</div>
+        </div>
+        <img src="images/bronco-kayak.jpg" alt="Yakima Kayak Carrier on Bronco">
+      </div>
+      <div class="e360-sidebar">
+        <div class="e360-pname">Yakima&#174; Rack Mounted Kayak Carrier w/o Lock</div>
+        <div class="e360-price">$249.00</div>
+        <hr class="e360-divider">
+        <div>
+          <div class="e360-section-title">Vehicle Color</div>
+          <div class="e360-colors">
+            <div class="e360-color on" style="background:#7ec8e3" title="Area 51 Blue" onclick="setColor(this)"></div>
+            <div class="e360-color" style="background:#c0392b" title="Rapid Red" onclick="setColor(this)"></div>
+            <div class="e360-color" style="background:#1a1a1a" title="Shadow Black" onclick="setColor(this)"></div>
+            <div class="e360-color" style="background:#e8e8e8;border:1px solid #ccc" title="Oxford White" onclick="setColor(this)"></div>
+            <div class="e360-color" style="background:#4a6741" title="Eruption Green" onclick="setColor(this)"></div>
+          </div>
+        </div>
+        <hr class="e360-divider">
+        <div>
+          <div class="e360-section-title">Fitment</div>
+          <div style="font-size:13px;color:#2d7d46;font-weight:600">&#10003; Fits Your 2025 Ford Bronco</div>
+        </div>
+        <hr class="e360-divider">
+        <button class="e360-ar-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          View in AR on Your Device
+        </button>
+        <button class="e360-atc">Add to Cart &mdash; $249.00</button>
+        <div class="e360-note">Point your phone at any surface to see this accessory installed on your Bronco in augmented reality.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
