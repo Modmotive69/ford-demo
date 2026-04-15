@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="build" content="1776290305">
+<meta name="build" content="1776290339">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Yakima® Rack Mounted Kayak Carrier w/o Lock | Accessories | Ford.com</title>
@@ -418,36 +418,30 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 </footer>
 <!-- v1776208125 -->
 <script>
-// Model-viewer loading progress
-if(document.readyState==='loading'){
-  document.addEventListener('DOMContentLoaded',initMVLoader);
-}else{initMVLoader();}
-function initMVLoader(){
-  var mv=document.getElementById('e360-mv');
-  if(!mv)return;
-  var pct=0,loaded=false,bar=document.getElementById('mv-bar'),pctEl=document.getElementById('mv-pct');
-  // Simulate progress 0→90% over ~3s, then wait for actual load
-  var sim=setInterval(function(){
-    if(loaded||pct>=90)return;
-    pct+=Math.random()*12+3;
-    if(pct>90)pct=90;
+// Model-viewer loader — starts on modal open
+var _mvLoaderSim=null;
+function startMVLoader(){
+  var bar=document.getElementById('mv-bar'),pctEl=document.getElementById('mv-pct'),loader=document.getElementById('mv-loader');
+  if(!loader)return;
+  // Reset
+  loader.style.display='flex';loader.style.opacity='1';
+  if(bar)bar.style.width='0%';
+  if(pctEl)pctEl.textContent='0%';
+  var pct=0;
+  if(_mvLoaderSim)clearInterval(_mvLoaderSim);
+  _mvLoaderSim=setInterval(function(){
+    pct+=Math.random()*8+4;
+    if(pct>=100){pct=100;clearInterval(_mvLoaderSim);_mvLoaderSim=null;
+      setTimeout(function(){loader.style.opacity='0';loader.style.transition='opacity .3s';setTimeout(function(){loader.style.display='none';},300);},300);
+    }
     if(bar)bar.style.width=Math.round(pct)+'%';
     if(pctEl)pctEl.textContent=Math.round(pct)+'%';
-  },200);
-  function hideLoader(){
-    if(loaded)return;loaded=true;clearInterval(sim);
-    if(bar)bar.style.width='100%';
-    if(pctEl)pctEl.textContent='100%';
-    var loader=document.getElementById('mv-loader');
-    setTimeout(function(){if(loader){loader.style.opacity='0';loader.style.transition='opacity .3s';setTimeout(function(){loader.style.display='none';},300);}},400);
-  }
-  mv.addEventListener('load',hideLoader);
-  // Fallback: complete after 5s
-  setTimeout(hideLoader,5000);
+  },150);
 }
 function openE360(){
   document.getElementById('e360modal').classList.add('open');
   for(var i=0;i<3;i++) document.getElementById('e360-panel-'+i).style.display=(i===0)?'flex':'none';
+  startMVLoader();
 }
 function closeE360(e){if(e.target===document.getElementById('e360modal'))document.getElementById('e360modal').classList.remove('open')}
 function setColor(el){document.querySelectorAll('.e360-color').forEach(c=>c.classList.remove('on'));el.classList.add('on')}
