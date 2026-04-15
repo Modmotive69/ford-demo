@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="build" content="1776286780">
+<meta name="build" content="1776287025">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Yakima® Rack Mounted Kayak Carrier w/o Lock | Accessories | Ford.com</title>
@@ -219,6 +219,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   .e360-split{flex-direction:column}
   .e360-split-left,.e360-split-right{height:200px;flex:none;width:100%}
   .e360-split-divider{width:70%;height:1px;align-self:center}
+  /* Hide Split View + AR tabs on mobile */
+  .e360-tab-split,.e360-tab-ar{display:none !important}
   /* QR / AR swap */
   .qr-desktop{display:none !important}
   .ar-mobile-only{display:block !important}
@@ -489,9 +491,9 @@ function togA(h){var b=h.nextElementSibling,i=h.querySelector('.abt-ico'),hi=b.s
         <div class="e360-tabs" id="e360-tabs-bar">
           <div class="e360-tab on" id="e360-tab-0" onclick="e360Tab(0)">3D View</div>
           <div class="e360-tab" id="e360-tab-1" onclick="e360Tab(1)">On Vehicle</div>
-          <div class="e360-tab" id="e360-tab-2" onclick="e360Tab(2)">Split View</div>
+          <div class="e360-tab e360-tab-split" id="e360-tab-2" onclick="e360Tab(2)">Split View</div>
           <div class="e360-tab" id="e360-tab-3" onclick="e360Tab(3)">Video</div>
-          <div class="e360-tab" id="e360-tab-4" onclick="e360Tab(4)">AR</div>
+          <div class="e360-tab e360-tab-ar" id="e360-tab-4" onclick="e360Tab(4)">AR</div>
         </div>
 
         <!-- PANEL 0: 3D View - WebGL model-viewer -->
