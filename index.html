@@ -77,10 +77,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 /* CARD */
 .pcard{border:1px solid #ededed;border-radius:8px;background:#fff;padding:20px;display:flex;flex-direction:column;gap:0;transition:box-shadow .2s}
 .pcard:hover{box-shadow:0 4px 20px rgba(0,0,0,.1)}
-.pcard-img-wrap{position:relative;width:100%;padding-top:100%;overflow:hidden;margin-bottom:15px;background:#f8f8f8;border-radius:6px}
-.pcard-img-wrap img,.pcard-img-wrap a,.pcard-img-wrap button.e360-overlay-btn{position:absolute}
-.pcard-img-wrap img{top:0;left:0;width:100%;height:100%;object-fit:contain}
-.pcard-img-wrap a{top:0;left:0;width:100%;height:100%;display:block}
+.pcard-img-wrap{position:relative;width:calc(100% + 40px);margin:0 -20px 15px -20px;padding-top:75%;overflow:hidden;background:#f0f0f0}
+.pcard-img-wrap img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover}
+.pcard-img-wrap button.e360-overlay-btn{position:absolute}
 .heart-btn{position:absolute;top:8px;right:8px;padding:4px;background:none;border:none;cursor:pointer;z-index:10}
 .pcard-body{display:flex;flex-direction:column;flex:1}
 .pcard-name{font-size:15px;font-weight:600;color:#000;line-height:1.35;margin-bottom:5px;min-height:44px;letter-spacing:.1px}
