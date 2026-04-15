@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="build" content="1776285132">
+<meta name="build" content="1776285219">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Yakima® Rack Mounted Kayak Carrier w/o Lock | Accessories | Ford.com</title>
@@ -210,6 +210,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   .e360-split-left,.e360-split-right{height:250px;flex:none;width:100%}
   .e360-split-divider{width:70%;height:1px;align-self:center}
   .qr-desktop{display:none !important}
+  .ar-mobile-only{display:block !important}
 }
 
 .e360-ar-inner{display:flex;align-items:center;justify-content:center;gap:32px;flex-wrap:wrap}
@@ -555,7 +556,7 @@ function togA(h){var b=h.nextElementSibling,i=h.querySelector('.abt-ico'),hi=b.s
         <!-- PANEL 4: AR -->
         <div class="e360-panel" id="e360-panel-4" style="display:none;align-items:center;justify-content:center;background:#fff">
           <!-- Desktop: QR code + instructions -->
-          <div id="ar-desktop" style="text-align:center;max-width:320px;padding:24px">
+          <div id="ar-desktop" class="qr-desktop" style="text-align:center;max-width:320px;padding:24px">
             <img src="images/ar-qr.jpg" alt="Scan for AR" style="width:200px;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,.12);margin-bottom:20px">
             <div style="font-size:16px;font-weight:700;color:#003478;margin-bottom:12px">View in Augmented Reality</div>
             <ol style="text-align:left;font-size:13px;color:#444;line-height:1.9;margin:0;padding-left:20px">
@@ -567,7 +568,7 @@ function togA(h){var b=h.nextElementSibling,i=h.querySelector('.abt-ico'),hi=b.s
             </ol>
           </div>
           <!-- Mobile: direct AR launch -->
-          <div id="ar-mobile" style="display:none;text-align:center;padding:40px">
+          <div id="ar-mobile" class="ar-mobile-only" style="display:none;text-align:center;padding:40px">
             <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#003478" stroke-width="1.5" style="margin-bottom:20px"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
             <div style="font-size:18px;font-weight:700;color:#003478;margin-bottom:10px">View in Your Space</div>
             <p style="font-size:13px;color:#666;margin-bottom:24px">Place this accessory in your environment using augmented reality</p>
