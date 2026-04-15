@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="build" content="1776289626">
+<meta name="build" content="1776289921">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Yakima® Rack Mounted Kayak Carrier w/o Lock | Accessories | Ford.com</title>
@@ -427,10 +427,12 @@ function setColor(el){document.querySelectorAll('.e360-color').forEach(c=>c.clas
 
 function checkARMode(){
   var mobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.innerWidth <= 700;
-  document.getElementById('ar-desktop').style.display = mobile ? 'none' : 'block';
-  document.getElementById('ar-mobile').style.display = mobile ? 'block' : 'none';
+  var dsk = document.getElementById('ar-desktop');
+  var mob = document.getElementById('ar-mobile');
+  if(dsk) dsk.style.display = mobile ? 'none' : 'block';
+  if(mob) mob.style.display = mobile ? 'block' : 'none';
 }
-checkARMode();
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',function(){checkARMode();});}else{checkARMode();}
 window.addEventListener('resize', checkARMode);
 function launchMobileAR(){
   var mv=document.querySelector('model-viewer');
