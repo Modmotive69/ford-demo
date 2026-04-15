@@ -77,9 +77,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 /* CARD */
 .pcard{border:1px solid #ededed;border-radius:8px;background:#fff;padding:20px;display:flex;flex-direction:column;gap:0;transition:box-shadow .2s}
 .pcard:hover{box-shadow:0 4px 20px rgba(0,0,0,.1)}
-.pcard-img-wrap{position:relative;width:calc(100% + 40px);margin:0 -20px 15px -20px;padding-top:75%;overflow:hidden;background:#f0f0f0}
-.pcard-img-wrap img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover}
-.pcard-img-wrap button.e360-overlay-btn{position:absolute}
+.pcard-img-wrap{position:relative;margin:-20px -20px 15px -20px;overflow:hidden;background:#f0f0f0}
+.pcard-img-wrap img{width:100%;height:auto;display:block}
+.e360-overlay-btn{position:absolute;top:12px;left:12px;z-index:5}
 .heart-btn{position:absolute;top:8px;right:8px;padding:4px;background:none;border:none;cursor:pointer;z-index:10}
 .pcard-body{display:flex;flex-direction:column;flex:1}
 .pcard-name{font-size:15px;font-weight:600;color:#000;line-height:1.35;margin-bottom:5px;min-height:44px;letter-spacing:.1px}
