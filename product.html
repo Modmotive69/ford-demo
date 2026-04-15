@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="build" content="1776284948">
+<meta name="build" content="1776285078">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Yakima® Rack Mounted Kayak Carrier w/o Lock | Accessories | Ford.com</title>
@@ -400,8 +400,13 @@ function setColor(el){document.querySelectorAll('.e360-color').forEach(c=>c.clas
 
 
 
-var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-if(isMobile){document.getElementById('ar-desktop').style.display='none';document.getElementById('ar-mobile').style.display='block';}
+function checkARMode(){
+  var mobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.innerWidth <= 700;
+  document.getElementById('ar-desktop').style.display = mobile ? 'none' : 'block';
+  document.getElementById('ar-mobile').style.display = mobile ? 'block' : 'none';
+}
+checkARMode();
+window.addEventListener('resize', checkARMode);
 function launchMobileAR(){
   var mv=document.querySelector('model-viewer');
   if(mv&&mv.activateAR){mv.activateAR();}else{window.open('https://modmotive69.github.io/ford-demo/models/VKB3Z7855100EB.glb','_blank');}
