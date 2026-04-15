@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="build" content="1776287809">
+<meta name="build" content="1776288473">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Yakima® Rack Mounted Kayak Carrier w/o Lock | Accessories | Ford.com</title>
@@ -216,10 +216,10 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   /* Rotation controls: visible at bottom of panel */
   .e360-rot-controls{bottom:8px !important;z-index:15}
   .e360-spin-hint{display:none}
-  /* On Vehicle: remove scale, ensure controls clickable above image */
-  #e360-viewer-img{transform:none !important;pointer-events:none}
-  .e360-rot-controls{z-index:20 !important;pointer-events:auto !important}
-  .e360-rot-btn,.e360-dot{pointer-events:auto !important;cursor:pointer !important}
+  /* On Vehicle: image is absolute, controls flow naturally */
+  #e360-viewer-img{transform:none !important}
+  .e360-rot-controls{position:absolute !important;bottom:10px !important;left:50% !important;transform:translateX(-50%) !important;z-index:20 !important;pointer-events:auto !important}
+  .e360-rot-btn,.e360-dot{pointer-events:auto !important;cursor:pointer !important;-webkit-tap-highlight-color:rgba(0,0,0,.1)}
   /* Sidebar: compact below viewer */
   .e360-sidebar{width:100%;flex:none;border-left:none;border-top:1px solid #e5e5e5;padding:12px 16px;gap:10px}
   .e360-price{font-size:18px}
@@ -540,9 +540,9 @@ function togA(h){var b=h.nextElementSibling,i=h.querySelector('.abt-ico'),hi=b.s
         </div>
 
         <!-- PANEL 1<!-- PANEL 1: On Vehicle -->
-        <div class="e360-panel" id="e360-panel-1" style="display:none;flex-direction:column;align-items:center;justify-content:center;overflow:hidden">
+        <div class="e360-panel" id="e360-panel-1" style="display:none;position:relative">
           <a id="e360-download-btn" href="images/bronco-kayak-3d.jpg" download="bronco-yakima-render.jpg" style="position:absolute;top:14px;right:14px;z-index:20;background:#fff;border:1.5px solid #003478;color:#003478;font-size:12px;font-weight:600;padding:6px 14px;border-radius:50px;text-decoration:none;display:flex;align-items:center;gap:6px;box-shadow:0 2px 8px rgba(0,0,0,.1)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download Render</a>
-          <img id="e360-viewer-img" src="images/bronco-kayak-front.jpg" onmouseenter="stopAutoRotate()" onmouseleave="startAutoRotate()" alt="On Vehicle" style="width:100%;height:100%;object-fit:contain;transform:scale(1.125);transition:opacity .2s;display:block">
+          <img id="e360-viewer-img" src="images/bronco-kayak-front.jpg" onmouseenter="stopAutoRotate()" onmouseleave="startAutoRotate()" alt="On Vehicle" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transform:scale(1.125);transition:opacity .2s;display:block">
           <div class="e360-rot-controls">
             <button class="e360-rot-btn" onclick="rotateView(-1)">&#8592;</button>
             <div class="e360-rot-dots">
