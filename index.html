@@ -77,10 +77,11 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 /* CARD */
 .pcard{border:1px solid #ededed;border-radius:8px;background:#fff;padding:20px;display:flex;flex-direction:column;gap:0;transition:box-shadow .2s}
 .pcard:hover{box-shadow:0 4px 20px rgba(0,0,0,.1)}
-.pcard-img-wrap{position:relative;aspect-ratio:1/1;overflow:hidden;margin-bottom:15px;background:#f6f6f6;border-radius:6px}
-.pcard-img-wrap a{display:block;width:100%;height:100%}
+.pcard-img-wrap{position:relative;width:100%;padding-top:100%;overflow:hidden;margin-bottom:15px;background:#f6f6f6;border-radius:6px}
+.pcard-img-wrap a{position:absolute;inset:0;display:block}
 .pcard-img-wrap img{width:100%;height:100%;object-fit:contain;padding:12px;box-sizing:border-box}
-.heart-btn{position:absolute;top:0;right:0;padding:4px;background:none;border:none}
+.e360-overlay-btn{position:absolute;top:8px;left:8px;z-index:5}
+.heart-btn{position:absolute;top:4px;right:4px;padding:4px;background:none;border:none;z-index:5;cursor:pointer}
 .pcard-body{display:flex;flex-direction:column;flex:1}
 .pcard-name{font-size:15px;font-weight:600;color:#000;line-height:1.35;margin-bottom:5px;min-height:44px;letter-spacing:.1px}
 .pcard-sku{font-size:12px;color:#707070;margin-bottom:8px}
@@ -108,9 +109,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 
 /* ENGAGE360 overlay button */
 .e360-overlay-btn{
-  position:absolute;
-  top:8px;
-  left:8px;
   white-space:nowrap;
   border:1.5px solid #333;
   border-radius:50px;
