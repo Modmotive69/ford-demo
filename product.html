@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="build" content="1776290088">
+<meta name="build" content="1776290236">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Yakima® Rack Mounted Kayak Carrier w/o Lock | Accessories | Ford.com</title>
@@ -417,19 +417,23 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 <!-- v1776208125 -->
 <script>
 // Model-viewer loading progress
-(function(){
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded',initMVLoader);
+}else{initMVLoader();}
+function initMVLoader(){
   var mv=document.getElementById('e360-mv');
-  if(mv){
-    mv.addEventListener('progress',function(e){
-      var pct=document.getElementById('mv-pct');
-      if(pct) pct.textContent=Math.round(e.detail.totalProgress*100)+'%';
-    });
-    mv.addEventListener('load',function(){
-      var loader=document.getElementById('mv-loader');
-      if(loader) loader.style.display='none';
-    });
-  }
-})();
+  if(!mv)return;
+  mv.addEventListener('progress',function(e){
+    var pct=document.getElementById('mv-pct');
+    if(pct) pct.textContent=Math.round(e.detail.totalProgress*100)+'%';
+  });
+  mv.addEventListener('load',function(){
+    var loader=document.getElementById('mv-loader');
+    if(loader){loader.style.opacity='0';loader.style.transition='opacity .3s';setTimeout(function(){loader.style.display='none';},300);}
+  });
+  // Fallback: hide loader after 8s regardless
+  setTimeout(function(){var l=document.getElementById('mv-loader');if(l)l.style.display='none';},8000);
+}
 function openE360(){
   document.getElementById('e360modal').classList.add('open');
   for(var i=0;i<3;i++) document.getElementById('e360-panel-'+i).style.display=(i===0)?'flex':'none';
@@ -551,7 +555,7 @@ function togA(h){var b=h.nextElementSibling,i=h.querySelector('.abt-ico'),hi=b.s
             ar
             ar-modes="webxr scene-viewer quick-look">
             <!-- Loading overlay -->
-            <div id="mv-loader" slot="poster" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#fff;z-index:10">
+            <div id="mv-loader" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#fff;z-index:10">
               <div style="width:48px;height:48px;border:3px solid #e0e0e0;border-top-color:#10599b;border-radius:50%;animation:mv-spin 1s linear infinite"></div>
               <div style="margin-top:16px;font-size:13px;color:#666;font-weight:600">Loading 3D Model...</div>
               <div style="margin-top:6px;font-size:11px;color:#999" id="mv-pct">0%</div>
