@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="build" content="1776284884">
+<meta name="build" content="1776284948">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Yakima® Rack Mounted Kayak Carrier w/o Lock | Accessories | Ford.com</title>
@@ -196,15 +196,19 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .e360-ar-panel p{font-size:14px;color:#555;text-align:center;max-width:280px;line-height:1.6}
 
 @media(max-width:700px){
-  .e360-modal{max-height:100vh;border-radius:0;height:100%}
-  .e360-body{flex-direction:column}
-  .e360-viewer{min-height:260px}
-  .e360-sidebar{width:100%;border-left:none;border-top:1px solid #e5e5e5;padding:16px;gap:12px}
+  .e360-modal{max-height:100vh;max-width:100vw;width:100vw;border-radius:0;height:100vh}
+  .e360-body{flex-direction:column;overflow-y:auto}
+  .e360-viewer{min-height:0;flex-direction:column;overflow:visible}
+  .e360-panel{min-height:300px;flex-shrink:0}
+  .e360-sidebar{width:100%;border-left:none;border-top:1px solid #e5e5e5;padding:16px;gap:12px;flex-shrink:0}
   .e360-price{font-size:18px}
   .e360-modal-top h2{font-size:13px}
-  .e360-tabs{top:10px}
-  .e360-tab{padding:6px 14px;font-size:12px}
+  .e360-tabs{position:relative;top:0;left:0;transform:none;margin:8px auto;flex-wrap:wrap;justify-content:center}
+  .e360-tab{padding:6px 10px;font-size:11px}
   .e360-overlay{padding:0}
+  .e360-split{flex-direction:column}
+  .e360-split-left,.e360-split-right{height:250px;flex:none;width:100%}
+  .e360-split-divider{width:70%;height:1px;align-self:center}
 }
 
 .e360-ar-inner{display:flex;align-items:center;justify-content:center;gap:32px;flex-wrap:wrap}
