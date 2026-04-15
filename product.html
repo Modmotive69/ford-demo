@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="build" content="1776290274">
+<meta name="build" content="1776290305">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Yakima® Rack Mounted Kayak Carrier w/o Lock | Accessories | Ford.com</title>
@@ -425,12 +425,25 @@ if(document.readyState==='loading'){
 function initMVLoader(){
   var mv=document.getElementById('e360-mv');
   if(!mv)return;
-  mv.addEventListener('load',function(){
+  var pct=0,loaded=false,bar=document.getElementById('mv-bar'),pctEl=document.getElementById('mv-pct');
+  // Simulate progress 0→90% over ~3s, then wait for actual load
+  var sim=setInterval(function(){
+    if(loaded||pct>=90)return;
+    pct+=Math.random()*12+3;
+    if(pct>90)pct=90;
+    if(bar)bar.style.width=Math.round(pct)+'%';
+    if(pctEl)pctEl.textContent=Math.round(pct)+'%';
+  },200);
+  function hideLoader(){
+    if(loaded)return;loaded=true;clearInterval(sim);
+    if(bar)bar.style.width='100%';
+    if(pctEl)pctEl.textContent='100%';
     var loader=document.getElementById('mv-loader');
-    if(loader){loader.style.opacity='0';loader.style.transition='opacity .3s';setTimeout(function(){loader.style.display='none';},300);}
-  });
-  // Fallback: hide after 6s
-  setTimeout(function(){var l=document.getElementById('mv-loader');if(l){l.style.opacity='0';l.style.transition='opacity .3s';setTimeout(function(){l.style.display='none';},300);}},6000);
+    setTimeout(function(){if(loader){loader.style.opacity='0';loader.style.transition='opacity .3s';setTimeout(function(){loader.style.display='none';},300);}},400);
+  }
+  mv.addEventListener('load',hideLoader);
+  // Fallback: complete after 5s
+  setTimeout(hideLoader,5000);
 }
 function openE360(){
   document.getElementById('e360modal').classList.add('open');
@@ -556,7 +569,8 @@ function togA(h){var b=h.nextElementSibling,i=h.querySelector('.abt-ico'),hi=b.s
             <div id="mv-loader" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#fff;z-index:10">
               <div style="width:48px;height:48px;border:3px solid #e0e0e0;border-top-color:#10599b;border-radius:50%;animation:mv-spin 1s linear infinite"></div>
               <div style="margin-top:16px;font-size:13px;color:#666;font-weight:600">Loading 3D Model</div>
-              <div style="margin-top:8px;display:flex;gap:4px;align-items:center;justify-content:center"><span class="mv-dot" style="animation-delay:0s"></span><span class="mv-dot" style="animation-delay:.2s"></span><span class="mv-dot" style="animation-delay:.4s"></span></div>
+              <div style="margin-top:10px;width:120px;height:4px;background:#e0e0e0;border-radius:4px;overflow:hidden"><div id="mv-bar" style="height:100%;width:0%;background:#10599b;border-radius:4px;transition:width .1s"></div></div>
+              <div style="margin-top:6px;font-size:11px;color:#999" id="mv-pct">0%</div>
             </div>
           </model-viewer>
           <!-- QR overlay top-left -->
