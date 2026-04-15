@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="build" content="1776217041">
+<meta name="build" content="1776217125">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Yakima® Rack Mounted Kayak Carrier w/o Lock | Accessories | Ford.com</title>
@@ -164,7 +164,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .e360-close{width:32px;height:32px;border-radius:50%;background:#f2f2f2;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;color:#555;flex-shrink:0}
 .e360-close:hover{background:#e0e0e0}
 .e360-body{display:flex;flex:1;overflow:hidden}
-.e360-viewer{flex:1;background:#fff;display:flex;align-items:stretch;position:relative;min-height:400px;overflow:hidden}
+.e360-viewer{flex:1;background:#fff;display:flex;align-items:stretch;position:relative;min-height:400px;overflow:visible}
 .e360-tabs{display:flex;gap:0;position:absolute;top:16px;left:50%;transform:translateX(-50%);background:#fff;border-radius:50px;border:1px solid #e0e0e0;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.1);z-index:20}
 .e360-tab{padding:8px 20px;font-size:13px;font-weight:600;cursor:pointer;color:#666;transition:all .18s;white-space:nowrap}
 .e360-tab.on{background:#10599b;color:#fff}
@@ -222,13 +222,26 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .phone-mockup-wrap img.phone-base{width:100%;display:block;border-radius:8px}
 .phone-screen-overlay{position:absolute;top:12%;left:4%;width:92%;height:76%;overflow:hidden;border-radius:6px;background:#fff}
 .phone-screen-overlay img{width:100%;height:100%;object-fit:contain;background:#fff}
-
 .e360-split{display:flex;width:100%;height:100%}
 .e360-split-left{flex:1;position:relative;border-right:2px solid #e0e0e0}
 .e360-split-right{flex:1;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;background:#fff}
 .e360-split-label{position:absolute;top:10px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.5);color:#fff;font-size:11px;font-weight:700;padding:3px 12px;border-radius:50px;white-space:nowrap;z-index:10;letter-spacing:.5px}
-
+.phone-mockup-wrap{position:relative;display:inline-block;max-width:340px;width:100%}
+.phone-mockup-wrap img.phone-base{width:100%;display:block;border-radius:8px}
+.phone-screen-overlay{position:absolute;top:12%;left:4%;width:92%;height:76%;overflow:hidden;border-radius:6px;background:#fff}
+.phone-screen-overlay img{width:100%;height:100%;object-fit:contain;background:#fff}
 </style>
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+</head>
+<body>
+
+<!-- PROMO -->
+<div class="promo">
+  <span class="promo-arrow">&#8249;</span>
+  20% Off Mustang&#174; Accessories Purchase up to $1,000*. <a href="#">Offer Details.</a>
+  <span class="promo-arrow">&#8250;</span>
+</div>
 
 <!-- NAV -->
 <nav class="nav">
@@ -454,13 +467,13 @@ function togA(h){var b=h.nextElementSibling,i=h.querySelector('.abt-ico'),hi=b.s
           </model-viewer>
           <!-- QR overlay top-left -->
           <div style="position:absolute;top:14px;left:14px;z-index:20;background:#fff;border-radius:8px;padding:10px;box-shadow:0 2px 12px rgba(0,0,0,.18)">
-            <img src="images/ar-qr.jpg" alt="Scan for AR" style="width:134px;display:block">
+            <img src="images/ar-qr.jpg" alt="Scan for AR" style="width:210px;display:block">
           </div>
         </div>
 
         <!-- PANEL 1<!-- PANEL 1: On Vehicle -->
-        <div class="e360-panel" id="e360-panel-1" style="display:none;flex-direction:column;align-items:center;justify-content:center">
-          <img id="e360-viewer-img" src="images/bronco-kayak-3d.jpg" onmouseenter="stopAutoRotate()" onmouseleave="startAutoRotate()" alt="On Vehicle" style="width:100%;height:100%;object-fit:contain;transform:scale(1.5);display:block">
+        <div class="e360-panel" id="e360-panel-1" style="display:none;flex-direction:column;align-items:center;justify-content:center;overflow:hidden">
+          <img id="e360-viewer-img" src="images/bronco-kayak-3d.jpg" onmouseenter="stopAutoRotate()" onmouseleave="startAutoRotate()" alt="On Vehicle" style="width:100%;height:100%;object-fit:contain;transform:scale(1.5);transition:opacity .2s;display:block">
           <div class="e360-rot-controls">
             <button class="e360-rot-btn" onclick="rotateView(-1)">&#8592;</button>
             <div class="e360-rot-dots">
@@ -472,46 +485,22 @@ function togA(h){var b=h.nextElementSibling,i=h.querySelector('.abt-ico'),hi=b.s
             <span class="e360-spin-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.95"/></svg> Drag to rotate</span>
           </div>
         </div>
+
+
         <!-- PANEL 2: Split View -->
         <div class="e360-panel" id="e360-panel-2" style="display:none">
           <div class="e360-split">
             <div class="e360-split-left">
               <div class="e360-split-label">3D MODEL</div>
-              <model-viewer
-                src="models/VKB3Z7855100EB.glb"
-                alt="Yakima Kayak Carrier 3D"
-                auto-rotate
-                camera-controls
-                shadow-intensity="1"
-                exposure="1"
-                style="width:100%;height:100%;background:#fff">
-              </model-viewer>
+              <model-viewer src="models/VKB3Z7855100EB.glb" alt="Yakima Kayak Carrier 3D" auto-rotate camera-controls shadow-intensity="1" exposure="1" style="width:100%;height:100%;background:#fff"></model-viewer>
             </div>
             <div class="e360-split-right">
               <div class="e360-split-label">ON VEHICLE</div>
-              <img id="e360-split-img" src="images/bronco-kayak-3d.jpg" alt="On Vehicle" style="width:100%;height:100%;object-fit:contain;transform:scale(1.5);transition:opacity .2s">
+              <img id="e360-split-img" src="images/bronco-kayak-3d.jpg" alt="On Vehicle" style="width:100%;height:100%;object-fit:contain;transform:scale(1.5)">
             </div>
           </div>
         </div>
 
-
-      </div>
-      .e360-acc-strip{padding:10px 12px 8px;border-top:1px solid #eee;background:#fafafa;flex-shrink:0;width:100%;order:3}
-      .e360-acc-title{font-size:11px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px}
-      .e360-acc-items{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-      .e360-acc-item{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;width:100%}
-      .e360-acc-item img{width:100%;height:68px;object-fit:contain;border-radius:6px;border:1.5px solid #e0e0e0;background:#fff;padding:4px;transition:border-color .15s}
-      .e360-acc-item:hover img{border-color:#10599b}
-      .e360-acc-item span{font-size:10px;color:#555;text-align:center;line-height:1.3;font-weight:600}
-      <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
-      </head>
-      <body>
-      <!-- PROMO -->
-      <div class="promo">
-      <span class="promo-arrow">&#8249;</span>
-      20% Off Mustang&#174; Accessories Purchase up to $1,000*. <a href="#">Offer Details.</a>
-      <span class="promo-arrow">&#8250;</span>
-      </div>
       </div>
       <div class="e360-sidebar">
         <div class="e360-pname">Yakima&#174; Rack Mounted Kayak Carrier w/o Lock</div>
@@ -535,16 +524,16 @@ function togA(h){var b=h.nextElementSibling,i=h.querySelector('.abt-ico'),hi=b.s
         <hr class="e360-divider">
         <div>
           <div class="e360-section-title">Required &amp; Compatible Accessories</div>
-          <div style="display:flex;flex-direction:column;gap:8px;margin-top:6px">
-            <div style="display:flex;align-items:center;gap:10px;cursor:pointer">
+          <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
+            <div style="display:flex;align-items:center;gap:10px">
               <img src="images/VKB3Z7855100EB_thumb.jpg" style="width:52px;height:40px;object-fit:contain;border:1.5px solid #10599b;border-radius:4px;background:#fff;padding:2px;flex-shrink:0">
               <span style="font-size:12px;font-weight:700;color:#10599b">&#9733; This Item</span>
             </div>
-            <div style="display:flex;align-items:center;gap:10px;cursor:pointer">
+            <div style="display:flex;align-items:center;gap:10px">
               <img src="images/M2DZ9955100BA.jpg" style="width:52px;height:40px;object-fit:contain;border:1.5px solid #e0e0e0;border-radius:4px;background:#fff;padding:2px;flex-shrink:0">
               <span style="font-size:12px;color:#333">Bronco OE Roof Rack</span>
             </div>
-            <div style="display:flex;align-items:center;gap:10px;cursor:pointer">
+            <div style="display:flex;align-items:center;gap:10px">
               <img src="images/VM1PZ7855100C.jpg" style="width:52px;height:40px;object-fit:contain;border:1.5px solid #e0e0e0;border-radius:4px;background:#fff;padding:2px;flex-shrink:0">
               <span style="font-size:12px;color:#333">Thule HD Crossbar System</span>
             </div>
@@ -558,5 +547,9 @@ function togA(h){var b=h.nextElementSibling,i=h.querySelector('.abt-ico'),hi=b.s
         <button class="e360-atc">Add to Cart &mdash; $249.00</button>
         <div class="e360-note">Point your phone at any surface to see this accessory installed on your Bronco in augmented reality.</div>
       </div>
+    </div>
+  </div>
 </div>
+
+</body>
 </html>
