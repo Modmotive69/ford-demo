@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="build" content="1776290339">
+<meta name="build" content="1776290376">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Yakima® Rack Mounted Kayak Carrier w/o Lock | Accessories | Ford.com</title>
@@ -418,26 +418,37 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 </footer>
 <!-- v1776208125 -->
 <script>
-// Model-viewer loader — starts on modal open
-var _mvLoaderSim=null;
+// Model-viewer loader — holds until model is actually rendered
+var _mvLoaderSim=null,_mvLoaded=false;
 function startMVLoader(){
   var bar=document.getElementById('mv-bar'),pctEl=document.getElementById('mv-pct'),loader=document.getElementById('mv-loader');
   if(!loader)return;
-  // Reset
+  _mvLoaded=false;
   loader.style.display='flex';loader.style.opacity='1';
   if(bar)bar.style.width='0%';
   if(pctEl)pctEl.textContent='0%';
   var pct=0;
   if(_mvLoaderSim)clearInterval(_mvLoaderSim);
+  // Fill to 90% over ~3s, then hold
   _mvLoaderSim=setInterval(function(){
-    pct+=Math.random()*8+4;
-    if(pct>=100){pct=100;clearInterval(_mvLoaderSim);_mvLoaderSim=null;
-      setTimeout(function(){loader.style.opacity='0';loader.style.transition='opacity .3s';setTimeout(function(){loader.style.display='none';},300);},300);
+    if(pct<90){
+      pct+=Math.random()*6+2;
+      if(pct>90)pct=90;
+    } else if(_mvLoaded){
+      pct+=5;if(pct>100)pct=100;
     }
     if(bar)bar.style.width=Math.round(pct)+'%';
     if(pctEl)pctEl.textContent=Math.round(pct)+'%';
+    if(pct>=100){clearInterval(_mvLoaderSim);_mvLoaderSim=null;
+      setTimeout(function(){loader.style.opacity='0';loader.style.transition='opacity .3s';setTimeout(function(){loader.style.display='none';},300);},200);
+    }
   },150);
 }
+function finishMVLoader(){_mvLoaded=true;}
+// Listen for model-viewer load
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded',function(){var mv=document.getElementById('e360-mv');if(mv)mv.addEventListener('load',finishMVLoader);});
+}else{var mv=document.getElementById('e360-mv');if(mv)mv.addEventListener('load',finishMVLoader);}
 function openE360(){
   document.getElementById('e360modal').classList.add('open');
   for(var i=0;i<3;i++) document.getElementById('e360-panel-'+i).style.display=(i===0)?'flex':'none';
