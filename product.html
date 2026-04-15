@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="build" content="1776217125">
+<meta name="build" content="1776217291">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Yakima® Rack Mounted Kayak Carrier w/o Lock | Accessories | Ford.com</title>
@@ -230,6 +230,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .phone-mockup-wrap img.phone-base{width:100%;display:block;border-radius:8px}
 .phone-screen-overlay{position:absolute;top:12%;left:4%;width:92%;height:76%;overflow:hidden;border-radius:6px;background:#fff}
 .phone-screen-overlay img{width:100%;height:100%;object-fit:contain;background:#fff}
+.e360-split-dot{width:7px;height:7px;border-radius:50%;background:#ccc;cursor:pointer;transition:background .15s}.e360-split-dot.on{background:#10599b}
 </style>
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
@@ -423,6 +424,15 @@ function setView(n){
   img.src = e360Views[n];
   document.querySelectorAll('.e360-dot').forEach(function(d,i){d.classList.toggle('on',i===n)});
 }
+
+var e360SplitCurrent = 0;
+function setSplitView(n){
+  e360SplitCurrent = n;
+  document.getElementById('e360-split-img').src = e360Views[n];
+  document.querySelectorAll('.e360-split-dot').forEach(function(d,i){d.classList.toggle('on',i===n)});
+}
+function rotateSplit(dir){ setSplitView((e360SplitCurrent+dir+e360Views.length)%e360Views.length); }
+
 function rotateView(dir){setView((e360Current+dir+e360Views.length)%e360Views.length)}
 
 function setImg(el,url){document.getElementById('main-img').src=url;document.querySelectorAll('.th').forEach(t=>t.classList.remove('on'));el.classList.add('on')}
@@ -494,9 +504,18 @@ function togA(h){var b=h.nextElementSibling,i=h.querySelector('.abt-ico'),hi=b.s
               <div class="e360-split-label">3D MODEL</div>
               <model-viewer src="models/VKB3Z7855100EB.glb" alt="Yakima Kayak Carrier 3D" auto-rotate camera-controls shadow-intensity="1" exposure="1" style="width:100%;height:100%;background:#fff"></model-viewer>
             </div>
-            <div class="e360-split-right">
+            <div class="e360-split-right" style="flex-direction:column">
               <div class="e360-split-label">ON VEHICLE</div>
-              <img id="e360-split-img" src="images/bronco-kayak-3d.jpg" alt="On Vehicle" style="width:100%;height:100%;object-fit:contain;transform:scale(1.5)">
+              <img id="e360-split-img" src="images/bronco-kayak-3d.jpg" alt="On Vehicle" style="flex:1;width:100%;min-height:0;object-fit:contain;transform:scale(1.5)">
+              <div class="e360-rot-controls" style="position:relative;transform:none;left:auto;bottom:auto;margin:8px auto">
+                <button class="e360-rot-btn" onclick="rotateSplit(-1)">&#8592;</button>
+                <div class="e360-rot-dots">
+                  <div class="e360-split-dot on" onclick="setSplitView(0)"></div>
+                  <div class="e360-split-dot" onclick="setSplitView(1)"></div>
+                  <div class="e360-split-dot" onclick="setSplitView(2)"></div>
+                </div>
+                <button class="e360-rot-btn" onclick="rotateSplit(1)">&#8594;</button>
+              </div>
             </div>
           </div>
         </div>
