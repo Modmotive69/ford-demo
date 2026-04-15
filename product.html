@@ -436,7 +436,6 @@ function togA(h){var b=h.nextElementSibling,i=h.querySelector('.abt-ico'),hi=b.s
         <div class="e360-tabs" id="e360-tabs-bar">
           <div class="e360-tab on" id="e360-tab-0" onclick="e360Tab(0)">3D View</div>
           <div class="e360-tab" id="e360-tab-1" onclick="e360Tab(1)">On Vehicle</div>
-          <div class="e360-tab" id="e360-tab-2" onclick="e360Tab(2)">AR</div>
         </div>
 
         <!-- PANEL 0: 3D View - WebGL model-viewer -->
@@ -473,19 +472,6 @@ function togA(h){var b=h.nextElementSibling,i=h.querySelector('.abt-ico'),hi=b.s
             </div>
             <button class="e360-rot-btn" onclick="rotateView(1)">&#8594;</button>
             <span class="e360-spin-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.95"/></svg> Drag to rotate</span>
-          </div>
-        </div>
-
-        <!-- PANEL 2: AR -->
-        <div class="e360-panel" id="e360-panel-2" style="display:none">
-          <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:24px;width:100%;height:100%">
-            <p style="font-size:14px;color:#333;font-weight:600;margin:0;text-align:center">Use QR code to view in Augmented Reality</p>
-            <div class="phone-mockup-wrap" style="position:relative;max-width:300px;width:90%">
-              <img class="phone-base" src="images/ar-phone-mockup.jpg" alt="Phone" style="width:100%;display:block">
-              <div class="phone-screen-overlay">
-                <img src="images/ar-qr.jpg" alt="QR Code" style="width:100%;height:100%;object-fit:cover">
-              </div>
-            </div>
           </div>
         </div>
 
