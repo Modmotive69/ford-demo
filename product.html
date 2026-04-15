@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="build" content="1776289921">
+<meta name="build" content="1776290011">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Yakima® Rack Mounted Kayak Carrier w/o Lock | Accessories | Ford.com</title>
@@ -455,7 +455,7 @@ function e360Tab(idx) {
 var e360AutoRotate = null;
 function startAutoRotate(){
   stopAutoRotate();
-  console.log('[ENGAGE360] Auto-rotate started');
+
   e360AutoRotate = setInterval(function(){ rotateView(1); }, 2500);
 }
 function stopAutoRotate(){
@@ -477,10 +477,10 @@ function stopAutoRotate(){
 var e360Views = ['images/bronco-kayak-front.jpg','images/bronco-kayak.jpg','images/bronco-kayak-rear.jpg'];
 var e360Current = 0;
 function setView(n){
-  console.log('[ENGAGE360] setView:', n, e360Views[n]);
+
   e360Current = n;
   var img = document.getElementById('e360-viewer-img');
-  if(!img){console.error('[ENGAGE360] e360-viewer-img not found!');return;}
+  if(!img)return;
   img.src = e360Views[n];
   var dlBtn = document.getElementById('e360-download-btn');
   if(dlBtn){dlBtn.href=e360Views[n];dlBtn.download='bronco-yakima-render-'+(n+1)+'.jpg';}
