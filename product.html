@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="build" content="1776290422">
+<meta name="build" content="1776290449">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Yakima® Rack Mounted Kayak Carrier w/o Lock | Accessories | Ford.com</title>
@@ -432,10 +432,10 @@ function startMVLoader(){
   // Fill to 90% over ~3s, then hold
   _mvLoaderSim=setInterval(function(){
     if(pct<90){
-      pct+=Math.random()*6+2;
+      pct+=Math.random()*2+0.5;
       if(pct>90)pct=90;
     } else if(_mvLoaded){
-      pct+=5;if(pct>100)pct=100;
+      pct+=3;if(pct>100)pct=100;
     }
     if(bar)bar.style.width=Math.round(pct)+'%';
     if(pctEl)pctEl.textContent=Math.round(pct)+'%';
