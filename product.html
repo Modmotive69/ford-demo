@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="build" content="1776707241">
+<meta name="build" content="1776707287">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Yakima® Rack Mounted Kayak Carrier w/o Lock | Accessories | Ford.com</title>
@@ -527,13 +527,13 @@ function e360Tab(idx) {
     if(tab) tab.classList.toggle('on',i===idx);
   }
   if(idx===1){ startAutoRotate(); } else { stopAutoRotate(); }
-  if(idx===4){
-    // Ensure model-viewer JS is loaded
+  if(idx===2){
+    // Ensure model-viewer JS is loaded for Split View
     if(!_mvScriptLoaded){
       _mvScriptLoaded=true;
       var s=document.createElement('script');s.type='module';s.src='js/model-viewer.min.js';document.head.appendChild(s);
     }
-    var mvs=document.getElementById('e360-mv-split'); if(mvs&&!mvs.getAttribute('src')){ mvs.setAttribute('src','models/VKB3Z7855100EB-v2.glb'); mvs.addEventListener('load',function(){mvs.style.opacity='1';}); }
+    var mvs=document.getElementById('e360-mv-split'); if(mvs&&!mvs.getAttribute('src')) mvs.setAttribute('src','models/VKB3Z7855100EB-v2.glb');
   }
   var vid=document.getElementById('e360-video');
   if(vid){ if(idx===3){ vid.play(); } else { vid.pause(); } }
