@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="build" content="1776304880">
+<meta name="build" content="1776706443">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Yakima® Rack Mounted Kayak Carrier w/o Lock | Accessories | Ford.com</title>
@@ -317,7 +317,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .phone-screen-overlay img{width:100%;height:100%;object-fit:contain;background:#fff}
 .e360-split-dot{width:7px;height:7px;border-radius:50%;background:#ccc;cursor:pointer;transition:background .15s}.e360-split-dot.on{background:#10599b}
 </style>
-  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+  <link rel="preconnect" href="https://ajax.googleapis.com">
 </head>
 <body>
 
@@ -501,10 +501,21 @@ function finishMVLoader(){_mvLoaded=true;}
 if(document.readyState==='loading'){
   document.addEventListener('DOMContentLoaded',function(){var mv=document.getElementById('e360-mv');if(mv)mv.addEventListener('load',finishMVLoader);});
 }else{var mv=document.getElementById('e360-mv');if(mv)mv.addEventListener('load',finishMVLoader);}
+var _mvLoaded=false;
 function openE360(){
   document.getElementById('e360modal').classList.add('open');
   for(var i=0;i<3;i++) document.getElementById('e360-panel-'+i).style.display=(i===0)?'flex':'none';
   startMVLoader();
+  // Lazy-load model-viewer JS + GLB on first open
+  if(!_mvLoaded){
+    _mvLoaded=true;
+    var s=document.createElement('script');
+    s.type='module';
+    s.src='https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js';
+    document.head.appendChild(s);
+    var mv=document.getElementById('e360-mv');
+    if(mv) mv.setAttribute('src','models/VKB3Z7855100EB-v2.glb');
+  }
 }
 function closeE360(e){if(e.target===document.getElementById('e360modal'))document.getElementById('e360modal').classList.remove('open')}
 function setColor(el){document.querySelectorAll('.e360-color').forEach(c=>c.classList.remove('on'));el.classList.add('on')}
@@ -532,6 +543,7 @@ function e360Tab(idx) {
     if(tab) tab.classList.toggle('on',i===idx);
   }
   if(idx===1){ startAutoRotate(); } else { stopAutoRotate(); }
+  if(idx===4){ var mvs=document.getElementById('e360-mv-split'); if(mvs&&!mvs.getAttribute('src')) mvs.setAttribute('src','models/VKB3Z7855100EB-v2.glb'); }
   var vid=document.getElementById('e360-video');
   if(vid){ if(idx===3){ vid.play(); } else { vid.pause(); } }
 }
@@ -620,7 +632,6 @@ function togA(h){var b=h.nextElementSibling,i=h.querySelector('.abt-ico'),hi=b.s
           </div>
           <model-viewer
             id="e360-mv"
-            src="models/VKB3Z7855100EB-v2.glb"
             alt="Yakima Rack Mounted Kayak Carrier"
             auto-rotate
             camera-controls
@@ -654,7 +665,7 @@ function togA(h){var b=h.nextElementSibling,i=h.querySelector('.abt-ico'),hi=b.s
         <div class="e360-panel" id="e360-panel-2" style="display:none">
           <div class="e360-split">
             <div class="e360-split-left" style="position:relative">
-              <model-viewer src="models/VKB3Z7855100EB-v2.glb" alt="Yakima Kayak Carrier 3D" auto-rotate camera-controls shadow-intensity="1" exposure="1" style="width:100%;height:100%;min-height:400px;background:#fff;padding:10%"></model-viewer>
+              <model-viewer id="e360-mv-split" alt="Yakima Kayak Carrier 3D" auto-rotate camera-controls shadow-intensity="1" exposure="1" style="width:100%;height:100%;min-height:400px;background:#fff;padding:10%"></model-viewer>
               <img class="qr-desktop" src="images/ar-qr.jpg" alt="Scan for AR" style="position:absolute;bottom:16px;left:12px;width:113px;border-radius:6px;box-shadow:0 2px 8px rgba(0,0,0,.15);z-index:10">
             </div>
             <div class="e360-split-divider"></div>
