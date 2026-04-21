@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="build" content="1776804588">
+<meta name="build" content="1776804707">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Yakima® Rack Mounted Kayak Carrier w/o Lock | Accessories | Ford.com</title>
@@ -278,7 +278,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   .e360-rot-controls{display:none !important}
   .e360-spin-hint{display:none}
   #e360-panel-1{overflow:visible !important}
-  #e360-viewer-img{position:absolute !important;inset:0 !important;transform:scale(1.1) !important;width:100% !important;height:100% !important;object-fit:contain !important}
+  #e360-viewer-img{position:absolute !important;inset:0 !important;transform:scale(1.1) !important;width:100% !important;height:100% !important;object-fit:contain !important;pointer-events:none !important;touch-action:none !important}
+  #e360-panel-1{touch-action:pan-y !important}
   /* Sidebar: compact below viewer */
   .e360-sidebar{width:100%;flex:none;border-left:none;border-top:1px solid #e5e5e5;padding:12px 16px;gap:10px}
   .e360-price{font-size:18px}
@@ -556,12 +557,19 @@ function stopAutoRotate(){
 // Start auto-rotate when On Vehicle tab is shown, stop on others
 // Touch swipe support for On Vehicle panel
 (function(){
-  var panel=document.getElementById('e360-panel-1'),sx=0;
+  var panel=document.getElementById('e360-panel-1'),sx=0,sy=0,isSwiping=false;
   if(panel){
-    panel.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;stopAutoRotate();},{passive:true});
+    panel.addEventListener('touchstart',function(e){
+      sx=e.touches[0].clientX;sy=e.touches[0].clientY;isSwiping=false;stopAutoRotate();
+    },{passive:true});
+    panel.addEventListener('touchmove',function(e){
+      var dx=Math.abs(e.touches[0].clientX-sx);
+      var dy=Math.abs(e.touches[0].clientY-sy);
+      if(dx>dy && dx>10){isSwiping=true;e.preventDefault();}
+    },{passive:false});
     panel.addEventListener('touchend',function(e){
       var dx=e.changedTouches[0].clientX-sx;
-      if(Math.abs(dx)>40){rotateView(dx<0?1:-1);}
+      if(isSwiping && Math.abs(dx)>40){rotateView(dx<0?1:-1);}
       startAutoRotate();
     },{passive:true});
   }
