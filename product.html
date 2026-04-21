@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="build" content="1776801918">
+<meta name="build" content="1776804588">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Yakima® Rack Mounted Kayak Carrier w/o Lock | Accessories | Ford.com</title>
@@ -274,14 +274,11 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   .e360-panel{position:relative !important;height:60vw;min-height:250px;max-height:360px;flex-shrink:0;width:100%;overflow:hidden}
   /* Download Render button: push below tab overlap zone */
   #e360-download-btn{top:6px !important;right:8px !important;font-size:11px !important;padding:4px 10px !important}
-  /* Rotation controls: visible at bottom of panel */
-  .e360-rot-controls{bottom:8px !important;z-index:15}
+  /* On Vehicle mobile: hide nav controls, full-bleed image, swipe-driven */
+  .e360-rot-controls{display:none !important}
   .e360-spin-hint{display:none}
-  /* On Vehicle mobile: image absolute fills panel, controls float above */
   #e360-panel-1{overflow:visible !important}
-  #e360-viewer-img{position:absolute !important;inset:0 !important;transform:none !important}
-  .e360-rot-controls{position:absolute !important;bottom:10px !important;left:50% !important;transform:translateX(-50%) !important;z-index:20 !important;pointer-events:auto !important}
-  .e360-rot-btn,.e360-dot{pointer-events:auto !important;cursor:pointer !important;-webkit-tap-highlight-color:rgba(0,0,0,.1)}
+  #e360-viewer-img{position:absolute !important;inset:0 !important;transform:scale(1.1) !important;width:100% !important;height:100% !important;object-fit:contain !important}
   /* Sidebar: compact below viewer */
   .e360-sidebar{width:100%;flex:none;border-left:none;border-top:1px solid #e5e5e5;padding:12px 16px;gap:10px}
   .e360-price{font-size:18px}
