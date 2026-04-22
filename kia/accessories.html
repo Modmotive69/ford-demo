@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="build" content="1">
+<title>Build & Price | 2027 Telluride X-Pro SX | Accessories | Kia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{overflow-x:hidden}
+body{font-family:'Inter','Helvetica Neue',Arial,sans-serif;background:#000;color:#fff;font-size:14px;-webkit-font-smoothing:antialiased;min-height:100vh}
+a{text-decoration:none;color:inherit}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+
+/* TOP NAV */
+.topnav{background:#000;padding:0 40px;height:64px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.08)}
+.topnav-left{display:flex;align-items:center;gap:40px}
+.kia-logo{font-size:32px;font-weight:800;letter-spacing:-0.05em;color:#fff;line-height:1}
+.topnav-links{display:flex;gap:32px}
+.topnav-link{font-size:14px;font-weight:500;color:#fff;display:flex;align-items:center;gap:5px;padding:4px 0}
+.topnav-link svg{opacity:.7}
+.topnav-right{display:flex;gap:28px;align-items:center}
+.topnav-util{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:#fff}
+
+/* BUILD HEADER */
+.build-header{padding:32px 40px 24px;display:grid;grid-template-columns:1fr auto;gap:40px;align-items:start;background:linear-gradient(180deg,#000 0%,#0a0a0a 100%)}
+.vehicle-title{display:flex;flex-direction:column;gap:4px}
+.vehicle-name{font-size:32px;font-weight:700;letter-spacing:-0.02em}
+.vehicle-trim{font-size:18px;font-weight:400;color:#c8c8c8}
+.vehicle-meta{display:flex;gap:24px;margin-top:14px;align-items:center}
+.msrp{display:flex;flex-direction:column}
+.msrp-label{font-size:11px;color:#999;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px}
+.msrp-value{font-size:18px;font-weight:700}
+.payment-calc{display:flex;align-items:center;gap:6px;font-size:13px;color:#fff;cursor:pointer;border-left:1px solid rgba(255,255,255,0.15);padding-left:24px;text-decoration:underline;text-underline-offset:3px}
+.inventory-btn{padding:12px 24px;border:1px solid #fff;color:#fff;border-radius:0;background:transparent;font-size:13px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;cursor:pointer;transition:all .18s}
+.inventory-btn:hover{background:#fff;color:#000}
+
+/* MAIN LAYOUT */
+.main{display:grid;grid-template-columns:280px 1fr;gap:0;padding:0;min-height:calc(100vh - 230px)}
+.sidebar{padding:32px 40px;border-right:1px solid rgba(255,255,255,0.06)}
+.sb-title{font-size:18px;font-weight:700;margin-bottom:16px}
+.sb-empty{font-size:13px;color:#999;line-height:1.6}
+.sb-selected{display:flex;flex-direction:column;gap:12px}
+.sb-item{display:flex;flex-direction:column;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.06);gap:4px}
+.sb-item-name{font-size:13px;font-weight:500;color:#fff}
+.sb-item-meta{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:#9aa0a6}
+.sb-item-remove{background:none;border:none;color:#999;font-size:16px;cursor:pointer;padding:0;line-height:1}
+.sb-item-remove:hover{color:#fff}
+.sb-total{margin-top:18px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.12);display:flex;justify-content:space-between;font-size:14px;font-weight:700}
+
+/* CONTENT AREA */
+.content{padding:32px 48px 80px;background:radial-gradient(ellipse at center top,#121212 0%,#000 70%)}
+.cat-nav{display:flex;gap:24px;margin-bottom:32px;flex-wrap:wrap;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:8px}
+.cat-link{font-size:13px;font-weight:600;color:#999;padding:8px 0;letter-spacing:.5px;text-transform:uppercase;cursor:pointer;border-bottom:2px solid transparent;transition:all .18s}
+.cat-link:hover{color:#fff}
+.cat-link.active{color:#fff;border-bottom-color:#fff}
+
+/* ACCESSORY GRID */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{background:#1a1a1a;border:1px solid rgba(255,255,255,0.06);border-radius:2px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .2s}
+.card:hover{border-color:rgba(255,255,255,0.2)}
+.card-img{aspect-ratio:16/10;background:#262626;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+.card-img img{width:100%;height:100%;object-fit:cover}
+.card-img .img-overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 0%,rgba(0,0,0,.3) 100%);pointer-events:none}
+.card-body{padding:20px;display:flex;flex-direction:column;flex:1}
+.card-name{font-size:16px;font-weight:600;color:#fff;margin-bottom:6px;line-height:1.3}
+.card-desc{font-size:13px;color:#c8c8c8;line-height:1.5;margin-bottom:10px;flex:1}
+.card-info-link{font-size:12px;color:#fff;display:flex;align-items:center;gap:4px;text-decoration:underline;text-underline-offset:3px;margin-bottom:16px;cursor:pointer}
+.card-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:auto}
+.card-price{font-size:18px;font-weight:700;color:#fff}
+.card-add{padding:8px 20px;border:1px solid #fff;color:#fff;background:transparent;font-size:12px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;cursor:pointer;transition:all .18s;border-radius:0;white-space:nowrap}
+.card-add:hover{background:#fff;color:#000}
+.card-add.added{background:#fff;color:#000}
+.card-add.added::before{content:"✓ ";margin-right:4px}
+.card .e360-trigger{position:absolute;top:10px;left:10px;background:rgba(0,0,0,0.7);color:#fff;border:1px solid rgba(255,255,255,0.3);padding:5px 10px;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;border-radius:50px;display:flex;align-items:center;gap:4px;z-index:5}
+.card .e360-trigger:hover{background:#fff;color:#000;border-color:#fff}
+
+/* BOTTOM STEPPER */
+.stepper{position:sticky;bottom:0;background:#000;border-top:1px solid rgba(255,255,255,0.1);padding:0 40px;height:64px;display:flex;align-items:center;justify-content:space-between;z-index:100}
+.steps{display:flex;gap:36px;align-items:center}
+.step{font-size:12px;font-weight:600;color:#999;letter-spacing:.8px;text-transform:uppercase;padding:22px 0;border-bottom:3px solid transparent;cursor:pointer;transition:color .18s}
+.step:hover{color:#fff}
+.step.active{color:#fff;border-bottom-color:#fff}
+.summary-btn{background:#fff;color:#000;padding:14px 32px;font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;border:none;cursor:pointer;transition:background .18s;display:flex;align-items:center;gap:8px}
+.summary-btn:hover{background:#ddd}
+
+/* DISCLAIMER */
+.disclaimer{padding:24px 40px;color:#666;font-size:11px;line-height:1.6;max-width:1200px}
+
+@media(max-width:900px){
+  .topnav-links{display:none}
+  .main{grid-template-columns:1fr}
+  .sidebar{border-right:none;border-bottom:1px solid rgba(255,255,255,0.06);padding:20px}
+  .content{padding:20px}
+  .grid{grid-template-columns:repeat(2,1fr);gap:12px}
+  .build-header{grid-template-columns:1fr;padding:20px}
+  .vehicle-meta{flex-wrap:wrap;gap:16px}
+  .payment-calc{border-left:none;padding-left:0}
+  .topnav{padding:0 16px;height:56px}
+  .kia-logo{font-size:26px}
+  .topnav-right .topnav-util span{display:none}
+  .stepper{padding:0 12px;height:56px;overflow-x:auto;gap:8px}
+  .steps{gap:20px}
+  .step{font-size:10px;padding:18px 0}
+  .summary-btn{padding:12px 20px;font-size:11px;flex-shrink:0}
+  .cat-nav{gap:16px;overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .cat-nav::-webkit-scrollbar{display:none}
+  .cat-link{white-space:nowrap;font-size:11px}
+  .card-name{font-size:14px}
+  .card-body{padding:14px}
+  .card-add{padding:6px 14px;font-size:11px}
+  .card-price{font-size:16px}
+}
+@media(max-width:560px){
+  .grid{grid-template-columns:1fr}
+}
+
+/* ENGAGE360 MODAL (reuses from product.html baseline but dark) */
+.e360-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px}
+.e360-overlay.open{display:flex}
+.e360-modal{background:#0a0a0a;border:1px solid rgba(255,255,255,0.1);width:90vw;height:88vh;max-width:1200px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,0.8)}
+.e360-modal-top{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;border-bottom:1px solid rgba(255,255,255,0.08)}
+.e360-modal-top h2{font-size:16px;font-weight:700;color:#fff;flex:1;min-width:0}
+.e360-modal-logo{font-size:11px;font-weight:700;color:#fff;letter-spacing:.8px;background:#BB162B;padding:3px 10px}
+.e360-close{width:32px;height:32px;border:1px solid rgba(255,255,255,0.2);background:transparent;color:#fff;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;margin-left:16px}
+.e360-close:hover{background:#fff;color:#000}
+.e360-body{flex:1;display:flex;overflow:hidden}
+.e360-viewer{flex:1;background:#0a0a0a;position:relative;display:flex;align-items:center;justify-content:center;min-height:400px}
+.e360-tabs{position:absolute;top:16px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.7);border:1px solid rgba(255,255,255,0.2);display:flex;z-index:20}
+.e360-tab{padding:8px 18px;font-size:11px;font-weight:600;color:#fff;cursor:pointer;letter-spacing:.5px;text-transform:uppercase}
+.e360-tab.on{background:#fff;color:#000}
+.e360-panel{display:none;position:absolute;inset:0;align-items:center;justify-content:center}
+.e360-panel.on{display:flex}
+.e360-viewer-img{max-width:90%;max-height:90%;object-fit:contain}
+.e360-sidebar{width:280px;border-left:1px solid rgba(255,255,255,0.08);padding:24px;display:flex;flex-direction:column;gap:16px;overflow-y:auto;background:#0a0a0a}
+.e360-pname{font-size:15px;font-weight:700;color:#fff;line-height:1.3}
+.e360-price{font-size:22px;font-weight:700;color:#fff}
+.e360-atc{background:#fff;color:#000;padding:14px;font-size:12px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;border:none;cursor:pointer;width:100%}
+.e360-atc:hover{background:#ddd}
+.e360-ar-btn{background:transparent;border:1px solid #fff;color:#fff;padding:14px;font-size:12px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;cursor:pointer;width:100%}
+.e360-ar-btn:hover{background:#fff;color:#000}
+model-viewer{width:100%;height:100%;background:#0a0a0a;--poster-color:#0a0a0a}
+
+@media(max-width:700px){
+  .e360-overlay{padding:0}
+  .e360-modal{width:100vw;height:100vh;max-width:100vw}
+  .e360-body{flex-direction:column}
+  .e360-viewer{min-height:50vh}
+  .e360-sidebar{width:100%;border-left:none;border-top:1px solid rgba(255,255,255,0.08)}
+}
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="topnav">
+  <div class="topnav-left">
+    <span class="kia-logo">KIA</span>
+    <div class="topnav-links">
+      <a class="topnav-link">Vehicles <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4l3 3 3-3"/></svg></a>
+      <a class="topnav-link">Shopping Assist <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4l3 3 3-3"/></svg></a>
+      <a class="topnav-link">Inventory <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4l3 3 3-3"/></svg></a>
+      <a class="topnav-link">Kia Innovation</a>
+      <a class="topnav-link">Owners</a>
+    </div>
+  </div>
+  <div class="topnav-right">
+    <a class="topnav-util"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Find a Dealer</span></a>
+    <a class="topnav-util"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><span>Search</span></a>
+  </div>
+</nav>
+
+<!-- BUILD HEADER -->
+<div class="build-header">
+  <div class="vehicle-title">
+    <div class="vehicle-name">2027 Telluride</div>
+    <div class="vehicle-trim">X-Pro SX · Panthera Metal · Black SynTex</div>
+    <div class="vehicle-meta">
+      <div class="msrp">
+        <div class="msrp-label">Starting MSRP</div>
+        <div class="msrp-value" id="msrp-total">$54,485</div>
+      </div>
+      <div class="msrp">
+        <div class="msrp-label">Est. Lease</div>
+        <div class="msrp-value">$589/mo</div>
+      </div>
+      <a class="payment-calc"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="10" y2="10"/><line x1="12" y1="10" x2="14" y2="10"/><line x1="8" y1="14" x2="10" y2="14"/><line x1="12" y1="14" x2="14" y2="14"/></svg>Payment Calculator</a>
+    </div>
+  </div>
+  <button class="inventory-btn">View Inventory</button>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- SELECTED ACCESSORIES SIDEBAR -->
+  <aside class="sidebar">
+    <h2 class="sb-title">Selected Accessories</h2>
+    <div id="sb-content"><p class="sb-empty">None selected</p></div>
+  </aside>
+
+  <!-- CONTENT -->
+  <main class="content">
+    <div class="cat-nav">
+      <a class="cat-link active">All</a>
+      <a class="cat-link">Exterior</a>
+      <a class="cat-link">Interior</a>
+      <a class="cat-link">Cargo & Carriers</a>
+      <a class="cat-link">Protection</a>
+      <a class="cat-link">Electronics</a>
+    </div>
+
+    <div class="grid" id="accessory-grid">
+      <!-- populated by JS -->
+    </div>
+
+  </main>
+</div>
+
+<!-- STEPPER -->
+<div class="stepper">
+  <div class="steps">
+    <a class="step">Model</a>
+    <a class="step">Type</a>
+    <a class="step">Trim</a>
+    <a class="step">Exterior</a>
+    <a class="step">Interior</a>
+    <a class="step">Packages</a>
+    <a class="step active">Accessories</a>
+  </div>
+  <button class="summary-btn">View Summary <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+</div>
+
+<!-- DISCLAIMER -->
+<div class="disclaimer">
+  Pricing shown is Manufacturer's Suggested Retail Price (MSRP). Actual dealer prices may vary. Accessory pricing does not include installation. Kia America reserves the right to change product specifications at any time. Displayed accessories fit 2027 Telluride X-Pro SX only.
+</div>
+
+<!-- ENGAGE360 MODAL -->
+<div class="e360-overlay" id="e360-overlay">
+  <div class="e360-modal">
+    <div class="e360-modal-top">
+      <span class="e360-modal-logo">ENGAGE360</span>
+      <h2 id="e360-title" style="margin-left:16px">—</h2>
+      <button class="e360-close" onclick="closeE360()">✕</button>
+    </div>
+    <div class="e360-body">
+      <div class="e360-viewer">
+        <div class="e360-tabs">
+          <div class="e360-tab on" onclick="switchTab(0)">Product</div>
+          <div class="e360-tab" onclick="switchTab(1)">On Vehicle</div>
+          <div class="e360-tab" onclick="switchTab(2)">3D</div>
+          <div class="e360-tab" onclick="switchTab(3)">AR</div>
+        </div>
+        <div class="e360-panel on" id="panel-0"><img class="e360-viewer-img" id="product-img" src=""></div>
+        <div class="e360-panel" id="panel-1"><img class="e360-viewer-img" id="vehicle-img" src=""></div>
+        <div class="e360-panel" id="panel-2" style="width:100%;height:100%"></div>
+        <div class="e360-panel" id="panel-3" style="flex-direction:column;gap:20px;color:#fff;text-align:center;padding:40px">
+          <p style="font-size:14px;max-width:320px;line-height:1.6">Scan this QR code with your phone to view this accessory in augmented reality.</p>
+          <img src="images/ar-qr.jpg" style="width:180px;height:180px;background:#fff;padding:10px">
+        </div>
+      </div>
+      <aside class="e360-sidebar">
+        <div>
+          <div class="e360-pname" id="e360-pname">—</div>
+          <div class="e360-price" id="e360-price" style="margin-top:8px">—</div>
+        </div>
+        <button class="e360-ar-btn" onclick="switchTab(3)">View in AR</button>
+        <button class="e360-atc" id="e360-add-btn">Add to Build</button>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<script src="js/model-viewer.min.js" type="module"></script>
+<script>
+// Accessory catalog — Telluride X-Pro SX
+const ACCESSORIES = [
+  {id:'roof-cross-bars',name:'Roof Cross Bars',desc:'Aero T-slot cross bars, matte black finish. 165 lb dynamic load.',price:389,img:'images/VKB3Z7855100EB.jpg',hasGlb:true,glb:'models/VKB3Z7855100EB-opt.glb',vehicleImg:'images/bronco-kayak.jpg',cat:'exterior'},
+  {id:'all-weather-mats',name:'All-Weather Floor Mats',desc:'Custom-fit rubber mats, Telluride logo, 3-row coverage.',price:255,img:'images/VM1PZ7855100A.jpg',cat:'interior'},
+  {id:'cargo-tray',name:'Cargo Area Tray',desc:'Custom-molded tray with non-slip surface and raised lip.',price:155,img:'images/VM1PZ7855100C.jpg',cat:'interior'},
+  {id:'tow-hitch',name:'Class III Tow Hitch',desc:'5,500 lb towing capacity. OE-grade wiring harness included.',price:649,img:'images/VM2DZ7855100E.jpg',cat:'exterior'},
+  {id:'mud-guards',name:'Splash Guard Set',desc:'Front and rear splash guards. Color-matched and Kia-branded.',price:165,img:'images/VKB3Z7821984A.jpg',cat:'exterior'},
+  {id:'side-steps',name:'X-Pro Side Steps',desc:'Textured black side steps. Non-slip tread, LED puddle lights.',price:1095,img:'images/VKB3Z99000A64A.jpg',cat:'exterior'},
+  {id:'skid-plate',name:'X-Pro Skid Plate',desc:'Aluminum underbody protection. Factory-tuned for off-road.',price:495,img:'images/VKB3Z99286A40D.jpg',cat:'exterior'},
+  {id:'cargo-cover',name:'Retractable Cargo Cover',desc:'Hideaway cover with keyed retractor. Matches interior.',price:195,img:'images/VM2DZ7855100G.jpg',cat:'interior'},
+  {id:'wireless-charger',name:'Wireless Charging Pad',desc:'Qi-compatible charger, 15W fast charge, Kia-branded.',price:145,img:'images/M2DZ9955100BA.jpg',cat:'electronics'},
+];
+
+// STATE
+let selected = {};
+let currentE360 = null;
+const BASE_PRICE = 54485;
+
+function renderGrid(filter='all'){
+  const grid = document.getElementById('accessory-grid');
+  grid.innerHTML = '';
+  ACCESSORIES.filter(a => filter==='all' || a.cat===filter).forEach(acc => {
+    const added = !!selected[acc.id];
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="card-img">
+        ${acc.hasGlb ? `<button class="e360-trigger" onclick="openE360('${acc.id}')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>3D / AR</button>` : ''}
+        <img src="${acc.img}" alt="${acc.name}">
+        <div class="img-overlay"></div>
+      </div>
+      <div class="card-body">
+        <div class="card-name">${acc.name}</div>
+        <div class="card-desc">${acc.desc}</div>
+        <a class="card-info-link">More Info <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4l3 3 3-3"/></svg></a>
+        <div class="card-foot">
+          <div class="card-price">+$${acc.price}</div>
+          <button class="card-add ${added?'added':''}" onclick="toggleAcc('${acc.id}')">${added?'Added':'Add'}</button>
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function toggleAcc(id){
+  if(selected[id]) delete selected[id];
+  else selected[id] = true;
+  renderGrid(currentFilter);
+  renderSidebar();
+  updateTotal();
+}
+
+function renderSidebar(){
+  const sb = document.getElementById('sb-content');
+  const keys = Object.keys(selected);
+  if(!keys.length){ sb.innerHTML = '<p class="sb-empty">None selected</p>'; return; }
+  let html = '<div class="sb-selected">';
+  let total = 0;
+  keys.forEach(id => {
+    const acc = ACCESSORIES.find(a=>a.id===id);
+    if(!acc) return;
+    total += acc.price;
+    html += `<div class="sb-item">
+      <div class="sb-item-name">${acc.name}</div>
+      <div class="sb-item-meta"><span>+$${acc.price}</span><button class="sb-item-remove" onclick="toggleAcc('${id}')">✕</button></div>
+    </div>`;
+  });
+  html += `</div><div class="sb-total"><span>Accessories Total</span><span>+$${total}</span></div>`;
+  sb.innerHTML = html;
+}
+
+function updateTotal(){
+  let total = BASE_PRICE;
+  Object.keys(selected).forEach(id => {
+    const acc = ACCESSORIES.find(a=>a.id===id);
+    if(acc) total += acc.price;
+  });
+  document.getElementById('msrp-total').textContent = '$' + total.toLocaleString();
+}
+
+let currentFilter = 'all';
+document.querySelectorAll('.cat-link').forEach(link => {
+  link.addEventListener('click', (e) => {
+    document.querySelectorAll('.cat-link').forEach(l => l.classList.remove('active'));
+    link.classList.add('active');
+    const text = link.textContent.trim().toLowerCase();
+    currentFilter = text === 'all' ? 'all' : text.replace(/ & /g,'').replace(/s$/,'').replace(/carriers/,'exterior');
+    if(text.includes('cargo')) currentFilter = 'exterior';
+    if(text.includes('protection')) currentFilter = 'exterior';
+    renderGrid(currentFilter);
+  });
+});
+
+// ENGAGE360
+function openE360(id){
+  const acc = ACCESSORIES.find(a => a.id === id);
+  if(!acc) return;
+  currentE360 = acc;
+  document.getElementById('e360-title').textContent = acc.name;
+  document.getElementById('e360-pname').textContent = acc.name;
+  document.getElementById('e360-price').textContent = '+$' + acc.price;
+  document.getElementById('product-img').src = acc.img;
+  document.getElementById('vehicle-img').src = acc.vehicleImg || acc.img;
+  const addBtn = document.getElementById('e360-add-btn');
+  addBtn.textContent = selected[acc.id] ? 'Remove from Build' : 'Add to Build';
+  addBtn.onclick = () => { toggleAcc(acc.id); closeE360(); };
+  // Load GLB if 3D tab supported
+  const panel3d = document.getElementById('panel-2');
+  panel3d.innerHTML = acc.hasGlb ? `<model-viewer src="${acc.glb}" camera-controls auto-rotate shadow-intensity="1" exposure="0.8" environment-image="neutral" style="width:100%;height:100%"></model-viewer>` : '<p style="color:#999;padding:40px">3D model not available for this accessory yet.</p>';
+  document.getElementById('e360-overlay').classList.add('open');
+  switchTab(0);
+}
+
+function closeE360(){
+  document.getElementById('e360-overlay').classList.remove('open');
+}
+
+function switchTab(n){
+  document.querySelectorAll('.e360-tab').forEach((t,i) => t.classList.toggle('on', i===n));
+  document.querySelectorAll('.e360-panel').forEach((p,i) => p.classList.toggle('on', i===n));
+}
+
+document.getElementById('e360-overlay').addEventListener('click', (e) => {
+  if(e.target.id === 'e360-overlay') closeE360();
+});
+
+renderGrid();
+</script>
+</body>
+</html>
