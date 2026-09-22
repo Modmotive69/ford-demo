@@ -22,7 +22,12 @@
       --radius-card: 20px;
       --shadow-card: 0 2px 24px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04);
       --font: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+      --bp-sm: 480px;
+      --bp-md: 768px;
+      --bp-lg: 1024px;
     }
+
+    html, body { overflow-x: hidden; max-width: 100%; }
 
     html { scroll-behavior: smooth; }
 
@@ -46,7 +51,7 @@
       height: var(--nav-h);
       display: flex;
       align-items: center;
-      padding: 0 40px;
+      padding: 0 clamp(16px, 4vw, 40px);
     }
 
     .nav-inner {
@@ -82,7 +87,7 @@
     /* ─── HERO ─── */
     .hero {
       background: var(--ford-blue);
-      padding: clamp(40px, 7vw, 80px) clamp(20px, 5vw, 80px) clamp(48px, 7vw, 88px);
+      padding: clamp(32px, 6vw, 80px) clamp(20px, 5vw, 80px) clamp(40px, 7vw, 88px);
       text-align: center;
     }
 
@@ -119,7 +124,7 @@
       justify-content: center;
       gap: 0;
       flex-wrap: wrap;
-      row-gap: 12px;
+      row-gap: 10px;
     }
 
     .hero-pill {
@@ -140,7 +145,7 @@
 
     /* ─── MAIN LAYOUT ─── */
     .page-body {
-      padding: 32px 16px 80px;
+      padding: clamp(28px, 4vw, 48px) clamp(16px, 3vw, 32px) clamp(48px, 6vw, 80px);
       background: #f5f5f7;
       min-height: calc(100vh - var(--nav-h));
     }
@@ -152,8 +157,9 @@
       box-shadow: var(--shadow-card);
       padding: clamp(24px, 4vw, 56px);
       width: 100%;
-      max-width: clamp(340px, 90vw, 860px);
+      max-width: 860px;
       margin: 0 auto;
+      box-sizing: border-box;
     }
 
     /* ─── SECTION HEADINGS ─── */
@@ -185,9 +191,11 @@
 
     .col-full { grid-column: 1 / -1; }
 
-    /* collapse 2-col rows on narrow screens */
-    @media (max-width: 559px) {
-      .grid-2 { grid-template-columns: 1fr; }
+    /* form-row = synonym for grid-2, collapses on mobile */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
     }
 
     /* ─── FIELD ─── */
@@ -217,7 +225,7 @@
     select {
       width: 100%;
       height: 52px;
-      min-height: 48px;
+      min-height: 52px;
       background: var(--gray-input-bg);
       border: 1.5px solid transparent;
       border-radius: var(--radius-input);
@@ -269,7 +277,7 @@
     /* ─── PLAN CARDS ─── */
     .plans-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 12px;
     }
 
@@ -448,7 +456,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 100%;
+      width: 100% !important;
       height: 56px;
       background: var(--ford-blue);
       color: #ffffff;
@@ -533,62 +541,63 @@
 
     /* ─── RESPONSIVE ─── */
 
-    /* ── Mobile < 600px ── */
-    @media (max-width: 599px) {
-      nav { padding: 0 16px; }
+    /* ── Mobile < 560px ── */
+    @media (max-width: 560px) {
       .nav-powered { display: none; }
 
-      .page-body { padding: 20px 12px 64px; }
+      .page-body { padding: 20px 16px 64px; }
 
       .form-card {
         padding: 24px 20px;
         border-radius: 16px;
-        max-width: 100%;
+      }
+
+      /* form rows: 1 column on mobile */
+      .grid-2,
+      .form-row {
+        grid-template-columns: 1fr;
       }
 
       .plans-grid { grid-template-columns: 1fr; }
 
-      .plan-card { padding: 18px 16px; }
+      .plan-card { padding: 16px 14px; }
 
       .hero-pill-divider { display: none; }
-      .hero-pills { gap: 8px; justify-content: center; }
+      .hero-pills { gap: 8px; }
       .hero-pill { font-size: 0.78rem; padding: 7px 14px; }
 
       .hero-sub { font-size: 0.95rem; }
 
       .btn-submit { height: 52px; font-size: 0.97rem; }
 
-      .form-section { margin-bottom: 32px; }
-      .section-divider { margin: 32px 0; }
+      .form-section { margin-bottom: 28px; }
+      .section-divider { margin: 28px 0; }
     }
 
-    /* ── Tablet 600px – 899px ── */
-    @media (min-width: 600px) and (max-width: 899px) {
-      .page-body { padding: 36px 20px 80px; }
+    /* ── Tablet 561px – 767px ── */
+    @media (min-width: 561px) and (max-width: 767px) {
+      .page-body { padding: 28px 20px 80px; }
 
       .form-card {
-        padding: 36px 32px;
-        max-width: 720px;
+        padding: 32px 28px;
       }
 
       .plans-grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
 
-      .hero-pills { gap: 0; }
+      .form-section { margin-bottom: 32px; }
+      .section-divider { margin: 32px 0; }
     }
 
-    /* ── Desktop 900px+ ── */
-    @media (min-width: 900px) {
-      .page-body { padding: 64px 32px 100px; }
+    /* ── Desktop 768px+ ── */
+    @media (min-width: 768px) {
+      .page-body { padding: 48px 32px 100px; }
 
       .form-card {
         padding: 56px;
-        max-width: 860px;
       }
 
       .form-section { margin-bottom: 44px; }
       .section-divider { margin: 44px 0; }
-
-      .hero-pills { gap: 0; }
     }
   </style>
 </head>
@@ -643,25 +652,25 @@
         <!-- SECTION: DEALERSHIP -->
         <div class="form-section">
           <div class="section-label">Your Dealership</div>
-          <div class="grid-2" style="gap:12px; display:flex; flex-direction:column;">
+          <div style="display:flex; flex-direction:column; gap:12px;">
 
-            <div class="field col-full">
+            <div class="field">
               <label for="dealer-name">Dealership Name</label>
               <input type="text" id="dealer-name" name="dealer_name" placeholder="Anderson Ford of Anytown" required />
             </div>
 
-            <div class="field col-full">
+            <div class="field">
               <label for="pa-code">P&amp;A Code (Dealer Code)</label>
               <input type="text" id="pa-code" name="pa_code" placeholder="e.g. 123456" maxlength="10" required />
               <span class="field-helper">Your 6-digit Ford Parts &amp; Accessories dealer code</span>
             </div>
 
-            <div class="field col-full">
+            <div class="field">
               <label for="address">Street Address</label>
               <input type="text" id="address" name="address" placeholder="1200 Main Street" required />
             </div>
 
-            <div class="grid-2" style="width:100%;">
+            <div class="grid-2">
               <div class="field">
                 <label for="city">City</label>
                 <input type="text" id="city" name="city" placeholder="Detroit" required />
@@ -687,7 +696,7 @@
               </div>
             </div>
 
-            <div class="field col-full">
+            <div class="field">
               <label for="zip">ZIP Code</label>
               <input type="text" id="zip" name="zip" placeholder="48201" maxlength="10" required />
             </div>
