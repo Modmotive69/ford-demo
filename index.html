@@ -125,6 +125,17 @@
 
     /* hero CTA full-width on mobile handled in media query */
 
+    
+    .hero-headline {
+      font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+      font-weight: 900;
+      font-size: clamp(72px, 12vw, 160px);
+      line-height: 0.9;
+      letter-spacing: -2px;
+      text-transform: uppercase;
+      color: #fff;
+      margin-bottom: 24px;
+    }
     /* ─── HERO ─── */
     .hero {
       position: relative;
@@ -701,6 +712,9 @@
     }
   </style>
 <!-- cache-bust 1790096570 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800;900&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -730,7 +744,7 @@
 
     <div class="hero-content">
       <p class="hero-eyebrow">Ford Dealer Accessory Program</p>
-      <h1>Built Ford Custom.</h1>
+      <h1 class="hero-headline">BUILT FORD CUSTOM.</h1>
       <p class="hero-sub">$805 extra gross. Per vehicle. Verified.</p>
       <p class="hero-body">Join hundreds of Ford dealers already earning more on every car they sell. JD Power confirmed it across 500+ dealers over 5 years.</p>
       <div class="hero-ctas">
