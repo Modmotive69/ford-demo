@@ -82,7 +82,7 @@
     /* ─── HERO ─── */
     .hero {
       background: var(--ford-blue);
-      padding: 64px 24px 72px;
+      padding: clamp(40px, 7vw, 80px) clamp(20px, 5vw, 80px) clamp(48px, 7vw, 88px);
       text-align: center;
     }
 
@@ -97,7 +97,7 @@
     }
 
     .hero h1 {
-      font-size: clamp(2.4rem, 6vw, 3.6rem);
+      font-size: clamp(1.75rem, 5vw, 3.25rem);
       font-weight: 700;
       color: #ffffff;
       letter-spacing: -0.03em;
@@ -140,7 +140,7 @@
 
     /* ─── MAIN LAYOUT ─── */
     .page-body {
-      padding: 48px 24px 80px;
+      padding: 32px 16px 80px;
       background: #f5f5f7;
       min-height: calc(100vh - var(--nav-h));
     }
@@ -150,8 +150,9 @@
       background: var(--white);
       border-radius: var(--radius-card);
       box-shadow: var(--shadow-card);
-      padding: 48px;
-      max-width: 600px;
+      padding: clamp(24px, 4vw, 56px);
+      width: 100%;
+      max-width: clamp(340px, 90vw, 860px);
       margin: 0 auto;
     }
 
@@ -184,6 +185,11 @@
 
     .col-full { grid-column: 1 / -1; }
 
+    /* collapse 2-col rows on narrow screens */
+    @media (max-width: 559px) {
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+
     /* ─── FIELD ─── */
     .field {
       display: flex;
@@ -211,6 +217,7 @@
     select {
       width: 100%;
       height: 52px;
+      min-height: 48px;
       background: var(--gray-input-bg);
       border: 1.5px solid transparent;
       border-radius: var(--radius-input);
@@ -262,7 +269,7 @@
     /* ─── PLAN CARDS ─── */
     .plans-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 12px;
     }
 
@@ -525,25 +532,63 @@
     }
 
     /* ─── RESPONSIVE ─── */
-    @media (max-width: 600px) {
-      nav { padding: 0 20px; }
+
+    /* ── Mobile < 600px ── */
+    @media (max-width: 599px) {
+      nav { padding: 0 16px; }
       .nav-powered { display: none; }
 
-      .hero { padding: 48px 20px 56px; }
+      .page-body { padding: 20px 12px 64px; }
 
-      .form-card { padding: 32px 24px; border-radius: 16px; }
-
-      .grid-2 { grid-template-columns: 1fr; }
+      .form-card {
+        padding: 24px 20px;
+        border-radius: 16px;
+        max-width: 100%;
+      }
 
       .plans-grid { grid-template-columns: 1fr; }
 
+      .plan-card { padding: 18px 16px; }
+
       .hero-pill-divider { display: none; }
-      .hero-pills { gap: 8px; }
-      .hero-pill { font-size: 0.8rem; padding: 7px 16px; }
+      .hero-pills { gap: 8px; justify-content: center; }
+      .hero-pill { font-size: 0.78rem; padding: 7px 14px; }
+
+      .hero-sub { font-size: 0.95rem; }
+
+      .btn-submit { height: 52px; font-size: 0.97rem; }
+
+      .form-section { margin-bottom: 32px; }
+      .section-divider { margin: 32px 0; }
     }
 
-    @media (max-width: 400px) {
-      .form-card { padding: 24px 16px; }
+    /* ── Tablet 600px – 899px ── */
+    @media (min-width: 600px) and (max-width: 899px) {
+      .page-body { padding: 36px 20px 80px; }
+
+      .form-card {
+        padding: 36px 32px;
+        max-width: 720px;
+      }
+
+      .plans-grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+
+      .hero-pills { gap: 0; }
+    }
+
+    /* ── Desktop 900px+ ── */
+    @media (min-width: 900px) {
+      .page-body { padding: 64px 32px 100px; }
+
+      .form-card {
+        padding: 56px;
+        max-width: 860px;
+      }
+
+      .form-section { margin-bottom: 44px; }
+      .section-divider { margin: 44px 0; }
+
+      .hero-pills { gap: 0; }
     }
   </style>
 </head>
