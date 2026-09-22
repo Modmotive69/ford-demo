@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Enroll — FordEngage | SmartDealer</title>
+  <meta name="description" content="Enroll your Ford dealership in the FordEngage accessory program. Join 500+ dealers grossing $805 more per vehicle." />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ford-blue: #003478;
+      --ford-blue-dark: #002a60;
+      --ford-blue-tint: #eef3fa;
+      --white: #ffffff;
+      --black: #111111;
+      --gray-label: #6e6e73;
+      --gray-input-bg: #f5f5f7;
+      --gray-border: #d2d2d7;
+      --nav-h: 68px;
+      --radius-input: 12px;
+      --radius-card: 20px;
+      --shadow-card: 0 2px 24px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04);
+      --font: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: #ffffff;
+      color: var(--black);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      box-shadow: 0 1px 0 rgba(0,0,0,0.1);
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      padding: 0 40px;
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-brand {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--black);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .nav-powered {
+      font-size: 0.78rem;
+      color: var(--gray-label);
+      font-weight: 500;
+      letter-spacing: 0.01em;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      background: var(--ford-blue);
+      padding: 64px 24px 72px;
+      text-align: center;
+    }
+
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 6vw, 3.6rem);
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 16px;
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.75);
+      max-width: 440px;
+      margin: 0 auto 32px;
+      line-height: 1.55;
+    }
+
+    .hero-pills {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      flex-wrap: wrap;
+      row-gap: 12px;
+    }
+
+    .hero-pill {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #ffffff;
+      padding: 8px 20px;
+      background: rgba(255,255,255,0.12);
+      border-radius: 40px;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .hero-pill-divider {
+      color: rgba(255,255,255,0.25);
+      font-size: 1rem;
+      padding: 0 8px;
+    }
+
+    /* ─── MAIN LAYOUT ─── */
+    .page-body {
+      padding: 48px 24px 80px;
+      background: #f5f5f7;
+      min-height: calc(100vh - var(--nav-h));
+    }
+
+    /* ─── FORM CARD ─── */
+    .form-card {
+      background: var(--white);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-card);
+      padding: 48px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* ─── SECTION HEADINGS ─── */
+    .section-label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray-label);
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #e8e8ed;
+    }
+
+    .form-section {
+      margin-bottom: 40px;
+    }
+
+    .form-section:last-of-type {
+      margin-bottom: 0;
+    }
+
+    /* ─── GRID LAYOUTS ─── */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .col-full { grid-column: 1 / -1; }
+
+    /* ─── FIELD ─── */
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .field label {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--gray-label);
+      letter-spacing: 0.01em;
+    }
+
+    .field-helper {
+      font-size: 0.72rem;
+      color: #aeaeb2;
+      margin-top: 4px;
+    }
+
+    /* ─── INPUTS ─── */
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    select {
+      width: 100%;
+      height: 52px;
+      background: var(--gray-input-bg);
+      border: 1.5px solid transparent;
+      border-radius: var(--radius-input);
+      padding: 0 16px;
+      font-family: var(--font);
+      font-size: 0.95rem;
+      color: var(--black);
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236e6e73' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      padding-right: 40px;
+      cursor: pointer;
+    }
+
+    input[type="text"]:hover,
+    input[type="email"]:hover,
+    input[type="tel"]:hover,
+    select:hover {
+      background: #ebebef;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="tel"]:focus,
+    select:focus {
+      background: var(--white);
+      border-color: var(--ford-blue);
+      box-shadow: 0 0 0 3px rgba(0,52,120,0.15);
+    }
+
+    input[type="text"]::placeholder,
+    input[type="email"]::placeholder,
+    input[type="tel"]::placeholder {
+      color: #aeaeb2;
+    }
+
+    input.sig-input {
+      font-style: italic;
+      letter-spacing: 0.01em;
+    }
+
+    /* ─── PLAN CARDS ─── */
+    .plans-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .plan-card {
+      position: relative;
+      background: var(--gray-input-bg);
+      border: 2px solid transparent;
+      border-radius: 16px;
+      padding: 20px 18px;
+      cursor: pointer;
+      transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .plan-card:hover {
+      background: #ebebef;
+      box-shadow: 0 2px 12px rgba(0,52,120,0.08);
+    }
+
+    .plan-card.selected {
+      border-color: var(--ford-blue);
+      background: var(--ford-blue-tint);
+      box-shadow: 0 2px 16px rgba(0,52,120,0.14);
+    }
+
+    .plan-check {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid var(--gray-border);
+      background: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .plan-card.selected .plan-check {
+      background: var(--ford-blue);
+      border-color: var(--ford-blue);
+    }
+
+    .plan-check svg {
+      opacity: 0;
+      transform: scale(0.5);
+      transition: opacity 0.15s ease, transform 0.15s ease;
+    }
+
+    .plan-card.selected .plan-check svg {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .plan-badge {
+      display: inline-block;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ford-blue);
+      background: rgba(0,52,120,0.1);
+      border-radius: 20px;
+      padding: 3px 8px;
+      margin-bottom: 8px;
+    }
+
+    .plan-card.selected .plan-badge {
+      background: rgba(0,52,120,0.18);
+    }
+
+    .plan-name {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--black);
+      line-height: 1.25;
+      margin-bottom: 8px;
+      padding-right: 28px;
+    }
+
+    .plan-bullets {
+      list-style: none;
+      margin-bottom: 14px;
+    }
+
+    .plan-bullets li {
+      font-size: 0.76rem;
+      color: var(--gray-label);
+      line-height: 1.5;
+      padding-left: 14px;
+      position: relative;
+    }
+
+    .plan-bullets li::before {
+      content: '·';
+      position: absolute;
+      left: 4px;
+      color: var(--gray-border);
+    }
+
+    .plan-price {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--ford-blue);
+      letter-spacing: -0.02em;
+    }
+
+    .plan-price-sub {
+      font-size: 0.72rem;
+      font-weight: 400;
+      color: var(--gray-label);
+      margin-left: 2px;
+    }
+
+    /* ─── AGREEMENT ─── */
+    .agreement-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.83rem;
+      font-weight: 500;
+      color: var(--ford-blue);
+      text-decoration: none;
+      margin-bottom: 18px;
+      padding: 10px 16px;
+      background: var(--ford-blue-tint);
+      border-radius: 10px;
+      transition: background 0.2s ease;
+    }
+
+    .agreement-link:hover {
+      background: #dce8f7;
+    }
+
+    .agreement-link svg {
+      flex-shrink: 0;
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .checkbox-row input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      margin-top: 1px;
+      accent-color: var(--ford-blue);
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .checkbox-row label {
+      font-size: 0.84rem;
+      color: var(--gray-label);
+      line-height: 1.5;
+      cursor: pointer;
+    }
+
+    /* ─── DIVIDER ─── */
+    .section-divider {
+      height: 1px;
+      background: #e8e8ed;
+      margin: 40px 0;
+    }
+
+    /* ─── SUBMIT BUTTON ─── */
+    .btn-submit {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 56px;
+      background: var(--ford-blue);
+      color: #ffffff;
+      font-family: var(--font);
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+      margin-top: 32px;
+    }
+
+    .btn-submit:hover {
+      background: var(--ford-blue-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(0,52,120,0.25);
+    }
+
+    .btn-submit:active {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* ─── FOOTER NOTE ─── */
+    .footer-note {
+      text-align: center;
+      font-size: 0.72rem;
+      color: #aeaeb2;
+      max-width: 600px;
+      margin: 24px auto 0;
+      line-height: 1.6;
+    }
+
+    /* ─── SUCCESS STATE ─── */
+    #success-state {
+      display: none;
+      text-align: center;
+      padding: 64px 32px;
+    }
+
+    .success-icon {
+      width: 72px;
+      height: 72px;
+      background: #34c759;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 28px;
+      animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.4); opacity: 0; }
+      to   { transform: scale(1);   opacity: 1; }
+    }
+
+    .success-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--black);
+      letter-spacing: -0.03em;
+      margin-bottom: 12px;
+    }
+
+    .success-sub {
+      font-size: 1rem;
+      color: var(--gray-label);
+      line-height: 1.55;
+      max-width: 340px;
+      margin: 0 auto;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 600px) {
+      nav { padding: 0 20px; }
+      .nav-powered { display: none; }
+
+      .hero { padding: 48px 20px 56px; }
+
+      .form-card { padding: 32px 24px; border-radius: 16px; }
+
+      .grid-2 { grid-template-columns: 1fr; }
+
+      .plans-grid { grid-template-columns: 1fr; }
+
+      .hero-pill-divider { display: none; }
+      .hero-pills { gap: 8px; }
+      .hero-pill { font-size: 0.8rem; padding: 7px 16px; }
+    }
+
+    @media (max-width: 400px) {
+      .form-card { padding: 24px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── NAV ─── -->
+  <nav>
+    <div class="nav-inner">
+      <a class="nav-brand" href="index.html">SmartDealer</a>
+      <div class="nav-right">
+        <span class="nav-powered">Powered by Ford DSS</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ─── HERO ─── -->
+  <section class="hero">
+    <span class="hero-eyebrow">Ford Dealer Enrollment</span>
+    <h1>Get Activated.</h1>
+    <p class="hero-sub">Join hundreds of Ford dealers already grossing $805 more per vehicle.</p>
+    <div class="hero-pills">
+      <span class="hero-pill">$805 avg</span>
+      <span class="hero-pill-divider">·</span>
+      <span class="hero-pill">155% PNVR</span>
+      <span class="hero-pill-divider">·</span>
+      <span class="hero-pill">500+ dealers</span>
+    </div>
+  </section>
+
+  <!-- ─── PAGE BODY ─── -->
+  <div class="page-body">
+
+    <div class="form-card">
+
+      <!-- SUCCESS STATE (hidden until submit) -->
+      <div id="success-state">
+        <div class="success-icon">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <path d="M7 16.5l6 6 12-13" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="success-title">You're enrolled.</div>
+        <p class="success-sub">We'll be in touch within one business day to confirm your activation and schedule onboarding.</p>
+      </div>
+
+      <!-- FORM -->
+      <form id="enroll-form" novalidate>
+
+        <!-- SECTION: DEALERSHIP -->
+        <div class="form-section">
+          <div class="section-label">Your Dealership</div>
+          <div class="grid-2" style="gap:12px; display:flex; flex-direction:column;">
+
+            <div class="field col-full">
+              <label for="dealer-name">Dealership Name</label>
+              <input type="text" id="dealer-name" name="dealer_name" placeholder="Anderson Ford of Anytown" required />
+            </div>
+
+            <div class="field col-full">
+              <label for="pa-code">P&amp;A Code (Dealer Code)</label>
+              <input type="text" id="pa-code" name="pa_code" placeholder="e.g. 123456" maxlength="10" required />
+              <span class="field-helper">Your 6-digit Ford Parts &amp; Accessories dealer code</span>
+            </div>
+
+            <div class="field col-full">
+              <label for="address">Street Address</label>
+              <input type="text" id="address" name="address" placeholder="1200 Main Street" required />
+            </div>
+
+            <div class="grid-2" style="width:100%;">
+              <div class="field">
+                <label for="city">City</label>
+                <input type="text" id="city" name="city" placeholder="Detroit" required />
+              </div>
+              <div class="field">
+                <label for="state">State</label>
+                <select id="state" name="state" required>
+                  <option value="" disabled selected>State</option>
+                  <option>AL</option><option>AK</option><option>AZ</option><option>AR</option>
+                  <option>CA</option><option>CO</option><option>CT</option><option>DE</option>
+                  <option>FL</option><option>GA</option><option>HI</option><option>ID</option>
+                  <option>IL</option><option>IN</option><option>IA</option><option>KS</option>
+                  <option>KY</option><option>LA</option><option>ME</option><option>MD</option>
+                  <option>MA</option><option>MI</option><option>MN</option><option>MS</option>
+                  <option>MO</option><option>MT</option><option>NE</option><option>NV</option>
+                  <option>NH</option><option>NJ</option><option>NM</option><option>NY</option>
+                  <option>NC</option><option>ND</option><option>OH</option><option>OK</option>
+                  <option>OR</option><option>PA</option><option>RI</option><option>SC</option>
+                  <option>SD</option><option>TN</option><option>TX</option><option>UT</option>
+                  <option>VT</option><option>VA</option><option>WA</option><option>WV</option>
+                  <option>WI</option><option>WY</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field col-full">
+              <label for="zip">ZIP Code</label>
+              <input type="text" id="zip" name="zip" placeholder="48201" maxlength="10" required />
+            </div>
+
+          </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- SECTION: PRIMARY CONTACT -->
+        <div class="form-section">
+          <div class="section-label">Primary Contact</div>
+          <div style="display:flex; flex-direction:column; gap:12px;">
+
+            <div class="grid-2">
+              <div class="field">
+                <label for="pc-first">First Name</label>
+                <input type="text" id="pc-first" name="pc_first" placeholder="Jane" required />
+              </div>
+              <div class="field">
+                <label for="pc-last">Last Name</label>
+                <input type="text" id="pc-last" name="pc_last" placeholder="Smith" required />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="pc-title">Title</label>
+              <select id="pc-title" name="pc_title" required>
+                <option value="" disabled selected>Select title</option>
+                <option>Dealer Principal</option>
+                <option>General Manager</option>
+                <option>F&I Director</option>
+                <option>Parts Manager</option>
+                <option>Other</option>
+              </select>
+            </div>
+
+            <div class="grid-2">
+              <div class="field">
+                <label for="pc-email">Email</label>
+                <input type="email" id="pc-email" name="pc_email" placeholder="jane@dealership.com" required />
+              </div>
+              <div class="field">
+                <label for="pc-phone">Phone</label>
+                <input type="tel" id="pc-phone" name="pc_phone" placeholder="(555) 000-0000" />
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- SECTION: ACCOUNTS PAYABLE -->
+        <div class="form-section">
+          <div class="section-label">Accounts Payable Contact</div>
+          <div style="display:flex; flex-direction:column; gap:12px;">
+
+            <div class="grid-2">
+              <div class="field">
+                <label for="ap-first">First Name</label>
+                <input type="text" id="ap-first" name="ap_first" placeholder="John" />
+              </div>
+              <div class="field">
+                <label for="ap-last">Last Name</label>
+                <input type="text" id="ap-last" name="ap_last" placeholder="Doe" />
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div class="field">
+                <label for="ap-email">Email</label>
+                <input type="email" id="ap-email" name="ap_email" placeholder="ap@dealership.com" />
+              </div>
+              <div class="field">
+                <label for="ap-phone">Phone</label>
+                <input type="tel" id="ap-phone" name="ap_phone" placeholder="(555) 000-0000" />
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- SECTION: PLAN SELECTION -->
+        <div class="form-section">
+          <div class="section-label">Choose Your Plan</div>
+          <input type="hidden" id="selected-plan" name="selected_plan" required />
+          <div class="plans-grid" id="plans-grid">
+
+            <!-- Plan 1: 12-Month -->
+            <div class="plan-card" data-plan="ford-engage-12">
+              <div class="plan-check">
+                <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                  <path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="plan-name">Ford Engage — 12 Month</div>
+              <ul class="plan-bullets">
+                <li>$1,000 installation fee</li>
+                <li>2 onsite trainings per year</li>
+                <li>Full platform access</li>
+              </ul>
+              <div class="plan-price">$499<span class="plan-price-sub">/mo</span></div>
+            </div>
+
+            <!-- Plan 2: 24-Month (Best Value) -->
+            <div class="plan-card" data-plan="ford-engage-24">
+              <div class="plan-check">
+                <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                  <path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="plan-badge">Best Value</div>
+              <div class="plan-name">Ford Engage — 24 Month</div>
+              <ul class="plan-bullets">
+                <li>Installation fee waived</li>
+                <li>2 onsite trainings per year</li>
+                <li>Full platform access</li>
+              </ul>
+              <div class="plan-price">$499<span class="plan-price-sub">/mo</span></div>
+            </div>
+
+            <!-- Plan 3: eStore Only -->
+            <div class="plan-card" data-plan="estore-only">
+              <div class="plan-check">
+                <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                  <path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="plan-name">eStore Only</div>
+              <ul class="plan-bullets">
+                <li>Webinar training included</li>
+                <li>Online accessory storefront</li>
+              </ul>
+              <div class="plan-price">$299<span class="plan-price-sub">/mo</span></div>
+            </div>
+
+            <!-- Plan 4: VDP Widget -->
+            <div class="plan-card" data-plan="vdp-widget-12">
+              <div class="plan-check">
+                <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                  <path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="plan-name">VDP Widget — 12 Month</div>
+              <ul class="plan-bullets">
+                <li>Webinar training included</li>
+                <li>VDP accessory widget</li>
+              </ul>
+              <div class="plan-price">$199<span class="plan-price-sub">/mo</span></div>
+            </div>
+
+            <!-- Plan 5: Package #1 (Most Popular) — full width -->
+            <div class="plan-card" data-plan="package-1-all-three" style="grid-column: 1 / -1;">
+              <div class="plan-check">
+                <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                  <path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="plan-badge">Most Popular</div>
+              <div class="plan-name">Package #1 — All Three</div>
+              <ul class="plan-bullets">
+                <li>Engage + eStore + VDP Widget — complete platform</li>
+                <li>Save $98/mo vs. individual plans</li>
+                <li>Webinar + onsite training included</li>
+              </ul>
+              <div class="plan-price">$899<span class="plan-price-sub">/mo</span></div>
+            </div>
+
+            <!-- Plan 6: Package #2 — full width -->
+            <div class="plan-card" data-plan="package-2-engage-widget" style="grid-column: 1 / -1;">
+              <div class="plan-check">
+                <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                  <path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="plan-name">Package #2 — Engage + Widget</div>
+              <ul class="plan-bullets">
+                <li>Engage + VDP Widget</li>
+                <li>Save $50/mo vs. individual plans</li>
+                <li>Onsite training included</li>
+              </ul>
+              <div class="plan-price">$649<span class="plan-price-sub">/mo</span></div>
+            </div>
+
+          </div>
+          <div id="plan-error" style="display:none; font-size:0.8rem; color:#ff3b30; margin-top:10px;">Please select a plan to continue.</div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- SECTION: AGREEMENT -->
+        <div class="form-section">
+          <div class="section-label">Agreement</div>
+
+          <a class="agreement-link" href="https://uwcampaigns.com/cm_ford_accessories_training/files/License%20and%20Service%20Agreement_Ford%20Dealers%20and%20FADs.pdf" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M3 2h7l3 3v9H3V2z" stroke="#003478" stroke-width="1.25" stroke-linejoin="round"/>
+              <path d="M10 2v3h3" stroke="#003478" stroke-width="1.25" stroke-linejoin="round"/>
+              <path d="M5 7h6M5 9.5h4" stroke="#003478" stroke-width="1.25" stroke-linecap="round"/>
+            </svg>
+            License &amp; Service Agreement — Ford Dealers &amp; FADs
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="margin-left:2px;opacity:0.5;">
+              <path d="M2.5 9.5l7-7M4.5 2.5h5v5" stroke="#003478" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+
+          <div class="checkbox-row">
+            <input type="checkbox" id="agree-checkbox" name="agreement" required />
+            <label for="agree-checkbox">I certify I am authorized to submit this on behalf of the dealership and have read and agree to the terms of the License &amp; Service Agreement.</label>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            <div class="field">
+              <label for="sig-name">Signature Name</label>
+              <input type="text" id="sig-name" name="sig_name" class="sig-input" placeholder="Your full legal name" required />
+            </div>
+            <div class="grid-2">
+              <div class="field">
+                <label for="sig-title">Title</label>
+                <input type="text" id="sig-title" name="sig_title" placeholder="General Manager" required />
+              </div>
+              <div class="field">
+                <label for="sig-phone">Phone</label>
+                <input type="tel" id="sig-phone" name="sig_phone" placeholder="(555) 000-0000" required />
+              </div>
+            </div>
+            <div class="field">
+              <label for="sig-email">Email</label>
+              <input type="email" id="sig-email" name="sig_email" placeholder="you@dealership.com" required />
+            </div>
+          </div>
+        </div>
+
+        <!-- SUBMIT -->
+        <button type="submit" class="btn-submit" id="submit-btn">
+          Submit Enrollment Request &nbsp;→
+        </button>
+
+      </form>
+
+      <!-- FOOTER NOTE -->
+      <p class="footer-note" id="footer-note">
+        Dealer performance data verified by J.D. Power across 500+ Ford dealers, 2019–2024. Offers valid through December 31, 2026.
+      </p>
+
+    </div>
+  </div>
+
+  <script>
+    // ─── PLAN CARD SELECTION ───
+    const planCards = document.querySelectorAll('.plan-card');
+    const selectedPlanInput = document.getElementById('selected-plan');
+    const planError = document.getElementById('plan-error');
+
+    planCards.forEach(card => {
+      card.addEventListener('click', () => {
+        planCards.forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+        selectedPlanInput.value = card.dataset.plan;
+        planError.style.display = 'none';
+      });
+    });
+
+    // ─── PHONE FORMATTING ───
+    document.querySelectorAll('input[type="tel"]').forEach(input => {
+      input.addEventListener('input', (e) => {
+        let val = e.target.value.replace(/\D/g, '');
+        if (val.length >= 10) {
+          val = `(${val.slice(0,3)}) ${val.slice(3,6)}-${val.slice(6,10)}`;
+        }
+        e.target.value = val;
+      });
+    });
+
+    // ─── FORM SUBMIT ───
+    const form = document.getElementById('enroll-form');
+    const successState = document.getElementById('success-state');
+    const footerNote = document.getElementById('footer-note');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      // Validate plan selection
+      if (!selectedPlanInput.value) {
+        planError.style.display = 'block';
+        document.getElementById('plans-grid').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+
+      // Validate required fields
+      const requiredFields = form.querySelectorAll('[required]');
+      let firstInvalid = null;
+      requiredFields.forEach(field => {
+        if (!field.value.trim()) {
+          field.style.borderColor = '#ff3b30';
+          field.style.boxShadow = '0 0 0 3px rgba(255,59,48,0.15)';
+          if (!firstInvalid) firstInvalid = field;
+        } else {
+          field.style.borderColor = '';
+          field.style.boxShadow = '';
+        }
+      });
+
+      if (firstInvalid) {
+        firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        firstInvalid.focus();
+        return;
+      }
+
+      // Collect form data
+      const data = {};
+      new FormData(form).forEach((val, key) => { data[key] = val; });
+      console.log('[FordEngage Enrollment]', JSON.stringify(data, null, 2));
+
+      // Show success state
+      const submitBtn = document.getElementById('submit-btn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending…';
+
+      setTimeout(() => {
+        form.style.display = 'none';
+        footerNote.style.display = 'none';
+        successState.style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 600);
+    });
+
+    // ─── CLEAR RED BORDERS ON INPUT ───
+    form.querySelectorAll('input, select').forEach(field => {
+      field.addEventListener('input', () => {
+        field.style.borderColor = '';
+        field.style.boxShadow = '';
+      });
+    });
+  </script>
+
+</body>
+</html>
