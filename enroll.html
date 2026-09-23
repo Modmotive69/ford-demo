@@ -684,7 +684,19 @@
       .form-section { margin-bottom: 44px; }
       .section-divider { margin: 44px 0; }
     }
-  </style>
+  
+    /* Overlay nav styles */
+    .nav-ford-oval { filter: drop-shadow(0 0 6px rgba(255,255,255,0.85)); transition: filter 0.35s ease; }
+    nav.scrolled .nav-ford-oval { filter: none; }
+    .nav-wordmark { filter: brightness(0) invert(1); transition: filter 0.35s ease; }
+    nav.scrolled .nav-wordmark { filter: none; }
+    .nav-program-text { color: rgba(255,255,255,0.92) !important; text-shadow: 0 1px 4px rgba(0,0,0,0.5); transition: color 0.35s ease; }
+    nav.scrolled .nav-program-text { color: #003478 !important; text-shadow: none; }
+    .nav-tagline-row .nav-powered { color: rgba(255,255,255,0.88) !important; text-shadow: 0 1px 4px rgba(0,0,0,0.5); transition: color 0.35s ease; }
+    nav.scrolled .nav-tagline-row .nav-powered { color: #003478 !important; text-shadow: none; }
+    nav:not(.scrolled) .btn-navy { background: transparent !important; border: 2px solid rgba(255,255,255,0.9) !important; color: #fff !important; }
+    nav.scrolled .btn-navy { background: var(--ford-blue, #003478) !important; border-color: var(--ford-blue, #003478) !important; color: #fff !important; }
+    </style>
 </head>
 <body>
 
