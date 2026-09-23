@@ -335,7 +335,7 @@
     .proof-stat:last-child { border-right: none; }
 
     .proof-stat-num {
-      font-size: clamp(2.2rem, 4vw, 3rem);
+      font-size: clamp(48px, 6vw, 80px);
       font-weight: 900;
       letter-spacing: -1px;
       line-height: 1;
@@ -472,6 +472,42 @@
       font-size: 1rem;
       flex-shrink: 0;
       margin-top: 1px;
+    }
+
+    /* ─── ENGAGE TABS ─── */
+    .engage-tabs {
+      display: flex;
+      gap: 0;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1.5px solid var(--ford-blue);
+      margin-bottom: 24px;
+      width: fit-content;
+    }
+
+    .engage-tab {
+      background: none;
+      border: none;
+      padding: 10px 22px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--ford-blue);
+      cursor: pointer;
+      font-family: inherit;
+      letter-spacing: 0.3px;
+      transition: background 0.18s, color 0.18s;
+      border-right: 1.5px solid var(--ford-blue);
+    }
+
+    .engage-tab:last-child { border-right: none; }
+
+    .engage-tab.active {
+      background: var(--ford-blue);
+      color: var(--white);
+    }
+
+    .engage-tab:hover:not(.active) {
+      background: rgba(0,52,120,0.07);
     }
 
     /* ─── ROI CALCULATOR ─── */
@@ -775,7 +811,7 @@
 
   <!-- ═══ HERO ═══ -->
   <section class="hero" id="hero">
-    <video autoplay muted loop playsinline class="hero-video" poster="images/bronco-hero.jpg">
+    <video id="hero-video" autoplay muted playsinline class="hero-video" poster="images/bronco-hero.jpg">
       <source src="images/bronco-hero.mp4" type="video/mp4">
     </video>
     <div class="hero-bg"></div>
@@ -837,16 +873,45 @@
       </div>
       <div class="engage-copy">
         <p class="section-eyebrow">Engage360 by SmartDealer</p>
-        <h2>They see it. They want it. They buy it.</h2>
-        <p class="engage-body">ENGAGE360 puts factory-accurate 4D accessory visualization in the hands of every sales associate — right on the showroom floor. When customers can see and price accessories on their exact vehicle in real time, the conversation closes itself.</p>
-        <ul class="engage-bullets">
-          <li>4D visualization on any Ford vehicle</li>
-          <li>Fitment and pricing in a single view</li>
-          <li>Tablet, desktop, and large-format display ready</li>
-          <li>Connected across F&amp;I, Parts, and Service</li>
-          <li>No fees. No contracts. No surprises.</li>
-        </ul>
-        <a class="btn btn-navy" href="enroll.html">Get Activated →</a>
+        <h2>Sell Accessories. Right Here. Right Now.</h2>
+
+        <div class="engage-tabs">
+          <button class="engage-tab active" data-tab="instore">In-Store</button>
+          <button class="engage-tab" data-tab="estore">eStore</button>
+          <button class="engage-tab" data-tab="vdp">VDP Widget</button>
+        </div>
+
+        <div class="engage-tab-content" data-content="instore">
+          <p class="engage-body">ENGAGE360 puts factory-accurate 4D accessory visualization in the hands of every sales associate — right on the showroom floor. Customers see their exact vehicle with accessories installed. The conversation closes itself.</p>
+          <ul class="engage-bullets">
+            <li>4D visualization on any Ford vehicle</li>
+            <li>Fitment and pricing in a single view</li>
+            <li>Tablet, desktop, and large-format display ready</li>
+            <li>Connected across F&amp;I, Parts, and Service</li>
+          </ul>
+        </div>
+
+        <div class="engage-tab-content" data-content="estore" style="display:none;">
+          <p class="engage-body">Give customers a branded online accessory store. They browse and configure before they arrive — you capture revenue before the deal even starts. Available 24/7, tied directly to your inventory.</p>
+          <ul class="engage-bullets">
+            <li>Dealer-branded online storefront</li>
+            <li>Factory-accurate Ford accessories catalog</li>
+            <li>Seamless checkout tied to your DMS</li>
+            <li>Capture online revenue around the clock</li>
+          </ul>
+        </div>
+
+        <div class="engage-tab-content" data-content="vdp" style="display:none;">
+          <p class="engage-body">Embed an accessories widget directly on your VDP — every shopper sees personalized, fitment-confirmed accessory options while viewing the vehicle they want. Converts online browsers into accessory buyers.</p>
+          <ul class="engage-bullets">
+            <li>Fits any website or inventory platform</li>
+            <li>Real-time fitment + pricing per VIN</li>
+            <li>Converts online shoppers to accessory buyers</li>
+            <li>Drops in with a single snippet — no dev work</li>
+          </ul>
+        </div>
+
+        <a class="btn btn-navy" href="enroll.html" style="margin-top:24px;display:inline-block;">Get Activated →</a>
       </div>
     </div>
   </section>
@@ -877,24 +942,24 @@
   </section>
 
   <!-- ═══ HOW IT WORKS ═══ -->
-  <section class="section-how">
+  <section class="section-how" id="how">
     <div class="how-inner">
       <h2>Live on your floor in days.</h2>
       <div class="how-cards">
         <div class="how-card">
-          <div class="how-step-num">01 — Enroll</div>
-          <h3>Ten minutes to start</h3>
-          <p>A quick enrollment call is all it takes. No lengthy sales process. You're approved through Ford DSS — we just need to activate your store.</p>
+          <div class="how-step-num">01 — Install &amp; Train</div>
+          <h3>Up and running in days</h3>
+          <p>ENGAGE360 is delivered, configured for your inventory, and live within days — no construction, no new hardware. We train your team on-site. They're selling accessories before we leave the building.</p>
         </div>
         <div class="how-card">
-          <div class="how-step-num">02 — Install</div>
-          <h3>Days, not months</h3>
-          <p>ENGAGE360 is delivered and configured for your inventory within days. No construction, no new hardware to spec — it runs on what you already have.</p>
+          <div class="how-step-num">02 — Present to Every Customer</div>
+          <h3>Every deal. Every time.</h3>
+          <p>Your team presents factory-accurate accessory options on every vehicle, every deal. The visual tool makes the conversation natural — customers ask for accessories you haven't even shown them yet.</p>
         </div>
         <div class="how-card">
-          <div class="how-step-num">03 — Sell</div>
-          <h3>Accessories on every deal</h3>
-          <p>Your team presents accessories on every vehicle, every deal. The tool makes the conversation easy — and the gross makes it worth having every time.</p>
+          <div class="how-step-num">03 — Watch Revenue Grow</div>
+          <h3>$805 more per vehicle</h3>
+          <p>Dealers see gross change within the first month. Top performers hit $1,200 per vehicle. JD Power verified it across 500+ dealers over 5 years. Your results start on your first deal.</p>
         </div>
       </div>
     </div>
@@ -927,9 +992,8 @@
   <!-- ═══ FINAL CTA ═══ -->
   <section class="section-finalcta">
     <div class="section-inner" style="text-align:center;">
-      <h2>Every dollar per vehicle matters.<br>This one is yours.</h2>
-      <a class="btn btn-white btn-lg" href="enroll.html">Get Activated →</a>
-      
+      <h2>Ready to capture your share of the $50B accessories market?</h2>
+      <a class="btn btn-white btn-lg" href="enroll.html">ACTIVATE YOUR PROFITS TODAY →</a>
     </div>
   </section>
 
@@ -953,6 +1017,20 @@
       });
     });
 
+    // ── Engage Tabs ──
+    const engageTabs = document.querySelectorAll('.engage-tab');
+    const engageContents = document.querySelectorAll('.engage-tab-content');
+
+    engageTabs.forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        engageTabs.forEach(function(t) { t.classList.remove('active'); });
+        engageContents.forEach(function(c) { c.style.display = 'none'; });
+        tab.classList.add('active');
+        var target = document.querySelector('[data-content="' + tab.dataset.tab + '"]');
+        if (target) target.style.display = 'block';
+      });
+    });
+
     // ── ROI Calculator ──
     var ratesAvg = 805;
     var ratesTop = 1200;
@@ -969,6 +1047,22 @@
 
     input.addEventListener('input', calcROI);
     calcROI();
+  </script>
+
+  <script>
+    // Alternate hero videos: Bronco → Raptor → Bronco → ...
+    (function() {
+      var videos = ['images/bronco-hero.mp4', 'images/f150-raptor-hero.mp4'];
+      var idx = 0;
+      var v = document.getElementById('hero-video');
+      if (!v) return;
+      v.addEventListener('ended', function() {
+        idx = (idx + 1) % videos.length;
+        v.src = videos[idx];
+        v.load();
+        v.play();
+      });
+    })();
   </script>
 
 </body>
