@@ -86,6 +86,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      overflow: visible;
     }
     .nav-brand img {
       height: 48px;
@@ -801,7 +802,8 @@
       color: #003478;
       white-space: nowrap;
     }
-      .nav-brand { display: flex; }
+      .nav-brand { display: flex;   overflow: visible;
+    }
 
       .engage-inner { grid-template-columns: 1fr; gap: 32px; }
 
@@ -862,7 +864,7 @@
     <div class="nav-inner">
       <a class="nav-brand" href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
         <img src="images/ford-oval.png" alt="Ford" class="nav-ford-oval" style="height:56px;width:auto;display:block;">
-        <img src="images/fordengage-wordmark.png" alt="FordEngage" class="nav-wordmark" style="height:52px;width:auto;display:block;"><span class="nav-program-text" style="font-size:22px;font-weight:200;letter-spacing:2px;align-self:flex-end;padding-bottom:8px;margin-left:4px;">Program</span>
+        <img src="images/fordengage-wordmark.png" alt="FordEngage" class="nav-wordmark" style="height:52px;width:auto;display:block;padding-bottom:6px;overflow:visible;"><span class="nav-program-text" style="font-size:22px;font-weight:200;letter-spacing:2px;align-self:flex-end;padding-bottom:8px;margin-left:4px;">Program</span>
       </a>
       <div class="nav-right">
         <a class="btn btn-navy" href="enroll.html">Activate Ford Engage</a>
