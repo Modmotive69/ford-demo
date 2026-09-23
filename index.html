@@ -35,16 +35,35 @@
 
     /* ─── NAV ─── */
     nav {
-      position: sticky;
+      position: fixed;
       top: 0;
+      left: 0;
+      width: 100%;
       z-index: 100;
-      background: var(--white);
-      box-shadow: 0 2px 12px rgba(0,0,0,0.10);
-      padding: 8px clamp(16px, 4vw, 40px) 6px;
+      background: transparent;
+      box-shadow: none;
+      padding: 18px clamp(16px, 4vw, 40px) 10px;
       display: flex;
       flex-direction: column;
-      gap: 0px;
+      gap: 0;
+      transition: background 0.35s ease, box-shadow 0.35s ease, padding 0.35s ease;
     }
+    nav::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 120px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, transparent 100%);
+      z-index: -1;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+    nav.scrolled {
+      background: #fff;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+      padding: 8px clamp(16px, 4vw, 40px) 6px;
+    }
+    nav.scrolled::before { opacity: 0; }
 
     .nav-inner {
       max-width: 1200px;
@@ -74,9 +93,7 @@
       display: block !important;
       visibility: visible !important;
     }
-    .nav-brand img[alt="FordEngage by SmartDealer Technologies"] {
-      height: 40px;
-    }
+
     .nav-brand svg {
       width: 52px;
       height: 52px;
@@ -149,7 +166,7 @@
       position: relative;
       height: auto;
       min-height: 520px;
-      padding: 80px 0 60px;
+      padding: 160px 0 60px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -257,7 +274,7 @@
     /* floating pills */
     .hero-pill-tl {
       position: absolute;
-      top: calc(var(--nav-h) + 16px);
+      top: 16px;
       left: clamp(16px, 4vw, 40px);
       z-index: 3;
       background: rgba(255,255,255,0.15);
@@ -324,6 +341,32 @@
     }
     .hero-video-next {
       opacity: 0;
+    }
+
+    /* Overlay nav styles */
+    .nav-wordmark { filter: brightness(0) invert(1); transition: filter 0.35s ease; }
+    nav.scrolled .nav-wordmark { filter: none; }
+    .nav-program-text {
+      color: rgba(255,255,255,0.92) !important;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+      transition: color 0.35s ease, text-shadow 0.35s ease;
+    }
+    nav.scrolled .nav-program-text { color: #003478 !important; text-shadow: none; }
+    .nav-tagline-row .nav-powered {
+      color: rgba(255,255,255,0.88) !important;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+      transition: color 0.35s ease;
+    }
+    nav.scrolled .nav-tagline-row .nav-powered { color: #003478 !important; text-shadow: none; }
+    nav:not(.scrolled) .btn-navy {
+      background: transparent !important;
+      border: 2px solid rgba(255,255,255,0.9) !important;
+      color: #fff !important;
+    }
+    nav.scrolled .btn-navy {
+      background: var(--ford-blue) !important;
+      border-color: var(--ford-blue) !important;
+      color: #fff !important;
     }
     /* ─── PROOF STRIP ─── */
     .proof-strip {
@@ -819,7 +862,7 @@
     <div class="nav-inner">
       <a class="nav-brand" href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
         <img src="images/ford-oval.jpg" alt="Ford" style="height:56px;width:auto;display:block;">
-        <img src="images/fordengage-wordmark.png" alt="FordEngage" style="height:52px;width:auto;display:block;"><span style="font-size:22px;font-weight:200;color:#003478;letter-spacing:2px;align-self:flex-end;padding-bottom:8px;margin-left:4px;">Program</span>
+        <img src="images/fordengage-wordmark.png" alt="FordEngage" class="nav-wordmark" style="height:52px;width:auto;display:block;"><span class="nav-program-text" style="font-size:22px;font-weight:200;letter-spacing:2px;align-self:flex-end;padding-bottom:8px;margin-left:4px;">Program</span>
       </a>
       <div class="nav-right">
         <a class="btn btn-navy" href="enroll.html">Activate Ford Engage</a>
@@ -1113,6 +1156,21 @@
     })();
   </script>
 
+
+    // Transparent nav → sticky on scroll
+    (function() {
+      var nav = document.querySelector('nav');
+      if (!nav) return;
+      function onScroll() {
+        if (window.scrollY > 60) {
+          nav.classList.add('scrolled');
+        } else {
+          nav.classList.remove('scrolled');
+        }
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
 </body>
 </html>
 <!-- cf deploy test Mon Sep 21 21:41:50 EDT 2026 -->
