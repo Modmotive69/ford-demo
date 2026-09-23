@@ -1066,7 +1066,7 @@
   </script>
 
   <script>
-    // Hero video crossfade carousel
+    // Hero video crossfade carousel — looping
     (function() {
       var videos = [
         'images/bronco-hero.mp4',
@@ -1080,39 +1080,32 @@
 
       var active = vA, next = vB;
 
-      function loadNext() {
+      function startFade() {
         idx = (idx + 1) % videos.length;
         next.src = videos[idx];
         next.load();
-        next.play();
-      }
-
-      function crossfade() {
-        // Fade in next, fade out active
+        next.play().catch(function(){});
+        // Fade next in, active out
         next.classList.add('hero-video-active');
         next.classList.remove('hero-video-next');
         active.classList.remove('hero-video-active');
         active.classList.add('hero-video-next');
-        // Swap references
+        // Swap
         var tmp = active; active = next; next = tmp;
-        // Load next video ready to go
-        loadNext();
+        active._fading = false;
       }
 
-      // Start crossfade 1.5s before current video ends
-      active.addEventListener('timeupdate', function() {
-        if (this.duration && this.currentTime >= this.duration - 1.8) {
-          if (!this._fading) {
+      function attachListener(el) {
+        el.addEventListener('timeupdate', function() {
+          if (!this._fading && this.duration && this.currentTime >= this.duration - 1.8) {
             this._fading = true;
-            loadNext();
-            setTimeout(crossfade, 300);
+            startFade();
           }
-        }
-      });
+        });
+      }
 
-      active.addEventListener('ended', function() {
-        this._fading = false;
-      });
+      attachListener(vA);
+      attachListener(vB);
 
       // Preload second video
       vB.src = videos[1];
