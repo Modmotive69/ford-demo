@@ -321,36 +321,38 @@
     /* ─── PROOF STRIP ─── */
     .proof-strip {
       background: #fff;
-      color: var(--black);
-      padding: clamp(36px, 5vw, 52px) clamp(20px, 5vw, 40px);
+      border-top: 1px solid #e8e8e8;
+      padding: 28px clamp(20px,5vw,60px);
     }
     .proof-strip-inner {
-      max-width: 1000px;
+      max-width: 1200px;
       width: 100%;
       margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
     .proof-stat {
-      padding: 16px 0;
-      border-right: 1px solid rgba(255,255,255,0.18);
+      text-align: center;
+      flex: 1;
+      padding: 0 12px;
+      border-right: 1px solid #e0e0e0;
     }
     .proof-stat:last-child { border-right: none; }
     .proof-stat-num {
-      font-size: clamp(48px, 6vw, 80px);
+      font-size: clamp(32px,4.5vw,52px);
       font-weight: 900;
       letter-spacing: -1px;
       line-height: 1;
-      margin-bottom: 8px;
+      color: #111;
     }
     .proof-stat-label {
-      font-size: 0.82rem;
-      color: rgba(255,255,255,0.72);
-      letter-spacing: 0.5px;
+      font-size: 10px;
+      font-weight: 700;
       text-transform: uppercase;
-      font-weight: 600;
+      letter-spacing: 1.4px;
+      color: #666;
+      margin-top: 5px;
     }
 
     /* ─── SECTIONS ─── */
@@ -570,8 +572,20 @@
 
     /* ─── MOBILE (≤ 480px) ─── */
     @media (max-width: 480px) {
-      .proof-strip-inner { grid-template-columns: 1fr; gap: 0; }
-      .proof-stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.18); padding: 24px 0; }
+      .proof-strip-inner {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+      .proof-stat {
+      text-align: center;
+      flex: 1;
+      padding: 0 12px;
+      border-right: 1px solid #e0e0e0;
+    }
       .proof-stat:last-child { border-bottom: none; }
       .engage-copy .btn,
       .roi-inner .btn { display: block; width: 100%; text-align: center; box-sizing: border-box; }
@@ -637,8 +651,26 @@
     <div class="proof-strip-inner">
       <div class="proof-stat">
         <div class="proof-stat-num">$800</div>
-        <div class="proof-stat-label">Avg extra gross per vehicle</div>
+        <div class="proof-stat-label">Avg Extra Gross Per Vehicle</div>
       </div>
+      <div class="proof-stat">
+        <div class="proof-stat-num">155%</div>
+        <div class="proof-stat-label">PNVR Increase</div>
+      </div>
+      <div class="proof-stat">
+        <div class="proof-stat-num">$1,200</div>
+        <div class="proof-stat-label">Top 100 Dealers Per Vehicle</div>
+      </div>
+      <div class="proof-stat">
+        <div class="proof-stat-num">500+</div>
+        <div class="proof-stat-label">Dealers — Proven</div>
+      </div>
+      <div class="proof-stat" style="border-right:none;">
+        <img src="images/jdpower-badge.png" alt="JD Power Verified" style="height:44px;width:auto;display:block;margin:0 auto 5px;">
+        <div class="proof-stat-label">Verified</div>
+      </div>
+    </div>
+  </div>
       <div class="proof-stat">
         <div class="proof-stat-num">155%</div>
         <div class="proof-stat-label">PNVR increase</div>
