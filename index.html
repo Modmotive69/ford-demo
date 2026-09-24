@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FordEngage | Built Ford Custom | SmartDealer</title>
+  <meta name="format-detection" content="telephone=no, address=no, email=no">
   <meta name="description" content="Ford dealer accessory program. $800 extra gross per vehicle. JD Power verified across 500+ dealers. Powered by Ford DSS." />
   <link rel="preconnect" href="https://www.ford.com" />
   <link rel="stylesheet" href="https://www.ford.com/shared/fonts/ford.css" />
@@ -372,6 +373,12 @@
 
     /* ─── PROBLEM ─── */
     .section-problem { background: var(--white); }
+    .section-problem h2 {
+      color: var(--black) !important;
+      text-decoration: none !important;
+      cursor: default !important;
+      pointer-events: none;
+    }
 
     /* ─── ENGAGE360 ─── */
     .section-engage { background: var(--gray-bg); }
@@ -706,7 +713,7 @@
   <!-- ═══ THE PROBLEM ═══ -->
   <section class="section-problem">
     <div class="section-inner">
-      <h2>Did you know, each year you've lost over $4 million in gross PNVR from our top PNVR dealers?</h2>
+      <h2 x-apple-data-detectors="false" style="cursor:default;text-decoration:none;"><h2 x-apple-data-detectors="false">Did you know, each year you've lost over $4 million in gross PNVR from our top PNVR dealers?</h2></h2>
       <p class="section-body">The typical Ford dealer makes nominal gross on accessories. No visual tool. No consistent presentation. Sales staff skip the conversation. Meanwhile the top dealers in your market are grossing $1,200 per vehicle in accessories — on every deal, every day. That gap is yours to close.</p>
     </div>
   </section>
