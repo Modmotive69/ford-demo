@@ -71,12 +71,6 @@
       justify-content: space-between;
       padding-bottom: 4px;
     }
-    .nav-tagline-row {
-      max-width: 1200px;
-      width: 100%;
-      margin: 0 auto;
-      text-align: center;
-    }
     .nav-brand {
       text-decoration: none;
       display: flex;
@@ -170,12 +164,7 @@
       transition: color 0.35s ease, text-shadow 0.35s ease;
     }
     nav.scrolled .nav-program-text { color: #003478 !important; text-shadow: none; }
-    .nav-tagline-row .nav-powered {
-      color: rgba(255,255,255,0.88) !important;
-      text-shadow: 0 1px 4px rgba(0,0,0,0.5);
-      transition: color 0.35s ease;
-    }
-    nav.scrolled .nav-tagline-row .nav-powered { color: #003478 !important; text-shadow: none; }
+    nav.scrolled
     nav:not(.scrolled) .btn-navy {
       background: transparent !important;
       border: 2px solid rgba(255,255,255,0.9) !important;
@@ -526,23 +515,19 @@
       <a class="nav-brand" href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
         <img src="images/ford-oval.png" alt="Ford" class="nav-ford-oval" style="height:56px;width:auto;display:block;">
         <img src="images/fordengage-wordmark.png" alt="FordEngage" class="nav-wordmark" style="height:52px;width:auto;display:block;padding-bottom:6px;overflow:visible;">
-        <span class="nav-program-text" style="font-size:22px;font-weight:200;letter-spacing:2px;align-self:flex-end;padding-bottom:8px;margin-left:4px;">Accessories Sale Program</span>
+        <span class="nav-program-text" style="font-size:14px;font-weight:300;letter-spacing:1.5px;white-space:nowrap;margin-left:12px;line-height:1;">Accessories Sale Program</span>
       </a>
       <div class="nav-right" style="display:flex;gap:12px;align-items:center;">
         <a class="btn btn-outline-white nav-btn" href="#how" style="font-size:14px;padding:10px 20px;border:2px solid rgba(255,255,255,0.8);color:#fff;border-radius:4px;text-decoration:none;font-weight:600;white-space:nowrap;transition:all 0.3s;">Watch Video</a>
         <a class="btn btn-navy nav-btn" href="enroll.html" style="font-size:14px;padding:10px 20px;white-space:nowrap;">Enroll Now</a>
       </div>
     </div>
-    <div class="nav-tagline-row">
-      <span class="nav-powered" style="font-size:13px;font-weight:700;color:#003478;">Stop letting $1,000 walk out your door!</span>
-    </div>
   </nav>
 
   <!-- ═══ HERO ═══ -->
   <section class="hero" id="home">
     <!-- Video layers — background (z-index: 0) -->
-    <video id="hero-video-a" autoplay muted playsinline class="hero-video hero-video-active" poster="images/hero-bg.jpg">
-      <source src="images/bronco-hero.mp4" type="video/mp4">
+    <video id="hero-video-a" muted playsinline class="hero-video hero-video-active" poster="images/hero-bg.jpg">
     </video>
     <video id="hero-video-b" muted playsinline class="hero-video hero-video-next"></video>
 
