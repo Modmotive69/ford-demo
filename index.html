@@ -238,7 +238,7 @@
     .hero-combined-img {
       position: absolute;
       right: 0;
-      top: 8%;
+      top: 22%;
       width: 54%;
       max-width: 780px;
       filter: drop-shadow(0 24px 60px rgba(0,0,0,0.2));
@@ -262,7 +262,7 @@
       .nav-btn { font-size: 11px !important; padding: 8px 12px !important; }
     }
 
-    /* ─── WE OWE SECTION — EDITORIAL ─── */
+    
     .section-weowe {
       background: #001a3a;
       color: #fff;
@@ -310,6 +310,31 @@
     @media (max-width: 768px) {
       .weowe-grid { grid-template-columns: 1fr; gap: 40px; }
     }
+
+    /* ─── DEAL JOURNEY SECTION ─── */
+    .section-journey { background: #fff; padding: clamp(60px,8vw,100px) clamp(24px,6vw,60px); }
+    .journey-wrap { max-width: 800px; margin: 0 auto; }
+    .journey-header { text-align: center; margin-bottom: 64px; }
+    .journey-kicker { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--ford-blue); margin-bottom: 16px; }
+    .journey-title { font-family: 'Barlow Condensed','Arial Narrow',sans-serif; font-weight: 900; font-size: clamp(40px,6vw,68px); line-height: 1; color: #111; margin-bottom: 16px; }
+    .journey-sub { font-size: 17px; color: #888; font-weight: 300; }
+    .journey-road { position: relative; padding-left: 60px; }
+    .journey-road::before { content: ''; position: absolute; left: 24px; top: 0; bottom: 0; width: 4px;
+      background: repeating-linear-gradient(to bottom, #003478 0px,#003478 16px,transparent 16px,transparent 28px);
+      border-radius: 2px; }
+    .journey-stop { position: relative; padding: 0 0 48px 24px; }
+    .journey-stop:last-child { padding-bottom: 0; }
+    .journey-num { position: absolute; left: -48px; top: 0; width: 44px; height: 44px;
+      background: var(--ford-blue); color: #fff; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 18px; box-shadow: 0 4px 16px rgba(0,52,120,0.25); z-index: 2; }
+    .journey-dept { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #003478; margin-bottom: 6px; }
+    .journey-action { font-family: 'Barlow Condensed','Arial Narrow',sans-serif; font-weight: 700; font-size: clamp(20px,2.5vw,28px); color: #111; line-height: 1.1; margin-bottom: 8px; }
+    .journey-detail { font-size: 14px; color: #777; line-height: 1.6; max-width: 500px; }
+    .journey-destination { margin-top: 48px; background: var(--ford-blue); color: #fff; padding: 32px 36px; border-radius: 12px; display: flex; align-items: center; gap: 24px; }
+    .journey-dest-term { font-family: 'Barlow Condensed','Arial Narrow',sans-serif; font-weight: 900; font-size: clamp(32px,4vw,48px); white-space: nowrap; letter-spacing: 1px; }
+    .journey-dest-text { font-size: 15px; color: rgba(255,255,255,0.8); line-height: 1.6; }
+    @media(max-width:600px){.journey-destination{flex-direction:column;align-items:flex-start;gap:12px;}}
     /* ─── PROOF STRIP ─── */
     .proof-strip {
       background: #fff;
@@ -567,7 +592,7 @@
     .hero-combined-img {
       position: absolute;
       right: 0;
-      top: 8%;
+      top: 22%;
       width: 54%;
       max-width: 780px;
       filter: drop-shadow(0 24px 60px rgba(0,0,0,0.2));
