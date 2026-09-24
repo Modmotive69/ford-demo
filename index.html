@@ -980,15 +980,11 @@
     (function() {
       var nav = document.querySelector('nav');
       if (!nav) return;
-      function onScroll() {
-        if (window.scrollY > 60) {
-          nav.classList.add('scrolled');
-        } else {
-          nav.classList.remove('scrolled');
-        }
-      }
-      window.addEventListener('scroll', onScroll, { passive: true });
-      onScroll();
+      nav.classList.remove('scrolled');
+      window.addEventListener('scroll', function() {
+        if (window.scrollY > 80) nav.classList.add('scrolled');
+        else nav.classList.remove('scrolled');
+      }, { passive: true });
     })();
   </script>
 
