@@ -169,9 +169,9 @@
       letter-spacing: 1.5px !important;
       white-space: nowrap !important;
       margin-left: 12px !important;
-      line-height: 1 !important;
-      color: rgba(255,255,255,0.92) !important;
+      color: rgba(255,255,255,0.85) !important;
       text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+      transition: color .35s ease;
     }
     nav.scrolled .nav-program-text {
       font-size: 13px !important;
@@ -179,9 +179,9 @@
       letter-spacing: 1.5px !important;
       white-space: nowrap !important;
       margin-left: 12px !important;
-      line-height: 1 !important;
-      color: rgba(255,255,255,0.92) !important;
+      color: rgba(255,255,255,0.85) !important;
       text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+      transition: color .35s ease;
     }
     nav.scrolled
     nav:not(.scrolled) .btn-navy {
@@ -246,7 +246,16 @@
     }
 
     @media (max-width: 768px) {
-      .nav-program-text { display: none !important; }
+      .nav-program-text {
+      font-size: 13px !important;
+      font-weight: 300 !important;
+      letter-spacing: 1.5px !important;
+      white-space: nowrap !important;
+      margin-left: 12px !important;
+      color: rgba(255,255,255,0.85) !important;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+      transition: color .35s ease;
+    }
       .nav-wordmark { height: 32px !important; }
       .nav-ford-oval { height: 38px !important; }
       .nav-right { gap: 8px !important; }
@@ -254,8 +263,8 @@
     }
     /* ─── PROOF STRIP ─── */
     .proof-strip {
-      background: var(--ford-blue);
-      color: var(--white);
+      background: #fff;
+      color: var(--black);
       padding: clamp(36px, 5vw, 52px) clamp(20px, 5vw, 40px);
     }
     .proof-strip-inner {
