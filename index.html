@@ -369,14 +369,41 @@
       color: #444;
       line-height: 1.75;
       max-width: 700px;
+      margin: 0 auto;
     }
 
     /* ─── PROBLEM ─── */
     .section-problem { background: var(--white); }
+    .section-problem { text-align: center; }
     .section-problem h2 {
       color: var(--black) !important;
       text-decoration: none !important;
       cursor: default !important;
+      pointer-events: none;
+      position: relative;
+      display: inline-block;
+      max-width: 820px;
+    }
+    .section-problem h2::before {
+      content: '\201C';
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 7em;
+      color: rgba(0,52,120,0.12);
+      position: absolute;
+      top: -0.28em;
+      left: -0.22em;
+      line-height: 1;
+      pointer-events: none;
+    }
+    .section-problem h2::after {
+      content: '\201D';
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 7em;
+      color: rgba(0,52,120,0.12);
+      position: absolute;
+      bottom: -0.42em;
+      right: -0.18em;
+      line-height: 1;
       pointer-events: none;
     }
 
