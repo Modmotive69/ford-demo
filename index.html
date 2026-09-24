@@ -9,6 +9,12 @@
   <link rel="preconnect" href="https://www.ford.com" />
   <link rel="stylesheet" href="https://www.ford.com/shared/fonts/ford.css" />
   <style>
+    @font-face {
+      font-family: 'Ford Light Extended';
+      src: url('fonts/ford-light-extended.otf') format('opentype');
+      font-weight: 300;
+      font-style: normal;
+    }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
@@ -174,7 +180,7 @@
       transition:color .3s,text-shadow .3s;
     }
     .nav-program-text {
-      font-size:12px; font-weight:700; letter-spacing:1px;
+      font-size: 24px; font-weight:700; letter-spacing:1px;
       white-space:nowrap; margin-left:14px; align-self:center;
       color:#fff; text-shadow:none;
       transition:color .3s;
@@ -325,6 +331,19 @@
     .journey-dest-term { font-family: 'Barlow Condensed','Arial Narrow',sans-serif; font-weight: 900; font-size: clamp(32px,4vw,48px); white-space: nowrap; letter-spacing: 1px; }
     .journey-dest-text { font-size: 15px; color: rgba(255,255,255,0.8); line-height: 1.6; }
     @media(max-width:600px){.journey-destination{flex-direction:column;align-items:flex-start;gap:12px;}}
+
+    /* ─── FORD LIGHT EXTENDED — copy only ─── */
+    .section-body,
+    .engage-body,
+    .how-card p,
+    .testimonial-text,
+    .journey-detail,
+    .weowe-desc,
+    .weowe-step-detail,
+    .journey-dest-text {
+      font-family: 'Ford Light Extended', 'Ford Antenna', Arial, sans-serif;
+      font-weight: 300;
+    }
     /* ─── PROOF STRIP ─── */
     .proof-strip {
       background: #fff;
