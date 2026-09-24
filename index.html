@@ -219,7 +219,7 @@
     }
     .hero-combined-img {
       position: absolute;
-      right: 0;
+      right: 3%;
       top: 22%;
       width: 54%;
       max-width: 780px;
@@ -586,6 +586,44 @@
       .roi-input { width: 100%; }
       .how-cards { grid-template-columns: 1fr; }
       .testimonial-cards { grid-template-columns: 1fr; }
+    }
+  
+    @media (max-width: 768px) {
+      .hero {
+        min-height: 100vh;
+        align-items: flex-start;
+      }
+      .hero-text-col {
+        position: relative;
+        left: auto; top: auto;
+        padding: 120px 24px 20px;
+        width: 100%;
+      }
+      .hero-assets-col {
+        position: relative;
+        top: auto; left: auto;
+        width: 100%;
+        height: auto;
+        display: flex;
+        justify-content: center;
+      }
+      .hero-combined-img {
+        position: relative;
+        right: auto; top: auto;
+        width: 90%;
+        max-width: 480px;
+        margin: 0 auto 40px;
+      }
+      .hero-foreground {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+        padding-bottom: 40px;
+      }
+      .hero-sand-fade { height: 120px; }
+      .hero-headline { font-size: clamp(64px, 18vw, 120px); }
     }
   </style>
   <script src="https://kit.fontawesome.com/a0d1bd4a2c.js" crossorigin="anonymous"></script>
