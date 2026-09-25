@@ -345,6 +345,35 @@
       font-family: 'Ford Light Extended', 'Ford Antenna', Arial, sans-serif;
       font-weight: 300;
     }
+
+    /* ─── VIDEO MODAL ─── */
+    .vmodal-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.88);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+    }
+    .vmodal-overlay.open { display: flex; }
+    .vmodal-inner {
+      position: relative;
+      width: min(900px, 92vw);
+      background: #000;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.7);
+    }
+    .vmodal-frame { position: relative; padding-bottom: 56.25%; height: 0; }
+    .vmodal-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .vmodal-close {
+      position: absolute; top: 12px; right: 14px; z-index: 10;
+      background: rgba(255,255,255,0.15); border: none; color: #fff;
+      font-size: 20px; width: 36px; height: 36px; border-radius: 50%;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .vmodal-close:hover { background: rgba(255,255,255,0.3); }
     /* ─── PROOF STRIP ─── */
     .proof-strip {
       background: #fff;
@@ -690,7 +719,7 @@
       </a>
       <span class="nav-program-text">World's Only Proven Accessories Sales Program</span>
       <div class="nav-right" style="display:flex;gap:12px;align-items:center;">
-        <a class="btn btn-outline-white nav-btn" href="#how" style="font-size:14px;padding:10px 20px;border:2px solid rgba(255,255,255,0.8);color:#fff;border-radius:4px;text-decoration:none;font-weight:600;white-space:nowrap;transition:all 0.3s;">Watch Video</a>
+        <a class="btn btn-outline-white nav-btn" href="#" onclick="event.preventDefault();openVideo();" style="font-size:14px;padding:10px 20px;border:2px solid rgba(255,255,255,0.8);color:#fff;border-radius:4px;text-decoration:none;font-weight:600;white-space:nowrap;transition:all 0.3s;">Watch Video</a>
         <a class="btn btn-navy nav-btn" href="enroll.html" style="font-size:14px;padding:10px 20px;white-space:nowrap;">Enroll Now</a>
       </div>
     </div>
@@ -1061,5 +1090,41 @@
     })();
   </script>
 
+
+  <!-- ═══ VIDEO LIGHTBOX ═══ -->
+  <div id="video-modal" class="vmodal-overlay" onclick="if(event.target===this)closeVideo()">
+    <div class="vmodal-inner">
+      <button class="vmodal-close" onclick="closeVideo()" aria-label="Close">&#x2715;</button>
+      <div class="vmodal-frame">
+        <iframe id="vmodal-iframe"
+          src=""
+          title="FordEngage — Accessories Sales Program"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var YT_ID = 'aHBj-zA7Hqg';
+    function openVideo() {
+      var modal = document.getElementById('video-modal');
+      var iframe = document.getElementById('vmodal-iframe');
+      iframe.src = 'https://www.youtube-nocookie.com/embed/' + YT_ID + '?autoplay=1&rel=0&modestbranding=1';
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeVideo() {
+      var modal = document.getElementById('video-modal');
+      var iframe = document.getElementById('vmodal-iframe');
+      modal.classList.remove('open');
+      iframe.src = '';
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeVideo();
+    });
+  </script>
 </body>
 </html>
