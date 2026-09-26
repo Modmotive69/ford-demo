@@ -776,6 +776,7 @@
   <!-- ─── NAV ─── -->
   <nav>
     <div class="nav-inner">
+      <button class="hamburger-btn" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button>
       <a class="nav-brand" href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
         <img src="images/ford-oval.png" alt="Ford" class="nav-ford-oval" style="height:56px;width:auto;display:block;">
         <span class="nav-wordmark-text"><span class="nav-fw">Ford</span><span class="nav-fe">Engage</span></span>
@@ -1224,5 +1225,48 @@
       onScroll();
     })();
     </script>
+
+  <!-- ═══ LEFT SIDEBAR ═══ -->
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <span style="font-family:'Ford Antenna',Arial,sans-serif;font-weight:800;font-size:20px;color:#fff;">Ford<span style="font-weight:300;">Engage</span></span>
+      <button class="sidebar-close" onclick="toggleSidebar()">&#x2715;</button>
+    </div>
+    <div class="sidebar-body">
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-label">Current Pages</div>
+        <a class="sidebar-link" href="index.html">&#127968; Home</a>
+        <a class="sidebar-link" href="enroll.html">&#128196; Enroll Now</a>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-label">Coming Soon</div>
+        <a class="sidebar-link sidebar-link-soon" href="#">&#127891; Learn More</a>
+        <a class="sidebar-link sidebar-link-soon" href="#">&#127909; See It in Action</a>
+        <a class="sidebar-link sidebar-link-soon" href="#">&#9989; Best Practices</a>
+        <a class="sidebar-link sidebar-link-soon" href="#">&#128218; Resources</a>
+        <a class="sidebar-link sidebar-link-soon" href="#">&#128101; About Us</a>
+        <a class="sidebar-link sidebar-link-soon" href="#">&#128222; Contact Us</a>
+      </div>
+
+    </div>
+  </nav>
+
+  <script>
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('open');
+      document.getElementById('sidebar-overlay').classList.toggle('open');
+      document.body.style.overflow = document.getElementById('sidebar').classList.contains('open') ? 'hidden' : '';
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        document.getElementById('sidebar').classList.remove('open');
+        document.getElementById('sidebar-overlay').classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    });
+  </script>
 </body>
 </html>
