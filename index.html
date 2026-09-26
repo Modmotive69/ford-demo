@@ -487,51 +487,54 @@
       position: fixed;
       top: 0; left: -300px;
       width: 280px; height: 100vh;
-      background: #001a3a;
+      background: #fff;
       z-index: 201;
       transition: left 0.35s cubic-bezier(0.4,0,0.2,1);
       overflow-y: auto;
-      box-shadow: 4px 0 24px rgba(0,0,0,0.3);
+      box-shadow: 4px 0 32px rgba(0,52,120,0.18);
     }
     .sidebar.open { left: 0; }
     .sidebar-header {
       display: flex; align-items: center;
       justify-content: space-between;
       padding: 20px 20px;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
+      border-bottom: 1px solid #e8eef5;
     }
     .sidebar-close {
       background: none; border: none;
-      color: rgba(255,255,255,0.6);
+      color: #aaa;
       font-size: 20px; cursor: pointer;
       padding: 4px;
       transition: color 0.2s;
     }
-    .sidebar-close:hover { color: #fff; }
+    .sidebar-close:hover { color: #003478; }
     .sidebar-body { padding: 16px 0; }
     .sidebar-section { margin-bottom: 8px; }
     .sidebar-section-label {
       font-size: 10px; font-weight: 700;
       letter-spacing: 2px; text-transform: uppercase;
-      color: rgba(255,255,255,0.35);
+      color: #aaa;
       padding: 12px 20px 8px;
+      font-family: 'Ford Antenna', Arial, sans-serif;
     }
     .sidebar-link {
       display: block;
       padding: 12px 20px;
-      color: rgba(255,255,255,0.85);
+      color: #003478;
       text-decoration: none;
       font-size: 15px; font-weight: 600;
       transition: background 0.18s, color 0.18s;
       border-left: 3px solid transparent;
+      font-family: 'Ford Antenna', Arial, sans-serif;
+      display: flex; align-items: center; gap: 12px;
     }
     .sidebar-link:hover {
-      background: rgba(255,255,255,0.06);
-      color: #fff;
+      background: #f0f4ff;
+      color: #003478;
       border-left-color: #003478;
     }
     .sidebar-link-soon {
-      color: rgba(255,255,255,0.4);
+      color: #bbb;
       font-weight: 400;
     }
     .sidebar-link-soon::after {
@@ -540,7 +543,7 @@
       opacity: 0.6;
     }
     .sidebar-link-soon:hover {
-      background: rgba(255,255,255,0.03);
+      background: #f8f8f8;
       border-left-color: transparent;
       cursor: default;
     }
@@ -1444,25 +1447,25 @@
   <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
   <nav class="sidebar" id="sidebar">
     <div class="sidebar-header">
-      <span style="font-family:'Ford Antenna',Arial,sans-serif;font-weight:800;font-size:20px;color:#fff;">Ford<span style="font-weight:300;">Engage</span></span>
+      <span style="font-family:'Ford Antenna',Arial,sans-serif;font-weight:800;font-size:20px;color:#003478;">Ford<span style="font-weight:300;">Engage</span></span>
       <button class="sidebar-close" onclick="toggleSidebar()">&#x2715;</button>
     </div>
     <div class="sidebar-body">
 
       <div class="sidebar-section">
         <div class="sidebar-section-label">Current Pages</div>
-        <a class="sidebar-link" href="index.html">&#127968; Home</a>
-        <a class="sidebar-link" href="enroll.html">&#128196; Enroll Now</a>
+        <a class="sidebar-link" href="index.html"><i class="fa-thin fa-house" style="width:18px;"></i> Home</a>
+        <a class="sidebar-link" href="enroll.html"><i class="fa-thin fa-file-signature" style="width:18px;"></i> Enroll Now</a>
       </div>
 
       <div class="sidebar-section">
         <div class="sidebar-section-label">Coming Soon</div>
-        <a class="sidebar-link sidebar-link-soon" href="#">&#127891; Learn More</a>
-        <a class="sidebar-link sidebar-link-soon" href="#">&#127909; See It in Action</a>
-        <a class="sidebar-link sidebar-link-soon" href="#">&#9989; Best Practices</a>
-        <a class="sidebar-link sidebar-link-soon" href="#">&#128218; Resources</a>
-        <a class="sidebar-link sidebar-link-soon" href="#">&#128101; About Us</a>
-        <a class="sidebar-link sidebar-link-soon" href="#">&#128222; Contact Us</a>
+        <a class="sidebar-link sidebar-link-soon" href="#"><i class="fa-thin fa-book-open" style="width:18px;"></i> Learn More</a>
+        <a class="sidebar-link sidebar-link-soon" href="#"><i class="fa-thin fa-circle-play" style="width:18px;"></i> See It in Action</a>
+        <a class="sidebar-link sidebar-link-soon" href="#"><i class="fa-thin fa-circle-check" style="width:18px;"></i> Best Practices</a>
+        <a class="sidebar-link sidebar-link-soon" href="#"><i class="fa-thin fa-folder-open" style="width:18px;"></i> Resources</a>
+        <a class="sidebar-link sidebar-link-soon" href="#"><i class="fa-thin fa-users" style="width:18px;"></i> About Us</a>
+        <a class="sidebar-link sidebar-link-soon" href="#"><i class="fa-thin fa-envelope" style="width:18px;"></i> Contact Us</a>
       </div>
 
     </div>
