@@ -376,7 +376,7 @@
     .vmodal-close:hover { background: rgba(255,255,255,0.3); }
 
     /* ─── HERO CTA BUTTON ─── */
-    .hero-cta-wrap {
+    .hero-cta-wrap { pointer-events: auto;
       position: absolute;
       bottom: 100px;
       left: 50%;
@@ -386,8 +386,8 @@
     }
     
     @media (max-width: 768px) {
-      .hero-cta-wrap { bottom: 20px; }
-      .hero-cta-btn { font-size: 16px; padding: 14px 40px; }
+      .hero-cta-wrap { pointer-events: auto; bottom: 20px; }
+      .hero-cta-btn { pointer-events: auto; font-size: 16px; padding: 14px 40px; }
     }
 
     /* ─── SLIDER ─── */
@@ -862,7 +862,7 @@
     </div>
 
       <div class="hero-cta-wrap">
-        <a class="btn btn-navy btn-lg hero-cta-btn" href="enroll.html">Start Today</a>
+        <a class="btn btn-navy btn-lg hero-cta-btn" href="enroll.html" style="pointer-events:auto;position:relative;z-index:20;">Start Today</a>
       </div>
     </div>
   </section>
@@ -1184,18 +1184,25 @@
       var topVal = v * ratesTop;
       outAvg.textContent = '$' + avgVal.toLocaleString();
       outTop.textContent = '$' + topVal.toLocaleString();
-      // Animate chart bars (max at 800 vehicles)
-      var maxVal = 800 * ratesTop;
-      var avgPct = Math.max(4, (avgVal / maxVal) * 100);
-      var topPct = Math.max(4, (topVal / maxVal) * 100);
-      var barAvg = document.getElementById('chart-bar-avg');
-      var barTop = document.getElementById('chart-bar-top');
-      var lblAvg = document.getElementById('chart-avg-val');
-      var lblTop = document.getElementById('chart-top-val');
-      if (barAvg) barAvg.style.height = avgPct + '%';
-      if (barTop) barTop.style.height = topPct + '%';
-      if (lblAvg) lblAvg.textContent = '$' + avgVal.toLocaleString();
-      if (lblTop) lblTop.textContent = '$' + topVal.toLocaleString();
+      var margin = 0.31;
+      var avgProfit = Math.round(avgVal * margin);
+      var topProfit = Math.round(topVal * margin);
+      var maxGross = 800 * ratesTop;
+      function pct(v) { return Math.max(2,(v/maxGross)*100); }
+      function el(id) { return document.getElementById(id); }
+      function setBar(id,h){ var b=el(id); if(b) b.style.height=h+'%'; }
+      function setW(id,w){ var b=el(id); if(b) b.style.width=w+'%'; }
+      function setLabel(id,v){ var l=el(id); if(l) l.textContent='$'+Math.round(v).toLocaleString(); }
+      setBar('chart-bar-avg',pct(avgVal)); setBar('chart-bar-top',pct(topVal));
+      setLabel('chart-avg-val',avgVal); setLabel('chart-top-val',topVal);
+      var annAvgGross=avgVal*12, annTopGross=topVal*12;
+      var annAvgProfit=avgProfit*12, annTopProfit=topProfit*12;
+      var annMax=800*ratesTop*12;
+      function wPct(v){ return Math.max(2,(v/annMax)*100); }
+      setW('ann-bar-avg-gross',wPct(annAvgGross)); setW('ann-bar-top-gross',wPct(annTopGross));
+      setW('ann-bar-avg-profit',wPct(annAvgProfit)); setW('ann-bar-top-profit',wPct(annTopProfit));
+      setLabel('ann-avg-gross-val',annAvgGross); setLabel('ann-top-gross-val',annTopGross);
+      setLabel('ann-avg-profit-val',annAvgProfit); setLabel('ann-top-profit-val',annTopProfit);
     }
     roiInput.addEventListener('input', calcROI);
     calcROI();
