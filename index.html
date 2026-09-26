@@ -1492,5 +1492,28 @@
       }
     });
   </script>
+
+  <script>
+    /* ── FordEngage Brand Rule ──
+       "Ford" = weight 800, "Engage" = weight 300
+       Applies automatically to every text instance on the page */
+    (function brandFordEngage() {
+      function processNode(node) {
+        if (node.nodeType === 3 && node.textContent.includes('FordEngage')) {
+          var span = document.createElement('span');
+          span.innerHTML = node.textContent.replace(
+            /FordEngage/g,
+            '<span style="font-weight:800;font-family:inherit;">Ford</span><span style="font-weight:300;font-family:inherit;">Engage</span>'
+          );
+          node.parentNode.replaceChild(span, node);
+        } else if (node.nodeType === 1 && !['SCRIPT','STYLE','INPUT','TEXTAREA'].includes(node.tagName) && !node.classList.contains('nav-fw') && !node.classList.contains('nav-fe')) {
+          Array.from(node.childNodes).forEach(processNode);
+        }
+      }
+      document.addEventListener('DOMContentLoaded', function() {
+        processNode(document.body);
+      });
+    })();
+  </script>
 </body>
 </html>
