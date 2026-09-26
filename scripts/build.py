@@ -5,13 +5,13 @@ ROOT=Path(__file__).resolve().parents[1]
 DIST=ROOT/'dist'
 if DIST.exists(): shutil.rmtree(DIST)
 DIST.mkdir()
-for name in ('index.html','enroll.html','product.html','dealer-agreement.html'):
+for name in ('index.html','enroll.html','product.html','dealer-agreement.html','shared.css','shared.js'):
     shutil.copy2(ROOT/name,DIST/name)
-for directory, extensions in {'images':{'.jpg','.jpeg','.png','.webp','.svg'},'fonts':{'.woff','.woff2','.otf'},'js':{'.js'},'models':{'.glb'},'videos':{'.mp4','.webm'}}.items():
-    for source in (ROOT/directory).glob('*'):
+for directory, extensions in {'images':{'.jpg','.jpeg','.png','.webp','.svg','.mp4'},'fonts':{'.woff','.woff2','.otf'},'js':{'.js'},'models':{'.glb'},'videos':{'.mp4','.webm'}}.items():
+    for source in (ROOT/directory).rglob('*'):
         if source.is_file() and source.suffix.lower() in extensions:
-            target=DIST/directory/source.name
-            target.parent.mkdir(exist_ok=True)
+            target=DIST/directory/source.relative_to(ROOT/directory)
+            target.parent.mkdir(parents=True,exist_ok=True)
             shutil.copy2(source,target)
 sha=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
 (DIST/'build.json').write_text(json.dumps({'commit':sha})+'\n')
