@@ -825,7 +825,9 @@
       </div>
 
       <!-- FORM -->
-      <form id="enroll-form" novalidate>
+      <p id="intake-unavailable" role="note" tabindex="-1"><strong>Enrollment unavailable.</strong> This page is a demonstration. Do not enter personal information. Online enrollment is disabled pending an authorized intake service and approved agreement and privacy notice.</p>
+<form id="enroll-form">
+<fieldset disabled aria-describedby="intake-unavailable" style="border:0;padding:0;margin:0;min-width:0">
 
         <!-- SECTION: DEALERSHIP -->
         <div class="form-section">
@@ -1116,7 +1118,7 @@
           Submit Enrollment Request &nbsp;→
         </button>
 
-      </form>
+      </fieldset></form>
 
       <!-- FOOTER NOTE -->
       <p class="footer-note" id="footer-note">
@@ -1157,52 +1159,11 @@
     const successState = document.getElementById('success-state');
     const footerNote = document.getElementById('footer-note');
 
+    // No authorized durable intake or approved collection notice is configured.
+    // Fail closed, including programmatic submit attempts. Never collect or log PII.
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-
-      // Validate plan selection
-      if (!selectedPlanInput.value) {
-        planError.style.display = 'block';
-        document.getElementById('plans-grid').scrollIntoView({ behavior: 'smooth', block: 'center' });
-        return;
-      }
-
-      // Validate required fields
-      const requiredFields = form.querySelectorAll('[required]');
-      let firstInvalid = null;
-      requiredFields.forEach(field => {
-        if (!field.value.trim()) {
-          field.style.borderColor = '#ff3b30';
-          field.style.boxShadow = '0 0 0 3px rgba(255,59,48,0.15)';
-          if (!firstInvalid) firstInvalid = field;
-        } else {
-          field.style.borderColor = '';
-          field.style.boxShadow = '';
-        }
-      });
-
-      if (firstInvalid) {
-        firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        firstInvalid.focus();
-        return;
-      }
-
-      // Collect form data
-      const data = {};
-      new FormData(form).forEach((val, key) => { data[key] = val; });
-      console.log('[FordEngage Enrollment]', JSON.stringify(data, null, 2));
-
-      // Show success state
-      const submitBtn = document.getElementById('submit-btn');
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Sending…';
-
-      setTimeout(() => {
-        form.style.display = 'none';
-        footerNote.style.display = 'none';
-        successState.style.display = 'block';
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 600);
+      document.getElementById('intake-unavailable').focus();
     });
 
     // ─── CLEAR RED BORDERS ON INPUT ───

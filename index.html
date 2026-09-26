@@ -1324,8 +1324,8 @@
       outAvg.textContent = '$' + avgVal.toLocaleString();
       outTop.textContent = '$' + topVal.toLocaleString();
       var margin = 0.31;
-      var avgProfit = Math.round(avgVal * margin);
-      var topProfit = Math.round(topVal * margin);
+      var avgProfit = avgVal * margin;
+      var topProfit = topVal * margin;
       var maxGross = 800 * ratesTop;
       var annMax = 800 * ratesTop * 12;
       function barH(n) { return Math.max(2, (n / maxGross) * 100); }
@@ -1339,7 +1339,7 @@
       setLbl('chart-avg-val', avgVal);
       setLbl('chart-top-val', topVal);
       var annAvgGross = avgVal * 12, annTopGross = topVal * 12;
-      var annAvgProfit = avgProfit * 12, annTopProfit = topProfit * 12;
+      var annAvgProfit = annAvgGross * margin, annTopProfit = annTopGross * margin;
       setWd('ann-bar-avg-gross', barW(annAvgGross));
       setWd('ann-bar-top-gross', barW(annTopGross));
       setWd('ann-bar-avg-profit', barW(annAvgProfit));
