@@ -921,7 +921,7 @@
                 <div class="chart-track">
                   <div class="chart-bar chart-bar-avg" id="chart-bar-avg" style="height:50%;"></div>
                 </div>
-                <div class="chart-col-label">FordEngage<br>Average</div>
+                <div class="chart-col-label">PNVR Gross<br>Sales</div>
               </div>
 
               <div class="chart-col">
@@ -934,6 +934,43 @@
 
             </div>
           </div>
+
+          <!-- Annual Revenue — left column -->
+          <div style="margin-top:28px;padding-top:24px;border-top:2px solid #e8eef5;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
+              <p style="font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#888;margin:0;">Annual Revenue</p>
+              <div style="display:flex;gap:14px;">
+                <span style="display:flex;align-items:center;gap:5px;font-size:10px;font-weight:700;text-transform:uppercase;color:#555;"><span style="width:10px;height:10px;background:#003478;border-radius:2px;display:inline-block;"></span>Gross</span>
+                <span style="display:flex;align-items:center;gap:5px;font-size:10px;font-weight:700;text-transform:uppercase;color:#555;"><span style="width:10px;height:10px;background:#22c55e;border-radius:2px;display:inline-block;"></span>Profit (31%)</span>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:14px;">
+              <div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:5px;">
+                  <span style="font-size:10px;font-weight:800;color:#003478;text-transform:uppercase;letter-spacing:1px;">PNVR Gross Sales</span>
+                  <span style="font-size:12px;font-weight:900;color:#003478;" id="ann-avg-gross-val">$289,800</span>
+                </div>
+                <div style="background:#dde5f0;border-radius:6px;height:22px;overflow:hidden;margin-bottom:5px;"><div id="ann-bar-avg-gross" style="height:100%;background:#003478;border-radius:6px;width:50%;transition:width .5s cubic-bezier(.34,1.2,.64,1);"></div></div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+                  <span style="font-size:10px;font-weight:700;color:#16a34a;">↳ Profit</span>
+                  <span style="font-size:11px;font-weight:800;color:#16a34a;" id="ann-avg-profit-val">$89,838</span>
+                </div>
+                <div style="background:#dde5f0;border-radius:5px;height:14px;overflow:hidden;"><div id="ann-bar-avg-profit" style="height:100%;background:#22c55e;border-radius:5px;width:16%;transition:width .5s cubic-bezier(.34,1.2,.64,1);"></div></div>
+              </div>
+              <div style="border-top:1px solid #e8eef5;padding-top:12px;">
+                <div style="display:flex;justify-content:space-between;margin-bottom:5px;">
+                  <span style="font-size:10px;font-weight:800;color:#0562D2;text-transform:uppercase;letter-spacing:1px;">Top Performers</span>
+                  <span style="font-size:12px;font-weight:900;color:#0562D2;" id="ann-top-gross-val">$432,000</span>
+                </div>
+                <div style="background:#dde5f0;border-radius:6px;height:22px;overflow:hidden;margin-bottom:5px;"><div id="ann-bar-top-gross" style="height:100%;background:linear-gradient(to right,#003478,#0562D2);border-radius:6px;width:75%;transition:width .5s cubic-bezier(.34,1.2,.64,1);"></div></div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+                  <span style="font-size:10px;font-weight:700;color:#16a34a;">↳ Profit</span>
+                  <span style="font-size:11px;font-weight:800;color:#16a34a;" id="ann-top-profit-val">$133,920</span>
+                </div>
+                <div style="background:#dde5f0;border-radius:5px;height:14px;overflow:hidden;"><div id="ann-bar-top-profit" style="height:100%;background:linear-gradient(to right,#16a34a,#4ade80);border-radius:5px;width:23%;transition:width .5s cubic-bezier(.34,1.2,.64,1);"></div></div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="problem-calc-col">
@@ -942,10 +979,10 @@
           <div style="margin-bottom:28px;">
             <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;">
               <label class="roi-label" for="vehicles-sold" style="text-transform:uppercase;font-size:11px;font-weight:700;letter-spacing:1.5px;color:#555;">New vehicles sold per month</label>
-              <span id="slider-display" style="font-size:2rem;font-weight:900;color:#003478;line-height:1;">100</span>
+              <span id="slider-display" style="font-size:2rem;font-weight:900;color:#003478;line-height:1;">300</span>
             </div>
             <input type="range" id="vehicles-sold"
-              min="100" max="800" step="50" value="100"
+              min="100" max="800" step="50" value="300"
               style="width:100%;height:6px;border-radius:3px;appearance:none;-webkit-appearance:none;background:linear-gradient(to right,#003478 0%,#003478 0%,#e0e0e0 0%,#e0e0e0 100%);outline:none;cursor:pointer;">
             <div style="display:flex;justify-content:space-between;font-size:11px;color:#aaa;margin-top:6px;">
               <span>100</span><span>200</span><span>300</span><span>400</span><span>500</span><span>600</span><span>700</span><span>800</span>
@@ -966,42 +1003,6 @@
           <a class="btn btn-navy btn-lg" href="enroll.html" style="margin-top:24px;display:inline-block;">Enroll Now</a>
         </div>
 
-      </div>
-      <!-- Annual Revenue — spans full width below both columns -->
-      <div style="margin-top:40px;padding-top:32px;border-top:2px solid #e8eef5;">
-        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:24px;">
-          <p style="font-size:12px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:#888;margin:0;">Annual Revenue Projection</p>
-          <div style="display:flex;gap:20px;">
-            <span style="display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;text-transform:uppercase;color:#555;"><span style="width:12px;height:12px;background:#003478;border-radius:3px;display:inline-block;"></span>Gross Sales</span>
-            <span style="display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;text-transform:uppercase;color:#555;"><span style="width:12px;height:12px;background:#22c55e;border-radius:3px;display:inline-block;"></span>Profit (31%)</span>
-          </div>
-        </div>
-        <div style="display:flex;flex-direction:column;gap:20px;">
-          <div>
-            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;">
-              <span style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:#003478;">FordEngage Average</span>
-              <span style="font-size:15px;font-weight:900;color:#003478;" id="ann-avg-gross-val">$966,000</span>
-            </div>
-            <div style="background:#dde5f0;border-radius:8px;height:30px;overflow:hidden;margin-bottom:8px;"><div id="ann-bar-avg-gross" style="height:100%;background:#003478;border-radius:8px;width:50%;transition:width .55s cubic-bezier(.34,1.2,.64,1);"></div></div>
-            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;">
-              <span style="font-size:11px;font-weight:700;color:#16a34a;">↳ Profit</span>
-              <span style="font-size:13px;font-weight:800;color:#16a34a;" id="ann-avg-profit-val">$299,460</span>
-            </div>
-            <div style="background:#dde5f0;border-radius:6px;height:20px;overflow:hidden;"><div id="ann-bar-avg-profit" style="height:100%;background:#22c55e;border-radius:6px;width:16%;transition:width .55s cubic-bezier(.34,1.2,.64,1);"></div></div>
-          </div>
-          <div style="border-top:1px solid #e8eef5;padding-top:20px;">
-            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;">
-              <span style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:#0562D2;">Top Performers</span>
-              <span style="font-size:15px;font-weight:900;color:#0562D2;" id="ann-top-gross-val">$1,440,000</span>
-            </div>
-            <div style="background:#dde5f0;border-radius:8px;height:30px;overflow:hidden;margin-bottom:8px;"><div id="ann-bar-top-gross" style="height:100%;background:linear-gradient(to right,#003478,#0562D2);border-radius:8px;width:75%;transition:width .55s cubic-bezier(.34,1.2,.64,1);"></div></div>
-            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;">
-              <span style="font-size:11px;font-weight:700;color:#16a34a;">↳ Profit</span>
-              <span style="font-size:13px;font-weight:800;color:#16a34a;" id="ann-top-profit-val">$446,400</span>
-            </div>
-            <div style="background:#dde5f0;border-radius:6px;height:20px;overflow:hidden;"><div id="ann-bar-top-profit" style="height:100%;background:linear-gradient(to right,#16a34a,#4ade80);border-radius:6px;width:23%;transition:width .55s cubic-bezier(.34,1.2,.64,1);"></div></div>
-          </div>
-        </div>
       </div>
     </div>
   </section>
