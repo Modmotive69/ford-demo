@@ -408,6 +408,58 @@
       box-shadow: 0 2px 6px rgba(0,52,120,0.35);
       cursor: pointer;
     }
+
+    /* ─── ROI ANIMATED CHART ─── */
+    .chart-bars-wrap {
+      display: flex;
+      align-items: flex-end;
+      gap: 20px;
+      height: 160px;
+      padding-bottom: 4px;
+    }
+    .chart-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+      justify-content: flex-end;
+    }
+    .chart-value-label {
+      font-size: 14px;
+      font-weight: 800;
+      color: #003478;
+      margin-bottom: 6px;
+      text-align: center;
+      transition: all 0.4s ease;
+    }
+    .chart-value-top { color: #0562D2; }
+    .chart-track {
+      width: 100%;
+      background: #f0f0f0;
+      border-radius: 6px 6px 0 0;
+      height: 120px;
+      display: flex;
+      align-items: flex-end;
+    }
+    .chart-bar {
+      width: 100%;
+      border-radius: 6px 6px 0 0;
+      transition: height 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+      min-height: 4px;
+    }
+    .chart-bar-avg { background: #003478; }
+    .chart-bar-top { background: linear-gradient(to top, #003478, #0562D2); }
+    .chart-col-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #999;
+      text-align: center;
+      margin-top: 8px;
+      line-height: 1.4;
+    }
     /* ─── PROOF STRIP ─── */
     .proof-strip {
       background: #fff;
@@ -857,7 +909,31 @@
 
         <div class="problem-copy-col">
           <p class="section-body">The typical Ford dealer makes nominal gross on accessories. No visual tool. No consistent presentation. Sales staff skip the conversation. Meanwhile the top dealers in your market are grossing $1,200 per vehicle in accessories — on every deal, every day. That gap is yours to close.</p>
-          <p style="margin-top:20px;font-size:13px;color:#aaa;font-style:italic;">* Based on avg $805 PNVR gap across 500+ FordEngage dealers.</p>
+          <p style="margin-top:16px;font-size:13px;color:#aaa;font-style:italic;">* Based on avg $805 PNVR gap across 500+ FordEngage dealers.</p>
+
+          <!-- Animated Revenue Comparison Chart -->
+          <div class="roi-chart" style="margin-top:32px;">
+            <p style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#999;margin-bottom:16px;">Monthly Revenue Comparison</p>
+            <div class="chart-bars-wrap">
+
+              <div class="chart-col">
+                <div class="chart-value-label" id="chart-avg-val">$80,500</div>
+                <div class="chart-track">
+                  <div class="chart-bar chart-bar-avg" id="chart-bar-avg" style="height:50%;"></div>
+                </div>
+                <div class="chart-col-label">FordEngage<br>Average</div>
+              </div>
+
+              <div class="chart-col">
+                <div class="chart-value-label chart-value-top" id="chart-top-val">$120,000</div>
+                <div class="chart-track">
+                  <div class="chart-bar chart-bar-top" id="chart-bar-top" style="height:75%;"></div>
+                </div>
+                <div class="chart-col-label">Top<br>Performers</div>
+              </div>
+
+            </div>
+          </div>
         </div>
 
         <div class="problem-calc-col">
@@ -1100,11 +1176,26 @@
       var v = parseInt(roiInput.value, 10);
       if (isNaN(v) || v < 0) v = 0;
       if (sliderDisplay) sliderDisplay.textContent = v;
-      // Update slider track fill
+      // Slider track fill
       var pct = ((v - 100) / (800 - 100)) * 100;
       roiInput.style.background = 'linear-gradient(to right,#003478 0%,#003478 '+pct+'%,#e0e0e0 '+pct+'%,#e0e0e0 100%)';
-      outAvg.textContent = '$' + (v * ratesAvg).toLocaleString();
-      outTop.textContent = '$' + (v * ratesTop).toLocaleString();
+      // Dollar outputs
+      var avgVal = v * ratesAvg;
+      var topVal = v * ratesTop;
+      outAvg.textContent = '$' + avgVal.toLocaleString();
+      outTop.textContent = '$' + topVal.toLocaleString();
+      // Animate chart bars (max at 800 vehicles)
+      var maxVal = 800 * ratesTop;
+      var avgPct = Math.max(4, (avgVal / maxVal) * 100);
+      var topPct = Math.max(4, (topVal / maxVal) * 100);
+      var barAvg = document.getElementById('chart-bar-avg');
+      var barTop = document.getElementById('chart-bar-top');
+      var lblAvg = document.getElementById('chart-avg-val');
+      var lblTop = document.getElementById('chart-top-val');
+      if (barAvg) barAvg.style.height = avgPct + '%';
+      if (barTop) barTop.style.height = topPct + '%';
+      if (lblAvg) lblAvg.textContent = '$' + avgVal.toLocaleString();
+      if (lblTop) lblTop.textContent = '$' + topVal.toLocaleString();
     }
     roiInput.addEventListener('input', calcROI);
     calcROI();
