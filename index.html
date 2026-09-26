@@ -184,7 +184,7 @@
       transition: color .3s, text-shadow .3s;
     }
     .nav-program-text {
-      font-family: \'Ford Light Extended\', \'Ford Antenna\', Arial, sans-serif;
+      font-family: 'Ford Light Extended', \'Ford Antenna\', Arial, sans-serif;
       font-size: 19px; font-weight:700; letter-spacing:1px;
       white-space:nowrap; margin-left:14px; align-self:center;
       color:#fff; text-shadow:none;
@@ -1013,7 +1013,7 @@
                 <div class="chart-track">
                   <div class="chart-bar chart-bar-avg" id="chart-bar-avg" style="height:50%;"></div>
                 </div>
-                <div class="chart-col-label">PNVR Gross<br>Sales</div>
+                <div class="chart-col-label">PNVR Gross<br>Sales</div><div class="chart-value-label" id="monthly-avg-profit"></div><div style="height:12px;background:#e5e7eb"><div id="monthly-avg-profit-bar" style="height:100%;background:#15803d"></div></div><span>Modeled gross profit (31%)</span>
               </div>
 
               <div class="chart-col">
@@ -1021,7 +1021,7 @@
                 <div class="chart-track">
                   <div class="chart-bar chart-bar-top" id="chart-bar-top" style="height:75%;"></div>
                 </div>
-                <div class="chart-col-label">Top<br>Performers</div>
+                <div class="chart-col-label">Top<br>Performers</div><div class="chart-value-label" id="monthly-top-profit"></div><div style="height:12px;background:#e5e7eb"><div id="monthly-top-profit-bar" style="height:100%;background:#15803d"></div></div><span>Modeled gross profit (31%)</span>
               </div>
 
             </div>
@@ -1067,20 +1067,20 @@
 
         <div class="problem-calc-col">
           <h2 style="font-size:1.4rem;font-weight:900;margin-bottom:8px;text-align:left;">Select your Car sales per month</h2>
-          <p style="font-size:0.95rem;color:#666;margin-bottom:28px;">See how our application affects your bottom line.</p>
+          <p style="font-size:0.95rem;color:#666;margin-bottom:28px;">Illustrative accessory sales scenarios, not a prediction.</p>
           <div style="margin-bottom:28px;">
             <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;">
               <label class="roi-label" for="vehicles-sold" style="text-transform:uppercase;font-size:11px;font-weight:700;letter-spacing:1.5px;color:#555;">New vehicles sold per month</label>
-              <span id="slider-display" style="font-size:2rem;font-weight:900;color:#003478;line-height:1;">300</span>
+              <span id="slider-display" style="font-size:2rem;font-weight:900;color:#003478;line-height:1;">100</span>
             </div>
             <input type="range" id="vehicles-sold"
-              min="100" max="800" step="50" value="300"
+              min="100" max="800" step="50" value="100" aria-describedby="calculator-assumptions"
               style="width:100%;height:6px;border-radius:3px;appearance:none;-webkit-appearance:none;background:linear-gradient(to right,#003478 0%,#003478 0%,#e0e0e0 0%,#e0e0e0 100%);outline:none;cursor:pointer;">
             <div style="display:flex;justify-content:space-between;font-size:11px;color:#aaa;margin-top:6px;">
               <span>100</span><span>200</span><span>300</span><span>400</span><span>500</span><span>600</span><span>700</span><span>800</span>
             </div>
           </div>
-          <div class="roi-results">
+          <p id="calculator-assumptions">Illustrative gross sales at $805 or $1,200 per vehicle. Modeled gross profit assumes a 31% margin, before program fees, overhead and taxes. These are not net profit, guaranteed results or return on investment.</p><div class="roi-results" aria-live="polite">
             <div class="roi-card">
               <div class="roi-card-label">Your monthly opportunity</div>
               <div class="roi-card-value" id="roi-avg">$40,250</div>
@@ -1338,6 +1338,10 @@
       setH('chart-bar-top', barH(topVal));
       setLbl('chart-avg-val', avgVal);
       setLbl('chart-top-val', topVal);
+      setLbl('monthly-avg-profit', avgProfit);
+      setLbl('monthly-top-profit', topProfit);
+      setWd('monthly-avg-profit-bar', avgProfit / maxGross * 100);
+      setWd('monthly-top-profit-bar', topProfit / maxGross * 100);
       var annAvgGross = avgVal * 12, annTopGross = topVal * 12;
       var annAvgProfit = annAvgGross * margin, annTopProfit = annTopGross * margin;
       setWd('ann-bar-avg-gross', barW(annAvgGross));
@@ -1508,10 +1512,16 @@
       function processNode(node) {
         if (node.nodeType === 3 && node.textContent.includes('FordEngage')) {
           var span = document.createElement('span');
-          span.innerHTML = node.textContent.replace(
-            /FordEngage/g,
-            '<span style="font-weight:800;font-family:inherit;">Ford</span><span style="font-weight:300;font-family:inherit;">Engage</span>'
-          );
+          node.textContent.split('FordEngage').forEach(function(part, index) {
+            if (index) {
+              var ford = document.createElement('span');
+              ford.textContent = 'Ford'; ford.style.fontWeight = '800';
+              var engage = document.createElement('span');
+              engage.textContent = 'Engage'; engage.style.fontWeight = '300';
+              span.append(ford, engage);
+            }
+            span.append(document.createTextNode(part));
+          });
           node.parentNode.replaceChild(span, node);
         } else if (node.nodeType === 1 && !['SCRIPT','STYLE','INPUT','TEXTAREA'].includes(node.tagName) && !node.classList.contains('nav-fw') && !node.classList.contains('nav-fe')) {
           Array.from(node.childNodes).forEach(processNode);
