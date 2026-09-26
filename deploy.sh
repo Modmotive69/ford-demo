@@ -1,22 +1,20 @@
 #!/bin/bash
 set -euo pipefail
 cd "$(dirname "$0")"
-if [[ -n "$(git status --porcelain --untracked-files=no)" ]]; then
-  echo 'Refusing deployment from uncommitted tracked changes.' >&2
+command -v wrangler >/dev/null
+wrangler whoami
+if [[ -n "$(git status --porcelain)" ]]; then
+  echo 'Refusing deployment with uncommitted files.' >&2
   exit 1
 fi
-python3 -m unittest discover -s tests -v
-python3 scripts/build.py
-wrangler whoami >/dev/null
-wrangler pages deploy dist --project-name=ford-demo --branch=main
-# A successful upload is not proof the custom domain has updated.
+python3 tests.py
+python3 build.py
+wrangler pages deploy dist --project-name=ford-demo --branch=main --commit-hash="$(git rev-parse HEAD)"
 python3 - <<'PY'
 import json, subprocess, urllib.request
-sha=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()
-request=urllib.request.Request('https://fordengage.livecode.tech/build.json?sha='+sha,headers={'Cache-Control':'no-cache'})
-with urllib.request.urlopen(request,timeout=30) as response:
-    actual=json.load(response)['commit']
-if actual != sha:
-    raise SystemExit('Upload finished, but custom-domain build SHA does not match. Deployment is NOT verified.')
-print('Verified custom-domain build SHA:',sha)
+expected=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()
+req=urllib.request.Request('https://fordengage.livecode.tech/build.json?sha='+expected,headers={'User-Agent':'Mozilla/5.0'})
+with urllib.request.urlopen(req,timeout=30) as r: actual=json.load(r)
+assert actual['sha']==expected and actual['dirty'] is False, actual
+print('Production build SHA verified:',expected)
 PY
