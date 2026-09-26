@@ -1188,21 +1188,27 @@
       var avgProfit = Math.round(avgVal * margin);
       var topProfit = Math.round(topVal * margin);
       var maxGross = 800 * ratesTop;
-      function pct(v) { return Math.max(2,(v/maxGross)*100); }
-      function el(id) { return document.getElementById(id); }
-      function setBar(id,h){ var b=el(id); if(b) b.style.height=h+'%'; }
-      function setW(id,w){ var b=el(id); if(b) b.style.width=w+'%'; }
-      function setLabel(id,v){ var l=el(id); if(l) l.textContent='$'+Math.round(v).toLocaleString(); }
-      setBar('chart-bar-avg',pct(avgVal)); setBar('chart-bar-top',pct(topVal));
-      setLabel('chart-avg-val',avgVal); setLabel('chart-top-val',topVal);
-      var annAvgGross=avgVal*12, annTopGross=topVal*12;
-      var annAvgProfit=avgProfit*12, annTopProfit=topProfit*12;
-      var annMax=800*ratesTop*12;
-      function wPct(v){ return Math.max(2,(v/annMax)*100); }
-      setW('ann-bar-avg-gross',wPct(annAvgGross)); setW('ann-bar-top-gross',wPct(annTopGross));
-      setW('ann-bar-avg-profit',wPct(annAvgProfit)); setW('ann-bar-top-profit',wPct(annTopProfit));
-      setLabel('ann-avg-gross-val',annAvgGross); setLabel('ann-top-gross-val',annTopGross);
-      setLabel('ann-avg-profit-val',annAvgProfit); setLabel('ann-top-profit-val',annTopProfit);
+      var annMax = 800 * ratesTop * 12;
+      function barH(n) { return Math.max(2, (n / maxGross) * 100); }
+      function barW(n) { return Math.max(2, (n / annMax) * 100); }
+      function gEl(id) { return document.getElementById(id); }
+      function setH(id, h) { var b = gEl(id); if (b) b.style.height = h + '%'; }
+      function setWd(id, w) { var b = gEl(id); if (b) b.style.width = w + '%'; }
+      function setLbl(id, n) { var l = gEl(id); if (l) l.textContent = '$' + Math.round(n).toLocaleString(); }
+      setH('chart-bar-avg', barH(avgVal));
+      setH('chart-bar-top', barH(topVal));
+      setLbl('chart-avg-val', avgVal);
+      setLbl('chart-top-val', topVal);
+      var annAvgGross = avgVal * 12, annTopGross = topVal * 12;
+      var annAvgProfit = avgProfit * 12, annTopProfit = topProfit * 12;
+      setWd('ann-bar-avg-gross', barW(annAvgGross));
+      setWd('ann-bar-top-gross', barW(annTopGross));
+      setWd('ann-bar-avg-profit', barW(annAvgProfit));
+      setWd('ann-bar-top-profit', barW(annTopProfit));
+      setLbl('ann-avg-gross-val', annAvgGross);
+      setLbl('ann-top-gross-val', annTopGross);
+      setLbl('ann-avg-profit-val', annAvgProfit);
+      setLbl('ann-top-profit-val', annTopProfit);
     }
     roiInput.addEventListener('input', calcROI);
     calcROI();
