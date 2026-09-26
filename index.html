@@ -389,6 +389,25 @@
       .hero-cta-wrap { bottom: 20px; }
       .hero-cta-btn { font-size: 16px; padding: 14px 40px; }
     }
+
+    /* ─── SLIDER ─── */
+    input[type='range']::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: #003478;
+      border: 3px solid #fff;
+      box-shadow: 0 2px 6px rgba(0,52,120,0.35);
+      cursor: pointer;
+    }
+    input[type='range']::-moz-range-thumb {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: #003478;
+      border: 3px solid #fff;
+      box-shadow: 0 2px 6px rgba(0,52,120,0.35);
+      cursor: pointer;
+    }
     /* ─── PROOF STRIP ─── */
     .proof-strip {
       background: #fff;
@@ -844,9 +863,17 @@
         <div class="problem-calc-col">
           <h2 style="font-size:1.4rem;font-weight:900;margin-bottom:8px;text-align:left;">What's your number?</h2>
           <p style="font-size:0.95rem;color:#666;margin-bottom:28px;">Move the input — see your monthly accessory opportunity.</p>
-          <div class="roi-input-row" style="justify-content:flex-start;margin-bottom:28px;">
-            <label class="roi-label" for="vehicles-sold">New vehicles sold per month</label>
-            <input class="roi-input" type="number" id="vehicles-sold" value="50" min="1" max="9999" />
+          <div style="margin-bottom:28px;">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;">
+              <label class="roi-label" for="vehicles-sold" style="text-transform:uppercase;font-size:11px;font-weight:700;letter-spacing:1.5px;color:#555;">New vehicles sold per month</label>
+              <span id="slider-display" style="font-size:2rem;font-weight:900;color:#003478;line-height:1;">100</span>
+            </div>
+            <input type="range" id="vehicles-sold"
+              min="100" max="800" step="50" value="100"
+              style="width:100%;height:6px;border-radius:3px;appearance:none;-webkit-appearance:none;background:linear-gradient(to right,#003478 0%,#003478 0%,#e0e0e0 0%,#e0e0e0 100%);outline:none;cursor:pointer;">
+            <div style="display:flex;justify-content:space-between;font-size:11px;color:#aaa;margin-top:6px;">
+              <span>100</span><span>200</span><span>300</span><span>400</span><span>500</span><span>600</span><span>700</span><span>800</span>
+            </div>
           </div>
           <div class="roi-results">
             <div class="roi-card">
@@ -1066,11 +1093,16 @@
     var ratesAvg = 805;
     var ratesTop = 1200;
     var roiInput = document.getElementById('vehicles-sold');
+    var sliderDisplay = document.getElementById('slider-display');
     var outAvg   = document.getElementById('roi-avg');
     var outTop   = document.getElementById('roi-top');
     function calcROI() {
       var v = parseInt(roiInput.value, 10);
       if (isNaN(v) || v < 0) v = 0;
+      if (sliderDisplay) sliderDisplay.textContent = v;
+      // Update slider track fill
+      var pct = ((v - 100) / (800 - 100)) * 100;
+      roiInput.style.background = 'linear-gradient(to right,#003478 0%,#003478 '+pct+'%,#e0e0e0 '+pct+'%,#e0e0e0 100%)';
       outAvg.textContent = '$' + (v * ratesAvg).toLocaleString();
       outTop.textContent = '$' + (v * ratesTop).toLocaleString();
     }
