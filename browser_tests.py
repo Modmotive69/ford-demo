@@ -13,6 +13,8 @@ with sync_playwright() as p:
   for name in ['index.html','enroll.html','product.html','dealer-agreement.html']:
    response=page.goto(base+'/'+name,wait_until='networkidle');assert response.status==200,(name,response.status)
    page.evaluate('document.fonts.ready');page.wait_for_timeout(200)
+   # Trigger all below-fold lazy images before measuring and capturing evidence.
+   page.evaluate("async()=>{for(const img of document.querySelectorAll('img[loading=lazy]')){img.loading='eager';try{await img.decode()}catch(e){}}}")
    metrics=page.evaluate('''() => ({overflow:document.documentElement.scrollWidth>innerWidth,broken:Array.from(document.images).filter(i=>i.complete&&i.naturalWidth===0).map(i=>i.getAttribute('src')),emDash:document.body.innerText.includes('—')})''')
    assert not metrics['emDash'],(name,'em dash')
    assert not metrics['broken'],(name,metrics['broken'])

@@ -10,11 +10,4 @@ fi
 python3 tests.py
 python3 build.py
 wrangler pages deploy dist --project-name=ford-demo --branch=main --commit-hash="$(git rev-parse HEAD)"
-python3 - <<'PY'
-import json, subprocess, urllib.request
-expected=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()
-req=urllib.request.Request('https://fordengage.livecode.tech/build.json?sha='+expected,headers={'User-Agent':'Mozilla/5.0'})
-with urllib.request.urlopen(req,timeout=30) as r: actual=json.load(r)
-assert actual['sha']==expected and actual['dirty'] is False, actual
-print('Production build SHA verified:',expected)
-PY
+python3 verify_production.py
