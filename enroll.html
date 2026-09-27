@@ -17,6 +17,7 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --ford-blue: #003478;
+      --ford-blue-tint: #f0f4ff;
       --gray-label: #6e6e73;
       --gray-input-bg: #f5f5f7;
       --gray-border: #d2d2d7;
@@ -36,7 +37,7 @@
     html, body { overflow-x: hidden; max-width: 100%; }
     html { scroll-behavior: smooth; }
     body { overflow-x: hidden; max-width: 100%; }
-    nav {
+    nav:not(.sidebar) {
       position: fixed;
       top: 0; left: 0;
       width: 100%;
@@ -49,7 +50,7 @@
       gap: 0;
       transition: background 0.35s ease, box-shadow 0.35s ease, padding 0.35s ease;
     }
-    nav::before {
+    nav:not(.sidebar)::before {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0;
@@ -59,12 +60,12 @@
       pointer-events: none;
       transition: opacity 0.35s ease;
     }
-    nav.scrolled {
+    nav:not(.sidebar).scrolled {
       background: #fff;
       box-shadow: 0 2px 12px rgba(0,0,0,0.10);
       padding: 8px clamp(16px, 4vw, 40px) 6px;
     }
-    nav.scrolled::before { opacity: 0; }
+    nav:not(.sidebar).scrolled::before { opacity: 0; }
     .nav-inner {
       max-width: 1200px;
       width: 100%;
@@ -111,17 +112,17 @@
       border-color: #003478 !important;
       color: #003478 !important;
     }
-    nav:not(.scrolled) .btn-navy {
+    nav:not(.sidebar):not(.scrolled) .btn-navy {
       background: transparent !important;
       border: 2px solid rgba(255,255,255,0.9) !important;
       color: #fff !important;
     }
-    nav.scrolled .btn-navy {
+    nav:not(.sidebar).scrolled .btn-navy {
       background: var(--ford-blue) !important;
       border-color: var(--ford-blue) !important;
       color: #fff !important;
     }
-    nav.scrolled .btn-outline-white {
+    nav:not(.sidebar).scrolled .btn-outline-white {
       border-color: #003478 !important;
       color: #003478 !important;
     }
@@ -144,15 +145,15 @@
       transition: color .3s, text-shadow .3s;
     }
     .nav-program-text {
-      font-family: \'Ford Light Extended\', \'Ford Antenna\', Arial, sans-serif;
+      font-family: 'Ford Light Extended', 'Ford Antenna', Arial, sans-serif;
       font-size: 19px; font-weight:700; letter-spacing:1px;
       white-space:nowrap; margin-left:14px; align-self:center;
       color:#fff; text-shadow:none;
       transition:color .3s;
     }
-    nav.scrolled .nav-fw  { color:#000 !important; text-shadow:none; }
-    nav.scrolled .nav-fe  { color:#000 !important; text-shadow:none; }
-    nav.scrolled .nav-program-text { color:#000 !important; text-shadow:none; }
+    nav:not(.sidebar).scrolled .nav-fw  { color:#000 !important; text-shadow:none; }
+    nav:not(.sidebar).scrolled .nav-fe  { color:#000 !important; text-shadow:none; }
+    nav:not(.sidebar).scrolled .nav-program-text { color:#000 !important; text-shadow:none; }
     /* ─── NAV TEXT STATES ─── */
 
     /* ─── ENROLL PAGE ─── */
@@ -622,8 +623,7 @@
       .section-divider { margin: 44px 0; }
     }
   
-    /* Overlay ...
-  /* ─── HERO ─── */
+    /* ─── HERO ─── */
     .hero {
       background: var(--ford-blue);
       padding: clamp(32px, 6vw, 80px) clamp(20px, 5vw, 80px) clamp(40px, 7vw, 88px);
@@ -774,6 +774,106 @@
       font-family: 'Ford Light Extended', 'Ford Antenna', Arial, sans-serif;
       font-weight: 300;
     }
+    /* ─── HAMBURGER + SIDEBAR ─── */
+    .hamburger-btn {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 26px;
+      cursor: pointer;
+      padding: 0 14px 0 0;
+      line-height: 1;
+      flex-shrink: 0;
+      transition: color 0.3s;
+      z-index: 101;
+      align-self: center;
+    }
+    nav:not(.sidebar).scrolled .hamburger-btn { color: #111; }
+    .sidebar-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 200;
+    }
+    .sidebar-overlay.open { display: block; }
+    .sidebar {
+      position: fixed;
+      top: 0; left: -300px;
+      width: 280px; height: 100vh;
+      background: #fff;
+      z-index: 201;
+      transition: left 0.35s cubic-bezier(0.4,0,0.2,1);
+      overflow-y: auto;
+      box-shadow: 4px 0 32px rgba(0,52,120,0.18);
+    }
+    .sidebar.open { left: 0; }
+    .sidebar-header {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 20px 20px;
+      border-bottom: 1px solid #e8eef5;
+    }
+    .sidebar-close {
+      background: none; border: none;
+      color: #aaa;
+      font-size: 20px; cursor: pointer;
+      padding: 4px;
+      transition: color 0.2s;
+    }
+    .sidebar-close:hover { color: #003478; }
+    .sidebar-body { padding: 16px 0; }
+    .sidebar-section { margin-bottom: 8px; }
+    .sidebar-section-label {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 2px; text-transform: none;
+      color: #aaa;
+      padding: 12px 20px 8px;
+      font-family: 'Ford Antenna', Arial, sans-serif;
+    }
+    .sidebar-link {
+      padding: 12px 20px;
+      color: #003478;
+      text-decoration: none;
+      font-size: 15px; font-weight: 600;
+      transition: background 0.18s, color 0.18s;
+      border-left: 3px solid transparent;
+      font-family: 'Ford Antenna', Arial, sans-serif;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .sidebar-link:hover {
+      background: #f0f4ff;
+      color: #003478;
+      border-left-color: #003478;
+    }
+    .sidebar-link-soon {
+      color: #bbb;
+      font-weight: 400;
+    }
+    .sidebar-link-soon:hover {
+      background: #f8f8f8;
+      border-left-color: transparent;
+      cursor: default;
+    }
+
+    nav:not(.sidebar) { font-family: 'Ford Antenna', 'FordAntenna', Arial, sans-serif; }
+    nav:not(.sidebar):not(.scrolled) .btn-outline-white { color: #fff !important; border-color: #fff !important; }
+    .hero { padding-top: 140px; }
+    @media (max-width: 1100px) { .hero { padding-top: 220px; } }
+
+    /* Keep the existing header content reachable at narrow widths. */
+    @media (max-width: 1100px) {
+      nav:not(.sidebar) .nav-inner { flex-wrap: wrap; justify-content: flex-start; gap: 8px; }
+      nav:not(.sidebar) .nav-program-text { order: 2; flex: 0 0 100%; white-space: normal; margin-left: 0; text-align: center; }
+      nav:not(.sidebar) .nav-right { order: 3; width: 100%; justify-content: center; }
+    }
+    @media (max-width: 480px) {
+      nav:not(.sidebar) .nav-brand img { height: 40px !important; }
+      nav:not(.sidebar) .nav-fw, nav:not(.sidebar) .nav-fe { font-size: 24px; }
+      nav:not(.sidebar) .nav-program-text { font-size: 14px; }
+    }
+    a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
+      outline: 3px solid #0562D2; outline-offset: 3px;
+    }
   </style>
 </head>
 <body>
@@ -788,7 +888,7 @@
       </a>
       <span class="nav-program-text">Industry's Only Proven Accessories Sales Program</span>
       <div class="nav-right" style="display:flex;gap:12px;align-items:center;">
-        <a class="btn btn-outline-white nav-btn" href="#" href="https://youtu.be/aHBj-zA7Hqg" target="_blank" style="font-size:14px;padding:10px 20px;border:2px solid rgba(255,255,255,0.8);color:#fff;border-radius:4px;text-decoration:none;font-weight:600;white-space:nowrap;transition:all 0.3s;">Watch Video</a>
+        <a class="btn btn-outline-white nav-btn" href="https://youtu.be/aHBj-zA7Hqg" target="_blank" style="font-size:14px;padding:10px 20px;border:2px solid rgba(255,255,255,0.8);color:#fff;border-radius:4px;text-decoration:none;font-weight:600;white-space:nowrap;transition:all 0.3s;">Watch Video</a>
         <a class="btn btn-navy nav-btn" href="enroll.html" style="font-size:14px;padding:10px 20px;white-space:nowrap;">Enroll Now</a>
       </div>
     </div>
@@ -1274,27 +1374,6 @@
     });
   </script>
 
-  <script>
-    /* ── FordEngage Brand Rule ──
-       "Ford" = weight 800, "Engage" = weight 300
-       Applies automatically to every text instance on the page */
-    (function brandFordEngage() {
-      function processNode(node) {
-        if (node.nodeType === 3 && node.textContent.includes('FordEngage')) {
-          var span = document.createElement('span');
-          span.innerHTML = node.textContent.replace(
-            /FordEngage/g,
-            '<span style="font-weight:800;font-family:inherit;">Ford</span><span style="font-weight:300;font-family:inherit;">Engage</span>'
-          );
-          node.parentNode.replaceChild(span, node);
-        } else if (node.nodeType === 1 && !['SCRIPT','STYLE','INPUT','TEXTAREA'].includes(node.tagName) && !node.classList.contains('nav-fw') && !node.classList.contains('nav-fe')) {
-          Array.from(node.childNodes).forEach(processNode);
-        }
-      }
-      document.addEventListener('DOMContentLoaded', function() {
-        processNode(document.body);
-      });
-    })();
-  </script>
+
 </body>
 </html>

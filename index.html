@@ -38,7 +38,7 @@
     }
 
     /* ─── NAV ─── */
-    nav {
+    nav:not(.sidebar) {
       position: fixed;
       top: 0; left: 0;
       width: 100%;
@@ -51,7 +51,7 @@
       gap: 0;
       transition: background 0.35s ease, box-shadow 0.35s ease, padding 0.35s ease;
     }
-    nav::before {
+    nav:not(.sidebar)::before {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0;
@@ -61,12 +61,12 @@
       pointer-events: none;
       transition: opacity 0.35s ease;
     }
-    nav.scrolled {
+    nav:not(.sidebar).scrolled {
       background: #fff;
       box-shadow: 0 2px 12px rgba(0,0,0,0.10);
       padding: 8px clamp(16px, 4vw, 40px) 6px;
     }
-    nav.scrolled::before { opacity: 0; }
+    nav:not(.sidebar).scrolled::before { opacity: 0; }
 
     .nav-inner {
       max-width: 1200px;
@@ -184,27 +184,27 @@
       transition: color .3s, text-shadow .3s;
     }
     .nav-program-text {
-      font-family: \'Ford Light Extended\', \'Ford Antenna\', Arial, sans-serif;
+      font-family: 'Ford Light Extended', 'Ford Antenna', Arial, sans-serif;
       font-size: 19px; font-weight:700; letter-spacing:1px;
       white-space:nowrap; margin-left:14px; align-self:center;
       color:#fff; text-shadow:none;
       transition:color .3s;
     }
     /* Sticky — white nav, dark text */
-    nav.scrolled .nav-fw  { color:#000 !important; text-shadow:none; }
-    nav.scrolled .nav-fe  { color:#000 !important; text-shadow:none; }
-    nav.scrolled .nav-program-text { color:#000 !important; text-shadow:none; }
-    nav:not(.scrolled) .btn-navy {
+    nav:not(.sidebar).scrolled .nav-fw  { color:#000 !important; text-shadow:none; }
+    nav:not(.sidebar).scrolled .nav-fe  { color:#000 !important; text-shadow:none; }
+    nav:not(.sidebar).scrolled .nav-program-text { color:#000 !important; text-shadow:none; }
+    nav:not(.sidebar):not(.scrolled) .btn-navy {
       background: transparent !important;
       border: 2px solid rgba(255,255,255,0.9) !important;
       color: #fff !important;
     }
-    nav.scrolled .btn-navy {
+    nav:not(.sidebar).scrolled .btn-navy {
       background: var(--ford-blue) !important;
       border-color: var(--ford-blue) !important;
       color: #fff !important;
     }
-    nav.scrolled .btn-outline-white {
+    nav:not(.sidebar).scrolled .btn-outline-white {
       border-color: #003478 !important;
       color: #003478 !important;
     }
@@ -479,7 +479,7 @@
       z-index: 101;
       align-self: center;
     }
-    nav.scrolled .hamburger-btn { color: #111; }
+    nav:not(.sidebar).scrolled .hamburger-btn { color: #111; }
     .sidebar-overlay {
       display: none;
       position: fixed; inset: 0;
@@ -522,7 +522,6 @@
       font-family: 'Ford Antenna', Arial, sans-serif;
     }
     .sidebar-link {
-      display: block;
       padding: 12px 20px;
       color: #003478;
       text-decoration: none;
@@ -839,6 +838,7 @@
       .testimonial-cards { grid-template-columns: 1fr 1fr; gap: 16px; }
       .hero-foreground { padding: 120px 24px 60px; flex-direction: column; align-items: flex-start; }
       .hero-text-col { flex: none; width: 100%; }
+    }
 
     /* ─── MOBILE (≤ 480px) ─── */
     @media (max-width: 480px) {
@@ -904,6 +904,26 @@
       }
       .hero-sand-fade { height: 120px; }
       .hero-headline { font-size: clamp(64px, 18vw, 120px); }
+    }
+
+    /* Keep the existing header content reachable at narrow widths. */
+    @media (max-width: 1100px) {
+      nav:not(.sidebar) .nav-inner { flex-wrap: wrap; justify-content: flex-start; gap: 8px; }
+      nav:not(.sidebar) .nav-program-text { order: 2; flex: 0 0 100%; white-space: normal; margin-left: 0; text-align: center; }
+      nav:not(.sidebar) .nav-right { order: 3; width: 100%; justify-content: center; }
+    }
+    @media (max-width: 480px) {
+      nav:not(.sidebar) .nav-brand img { height: 40px !important; }
+      nav:not(.sidebar) .nav-fw, nav:not(.sidebar) .nav-fe { font-size: 24px; }
+      nav:not(.sidebar) .nav-program-text { font-size: 14px; }
+    }
+    @media (max-width: 600px) {
+      .proof-strip-inner { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 0; }
+      .proof-stat { min-width: 0; border-right: none; }
+      .proof-stat:last-child { grid-column: 1 / -1; }
+    }
+    a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
+      outline: 3px solid #0562D2; outline-offset: 3px;
     }
   </style>
   <script src="https://kit.fontawesome.com/a0d1bd4a2c.js" crossorigin="anonymous"></script>
@@ -994,14 +1014,14 @@
     <div style="max-width:1200px;margin:0 auto;padding:0 clamp(24px,5vw,60px);">
 
       <!-- HEADLINE — full width spanning both columns -->
-      <h2 x-apple-data-detectors="false" style="font-family:'Merriweather','Times New Roman',Georgia,serif;line-height:1.25;font-size:clamp(1.8rem,3vw,2.6rem);font-weight:900;line-height:1.15;letter-spacing:-0.3px;color:#111;margin-bottom:36px;max-width:100%;cursor:default;text-decoration:none;pointer-events:none;">Fact, each year you've lost nearly $4 Million in PNVR sales compared to our Top Ford Dealers using the FordEngage sales application.</h2>
+      <h2 x-apple-data-detectors="false" style="font-family:'Merriweather','Times New Roman',Georgia,serif;line-height:1.25;font-size:clamp(1.8rem,3vw,2.6rem);font-weight:900;line-height:1.15;letter-spacing:-0.3px;color:#111;margin-bottom:36px;max-width:100%;cursor:default;text-decoration:none;pointer-events:none;">Fact, each year you've lost nearly $4 Million in PNVR sales compared to our Top Ford Dealers using the <span style="font-weight:800;font-family:inherit;">Ford</span><span style="font-weight:300;font-family:inherit;">Engage</span> sales application.</h2>
 
       <!-- COPY + CALCULATOR — two columns below the headline -->
       <div class="problem-roi-wrap">
 
         <div class="problem-copy-col" style="text-align:left;">
           <p class="section-body" style="text-align:left;">Most Ford dealers clear under $200 per vehicle on accessories. The top performers in your market are closing $1,200 on the same deal with the same customer. The difference is a consistent presentation, a visual tool, and a sales process built around accessories from the start. Your customers are already spending that money. The question is whether they spend it with you.</p>
-          <p style="margin-top:16px;font-size:13px;color:#aaa;font-style:italic;">* Based on avg $805 PNVR gap across 500+ FordEngage dealers.</p>
+          <p style="margin-top:16px;font-size:13px;color:#aaa;font-style:italic;">* Based on avg $805 PNVR gap across 500+ <span style="font-weight:800;font-family:inherit;">Ford</span><span style="font-weight:300;font-family:inherit;">Engage</span> dealers.</p>
 
           <!-- Animated Revenue Comparison Chart -->
           <div class="roi-chart" style="margin-top:32px;">
@@ -1111,7 +1131,7 @@
       <div style="text-align:center;margin-bottom:52px;">
         <p style="font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#003478;margin-bottom:12px;">The Deal Journey</p>
         <h2 style="font-size:clamp(36px,5vw,60px);line-height:1;margin-bottom:16px;">One Platform.<br>Every Department.<br>Every Dollar.</h2>
-        <p style="font-size:17px;color:#666;font-weight:300;max-width:560px;margin:0 auto;">FordEngage connects every department so every accessory dollar gets captured, tracked, and paid.</p>
+        <p style="font-size:17px;color:#666;font-weight:300;max-width:560px;margin:0 auto;"><span style="font-weight:800;font-family:inherit;">Ford</span><span style="font-weight:300;font-family:inherit;">Engage</span> connects every department so every accessory dollar gets captured, tracked, and paid.</p>
       </div>
 
       <div class="journey-side-by-side">
@@ -1122,14 +1142,14 @@
             <div class="jdept-num">01</div>
             <div>
               <div class="jdept-name">Sales Floor, Subject Matter Expert</div>
-              <p class="jdept-body">Your salesperson knows pricing, inventory, and availability before the customer sits down. FordEngage pulls live Parts data so every associate confidently closes the accessory conversation on every deal.</p>
+              <p class="jdept-body">Your salesperson knows pricing, inventory, and availability before the customer sits down. <span style="font-weight:800;font-family:inherit;">Ford</span><span style="font-weight:300;font-family:inherit;">Engage</span> pulls live Parts data so every associate confidently closes the accessory conversation on every deal.</p>
             </div>
           </div>
           <div class="jdept">
             <div class="jdept-num">02</div>
             <div>
               <div class="jdept-name">Parts, Single Source of Truth</div>
-              <p class="jdept-body">Parts owns the inventory. The moment an accessory is selected, FordEngage auto-generates a purchase order. Parts knows what's coming before Service even asks. No phone calls. No spreadsheets.</p>
+              <p class="jdept-body">Parts owns the inventory. The moment an accessory is selected, <span style="font-weight:800;font-family:inherit;">Ford</span><span style="font-weight:300;font-family:inherit;">Engage</span> auto-generates a purchase order. Parts knows what's coming before Service even asks. No phone calls. No spreadsheets.</p>
             </div>
           </div>
           <div class="jdept">
@@ -1218,7 +1238,7 @@
   
 
   <!-- ═══ HOW IT WORKS ═══ -->
-  <section class="section-how" id="how">
+  <section class="section-how" id="how-steps">
     <div class="how-inner">
       <h2>Live on your floor in days.</h2>
       <div class="how-cards">
@@ -1500,27 +1520,6 @@
     });
   </script>
 
-  <script>
-    /* ── FordEngage Brand Rule ──
-       "Ford" = weight 800, "Engage" = weight 300
-       Applies automatically to every text instance on the page */
-    (function brandFordEngage() {
-      function processNode(node) {
-        if (node.nodeType === 3 && node.textContent.includes('FordEngage')) {
-          var span = document.createElement('span');
-          span.innerHTML = node.textContent.replace(
-            /FordEngage/g,
-            '<span style="font-weight:800;font-family:inherit;">Ford</span><span style="font-weight:300;font-family:inherit;">Engage</span>'
-          );
-          node.parentNode.replaceChild(span, node);
-        } else if (node.nodeType === 1 && !['SCRIPT','STYLE','INPUT','TEXTAREA'].includes(node.tagName) && !node.classList.contains('nav-fw') && !node.classList.contains('nav-fe')) {
-          Array.from(node.childNodes).forEach(processNode);
-        }
-      }
-      document.addEventListener('DOMContentLoaded', function() {
-        processNode(document.body);
-      });
-    })();
-  </script>
+
 </body>
 </html>
