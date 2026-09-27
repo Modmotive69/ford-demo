@@ -31,3 +31,5 @@
   #fe-full-note, #fe-full-status { padding:6px 10px; font-size:12px; }
   #fe-full-dialog .fe-full-footer { padding:4px 10px; }
 }
+
+#see-it-in-action .fe-demo-product-image { display:block; width:100%; max-width:900px; height:auto; margin:0 auto 32px; }

@@ -185,8 +185,8 @@
     }
     .nav-program-text {
       font-family: 'Ford Light Extended', 'Ford Antenna', Arial, sans-serif;
-      font-size: 19px; font-weight:700; letter-spacing:1px;
-      white-space:nowrap; margin-left:14px; align-self:center;
+      font-size: 14px; font-weight:500; letter-spacing:1px;
+      white-space:normal; margin-left:14px; align-self:center; text-align:center; flex:1;
       color:#fff; text-shadow:none;
       transition:color .3s;
     }
@@ -782,8 +782,8 @@
       grid-template-columns: 1fr 1fr;
       gap: 16px;
     }
-    .roi-card { padding: 24px 16px; background: var(--white); border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-    .roi-card-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1px; color: #888; font-weight: 700; margin-bottom: 8px; }
+    .roi-card { display:grid; grid-template-rows:subgrid; grid-row:span 3; row-gap:0; min-width:0; padding: 24px 16px; background: var(--white); border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+    .roi-card-label { min-height:2lh; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1px; color: #888; font-weight: 700; margin-bottom: 8px; }
     .roi-card-value { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 900; color: var(--ford-blue); letter-spacing: -0.5px; }
     .roi-card.top-rate .roi-card-value { color: var(--ford-bright); }
 
@@ -968,7 +968,7 @@
     <div class="hero-foreground">
       <div class="hero-text-col">
         <h1 class="hero-headline">BUILT<br>FORD<br>CUSTOM</h1>
-        <p class="hero-subline">Stop letting <strong class="hero-accent">$1,000</strong> walk out your door!</p>
+        <p class="hero-subline">Stop letting <strong class="hero-accent">$1,000</strong> per car deal walk out your door!</p>
       </div>
       <div class="hero-assets-col">
       <img src="images/ipadbronco.png" alt="FordEngage platform" class="hero-combined-img">
@@ -1127,7 +1127,8 @@
 
   <!-- Inline interactive viewer, reuses the existing product viewer. -->
   <section id="see-it-in-action" aria-labelledby="fe-demo-heading">
-    <h2 id="fe-demo-heading">See it in action</h2>
+    <h2 id="fe-demo-heading">Bringing Products to Life</h2>
+    <img class="fe-demo-product-image" src="images/ipadbronco.png" alt="Bronco accessories alongside the ENGAGE360 product interface" loading="lazy">
     <div id="fe-demo-inline" aria-label="ENGAGE360 interactive viewer" aria-busy="true">
       <div class="fe-demo-status" role="status"><p>Loading viewer…</p><button class="fe-demo-retry" type="button" hidden>Try again</button></div>
     </div>
@@ -1448,7 +1449,7 @@
         <div class="sidebar-section-label">Current Pages</div>
         <a class="sidebar-link" href="index.html"><i class="fa-thin fa-house" style="width:18px;"></i> Home</a>
         <a class="sidebar-link" href="how-it-works.html"><i class="fa-thin fa-route" style="width:18px;"></i> How It Works</a>
-        <a class="sidebar-link" href="#see-it-in-action"><i class="fa-thin fa-circle-play" style="width:18px;"></i> See It in Action</a>
+        <a class="sidebar-link" href="#see-it-in-action"><i class="fa-thin fa-circle-play" style="width:18px;"></i> Bringing Products to Life</a>
         <a class="sidebar-link" href="enroll.html"><i class="fa-thin fa-file-signature" style="width:18px;"></i> Enroll Now</a>
       </div>
 
