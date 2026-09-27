@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FordEngage | Built Ford Custom | SmartDealer</title>
+  <title>How It Works | FordEngage</title>
   <meta name="format-detection" content="telephone=no, address=no, email=no">
   <meta name="description" content="Ford dealer accessory program. $800 extra gross per vehicle. JD Power verified across 500+ dealers. Powered by Ford DSS." />
   <link rel="preconnect" href="https://www.ford.com" />
@@ -930,11 +930,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800;900&family=Merriweather:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    .how-page main { padding-top: var(--page-nav-height, 100px); }
+    .how-page-title { padding: 36px 24px 0; text-align: center; font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif; font-weight: 900; font-size: clamp(36px, 5vw, 60px); line-height: 1.1; color: #003478; }
+    .how-page #how { scroll-margin-top: calc(var(--page-nav-height, 100px) + 16px); }
+    .sidebar-link[aria-current="page"] { background: #f0f4ff; font-weight: 700; }
+  </style>
 </head>
-<body>
-
+<body class="how-page">
   <!-- ═══ NAV ═══ -->
-  <nav>
+  <nav class="scrolled">
     <div class="nav-inner">
       <button class="hamburger-btn" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button>
       <a class="nav-brand" href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
@@ -949,168 +954,53 @@
     </div>
   </nav>
 
-  <!-- ═══ HERO ═══ -->
-  <section class="hero" id="home">
-    <!-- Video layers — background (z-index: 0) -->
-    <video id="hero-video-a" autoplay muted playsinline class="hero-video hero-video-active" poster="images/hero-bg.jpg">
-      <source src="images/bronco-hero.mp4" type="video/mp4">
-    </video>
-    <video id="hero-video-b" muted playsinline class="hero-video hero-video-next"></video>
-
-    <!-- Static bg panel — starts opaque, fades out to reveal video (z-index: 2) -->
-    <div class="hero-bg-panel" id="hero-bg-panel"></div>
-
-    <!-- Sand/dust fade at bottom (z-index: 3) -->
-    <div class="hero-sand-fade"></div>
-
-    <!-- Foreground content — always on top (z-index: 10) -->
-    <div class="hero-foreground">
-      <div class="hero-text-col">
-        <h1 class="hero-headline">BUILT<br>FORD<br>CUSTOM</h1>
-        <p class="hero-subline">Stop letting <strong class="hero-accent">$1,000</strong> walk out your door!</p>
-      </div>
-      <div class="hero-assets-col">
-      <img src="images/ipadbronco.png" alt="FordEngage platform" class="hero-combined-img">
-    </div>
-
-      <div class="hero-cta-wrap">
-        <a class="btn btn-navy btn-lg hero-cta-btn" href="enroll.html" style="pointer-events:auto;position:relative;z-index:20;">Start Today</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ PROOF STRIP ═══ -->
-  <div class="proof-strip">
-    <div class="proof-strip-inner">
-      <div class="proof-stat">
-        <div class="proof-stat-num">$800</div>
-        <div class="proof-stat-label">Avg Extra Gross Per Vehicle</div>
-      </div>
-      <div class="proof-stat">
-        <div class="proof-stat-num">155%</div>
-        <div class="proof-stat-label">PNVR Increase</div>
-      </div>
-      <div class="proof-stat">
-        <div class="proof-stat-num">$1,200</div>
-        <div class="proof-stat-label">Top 100 Dealers Per Vehicle</div>
-      </div>
-      <div class="proof-stat">
-        <div class="proof-stat-num">500+</div>
-        <div class="proof-stat-label">Dealers, Proven</div>
-      </div>
-      <div class="proof-stat" style="border-right:none;">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 148 44" style="height:44px;width:auto;display:block;margin:0 auto;" aria-label="JD Power Verified">
-          <text x="1" y="29" font-family="'Arial Black',Arial,sans-serif" font-size="30" font-weight="900" fill="#0097A7">JD</text>
-          <text x="2" y="41" font-family="Arial,sans-serif" font-size="9.5" font-weight="800" fill="#0097A7" letter-spacing="0.8">POWER</text>
-          <text x="58" y="28" font-family="Arial,sans-serif" font-size="18" font-weight="600" fill="#1a1a1a">Verified</text>
-        </svg>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- ═══ THE PROBLEM + ROI ═══ -->
-  <section class="section-problem">
+  <main>
+    <h1 class="how-page-title">How It Works</h1>
+      <!-- ═══ DEAL JOURNEY ═══ -->
+  <section class="section-journey" id="how">
     <div style="max-width:1200px;margin:0 auto;padding:0 clamp(24px,5vw,60px);">
 
-      <!-- HEADLINE — full width spanning both columns -->
-      <h2 x-apple-data-detectors="false" style="font-family:'Merriweather','Times New Roman',Georgia,serif;line-height:1.25;font-size:clamp(1.8rem,3vw,2.6rem);font-weight:900;line-height:1.15;letter-spacing:-0.3px;color:#111;margin-bottom:36px;max-width:100%;cursor:default;text-decoration:none;pointer-events:none;">Fact, each year you've lost nearly $4 Million in PNVR sales compared to our Top Ford Dealers using the <span style="font-weight:800;font-family:inherit;">Ford</span><span style="font-weight:300;font-family:inherit;">Engage</span> sales application.</h2>
+      <div style="text-align:center;margin-bottom:52px;">
+        <p style="font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#003478;margin-bottom:12px;">The Deal Journey</p>
+        <h2 style="font-size:clamp(36px,5vw,60px);line-height:1;margin-bottom:16px;">One Platform.<br>Every Department.<br>Every Dollar.</h2>
+        <p style="font-size:17px;color:#666;font-weight:300;max-width:560px;margin:0 auto;"><span style="font-weight:800;font-family:inherit;">Ford</span><span style="font-weight:300;font-family:inherit;">Engage</span> connects every department so every accessory dollar gets captured, tracked, and paid.</p>
+      </div>
 
-      <!-- COPY + CALCULATOR — two columns below the headline -->
-      <div class="problem-roi-wrap">
+      <div class="journey-side-by-side">
 
-        <div class="problem-copy-col" style="text-align:left;">
-          <p class="section-body" style="text-align:left;">Most Ford dealers clear under $200 per vehicle on accessories. The top performers in your market are closing $1,200 on the same deal with the same customer. The difference is a consistent presentation, a visual tool, and a sales process built around accessories from the start. Your customers are already spending that money. The question is whether they spend it with you.</p>
-          <p style="margin-top:16px;font-size:13px;color:#aaa;font-style:italic;">* Based on avg $805 PNVR gap across 500+ <span style="font-weight:800;font-family:inherit;">Ford</span><span style="font-weight:300;font-family:inherit;">Engage</span> dealers.</p>
-
-          <!-- Animated Revenue Comparison Chart -->
-          <div class="roi-chart" style="margin-top:32px;">
-            <p style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#999;margin-bottom:16px;">Monthly Revenue Comparison</p>
-            <div class="chart-bars-wrap">
-
-              <div class="chart-col">
-                <div class="chart-value-label" id="chart-avg-val">$80,500</div>
-                <div class="chart-track">
-                  <div class="chart-bar chart-bar-avg" id="chart-bar-avg" style="height:50%;"></div>
-                </div>
-                <div class="chart-col-label">PNVR Gross<br>Sales</div>
-              </div>
-
-              <div class="chart-col">
-                <div class="chart-value-label chart-value-top" id="chart-top-val">$120,000</div>
-                <div class="chart-track">
-                  <div class="chart-bar chart-bar-top" id="chart-bar-top" style="height:75%;"></div>
-                </div>
-                <div class="chart-col-label">Top<br>Performers</div>
-              </div>
-
+        <!-- LEFT: Copy -->
+        <div class="journey-text-col">
+          <div class="jdept">
+            <div class="jdept-num">01</div>
+            <div>
+              <div class="jdept-name">Sales Floor, Subject Matter Expert</div>
+              <p class="jdept-body">Your salesperson knows pricing, inventory, and availability before the customer sits down. <span style="font-weight:800;font-family:inherit;">Ford</span><span style="font-weight:300;font-family:inherit;">Engage</span> pulls live Parts data so every associate confidently closes the accessory conversation on every deal.</p>
             </div>
           </div>
-
-          <!-- Annual Revenue — left column -->
-          <div style="margin-top:28px;padding-top:24px;border-top:2px solid #e8eef5;">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
-              <p style="font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#888;margin:0;">Annual Revenue</p>
-              <div style="display:flex;gap:14px;">
-                <span style="display:flex;align-items:center;gap:5px;font-size:10px;font-weight:700;text-transform:uppercase;color:#555;"><span style="width:10px;height:10px;background:#003478;border-radius:2px;display:inline-block;"></span>Gross</span>
-                <span style="display:flex;align-items:center;gap:5px;font-size:10px;font-weight:700;text-transform:uppercase;color:#555;"><span style="width:10px;height:10px;background:#22c55e;border-radius:2px;display:inline-block;"></span>Profit (31%)</span>
-              </div>
-            </div>
-            <div style="display:flex;flex-direction:column;gap:14px;">
-              <div>
-                <div style="display:flex;justify-content:space-between;margin-bottom:5px;">
-                  <span style="font-size:10px;font-weight:800;color:#003478;text-transform:uppercase;letter-spacing:1px;">PNVR Gross Sales</span>
-                  <span style="font-size:12px;font-weight:900;color:#003478;" id="ann-avg-gross-val">$289,800</span>
-                </div>
-                <div style="background:#dde5f0;border-radius:6px;height:22px;overflow:hidden;margin-bottom:5px;"><div id="ann-bar-avg-gross" style="height:100%;background:#003478;border-radius:6px;width:50%;transition:width .5s cubic-bezier(.34,1.2,.64,1);"></div></div>
-                <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
-                  <span style="font-size:10px;font-weight:700;color:#16a34a;">↳ Profit</span>
-                  <span style="font-size:11px;font-weight:800;color:#16a34a;" id="ann-avg-profit-val">$89,838</span>
-                </div>
-                <div style="background:#dde5f0;border-radius:5px;height:14px;overflow:hidden;"><div id="ann-bar-avg-profit" style="height:100%;background:#22c55e;border-radius:5px;width:16%;transition:width .5s cubic-bezier(.34,1.2,.64,1);"></div></div>
-              </div>
-              <div style="border-top:1px solid #e8eef5;padding-top:12px;">
-                <div style="display:flex;justify-content:space-between;margin-bottom:5px;">
-                  <span style="font-size:10px;font-weight:800;color:#0562D2;text-transform:uppercase;letter-spacing:1px;">Top Performers</span>
-                  <span style="font-size:12px;font-weight:900;color:#0562D2;" id="ann-top-gross-val">$432,000</span>
-                </div>
-                <div style="background:#dde5f0;border-radius:6px;height:22px;overflow:hidden;margin-bottom:5px;"><div id="ann-bar-top-gross" style="height:100%;background:linear-gradient(to right,#003478,#0562D2);border-radius:6px;width:75%;transition:width .5s cubic-bezier(.34,1.2,.64,1);"></div></div>
-                <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
-                  <span style="font-size:10px;font-weight:700;color:#16a34a;">↳ Profit</span>
-                  <span style="font-size:11px;font-weight:800;color:#16a34a;" id="ann-top-profit-val">$133,920</span>
-                </div>
-                <div style="background:#dde5f0;border-radius:5px;height:14px;overflow:hidden;"><div id="ann-bar-top-profit" style="height:100%;background:linear-gradient(to right,#16a34a,#4ade80);border-radius:5px;width:23%;transition:width .5s cubic-bezier(.34,1.2,.64,1);"></div></div>
-              </div>
+          <div class="jdept">
+            <div class="jdept-num">02</div>
+            <div>
+              <div class="jdept-name">Parts, Single Source of Truth</div>
+              <p class="jdept-body">Parts owns the inventory. The moment an accessory is selected, <span style="font-weight:800;font-family:inherit;">Ford</span><span style="font-weight:300;font-family:inherit;">Engage</span> auto-generates a purchase order. Parts knows what's coming before Service even asks. No phone calls. No spreadsheets.</p>
             </div>
           </div>
-        </div>
-
-        <div class="problem-calc-col">
-          <h2 style="font-size:1.4rem;font-weight:900;margin-bottom:8px;text-align:left;">Select your Car sales per month</h2>
-          <p style="font-size:0.95rem;color:#666;margin-bottom:28px;">See how our application affects your bottom line.</p>
-          <div style="margin-bottom:28px;">
-            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;">
-              <label class="roi-label" for="vehicles-sold" style="text-transform:uppercase;font-size:11px;font-weight:700;letter-spacing:1.5px;color:#555;">New vehicles sold per month</label>
-              <span id="slider-display" style="font-size:2rem;font-weight:900;color:#003478;line-height:1;">300</span>
-            </div>
-            <input type="range" id="vehicles-sold"
-              min="100" max="800" step="50" value="300"
-              style="width:100%;height:6px;border-radius:3px;appearance:none;-webkit-appearance:none;background:linear-gradient(to right,#003478 0%,#003478 0%,#e0e0e0 0%,#e0e0e0 100%);outline:none;cursor:pointer;">
-            <div style="display:flex;justify-content:space-between;font-size:11px;color:#aaa;margin-top:6px;">
-              <span>100</span><span>200</span><span>300</span><span>400</span><span>500</span><span>600</span><span>700</span><span>800</span>
+          <div class="jdept">
+            <div class="jdept-num">03</div>
+            <div>
+              <div class="jdept-name">Service, Scheduled at Close</div>
+              <p class="jdept-body">The install appointment is created the moment the deal closes. Labor is blocked, parts arrival tracked, delivery confirmed automatically. No write-up surprises. No customer callbacks.</p>
             </div>
           </div>
-          <div class="roi-results">
-            <div class="roi-card">
-              <div class="roi-card-label">Your monthly opportunity</div>
-              <div class="roi-card-value" id="roi-avg">$40,250</div>
-              <div style="font-size:0.72rem;color:#999;margin-top:6px;">at $805 avg · JD Power verified</div>
+          <div class="jdept">
+            <div class="jdept-num">04</div>
+            <div>
+              <div class="jdept-name">F&amp;I, Every Dollar Accounted For</div>
+              <p class="jdept-body">Commission calculated. Backend margin documented. Deal jacket updated before the F&amp;I manager sits down. Every accessory dollar tracked from sale to delivery.</p>
             </div>
-            <div class="roi-card top-rate">
-              <div class="roi-card-label">At top dealer rate</div>
-              <div class="roi-card-value" id="roi-top">$60,000</div>
-              <div style="font-size:0.72rem;color:#999;margin-top:6px;">at $1,200/vehicle · top performers</div>
-            </div>
+          </div>
+          <div style="background:#f0f4ff;border-left:4px solid #003478;padding:18px 22px;border-radius:0 8px 8px 0;margin-top:4px;">
+            <div style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:900;font-size:24px;color:#003478;letter-spacing:1px;margin-bottom:4px;">WE OWE, Fulfilled</div>
+            <p style="font-size:13px;color:#444;line-height:1.6;margin:0;">Every promise documented. Every department aligned. Nothing missed from the sales floor to the delivery bay.</p>
           </div>
           <div style="margin-bottom:14px;padding-bottom:16px;border-bottom:1px solid #e8eef5;">
             <p style="font-family:'Arial Black',Arial,sans-serif;font-weight:900;font-size:clamp(1rem,1.8vw,1.2rem);color:#003478;line-height:1.2;margin-bottom:6px;">Stop the Profit Leaking Now</p>
@@ -1120,264 +1010,21 @@
           <a class="btn btn-navy btn-lg" href="enroll.html" style="display:inline-block;">Enroll Now</a>
         </div>
 
+        <!-- RIGHT: Infographic — smaller, constrained -->
+        <div class="journey-img-col">
+          <img src="images/journey-roadmap.png" alt="FordEngage Deal Journey" style="width:100%;display:block;border-radius:12px;box-shadow:0 8px 32px rgba(0,52,120,0.12);">
+        </div>
+
       </div>
     </div>
   </section>
 
-  <!-- ═══ ENGAGE360 ═══ -->
-  <section class="section-engage" id="engage360">
-    <div class="engage-inner">
-      <div class="engage-copy">
-        <p class="section-eyebrow">Engage360 by SmartDealer</p>
-        <h2>Sell Accessories. Right Here. Right Now.</h2>
-
-        <div class="engage-tabs">
-          <button class="engage-tab active" data-tab="instore">In-Store</button>
-          <button class="engage-tab" data-tab="estore">eStore</button>
-          <button class="engage-tab" data-tab="vdp">VDP Widget</button>
-        </div>
-
-        <div class="engage-tab-content" data-content="instore">
-          <p class="engage-body">ENGAGE360 puts factory-accurate 4D accessory visualization in the hands of every sales associate, right on the showroom floor. Customers see their exact vehicle with accessories installed. The conversation closes itself.</p>
-          <ul class="engage-bullets">
-            <li>4D visualization on any Ford vehicle</li>
-            <li>Fitment and pricing in a single view</li>
-            <li>Tablet, desktop, and large-format display ready</li>
-            <li>Connected across F&amp;I, Parts, and Service</li>
-          </ul>
-        </div>
-
-        <div class="engage-tab-content" data-content="estore" style="display:none;">
-          <p class="engage-body">Give customers a branded online accessory store. They browse and configure before they arrive, you capture revenue before the deal even starts. Available 24/7, tied directly to your inventory.</p>
-          <ul class="engage-bullets">
-            <li>Dealer-branded online storefront</li>
-            <li>Factory-accurate Ford accessories catalog</li>
-            <li>Seamless checkout tied to your DMS</li>
-            <li>Capture online revenue around the clock</li>
-          </ul>
-        </div>
-
-        <div class="engage-tab-content" data-content="vdp" style="display:none;">
-          <p class="engage-body">Embed an accessories widget directly on your VDP, every shopper sees personalized, fitment-confirmed accessory options while viewing the vehicle they want. Converts online browsers into accessory buyers.</p>
-          <ul class="engage-bullets">
-            <li>Fits any website or inventory platform</li>
-            <li>Real-time fitment + pricing per VIN</li>
-            <li>Converts online shoppers to accessory buyers</li>
-            <li>Drops in with a single snippet, no dev work</li>
-          </ul>
-        </div>
-
-        <a class="btn btn-navy" href="enroll.html" style="margin-top:24px;display:inline-block;">Enroll Now</a>
-      </div>
-    </div>
-  </section>
-
-  
-
-  <!-- ═══ HOW IT WORKS ═══ -->
-  <section class="section-how" id="how-steps">
-    <div class="how-inner">
-      <h2>Live on your floor in days.</h2>
-      <div class="how-cards">
-        <div class="how-card">
-          <div class="how-step-num">01, Install &amp; Train</div>
-          <h3>Up and running in days</h3>
-          <p>ENGAGE360 is delivered, configured for your inventory, and live within days, no construction, no new hardware. We train your team on-site. They're selling accessories before we leave the building.</p>
-        </div>
-        <div class="how-card">
-          <div class="how-step-num">02, Present to Every Customer</div>
-          <h3>Every deal. Every time.</h3>
-          <p>Your team presents factory-accurate accessory options on every vehicle, every deal. The visual tool makes the conversation natural, customers ask for accessories you haven't even shown them yet.</p>
-        </div>
-        <div class="how-card">
-          <div class="how-step-num">03, Watch Revenue Grow</div>
-          <h3>$800 more per vehicle</h3>
-          <p>Dealers see gross change within the first month. Top performers hit $1,200 per vehicle. JD Power verified it across 500+ dealers over 5 years. Your results start on your first deal.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ TESTIMONIALS ═══ -->
-  <section class="section-testimonials">
-    <div class="testimonials-inner">
-      <h2>Dealers are talking.</h2>
-      <div class="testimonial-cards">
-        <div class="testimonial-card">
-          <div class="testimonial-quote">"</div>
-          <p class="testimonial-text">We went from $200 a car to over $900 in accessories. Every deal. Once the team saw the numbers it sold itself internally, they stopped skipping the conversation.</p>
-          <div class="testimonial-attr">General Manager &nbsp;·&nbsp; Texas</div>
-        </div>
-        <div class="testimonial-card">
-          <div class="testimonial-quote">"</div>
-          <p class="testimonial-text">JD Power brought this to us and the data was undeniable. We activated within the week. Three months in and we haven't looked back, this is just how we sell accessories now.</p>
-          <div class="testimonial-attr">Dealer Principal &nbsp;·&nbsp; Ohio</div>
-        </div>
-        <div class="testimonial-card">
-          <div class="testimonial-quote">"</div>
-          <p class="testimonial-text">ROI was there on the first deal. The visualization closes it, customers can see exactly what their truck looks like with the accessories on it. There's no objection after that.</p>
-          <div class="testimonial-attr">General Manager &nbsp;·&nbsp; Florida</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ FINAL CTA ═══ -->
-  <section class="section-finalcta">
-    <div class="section-inner" style="text-align:center;">
-      <h2>Ready to capture your share of the $50B accessories market?</h2>
-      <a class="btn btn-white btn-lg" href="enroll.html">ACTIVATE YOUR PROFITS TODAY →</a>
-    </div>
-  </section>
-
+  </main>
   <!-- ═══ FOOTER ═══ -->
   <footer>
     <p><strong>SmartDealer</strong> &copy; 2026 &nbsp;|&nbsp; A Ford Dealer Solutions partner</p>
     <p style="margin-top:8px;">Dealer performance data verified by J.D. Power across 500+ Ford dealers, 2019–2024.</p>
   </footer>
-
-  <script>
-    // ── Gallery swap ──
-    var mainImg = document.getElementById('engage-main');
-    var thumbs = document.querySelectorAll('.engage-thumb');
-    thumbs.forEach(function(thumb) {
-      thumb.addEventListener('click', function() {
-        if (mainImg) mainImg.src = this.dataset.src;
-        thumbs.forEach(function(t) { t.classList.remove('active'); });
-        this.classList.add('active');
-      });
-    });
-
-    // ── Engage Tabs ──
-    var engageTabs = document.querySelectorAll('.engage-tab');
-    var engageContents = document.querySelectorAll('.engage-tab-content');
-    engageTabs.forEach(function(tab) {
-      tab.addEventListener('click', function() {
-        engageTabs.forEach(function(t) { t.classList.remove('active'); });
-        engageContents.forEach(function(c) { c.style.display = 'none'; });
-        tab.classList.add('active');
-        var target = document.querySelector('[data-content="' + tab.dataset.tab + '"]');
-        if (target) target.style.display = 'block';
-      });
-    });
-
-    // ── ROI Calculator ──
-    var ratesAvg = 805;
-    var ratesTop = 1200;
-    var roiInput = document.getElementById('vehicles-sold');
-    var sliderDisplay = document.getElementById('slider-display');
-    var outAvg   = document.getElementById('roi-avg');
-    var outTop   = document.getElementById('roi-top');
-    function calcROI() {
-      var v = parseInt(roiInput.value, 10);
-      if (isNaN(v) || v < 0) v = 0;
-      if (sliderDisplay) sliderDisplay.textContent = v;
-      // Slider track fill
-      var pct = ((v - 100) / (800 - 100)) * 100;
-      roiInput.style.background = 'linear-gradient(to right,#003478 0%,#003478 '+pct+'%,#e0e0e0 '+pct+'%,#e0e0e0 100%)';
-      // Dollar outputs
-      var avgVal = v * ratesAvg;
-      var topVal = v * ratesTop;
-      outAvg.textContent = '$' + avgVal.toLocaleString();
-      outTop.textContent = '$' + topVal.toLocaleString();
-      var margin = 0.31;
-      var avgProfit = Math.round(avgVal * margin);
-      var topProfit = Math.round(topVal * margin);
-      var maxGross = 800 * ratesTop;
-      var annMax = 800 * ratesTop * 12;
-      function barH(n) { return Math.max(2, (n / maxGross) * 100); }
-      function barW(n) { return Math.max(2, (n / annMax) * 100); }
-      function gEl(id) { return document.getElementById(id); }
-      function setH(id, h) { var b = gEl(id); if (b) b.style.height = h + '%'; }
-      function setWd(id, w) { var b = gEl(id); if (b) b.style.width = w + '%'; }
-      function setLbl(id, n) { var l = gEl(id); if (l) l.textContent = '$' + Math.round(n).toLocaleString(); }
-      setH('chart-bar-avg', barH(avgVal));
-      setH('chart-bar-top', barH(topVal));
-      setLbl('chart-avg-val', avgVal);
-      setLbl('chart-top-val', topVal);
-      var annAvgGross = avgVal * 12, annTopGross = topVal * 12;
-      var annAvgProfit = avgProfit * 12, annTopProfit = topProfit * 12;
-      setWd('ann-bar-avg-gross', barW(annAvgGross));
-      setWd('ann-bar-top-gross', barW(annTopGross));
-      setWd('ann-bar-avg-profit', barW(annAvgProfit));
-      setWd('ann-bar-top-profit', barW(annTopProfit));
-      setLbl('ann-avg-gross-val', annAvgGross);
-      setLbl('ann-top-gross-val', annTopGross);
-      setLbl('ann-avg-profit-val', annAvgProfit);
-      setLbl('ann-top-profit-val', annTopProfit);
-    }
-    roiInput.addEventListener('input', calcROI);
-    calcROI();
-  </script>
-
-  <script>
-    // ── Hero video crossfade carousel, looping ──
-    (function() {
-      var videos = [
-        'images/bronco-hero.mp4',
-        'images/f150-raptor-hero.mp4',
-        'images/f250-superduty-hero.mp4'
-      ];
-      var idx = 0;
-      var vA = document.getElementById('hero-video-a');
-      var vB = document.getElementById('hero-video-b');
-      if (!vA || !vB) return;
-
-      var active = vA, next = vB;
-
-      function startFade() {
-        idx = (idx + 1) % videos.length;
-        next.src = videos[idx];
-        next.load();
-        next.play().catch(function(){});
-        next.classList.add('hero-video-active');
-        next.classList.remove('hero-video-next');
-        active.classList.remove('hero-video-active');
-        active.classList.add('hero-video-next');
-        var tmp = active; active = next; next = tmp;
-        active._fading = false;
-      }
-
-      function attachListener(el) {
-        el.addEventListener('timeupdate', function() {
-          if (!this._fading && this.duration && this.currentTime >= this.duration - 1.8) {
-            this._fading = true;
-            startFade();
-          }
-        });
-      }
-
-      attachListener(vA);
-      attachListener(vB);
-
-      // Preload second video
-      vB.src = videos[1];
-      vB.load();
-    })();
-
-    // ── Fade static bg panel out after 3s to reveal video ──
-    setTimeout(function() {
-      var panel = document.getElementById('hero-bg-panel');
-      if (panel) {
-        panel.classList.add('fade-out');
-      }
-    }, 3000);
-  </script>
-
-  <script>
-    // ── Transparent nav → sticky on scroll ──
-    (function() {
-      var nav = document.querySelector('nav');
-      if (!nav) return;
-      nav.classList.remove('scrolled');
-      window.addEventListener('scroll', function() {
-        if (window.scrollY > 80) nav.classList.add('scrolled');
-        else nav.classList.remove('scrolled');
-      }, { passive: true });
-    })();
-  </script>
-
-
   <!-- ═══ VIDEO LIGHTBOX ═══ -->
   <div id="video-modal" class="vmodal-overlay" onclick="if(event.target===this)closeVideo()">
     <div class="vmodal-inner">
@@ -1426,7 +1073,7 @@
       <div class="sidebar-section">
         <div class="sidebar-section-label">Current Pages</div>
         <a class="sidebar-link" href="index.html"><i class="fa-thin fa-house" style="width:18px;"></i> Home</a>
-        <a class="sidebar-link" href="how-it-works.html"><i class="fa-thin fa-route" style="width:18px;"></i> How It Works</a>
+        <a class="sidebar-link" href="how-it-works.html" aria-current="page"><i class="fa-thin fa-route" style="width:18px;"></i> How It Works</a>
         <a class="sidebar-link" href="enroll.html"><i class="fa-thin fa-file-signature" style="width:18px;"></i> Enroll Now</a>
       </div>
 
@@ -1459,5 +1106,16 @@
   </script>
 
 
+  <script>
+    // Keep the page below the shared fixed header at every viewport and font size.
+    (function () {
+      var header = document.querySelector('body > nav:not(.sidebar)');
+      function measureHeader() {
+        document.documentElement.style.setProperty('--page-nav-height', header.getBoundingClientRect().height + 'px');
+      }
+      new ResizeObserver(measureHeader).observe(header);
+      measureHeader();
+    })();
+  </script>
 </body>
 </html>
