@@ -930,6 +930,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800;900&family=Merriweather:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/see-it-in-action.css">
 </head>
 <body>
 
@@ -1122,6 +1123,13 @@
 
       </div>
     </div>
+  </section>
+
+  <!-- Homepage interactive viewer, reuses the existing product popup. -->
+  <section id="see-it-in-action" aria-labelledby="fe-demo-heading">
+    <h2 id="fe-demo-heading">See it in action</h2>
+    <img class="fe-demo-preview" src="images/bronco-kayak-front.jpg" alt="ENGAGE360 On Vehicle preview" loading="lazy" width="1280" height="667">
+    <button type="button" class="btn btn-navy btn-lg" id="fe-demo-launch" aria-haspopup="dialog">Launch interactive viewer</button>
   </section>
 
   <!-- ═══ ENGAGE360 ═══ -->
@@ -1427,13 +1435,13 @@
         <div class="sidebar-section-label">Current Pages</div>
         <a class="sidebar-link" href="index.html"><i class="fa-thin fa-house" style="width:18px;"></i> Home</a>
         <a class="sidebar-link" href="how-it-works.html"><i class="fa-thin fa-route" style="width:18px;"></i> How It Works</a>
+        <a class="sidebar-link" href="#see-it-in-action"><i class="fa-thin fa-circle-play" style="width:18px;"></i> See It in Action</a>
         <a class="sidebar-link" href="enroll.html"><i class="fa-thin fa-file-signature" style="width:18px;"></i> Enroll Now</a>
       </div>
 
       <div class="sidebar-section">
         <div class="sidebar-section-label">Coming Soon</div>
         <a class="sidebar-link sidebar-link-soon" href="#"><i class="fa-thin fa-book-open" style="width:18px;"></i> Learn More</a>
-        <a class="sidebar-link sidebar-link-soon" href="#"><i class="fa-thin fa-circle-play" style="width:18px;"></i> See It in Action</a>
         <a class="sidebar-link sidebar-link-soon" href="#"><i class="fa-thin fa-circle-check" style="width:18px;"></i> Best Practices</a>
         <a class="sidebar-link sidebar-link-soon" href="#"><i class="fa-thin fa-folder-open" style="width:18px;"></i> Resources</a>
         <a class="sidebar-link sidebar-link-soon" href="#"><i class="fa-thin fa-users" style="width:18px;"></i> About Us</a>
@@ -1459,5 +1467,10 @@
   </script>
 
 
+  <dialog id="fe-demo-dialog" aria-label="ENGAGE360 interactive viewer">
+    <div class="fe-demo-toolbar"><strong>ENGAGE360</strong><button type="button" class="fe-demo-close">Close viewer</button></div>
+    <div class="fe-demo-status" role="status"><p>Loading viewer…</p><button class="fe-demo-retry" type="button" hidden>Try again</button></div>
+  </dialog>
+  <script src="js/see-it-in-action.js" defer></script>
 </body>
 </html>

@@ -1,0 +1,11 @@
+#see-it-in-action { background:#f5f5f5; padding:60px 24px; text-align:center; scroll-margin-top:220px; }
+#see-it-in-action h2 { font-family:'Barlow Condensed','Arial Narrow',sans-serif; font-size:clamp(36px,5vw,60px); color:#003478; margin-bottom:24px; }
+#see-it-in-action .fe-demo-preview { display:block; height:auto; width:min(100%,900px); margin:0 auto 24px; border-radius:12px; }
+#fe-demo-dialog { position:fixed; inset:0; margin:auto; padding:0; border:0; border-radius:12px; width:96vw; max-width:1500px; height:94dvh; max-height:94dvh; background:#fff; color:#111; }
+#fe-demo-dialog::backdrop { background:rgba(0,0,0,.75); }
+#fe-demo-dialog .fe-demo-toolbar { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 16px; height:52px; background:#fff; border-bottom:1px solid #ddd; }
+#fe-demo-dialog .fe-demo-toolbar button, #fe-demo-dialog .fe-demo-retry { border:1px solid #003478; border-radius:4px; padding:6px 12px; background:#fff; color:#003478; cursor:pointer; }
+#fe-demo-dialog .fe-demo-frame { display:block; width:100%; height:calc(100% - 52px); border:0; }
+#fe-demo-dialog .fe-demo-status { position:absolute; top:65px; left:16px; right:16px; padding:16px; background:#fff; z-index:1; }
+#fe-demo-dialog [hidden] { display:none; }
+@media(max-width:700px) { #fe-demo-dialog { width:100vw; height:100dvh; max-width:100vw; max-height:100dvh; border-radius:0; } }
