@@ -16,11 +16,9 @@
   document.addEventListener('error', e => {
     if (e.target.tagName === 'SCRIPT' && e.target.src.includes('model-viewer')) unavailable();
   }, true);
-  document.querySelector('.e360-close').onclick = () => send('fe-viewer-close');
-  modal.onclick = e => { if (e.target === modal) send('fe-viewer-close'); };
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') { e.preventDefault(); send('fe-viewer-close'); }
-  });
+  // Inline component: no dismiss control, backdrop or Escape-to-close behavior.
+  document.querySelector('.e360-close').remove();
+  modal.removeAttribute('onclick');
   document.querySelectorAll('.e360-tab').forEach(tab => {
     tab.tabIndex = 0;
     tab.setAttribute('role','button');

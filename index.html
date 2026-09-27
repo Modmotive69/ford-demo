@@ -1125,11 +1125,12 @@
     </div>
   </section>
 
-  <!-- Homepage interactive viewer, reuses the existing product popup. -->
+  <!-- Inline interactive viewer, reuses the existing product viewer. -->
   <section id="see-it-in-action" aria-labelledby="fe-demo-heading">
     <h2 id="fe-demo-heading">See it in action</h2>
-    <img class="fe-demo-preview" src="images/bronco-kayak-front.jpg" alt="ENGAGE360 On Vehicle preview" loading="lazy" width="1280" height="667">
-    <button type="button" class="btn btn-navy btn-lg" id="fe-demo-launch" aria-haspopup="dialog">Launch interactive viewer</button>
+    <div id="fe-demo-inline" aria-label="ENGAGE360 interactive viewer" aria-busy="true">
+      <div class="fe-demo-status" role="status"><p>Loading viewer…</p><button class="fe-demo-retry" type="button" hidden>Try again</button></div>
+    </div>
   </section>
 
   <!-- ═══ ENGAGE360 ═══ -->
@@ -1467,10 +1468,6 @@
   </script>
 
 
-  <dialog id="fe-demo-dialog" aria-label="ENGAGE360 interactive viewer">
-    <div class="fe-demo-toolbar"><strong>ENGAGE360</strong><button type="button" class="fe-demo-close">Close viewer</button></div>
-    <div class="fe-demo-status" role="status"><p>Loading viewer…</p><button class="fe-demo-retry" type="button" hidden>Try again</button></div>
-  </dialog>
   <script src="js/see-it-in-action.js" defer></script>
 </body>
 </html>

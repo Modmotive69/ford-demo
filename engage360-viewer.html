@@ -318,7 +318,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 @media(max-width:700px){.nl.site-how-link{display:inline-flex;height:48px;font-size:12px;margin-left:12px}}
 .site-how-link:focus-visible{outline:3px solid #0562D2;outline-offset:3px}
 
-.e360-overlay{padding:0;background:#fff}.e360-modal{width:100%;max-width:100%;height:100dvh;max-height:100dvh;border-radius:0;box-shadow:none}.e360-close:focus-visible,.e360-tab:focus-visible{outline:3px solid #0562D2;outline-offset:-3px}#fe-viewer-notice{padding:10px;color:#003478;background:#f0f4ff;font-size:13px}.e360-atc:disabled{opacity:.5;cursor:not-allowed}</style></head><body><script>
+.e360-overlay{position:static;display:flex;padding:0;background:#fff}.e360-modal{width:100%;max-width:100%;height:100dvh;max-height:100dvh;border-radius:0;box-shadow:none}.e360-close{display:none}.e360-tab:focus-visible{outline:3px solid #0562D2;outline-offset:-3px}#fe-viewer-notice{padding:10px;color:#003478;background:#f0f4ff;font-size:13px}.e360-atc:disabled{opacity:.5;cursor:not-allowed}</style></head><body><script>
 // Model-viewer loader, holds until model is actually rendered
 var _mvLoaderSim=null,_mvLoaded=false,_mvScriptLoaded=false;
 function startMVLoader(){
@@ -447,7 +447,7 @@ function setImg(el,url){document.getElementById('main-img').src=url;document.que
 function tog(h){var b=h.nextElementSibling,i=h.querySelector('.aico'),o=b.classList.toggle('open');i.textContent=o?'−':'+'}
 function togA(h){var b=h.nextElementSibling,i=h.querySelector('.abt-ico'),hi=b.style.display==='none';b.style.display=hi?'block':'none';i.innerHTML=hi?'&minus;':'+'}
 </script><!-- ENGAGE360 MODAL -->
-<div class="e360-overlay" id="e360modal" onclick="closeE360(event)">
+<div class="e360-overlay" id="e360modal">
   <div class="e360-modal">
     <div class="e360-modal-top">
       <h2>Yakima&#174; Rack Mounted Kayak Carrier w/o Lock</h2>
