@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Rendered menu regression; no enrollment submissions or external transactions."""
 import json, sys
+from urllib.parse import urlparse
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 base = sys.argv[1] if len(sys.argv) > 1 else 'http://127.0.0.1:8769'
@@ -60,7 +61,10 @@ with sync_playwright() as p:
             menu.click()
             destination = 'enroll.html' if name == 'index.html' else 'index.html'
             drawer.locator(f'a[href="{destination}"]').click()
-            page.wait_for_url('**/' + destination)
+            # Cloudflare Pages canonicalizes /enroll.html to /enroll and /index.html to /.
+            paths = ['/index.html', '/'] if destination == 'index.html' else ['/enroll.html', '/enroll']
+            page.wait_for_url(lambda url: urlparse(url).path in paths)
+            assert page.locator('#enroll-form' if destination == 'enroll.html' else '.hero').count() == 1
             results.append({'page': name, 'width': width, 'visibleBarsAndLinks': True, 'escapeCloseOverlayFocusTrapScroll': True, 'navigation': destination})
         page.close()
     browser.close()
