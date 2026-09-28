@@ -55,8 +55,8 @@
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0;
-      height: 120px;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, transparent 100%);
+      height: 190px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.22) 58%, transparent 100%);
       z-index: -1;
       pointer-events: none;
       transition: opacity 0.35s ease;
@@ -163,9 +163,10 @@
 
     /* ─── HERO ─── */
     .hero {
-      background: var(--ford-blue);
-      padding: clamp(32px, 6vw, 80px) clamp(20px, 5vw, 80px) clamp(40px, 7vw, 88px);
+      background: linear-gradient(180deg, #f6f9fd 0%, #ffffff 32%, #ffffff 100%);
+      padding: clamp(28px, 5vw, 56px) clamp(20px, 5vw, 80px) 0;
       text-align: center;
+      overflow: hidden;
     }
 
     .enroll-page-heading {
@@ -174,12 +175,11 @@
       text-align: center;
       text-wrap: balance;
       overflow-wrap: anywhere;
-      color: #ffffff;
-      /* Explicit typography — override any print/document h2 cascade conflicts */
+      color: var(--ford-blue);
       font-family: 'Ford Antenna', FordAntenna, Arial, sans-serif !important;
       font-weight: 900 !important;
-      font-size: clamp(1.6rem, 3.2vw, 2.4rem) !important;
-      line-height: 1.1 !important;
+      font-size: clamp(1.6rem, 3.2vw, 2.35rem) !important;
+      line-height: 1.08 !important;
       letter-spacing: -0.4px !important;
     }
     .hero-eyebrow {
@@ -188,14 +188,14 @@
       font-weight: 600;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.6);
+      color: rgba(0,52,120,0.72);
       margin-bottom: 18px;
     }
 
     .hero h1 {
       font-size: clamp(1.75rem, 5vw, 3.25rem);
       font-weight: 700;
-      color: #ffffff;
+      color: var(--ford-blue);
       letter-spacing: -0.03em;
       line-height: 1.05;
       margin-bottom: 16px;
@@ -203,9 +203,9 @@
 
     .hero-sub {
       font-size: 1.05rem;
-      color: rgba(255,255,255,0.75);
-      max-width: 440px;
-      margin: 0 auto 32px;
+      color: #44556a;
+      max-width: 520px;
+      margin: 0 auto 28px;
       line-height: 1.55;
     }
 
@@ -221,17 +221,31 @@
     .hero-pill {
       font-size: 0.85rem;
       font-weight: 600;
-      color: #ffffff;
+      color: var(--ford-blue);
       padding: 8px 20px;
-      background: rgba(255,255,255,0.12);
+      background: rgba(0,52,120,0.06);
       border-radius: 40px;
-      border: 1px solid rgba(255,255,255,0.2);
+      border: 1px solid rgba(0,52,120,0.14);
     }
 
     .hero-pill-divider {
-      color: rgba(255,255,255,0.25);
+      color: rgba(0,52,120,0.28);
       font-size: 1rem;
       padding: 0 8px;
+    }
+
+    .hero-image-wrap {
+      max-width: 980px;
+      margin: clamp(24px, 4vw, 36px) auto 0;
+      pointer-events: none;
+    }
+    .hero-image {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 0 auto;
+      user-select: none;
+      -webkit-user-drag: none;
     }
 
     /* ─── MAIN LAYOUT ─── */
@@ -874,9 +888,10 @@
   
     /* ─── HERO ─── */
     .hero {
-      background: var(--ford-blue);
-      padding: clamp(32px, 6vw, 80px) clamp(20px, 5vw, 80px) clamp(40px, 7vw, 88px);
+      background: linear-gradient(180deg, #f6f9fd 0%, #ffffff 32%, #ffffff 100%);
+      padding: clamp(28px, 5vw, 56px) clamp(20px, 5vw, 80px) 0;
       text-align: center;
+      overflow: hidden;
     }
 
     .hero-eyebrow {
@@ -885,14 +900,14 @@
       font-weight: 600;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.6);
+      color: rgba(0,52,120,0.72);
       margin-bottom: 18px;
     }
 
     .hero h1 {
       font-size: clamp(1.75rem, 5vw, 3.25rem);
       font-weight: 700;
-      color: #ffffff;
+      color: var(--ford-blue);
       letter-spacing: -0.03em;
       line-height: 1.05;
       margin-bottom: 16px;
@@ -900,9 +915,9 @@
 
     .hero-sub {
       font-size: 1.05rem;
-      color: rgba(255,255,255,0.75);
-      max-width: 440px;
-      margin: 0 auto 32px;
+      color: #44556a;
+      max-width: 520px;
+      margin: 0 auto 28px;
       line-height: 1.55;
     }
 
@@ -918,15 +933,15 @@
     .hero-pill {
       font-size: 0.85rem;
       font-weight: 600;
-      color: #ffffff;
+      color: var(--ford-blue);
       padding: 8px 20px;
-      background: rgba(255,255,255,0.12);
+      background: rgba(0,52,120,0.06);
       border-radius: 40px;
-      border: 1px solid rgba(255,255,255,0.2);
+      border: 1px solid rgba(0,52,120,0.14);
     }
 
     .hero-pill-divider {
-      color: rgba(255,255,255,0.25);
+      color: rgba(0,52,120,0.28);
       font-size: 1rem;
       padding: 0 8px;
     }
@@ -1167,6 +1182,9 @@
       <span class="hero-pill">155% PNVR</span>
       <span class="hero-pill-divider">·</span>
       <span class="hero-pill">500+ dealers</span>
+    </div>
+    <div class="hero-image-wrap" aria-hidden="true">
+      <img class="hero-image" src="images/enroll-bronco-f150-hero-feather.webp" alt="" width="1536" height="1024" loading="eager" decoding="async">
     </div>
   </section>
 
