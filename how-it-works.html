@@ -936,6 +936,326 @@
     .how-page #how { scroll-margin-top: calc(var(--page-nav-height, 100px) + 16px); }
     .sidebar-link[aria-current="page"] { background: #f0f4ff; font-weight: 700; }
   </style>
+
+  <style>
+    /* ══ HOW IT WORKS — hiw-* components ══════════════════════════════ */
+    /* Suppress old how-page-title — new hero replaces it */
+    .how-page-title { display: none; }
+    .how-page main { padding-top: 0; }
+
+    /* ── Shared tokens ── */
+    .hiw-eyebrow {
+      font-family: Arial, sans-serif;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: #003478; margin: 0 0 14px;
+    }
+    .hiw-eyebrow--dark { color: #fff; opacity: .75; }
+    .hiw-eyebrow--light { color: rgba(255,255,255,.75); }
+
+    .hiw-btn {
+      display: inline-block;
+      font-family: Arial, sans-serif; font-size: 15px; font-weight: 700;
+      padding: 14px 32px; border-radius: 4px; text-decoration: none;
+      letter-spacing: .04em; transition: background .2s, color .2s, border-color .2s;
+      white-space: nowrap; cursor: pointer; border: 2px solid transparent;
+    }
+    .hiw-btn--primary { background: #003478; color: #fff; border-color: #003478; }
+    .hiw-btn--primary:hover { background: #002050; border-color: #002050; }
+    .hiw-btn--ghost { background: transparent; color: #fff; border-color: rgba(255,255,255,.75); }
+    .hiw-btn--ghost:hover { background: rgba(255,255,255,.1); }
+    .hiw-btn--lg { font-size: 17px; padding: 18px 44px; }
+    @media (prefers-reduced-motion: reduce) { .hiw-btn { transition: none; } }
+
+    /* ── Hero ── */
+    .hiw-hero {
+      position: relative; min-height: 100svh; min-height: 100vh;
+      display: flex; align-items: center; justify-content: flex-start;
+      overflow: hidden; padding: 0;
+    }
+    .hiw-hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+    }
+    .hiw-hero-bg img {
+      width: 100%; height: 100%; object-fit: cover; object-position: center 30%;
+      display: block; pointer-events: none;
+    }
+    .hiw-hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(120deg, rgba(0,20,60,.85) 30%, rgba(0,52,120,.55) 70%, rgba(0,52,120,.35) 100%);
+    }
+    .hiw-hero-inner {
+      position: relative; z-index: 2;
+      padding: clamp(100px,14vw,160px) clamp(24px,6vw,80px) clamp(60px,8vw,100px);
+      max-width: 900px;
+    }
+    .hiw-hero-headline {
+      font-family: 'Barlow Condensed', 'Arial Narrow', Arial, sans-serif;
+      font-weight: 900; font-size: clamp(52px, 8vw, 96px);
+      line-height: .96; color: #fff; margin: 0 0 22px;
+      text-transform: uppercase; letter-spacing: -.01em;
+    }
+    .hiw-hero-sub {
+      font-family: Arial, sans-serif; font-size: clamp(16px, 2vw, 20px);
+      color: rgba(255,255,255,.88); line-height: 1.55;
+      max-width: 560px; margin: 0 0 36px;
+    }
+    .hiw-hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+    .hiw-scroll-cue {
+      position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+      z-index: 2; opacity: .75; text-decoration: none;
+      animation: hiw-bounce 2s ease-in-out infinite;
+    }
+    @keyframes hiw-bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
+    @media (prefers-reduced-motion: reduce) { .hiw-scroll-cue { animation: none; } }
+
+    /* ── Journey steps ── */
+    .hiw-step { background: #fff; padding: clamp(64px,8vw,100px) clamp(24px,5vw,48px); }
+    .hiw-step--alt { background: #f5f7fb; }
+    .hiw-step-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: clamp(40px,6vw,80px); align-items: center;
+    }
+    .hiw-step--image-right .hiw-step-content { order: 1; }
+    .hiw-step--image-right .hiw-step-visual  { order: 2; }
+    .hiw-step--image-left  .hiw-step-visual  { order: 1; }
+    .hiw-step--image-left  .hiw-step-content { order: 2; }
+
+    .hiw-step-num {
+      font-family: 'Barlow Condensed', 'Arial Narrow', Arial, sans-serif;
+      font-weight: 900; font-size: clamp(80px,10vw,120px);
+      line-height: 1; color: #003478; opacity: .08;
+      margin: 0 0 -20px; user-select: none;
+    }
+    .hiw-step-label {
+      font-family: Arial, sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: #0562D2; margin: 0 0 10px;
+    }
+    .hiw-step-heading {
+      font-family: 'Barlow Condensed', 'Arial Narrow', Arial, sans-serif;
+      font-weight: 900; font-size: clamp(30px, 4vw, 50px);
+      line-height: 1.05; color: #003478; margin: 0 0 18px;
+    }
+    .hiw-step-body {
+      font-family: Arial, sans-serif; font-size: clamp(15px,1.5vw,17px);
+      color: #444; line-height: 1.65; margin: 0 0 20px;
+    }
+    .hiw-step-bullets {
+      list-style: none; padding: 0; margin: 0 0 24px;
+    }
+    .hiw-step-bullets li {
+      font-family: Arial, sans-serif; font-size: 15px; color: #445;
+      padding: 7px 0 7px 22px; border-top: 1px solid #eaeff6;
+      position: relative; line-height: 1.45;
+    }
+    .hiw-step-bullets li::before {
+      content: '';
+      position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #003478; flex-shrink: 0;
+    }
+    .hiw-step-badge {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 10px 18px; border-radius: 8px; margin-top: 8px;
+    }
+    .hiw-step-badge .hiw-badge-label {
+      font-family: Arial, sans-serif; font-size: 10px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase; opacity: .7;
+    }
+    .hiw-step-badge strong {
+      font-family: 'Barlow Condensed', 'Arial Narrow', Arial, sans-serif;
+      font-size: 18px; font-weight: 900; letter-spacing: .02em;
+    }
+    .hiw-badge--core  { background: #e8f0fb; color: #003478; }
+    .hiw-badge--addon { background: #edf2ec; color: #1a5c2a; }
+
+    .hiw-product-card {
+      display: flex; flex-direction: column; align-items: center; gap: 12px;
+    }
+    .hiw-product-card img {
+      width: 100%; max-width: 380px; height: auto;
+      object-fit: contain; display: block;
+      filter: drop-shadow(0 16px 40px rgba(0,52,120,.14));
+    }
+    .hiw-product-desc {
+      font-family: Arial, sans-serif; font-size: 13px; font-weight: 600;
+      color: #8898ae; letter-spacing: 1.5px; text-transform: uppercase; text-align: center;
+    }
+
+    /* Step 2 visual stack */
+    .hiw-visual-stack { position: relative; }
+    .hiw-vs-main {
+      width: 100%; height: auto; border-radius: 14px; display: block;
+      box-shadow: 0 16px 48px rgba(0,52,120,.15);
+    }
+    .hiw-vs-badge {
+      position: absolute; bottom: 20px; left: 20px;
+      background: #003478; color: #fff;
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 8px 16px; border-radius: 999px;
+      font-family: Arial, sans-serif; font-size: 12px; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      box-shadow: 0 4px 16px rgba(0,0,0,.25);
+    }
+    .hiw-vs-phone {
+      position: absolute; right: -10%; bottom: -8%;
+      width: 28%; border-radius: 12px;
+      box-shadow: 0 12px 32px rgba(0,0,0,.22);
+    }
+
+    .hiw-modes-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 20px 0;
+    }
+    .hiw-mode-card {
+      background: #f5f7fb; border-radius: 10px; padding: 16px 18px;
+      border-left: 3px solid #003478;
+    }
+    .hiw-mode-name {
+      font-family: 'Barlow Condensed', 'Arial Narrow', Arial, sans-serif;
+      font-size: 16px; font-weight: 900; color: #003478; margin: 0 0 5px;
+      text-transform: uppercase;
+    }
+    .hiw-mode-desc {
+      font-family: Arial, sans-serif; font-size: 13px; color: #555;
+      line-height: 1.5; margin: 0;
+    }
+
+    /* ── Product differentiation ── */
+    .hiw-products {
+      background: #003478;
+      padding: clamp(64px,8vw,100px) clamp(24px,5vw,48px);
+    }
+    .hiw-products-inner { max-width: 1200px; margin: 0 auto; }
+    .hiw-products-hdr {
+      text-align: center; margin-bottom: 52px;
+    }
+    .hiw-products-heading {
+      font-family: 'Barlow Condensed', 'Arial Narrow', Arial, sans-serif;
+      font-weight: 900; font-size: clamp(32px,5vw,58px);
+      color: #fff; line-height: 1.05; margin: 0 0 14px;
+    }
+    .hiw-products-sub {
+      font-family: Arial, sans-serif; font-size: 17px;
+      color: rgba(255,255,255,.75); line-height: 1.6;
+      max-width: 560px; margin: 0 auto;
+    }
+    .hiw-prod-grid {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 24px; align-items: stretch;
+    }
+    .hiw-prod-card {
+      background: #fff; border-radius: 16px;
+      padding: 28px 24px; display: flex; flex-direction: column;
+      box-shadow: 0 8px 32px rgba(0,0,0,.12);
+      transition: transform .2s;
+    }
+    .hiw-prod-card:hover { transform: translateY(-4px); }
+    @media (prefers-reduced-motion: reduce) { .hiw-prod-card { transition: none; } }
+    .hiw-prod-card--core { border-top: 3px solid #003478; }
+    .hiw-prod-art {
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+    }
+    .hiw-prod-art img {
+      width: 100%; max-width: 180px; height: 220px;
+      object-fit: contain; display: block;
+      filter: drop-shadow(0 8px 24px rgba(0,52,120,.12));
+    }
+    .hiw-prod-body { flex: 1; display: flex; flex-direction: column; }
+    .hiw-prod-eyebrow {
+      font-family: Arial, sans-serif; font-size: 10px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: #0562D2; margin: 0 0 8px;
+    }
+    .hiw-prod-name {
+      font-family: 'Barlow Condensed', 'Arial Narrow', Arial, sans-serif;
+      font-weight: 900; font-size: 26px; color: #003478;
+      margin: 0 0 10px; line-height: 1.1;
+    }
+    .hiw-prod-desc {
+      font-family: Arial, sans-serif; font-size: 14px; color: #555;
+      line-height: 1.6; margin: 0 0 16px;
+    }
+    .hiw-prod-features {
+      list-style: none; padding: 0; margin: 0 0 auto;
+      border-top: 1px solid #eaeff6;
+    }
+    .hiw-prod-features li {
+      font-family: Arial, sans-serif; font-size: 13px; color: #445;
+      padding: 8px 0 8px 18px; border-bottom: 1px solid #eaeff6;
+      position: relative;
+    }
+    .hiw-prod-features li::before {
+      content: '';
+      position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+      width: 6px; height: 6px; border-radius: 50%; background: #003478;
+    }
+    .hiw-prod-price-note {
+      font-family: Arial, sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase; color: #8898ae;
+      margin-top: 18px; padding-top: 12px; border-top: 1px solid #eaeff6;
+    }
+
+    /* ── CTA section ── */
+    .hiw-cta {
+      background: #002050; text-align: center;
+      padding: clamp(64px,8vw,100px) clamp(24px,5vw,48px);
+    }
+    .hiw-cta-inner { max-width: 680px; margin: 0 auto; }
+    .hiw-cta-heading {
+      font-family: 'Barlow Condensed', 'Arial Narrow', Arial, sans-serif;
+      font-weight: 900; font-size: clamp(36px,5vw,62px);
+      color: #fff; line-height: 1.05; margin: 0 0 16px;
+    }
+    .hiw-cta-sub {
+      font-family: Arial, sans-serif; font-size: 18px;
+      color: rgba(255,255,255,.8); line-height: 1.6; margin: 0 0 32px;
+    }
+    .hiw-cta-note {
+      font-family: Arial, sans-serif; font-size: 13px;
+      color: rgba(255,255,255,.5); margin: 16px 0 0;
+    }
+
+    /* ── data-reveal animation ── */
+    [data-reveal] { opacity: 0; transform: translateY(28px); transition: opacity .55s ease, transform .55s ease; }
+    [data-reveal].revealed { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      [data-reveal] { opacity: 1; transform: none; transition: none; }
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .hiw-step-inner { grid-template-columns: 1fr; gap: 36px; }
+      .hiw-step--image-left .hiw-step-visual,
+      .hiw-step--image-right .hiw-step-visual { order: -1; }
+      .hiw-step--image-left .hiw-step-content,
+      .hiw-step--image-right .hiw-step-content { order: 1; }
+      .hiw-prod-grid { grid-template-columns: 1fr 1fr; }
+      .hiw-vs-phone { display: none; }
+    }
+    @media (max-width: 600px) {
+      .hiw-prod-grid { grid-template-columns: 1fr; }
+      .hiw-modes-row { grid-template-columns: 1fr; }
+      .hiw-hero-ctas { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 380px) {
+      .hiw-step-inner { gap: 24px; }
+    }
+  </style>
+  <script>
+    // Reveal on scroll
+    (function() {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const els = document.querySelectorAll('[data-reveal]');
+      if (!els.length) return;
+      const obs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('revealed'); obs.unobserve(e.target); } });
+      }, { threshold: 0.12 });
+      els.forEach(function(el) { obs.observe(el); });
+    })();
+  </script>
 </head>
 <body class="how-page">
   <!-- ═══ NAV ═══ -->
@@ -954,73 +1274,202 @@
     </div>
   </nav>
 
+
   <main>
-    <h1 class="how-page-title">How It Works</h1>
-      <!-- ═══ DEAL JOURNEY ═══ -->
-  <section class="section-journey" id="how">
-    <div style="max-width:1200px;margin:0 auto;padding:0 clamp(24px,5vw,60px);">
 
-      <div style="text-align:center;margin-bottom:52px;">
-        <p style="font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#003478;margin-bottom:12px;">The Deal Journey</p>
-        <h2 style="font-size:clamp(36px,5vw,60px);line-height:1;margin-bottom:16px;">One Platform.<br>Every Department.<br>Every Dollar.</h2>
-        <p style="font-size:17px;color:#666;font-weight:300;max-width:560px;margin:0 auto;"><span style="font-weight:800;font-family:inherit;">Ford</span><span style="font-weight:300;font-family:inherit;">Engage</span> connects every department so every accessory dollar gets captured, tracked, and paid.</p>
+    <!-- ═══ HIW HERO ═══ -->
+    <section class="hiw-hero" id="hiw-hero" aria-label="The customer journey">
+      <div class="hiw-hero-bg" aria-hidden="true">
+        <img src="images/ford-showroom-render.webp" alt="" width="1440" height="810" loading="eager" decoding="async" fetchpriority="high">
+        <div class="hiw-hero-overlay"></div>
       </div>
-
-      <div class="journey-side-by-side">
-
-        <!-- LEFT: Copy -->
-        <div class="journey-text-col">
-          <div class="jdept">
-            <div class="jdept-num">01</div>
-            <div>
-              <div class="jdept-name">Sales Floor, Subject Matter Expert</div>
-              <p class="jdept-body">Your salesperson knows pricing, inventory, and availability before the customer sits down. <span style="font-weight:800;font-family:inherit;">Ford</span><span style="font-weight:300;font-family:inherit;">Engage</span> pulls live Parts data so every associate confidently closes the accessory conversation on every deal.</p>
-            </div>
-          </div>
-          <div class="jdept">
-            <div class="jdept-num">02</div>
-            <div>
-              <div class="jdept-name">Parts, Single Source of Truth</div>
-              <p class="jdept-body">Parts owns the inventory. The moment an accessory is selected, <span style="font-weight:800;font-family:inherit;">Ford</span><span style="font-weight:300;font-family:inherit;">Engage</span> auto-generates a purchase order. Parts knows what's coming before Service even asks. No phone calls. No spreadsheets.</p>
-            </div>
-          </div>
-          <div class="jdept">
-            <div class="jdept-num">03</div>
-            <div>
-              <div class="jdept-name">Service, Scheduled at Close</div>
-              <p class="jdept-body">The install appointment is created the moment the deal closes. Labor is blocked, parts arrival tracked, delivery confirmed automatically. No write-up surprises. No customer callbacks.</p>
-            </div>
-          </div>
-          <div class="jdept">
-            <div class="jdept-num">04</div>
-            <div>
-              <div class="jdept-name">F&amp;I, Every Dollar Accounted For</div>
-              <p class="jdept-body">Commission calculated. Backend margin documented. Deal jacket updated before the F&amp;I manager sits down. Every accessory dollar tracked from sale to delivery.</p>
-            </div>
-          </div>
-          <div style="background:#f0f4ff;border-left:4px solid #003478;padding:18px 22px;border-radius:0 8px 8px 0;margin-top:4px;">
-            <div style="font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:900;font-size:24px;color:#003478;letter-spacing:1px;margin-bottom:4px;">WE OWE, Fulfilled</div>
-            <p style="font-size:13px;color:#444;line-height:1.6;margin:0;">Every promise documented. Every department aligned. Nothing missed from the sales floor to the delivery bay.</p>
-          </div>
-          <div style="margin-bottom:14px;padding-bottom:16px;border-bottom:1px solid #e8eef5;">
-            <p style="font-family:'Arial Black',Arial,sans-serif;font-weight:900;font-size:clamp(1rem,1.8vw,1.2rem);color:#003478;line-height:1.2;margin-bottom:6px;">Stop the Profit Leaking Now</p>
-            <p style="font-family:'Ford Light Extended',Arial,sans-serif;font-weight:300;font-size:14px;color:#555;line-height:1.7;margin:0;">Only takes 60 seconds to enroll in the most effective complete PNVR tool on the Planet. Don&rsquo;t let the aftermarket take your money when it was your customer FIRST!</p>
-          </div>
-
-          <a class="btn btn-navy btn-lg" href="enroll.html" style="display:inline-block;">Enroll Now</a>
+      <div class="hiw-hero-inner">
+        <p class="hiw-eyebrow">The Dealer Revenue Journey</p>
+        <h1 class="hiw-hero-headline">Every Accessory Dollar.<br>Every Deal.<br>Every Time.</h1>
+        <p class="hiw-hero-sub">From the moment a customer researches online to the moment they drive off the lot, FordEngage keeps accessory revenue in your store.</p>
+        <div class="hiw-hero-ctas">
+          <a href="enroll.html" class="hiw-btn hiw-btn--primary">Enroll Now</a>
+          <a href="#step-1" class="hiw-btn hiw-btn--ghost">See How It Works</a>
         </div>
-
-        <!-- RIGHT: Infographic — smaller, constrained -->
-        <div class="journey-img-col">
-          <img src="images/journey-roadmap.png" alt="FordEngage Deal Journey" style="width:100%;display:block;border-radius:12px;box-shadow:0 8px 32px rgba(0,52,120,0.12);">
-        </div>
-
       </div>
-    </div>
-  </section>
+      <a href="#step-1" class="hiw-scroll-cue" aria-label="Scroll to journey">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true"><circle cx="14" cy="14" r="13" stroke="rgba(255,255,255,0.6)" stroke-width="1.5"/><path d="M9 12l5 5 5-5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </section>
+
+    <!-- ═══ JOURNEY STEPS ═══ -->
+
+    <!-- STEP 1: Online Research / VDP -->
+    <section class="hiw-step" id="step-1" aria-labelledby="step-1-heading">
+      <div class="hiw-step-inner hiw-step--image-right" data-reveal>
+        <div class="hiw-step-content">
+          <p class="hiw-step-num" aria-label="Step 1">01</p>
+          <p class="hiw-step-label">Online Research</p>
+          <h2 id="step-1-heading" class="hiw-step-heading">The Accessory Sale Starts on Your VDP</h2>
+          <p class="hiw-step-body">Before a customer walks through your door, they are already on your website choosing their vehicle. The VDP Widget places accessory options directly alongside the vehicle listing. Customers browse, build, and inquire about genuine Ford accessories before they ever leave home.</p>
+          <ul class="hiw-step-bullets">
+            <li>Genuine Ford accessories displayed vehicle-specific on every VDP</li>
+            <li>Accessory inquiry captured and routed to your sales team</li>
+            <li>Financed accessory pricing shown alongside vehicle price</li>
+          </ul>
+          <div class="hiw-step-badge hiw-badge--addon">
+            <span class="hiw-badge-label">Optional Add-On</span>
+            <strong>VDP Widget</strong>
+          </div>
+        </div>
+        <div class="hiw-step-visual">
+          <div class="hiw-product-card">
+            <img src="images/product/box-vdp-widget.webp" alt="VDP Widget product box" width="600" height="760" loading="eager" decoding="async">
+            <p class="hiw-product-desc">Accessories on every VDP</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 2: In-Showroom 3D/AR -->
+    <section class="hiw-step hiw-step--alt" id="step-2" aria-labelledby="step-2-heading">
+      <div class="hiw-step-inner hiw-step--image-left" data-reveal>
+        <div class="hiw-step-visual">
+          <div class="hiw-visual-stack">
+            <img class="hiw-vs-main" src="images/bronco-kayak-3d.jpg" alt="Ford Bronco with Yakima kayak carrier shown in 3D visualization" width="800" height="600" loading="lazy" decoding="async">
+            <div class="hiw-vs-badge">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M9 1.5L1.5 5.25V12.75L9 16.5L16.5 12.75V5.25L9 1.5Z" stroke="#fff" stroke-width="1.4" stroke-linejoin="round" fill="rgba(255,255,255,0.1)"/><path d="M9 1.5V16.5M1.5 5.25L9 9M16.5 5.25L9 9" stroke="#fff" stroke-width="1.1" stroke-linecap="round"/></svg>
+              <span>3D &amp; AR</span>
+            </div>
+            <img class="hiw-vs-phone" src="images/ar-phone-mockup.jpg" alt="AR view of Ford accessory on mobile device" width="400" height="600" loading="lazy" decoding="async">
+          </div>
+        </div>
+        <div class="hiw-step-content">
+          <p class="hiw-step-num" aria-label="Step 2">02</p>
+          <p class="hiw-step-label">In-Showroom Visualization</p>
+          <h2 id="step-2-heading" class="hiw-step-heading">Seeing Is Believing. Show Every Accessory in Real 3D and AR.</h2>
+          <p class="hiw-step-body">Your sales team presents every accessory on the customer's exact vehicle, live in the showroom. Factory-accurate 3D and AR visualization removes every objection before it forms. Customers see it. They want it.</p>
+          <div class="hiw-modes-row">
+            <div class="hiw-mode-card">
+              <p class="hiw-mode-name">Sales Agent Mode</p>
+              <p class="hiw-mode-desc">Guided presentation flow for your sales team. Every accessory, every vehicle, every deal.</p>
+            </div>
+            <div class="hiw-mode-card">
+              <p class="hiw-mode-name">Self-Drive Mode</p>
+              <p class="hiw-mode-desc">Customer-facing touchscreen experience. Shoppers build their own accessory package while they wait.</p>
+            </div>
+          </div>
+          <div class="hiw-step-badge hiw-badge--core">
+            <span class="hiw-badge-label">Core Platform</span>
+            <strong>Engage360</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 3: Accessory selection + eStore -->
+    <section class="hiw-step" id="step-3" aria-labelledby="step-3-heading">
+      <div class="hiw-step-inner hiw-step--image-right" data-reveal>
+        <div class="hiw-step-content">
+          <p class="hiw-step-num" aria-label="Step 3">03</p>
+          <p class="hiw-step-label">Selection and Purchase</p>
+          <h2 id="step-3-heading" class="hiw-step-heading">Online Accessory Revenue, 24 Hours a Day</h2>
+          <p class="hiw-step-body">When customers are not in your showroom, they are still buying. The EnvyPRO eStore is your dealer-branded online accessory storefront, open around the clock. Genuine Ford accessories, your branding, your revenue.</p>
+          <ul class="hiw-step-bullets">
+            <li>Your dealer branding, your storefront, your pricing control</li>
+            <li>Genuine Ford accessories with full catalog and fitment</li>
+            <li>Order operations built in</li>
+          </ul>
+          <div class="hiw-step-badge hiw-badge--addon">
+            <span class="hiw-badge-label">Optional Add-On</span>
+            <strong>EnvyPRO eStore</strong>
+          </div>
+        </div>
+        <div class="hiw-step-visual">
+          <div class="hiw-product-card">
+            <img src="images/product/box-envypro-estore.webp" alt="EnvyPRO eStore product box" width="600" height="760" loading="lazy" decoding="async">
+            <p class="hiw-product-desc">Online parts and accessories</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ PRODUCT DIFFERENTIATION CARDS ═══ -->
+    <section class="hiw-products" id="products" aria-labelledby="products-heading">
+      <div class="hiw-products-inner" data-reveal>
+        <div class="hiw-products-hdr">
+          <p class="hiw-eyebrow hiw-eyebrow--dark">The Platform</p>
+          <h2 id="products-heading" class="hiw-products-heading">One Core Platform. Two Powerful Add-Ons.</h2>
+          <p class="hiw-products-sub">Every enrollment includes Engage360. Add the tools that match your revenue goals.</p>
+        </div>
+        <div class="hiw-prod-grid">
+
+          <div class="hiw-prod-card hiw-prod-card--core">
+            <div class="hiw-prod-art">
+              <img src="images/product/box-engage360.webp" alt="Engage360 product box" width="600" height="760" loading="lazy" decoding="async">
+            </div>
+            <div class="hiw-prod-body">
+              <p class="hiw-prod-eyebrow">Included with every enrollment</p>
+              <h3 class="hiw-prod-name">Engage360</h3>
+              <p class="hiw-prod-desc">Factory-accurate 4D accessory visualization on the showroom floor. Demonstrate any Ford or Lincoln accessory on the customer's actual vehicle, live, in color, from every angle.</p>
+              <ul class="hiw-prod-features">
+                <li>3D and AR visualization</li>
+                <li>Sales Agent and Self-Drive modes</li>
+                <li>Live Parts data integration</li>
+                <li>Commission and inquiry tracking</li>
+              </ul>
+              <div class="hiw-prod-price-note">Core Platform</div>
+            </div>
+          </div>
+
+          <div class="hiw-prod-card">
+            <div class="hiw-prod-art">
+              <img src="images/product/box-envypro-estore.webp" alt="EnvyPRO eStore product box" width="600" height="760" loading="lazy" decoding="async">
+            </div>
+            <div class="hiw-prod-body">
+              <p class="hiw-prod-eyebrow">Optional add-on</p>
+              <h3 class="hiw-prod-name">EnvyPRO eStore</h3>
+              <p class="hiw-prod-desc">Your dealer-branded accessory storefront, open 24/7. Customers browse and buy genuine Ford accessories online, turning every web visit into accessory revenue.</p>
+              <ul class="hiw-prod-features">
+                <li>Dealer-branded storefront</li>
+                <li>Full Ford accessory catalog</li>
+                <li>VIN and vehicle fitment</li>
+                <li>Checkout and order operations</li>
+              </ul>
+              <div class="hiw-prod-price-note">Add-On</div>
+            </div>
+          </div>
+
+          <div class="hiw-prod-card">
+            <div class="hiw-prod-art">
+              <img src="images/product/box-vdp-widget.webp" alt="VDP Widget product box" width="600" height="760" loading="lazy" decoding="async">
+            </div>
+            <div class="hiw-prod-body">
+              <p class="hiw-prod-eyebrow">Optional add-on</p>
+              <h3 class="hiw-prod-name">VDP Widget</h3>
+              <p class="hiw-prod-desc">Start the accessory sale before the showroom visit. Customers shop accessories alongside their vehicle on your VDP, with pricing right next to the vehicle price.</p>
+              <ul class="hiw-prod-features">
+                <li>Vehicle-specific accessory display</li>
+                <li>Accessory inquiry capture</li>
+                <li>Embeds on your existing website VDP</li>
+              </ul>
+              <div class="hiw-prod-price-note">Add-On</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ ENROLLMENT CTA ═══ -->
+    <section class="hiw-cta" id="enroll-cta" aria-labelledby="cta-heading">
+      <div class="hiw-cta-inner" data-reveal>
+        <p class="hiw-eyebrow hiw-eyebrow--light">Ready to start</p>
+        <h2 id="cta-heading" class="hiw-cta-heading">Build Your Plan Today</h2>
+        <p class="hiw-cta-sub">Enroll in under two minutes. Choose your products. Start capturing accessory revenue on your next deal.</p>
+        <a href="enroll.html" class="hiw-btn hiw-btn--primary hiw-btn--lg">Enroll Now</a>
+        <p class="hiw-cta-note">All enrollments include Engage360. Add-ons selected during enrollment.</p>
+      </div>
+    </section>
 
   </main>
-  <!-- ═══ FOOTER ═══ -->
+
+    <!-- ═══ FOOTER ═══ -->
   <footer>
     <p><strong>SmartDealer</strong> &copy; 2026 &nbsp;|&nbsp; A Ford Dealer Solutions partner</p>
     <p style="margin-top:8px;">Dealer performance data verified by J.D. Power across 500+ Ford dealers, 2019–2024.</p>
