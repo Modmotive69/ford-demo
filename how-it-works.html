@@ -1219,10 +1219,10 @@
     }
 
     /* ── data-reveal animation ── */
-    [data-reveal] { opacity: 0; transform: translateY(28px); transition: opacity .55s ease, transform .55s ease; }
-    [data-reveal].revealed { opacity: 1; transform: none; }
+    [data-reveal] { transform: translateY(20px); transition: opacity .55s ease, transform .55s ease; }
+    [data-reveal].revealed { transform: none; }
     @media (prefers-reduced-motion: reduce) {
-      [data-reveal] { opacity: 1; transform: none; transition: none; }
+      [data-reveal] { transform: none; transition: none; }
     }
 
     /* ── Responsive ── */
@@ -1277,7 +1277,7 @@
 
   <main>
 
-    <!-- ═══ HIW HERO ═══ -->
+    <!-- ═══ HIW HERO v2 ═══ -->
     <section class="hiw-hero" id="hiw-hero" aria-label="The customer journey">
       <div class="hiw-hero-bg" aria-hidden="true">
         <img src="images/ford-showroom-render.webp" alt="" width="1440" height="810" loading="eager" decoding="async" fetchpriority="high">
@@ -1331,12 +1331,12 @@
       <div class="hiw-step-inner hiw-step--image-left" data-reveal>
         <div class="hiw-step-visual">
           <div class="hiw-visual-stack">
-            <img class="hiw-vs-main" src="images/bronco-kayak-3d.jpg" alt="Ford Bronco with Yakima kayak carrier shown in 3D visualization" width="800" height="600" loading="lazy" decoding="async">
+            <img class="hiw-vs-main" src="images/bronco-kayak-3d.jpg" alt="Ford Bronco with Yakima kayak carrier shown in 3D visualization" width="800" height="600" loading="eager" decoding="async">
             <div class="hiw-vs-badge">
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M9 1.5L1.5 5.25V12.75L9 16.5L16.5 12.75V5.25L9 1.5Z" stroke="#fff" stroke-width="1.4" stroke-linejoin="round" fill="rgba(255,255,255,0.1)"/><path d="M9 1.5V16.5M1.5 5.25L9 9M16.5 5.25L9 9" stroke="#fff" stroke-width="1.1" stroke-linecap="round"/></svg>
               <span>3D &amp; AR</span>
             </div>
-            <img class="hiw-vs-phone" src="images/ar-phone-mockup.jpg" alt="AR view of Ford accessory on mobile device" width="400" height="600" loading="lazy" decoding="async">
+            <img class="hiw-vs-phone" src="images/ar-phone-mockup.jpg" alt="AR view of Ford accessory on mobile device" width="400" height="600" loading="eager" decoding="async">
           </div>
         </div>
         <div class="hiw-step-content">
@@ -1382,7 +1382,7 @@
         </div>
         <div class="hiw-step-visual">
           <div class="hiw-product-card">
-            <img src="images/product/box-envypro-estore.webp" alt="EnvyPRO eStore product box" width="600" height="760" loading="lazy" decoding="async">
+            <img src="images/product/box-envypro-estore.webp" alt="EnvyPRO eStore product box" width="600" height="760" loading="eager" decoding="async">
             <p class="hiw-product-desc">Online parts and accessories</p>
           </div>
         </div>
@@ -1401,7 +1401,7 @@
 
           <div class="hiw-prod-card hiw-prod-card--core">
             <div class="hiw-prod-art">
-              <img src="images/product/box-engage360.webp" alt="Engage360 product box" width="600" height="760" loading="lazy" decoding="async">
+              <img src="images/product/box-engage360.webp" alt="Engage360 product box" width="600" height="760" loading="eager" decoding="async">
             </div>
             <div class="hiw-prod-body">
               <p class="hiw-prod-eyebrow">Included with every enrollment</p>
@@ -1419,7 +1419,7 @@
 
           <div class="hiw-prod-card">
             <div class="hiw-prod-art">
-              <img src="images/product/box-envypro-estore.webp" alt="EnvyPRO eStore product box" width="600" height="760" loading="lazy" decoding="async">
+              <img src="images/product/box-envypro-estore.webp" alt="EnvyPRO eStore product box" width="600" height="760" loading="eager" decoding="async">
             </div>
             <div class="hiw-prod-body">
               <p class="hiw-prod-eyebrow">Optional add-on</p>
@@ -1437,7 +1437,7 @@
 
           <div class="hiw-prod-card">
             <div class="hiw-prod-art">
-              <img src="images/product/box-vdp-widget.webp" alt="VDP Widget product box" width="600" height="760" loading="lazy" decoding="async">
+              <img src="images/product/box-vdp-widget.webp" alt="VDP Widget product box" width="600" height="760" loading="eager" decoding="async">
             </div>
             <div class="hiw-prod-body">
               <p class="hiw-prod-eyebrow">Optional add-on</p>
