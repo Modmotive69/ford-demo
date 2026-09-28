@@ -1,196 +1,230 @@
 'use strict';
 /**
- * price-lookup.js — product selection → price resolution for FordEngage enrollment draft.
+ * price-lookup.js — product + term selection → price resolution.
  *
- * Source: published enroll.html plan cards (verified 2026-09-28).
- * Server re-validates this same config in submit-enrollment.py before sending.
- * Client amounts are NEVER trusted by the server; server derives price from
- * selected product IDs against its own copy of PRICE_CONFIG.
- *
- * Two combinations are not in published plan cards and require a custom quote:
- *   FordEngage + eStore
- *   eStore + VDP Widget
- * These display a contact-sales notice; no dollar amount is inserted into the agreement.
- * Selection of a quote-required combination blocks submission with a clear message.
+ * Server re-validates against agreement.json termConfig + priceConfig.
+ * Client amounts are NEVER trusted by the server.
+ * Quote-required combos block submission.
  */
 (() => {
-  // ── Authoritative price table (mirrors price-config.json) ────────────────
-  // Keys are JS Array.prototype.sort() order (lexicographic, uppercase before lowercase)
-  const PRICES = {
-    'FordEngage':                   { price: 499,  label: '$499/mo' },
-    'eStore':                       { price: 299,  label: '$299/mo' },
-    'VDP Widget':                   { price: 199,  label: '$199/mo' },
-    'FordEngage+VDP Widget':        { price: 649,  label: '$649/mo' },
-    'FordEngage+VDP Widget+eStore': { price: 899,  label: '$899/mo' },   // all three
-    'FordEngage+eStore':            { price: null, label: 'Contact sales for pricing' },
-    'VDP Widget+eStore':            { price: null, label: 'Contact sales for pricing' }, // JS sort
-  };
+  // ── Read authoritative config from embedded agreement blob ───────────────
+  const dataEl = document.getElementById('draft-agreement-data');
+  if (!dataEl) return;
+  const agreement = JSON.parse(dataEl.textContent);
+  const PRICES = agreement.priceConfig;   // { key: {price:cents|null, label} }
+  const TERMS  = agreement.termConfig;    // { id: {label, discountPct, discountFactor, setupCents, setupLabel} }
 
   // ── DOM refs ──────────────────────────────────────────────────────────────
-  const form          = document.getElementById('enroll-form');
-  const consentBox    = document.getElementById('agree-checkbox');
-  const summaryEl     = document.getElementById('signing-summary');
-  const priceSummaryEl= document.getElementById('price-product-summary');  // injected below
-  const submitBtn     = form ? form.querySelector('button[type=submit]') : null;
+  const form       = document.getElementById('enroll-form');
+  const consentBox = document.getElementById('agree-checkbox');
+  const summaryEl  = document.getElementById('signing-summary');
   if (!form || !consentBox) return;
 
-  // ── Inject Product & Price Summary section (above consent/signature) ──────
-  // Find the consent label and insert the summary block before it
-  const consentLabel = form.querySelector('label[for="agree-checkbox"], .checkbox-row');
-  if (consentLabel && !document.getElementById('price-product-summary')) {
-    const div = document.createElement('div');
-    div.id = 'price-product-summary';
-    div.setAttribute('aria-live', 'polite');
-    div.style.cssText = [
-      'border:1px solid #003478;border-radius:8px;padding:18px 20px;margin:20px 0',
-      'background:#f5f8ff;font-family:Georgia,serif',
-    ].join(';');
-    div.innerHTML = `
-      <div style="font-weight:700;color:#003478;margin-bottom:10px;font-size:0.95rem">
-        Product &amp; Price Summary
-        <span style="font-weight:400;font-size:0.8rem;color:#555;margin-left:8px">
-          — incorporated into this Agreement
-        </span>
-      </div>
-      <div id="pps-content" style="font-size:0.9rem;color:#555;font-style:italic">
-        No products selected yet.
-      </div>
-      <p id="pps-quote-notice" style="display:none;margin:10px 0 0;color:#a56c00;
-         background:#fff8e6;border-left:3px solid #a56c00;padding:8px 12px;font-size:0.85rem">
-      </p>
-      <p id="pps-note" style="margin:8px 0 0;font-size:0.78rem;color:#6e6e73">
-        Fees are monthly, invoiced in arrears. Payable within 30 days of receipt of PartSites invoice.
-        Commencement after first-user onboarding as described in the Agreement.
-      </p>
-    `;
-    consentLabel.parentNode.insertBefore(div, consentLabel);
-  }
-
-  // ── Core: compute price from selected products ────────────────────────────
+  // ── Helpers ──────────────────────────────────────────────────────────────
   function combKey(products) {
     return [...products].sort().join('+');
-  }
-
-  function resolvePrice(products) {
-    if (!products.length) return null;
-    const key = combKey(products);
-    return PRICES[key] || { price: null, label: 'Contact sales for pricing' };
   }
 
   function selectedProducts() {
     return Array.from(form.querySelectorAll('[name=products]:checked'), e => e.value);
   }
 
-  // ── Update Product & Price Summary block ──────────────────────────────────
-  let lastConsentState = false;
+  function selectedTerm() {
+    const el = document.getElementById('term-select');
+    return el ? el.value : 'month-to-month';
+  }
 
+  /** Cents-safe: all arithmetic in integer cents, convert at display only */
+  function resolvePricing(products, termId) {
+    if (!products.length) return null;
+    const key   = combKey(products);
+    const entry = PRICES[key];
+    if (!entry || entry.price === null) return { isQuote: true, key };
+    const tc         = TERMS[termId] || TERMS['month-to-month'];
+    const baseCents  = Math.round(entry.price * 100);
+    const discCents  = Math.round(baseCents * tc.discountFactor);
+    const fmtCents   = c => '$' + (c / 100).toFixed(2).replace(/\.00$/, '');
+    return {
+      isQuote:        false,
+      key,
+      products,
+      termId,
+      termLabel:      tc.label,
+      termMonths:     tc.termMonths,
+      discountPct:    tc.discountPct,
+      baseCents,
+      baseLabel:      fmtCents(baseCents) + '/mo',
+      discountedCents: discCents,
+      discountedLabel: fmtCents(discCents) + '/mo',
+      setupCents:     tc.setupCents,
+      setupLabel:     tc.setupLabel,
+    };
+  }
+
+  // ── Inject term selector immediately after product fieldset closes ────────
+  const productFieldset = document.getElementById('product-selection');
+  if (productFieldset && !document.getElementById('term-selector-section')) {
+    const termSection = document.createElement('div');
+    termSection.id = 'term-selector-section';
+    termSection.setAttribute('aria-live', 'polite');
+    termSection.style.cssText = 'margin:20px 0 0';
+    termSection.innerHTML = `
+      <label for="term-select" style="font-weight:600;color:#003478;display:block;margin-bottom:8px">
+        Commitment term
+      </label>
+      <select id="term-select" name="term"
+              style="width:100%;padding:12px;border:1px solid #718096;border-radius:4px;font:inherit;background:#fff;appearance:auto"
+              aria-describedby="term-note">
+        <option value="month-to-month">Month-to-month — $1,000 one-time setup, no commitment</option>
+        <option value="1year">1-year (12 months) — setup waived, 10% off monthly</option>
+        <option value="2year">2-year (24 months) — setup waived, 25% off monthly</option>
+      </select>
+      <p id="term-note" style="font-size:0.78rem;color:#6e6e73;margin:6px 0 0">
+        Term applies to any priced product or bundle. Quote-required combinations cannot be selected here.
+      </p>`;
+    productFieldset.insertAdjacentElement('afterend', termSection);
+
+    document.getElementById('term-select').addEventListener('change', () => {
+      updatePriceSummary();
+      unconsent('You changed the commitment term — please re-read and re-check consent.');
+    });
+  }
+
+  // ── Inject Product & Price Summary immediately after term selector ────────
+  const termSection = document.getElementById('term-selector-section');
+  if (termSection && !document.getElementById('price-product-summary')) {
+    const div = document.createElement('div');
+    div.id = 'price-product-summary';
+    div.setAttribute('aria-live', 'polite');
+    div.style.cssText = [
+      'border:1px solid #003478;border-radius:8px;padding:18px 20px;margin:20px 0 0',
+      'background:#f5f8ff;font-family:Georgia,serif',
+    ].join(';');
+    div.innerHTML = `
+      <div style="font-weight:700;color:#003478;margin-bottom:10px;font-size:0.95rem">
+        Product &amp; Price Summary
+        <span style="font-weight:400;font-size:0.8rem;color:#555;margin-left:8px">— incorporated into this Agreement</span>
+      </div>
+      <div id="pps-content" style="font-size:0.9rem;color:#555;font-style:italic">No products selected yet.</div>
+      <p id="pps-quote-notice" style="display:none;margin:10px 0 0;color:#a56c00;
+         background:#fff8e6;border-left:3px solid #a56c00;padding:8px 12px;font-size:0.85rem"></p>
+      <p id="pps-note" style="margin:8px 0 0;font-size:0.78rem;color:#6e6e73">
+        Fees invoiced monthly in arrears, payable within 30 days of PartSites invoice.
+        Monthly fees commence after first-user onboarding as described in the Agreement.
+      </p>`;
+    termSection.insertAdjacentElement('afterend', div);
+  }
+
+  // ── Update Price Summary block ───────────────────────────────────────────
   function updatePriceSummary() {
-    const prods = selectedProducts();
-    const content   = document.getElementById('pps-content');
-    const notice    = document.getElementById('pps-quote-notice');
+    const prods   = selectedProducts();
+    const termId  = selectedTerm();
+    const content = document.getElementById('pps-content');
+    const notice  = document.getElementById('pps-quote-notice');
     if (!content) return;
 
     if (!prods.length) {
-      content.style.color = '#555';
-      content.style.fontStyle = 'italic';
+      content.style.cssText = 'font-size:0.9rem;color:#555;font-style:italic';
       content.innerHTML = 'No products selected yet.';
       notice.style.display = 'none';
-      notice.textContent = '';
-      updateConsentOnChange();
       return;
     }
 
-    const resolved = resolvePrice(prods);
-    const isQuote  = resolved.price === null;
-
+    const r = resolvePricing(prods, termId);
     content.style.fontStyle = 'normal';
     content.style.color = '#1a1a1a';
 
-    if (isQuote) {
+    if (r.isQuote) {
       content.innerHTML =
         '<strong>' + prods.join(', ') + '</strong> — ' +
         '<span style="color:#a56c00;font-weight:600">Contact sales for pricing</span><br>' +
-        '<span style="font-size:0.8rem;color:#6e6e73">This product combination is not listed as a standard plan. ' +
-        'A custom quote is required before execution.</span>';
+        '<span style="font-size:0.8rem;color:#6e6e73">This combination requires a custom quote. No fee confirmed by submission.</span>';
       notice.style.display = '';
-      notice.textContent =
-        'This combination requires a custom quote. You may submit this form to notify ' +
-        'the sales team; no fee is confirmed or implied by submission.';
+      notice.textContent = 'This combination requires a custom quote. Submit to notify the sales team; no fee is implied.';
     } else {
-      content.innerHTML =
-        '<strong>' + prods.join(' + ') + '</strong>' +
-        ' &nbsp;·&nbsp; <strong style="color:#003478;font-size:1.05rem">' + resolved.label + '</strong>' +
-        '<br><span style="font-size:0.8rem;color:#6e6e73">per month · no fixed term · 30-day written notice to terminate</span>';
+      const termLabel = TERMS[termId].label;
+      const rows = [
+        ['Products',       prods.join(' + ')],
+        ['Term',           termLabel],
+        ['Base monthly',   r.baseLabel],
+      ];
+      if (r.discountPct > 0) {
+        rows.push(['Discount', r.discountPct + '%']);
+        rows.push(['Discounted monthly', '<strong style="color:#003478;font-size:1.05rem">' + r.discountedLabel + '</strong>']);
+      } else {
+        rows.push(['Monthly fee', '<strong style="color:#003478;font-size:1.05rem">' + r.discountedLabel + '</strong>']);
+      }
+      rows.push(['One-time setup', r.setupCents === 0 ? '<span style="color:#1a7a3c;font-weight:600">Waived</span>' : '<strong>' + r.setupLabel + '</strong>']);
+      content.innerHTML = '<table style="border-collapse:collapse;width:100%;font-size:0.9rem">' +
+        rows.map(([k,v]) => `<tr><td style="padding:4px 12px 4px 0;color:#555;white-space:nowrap;vertical-align:top">${k}</td><td style="padding:4px 0">${v}</td></tr>`).join('') +
+        '</table>';
       notice.style.display = 'none';
-      notice.textContent = '';
     }
 
-    updateConsentOnChange();
     updateSigningSummary();
   }
 
-  // ── Consent re-check when selection changes ───────────────────────────────
-  function updateConsentOnChange() {
-    const prods = selectedProducts();
-    const wasChecked = consentBox.checked;
+  // ── Consent reset helpers ────────────────────────────────────────────────
+  let lastCheckedCombo = '';
+  let lastCheckedTerm  = '';
 
-    // If user had checked consent and then changes product selection,
-    // uncheck consent and require explicit re-check
-    if (wasChecked && prods.join(',') !== lastCheckedCombo) {
+  function unconsent(msg) {
+    const prods = selectedProducts();
+    const term  = selectedTerm();
+    if (consentBox.checked && (prods.join(',') !== lastCheckedCombo || term !== lastCheckedTerm)) {
       consentBox.checked = false;
       consentBox.removeAttribute('aria-invalid');
       const errEl = document.getElementById('agree-checkbox-error');
-      if (errEl) {
-        errEl.textContent = 'You changed the product selection — please re-read and re-check consent.';
-        errEl.style.color = '#a56c00';
-      }
+      if (errEl) { errEl.textContent = msg || 'Product or term changed — please re-read and re-check consent.'; errEl.style.color = '#a56c00'; }
     }
   }
 
-  let lastCheckedCombo = '';
   consentBox.addEventListener('change', () => {
     if (consentBox.checked) {
       lastCheckedCombo = selectedProducts().join(',');
+      lastCheckedTerm  = selectedTerm();
       const errEl = document.getElementById('agree-checkbox-error');
       if (errEl) { errEl.textContent = ''; errEl.style.color = '#a21d16'; }
     } else {
       lastCheckedCombo = '';
+      lastCheckedTerm  = '';
     }
   });
 
-  // ── Wire product checkboxes ───────────────────────────────────────────────
+  // ── Wire product checkboxes ──────────────────────────────────────────────
   form.addEventListener('change', e => {
-    if (e.target.name === 'products') updatePriceSummary();
+    if (e.target.name === 'products') {
+      updatePriceSummary();
+      unconsent('You changed the product selection — please re-read and re-check consent.');
+    }
   });
 
-  // ── Update signing summary (called by enrollment-draft.js via form input event) ─
-  // Override the existing updateSummary hook by exposing price data
+  // ── Update signing summary (called by enrollment-draft.js via input event) ─
   function updateSigningSummary() {
     if (!summaryEl) return;
-    const prods    = selectedProducts();
-    const resolved = prods.length ? resolvePrice(prods) : null;
-    const priceStr = resolved
-      ? (resolved.price !== null ? resolved.label : 'Contact sales — custom quote required')
-      : 'None';
-    // Expose for enrollment-draft.js to pick up
-    window._priceSummaryLine = 'Product & Price: ' + (prods.length ? prods.join(' + ') : 'None') + ' — ' + priceStr;
-    // Trigger enrollment-draft.js updateSummary by firing an input event
+    const prods  = selectedProducts();
+    const termId = selectedTerm();
+    const r      = prods.length ? resolvePricing(prods, termId) : null;
+    let priceStr;
+    if (!r)               priceStr = 'None';
+    else if (r.isQuote)   priceStr = 'Contact sales — custom quote required';
+    else if (r.discountPct > 0)
+      priceStr = r.discountedLabel + ' (' + r.discountPct + '% off base ' + r.baseLabel + ', ' + TERMS[termId].label + ')' +
+                 (r.setupCents > 0 ? ' + ' + r.setupLabel : ', setup waived');
+    else
+      priceStr = r.discountedLabel + ' + ' + r.setupLabel;
+
+    window._priceSummaryLine = 'Term: ' + (TERMS[termId]?.label || termId) + '\nProduct & Price: ' +
+      (prods.length ? prods.join(' + ') : 'None') + ' — ' + priceStr;
     form.dispatchEvent(new Event('input', { bubbles: false }));
   }
 
-  // ── Expose resolved price for server validation payload ───────────────────
+  // ── Expose resolved pricing for submission payload ───────────────────────
   window.resolveEnrollmentPrice = function() {
-    const prods = selectedProducts();
+    const prods  = selectedProducts();
+    const termId = selectedTerm();
     if (!prods.length) return null;
-    const key = combKey(prods);
-    const r   = PRICES[key] || { price: null, label: 'Contact sales for pricing' };
-    return {
-      combinationKey: key,
-      products:       prods,
-      price:          r.price,
-      label:          r.label,
-      isQuoteRequired: r.price === null,
-    };
+    return resolvePricing(prods, termId);
   };
 
   // ── Init ─────────────────────────────────────────────────────────────────

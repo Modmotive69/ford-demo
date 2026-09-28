@@ -233,7 +233,11 @@
     panel.append(heading);
     const summary = document.createElement('p');
     summary.style.whiteSpace = 'pre-line';
-    summary.textContent = `Dealership: ${result.enrollment.dealer_name}\nProducts: ${result.selectedProducts.join(' + ')}\nMonthly fee: ${result.resolved_price.label}\nSigner: ${result.signer.name} (${result.signer.title})\nSubmitted (UTC): ${result.server_timestamp}\nReceipt: ${result.receipt_id}\nAgreement version: ${result.agreementVersion}`;
+    const rp = result.resolved_price;
+    const priceLines = rp.discountPct > 0
+      ? `Base monthly: ${rp.baseLabel}\nDiscount: ${rp.discountPct}%\nDiscounted monthly: ${rp.discountedLabel}\nOne-time setup: ${rp.setupCents === 0 ? 'Waived' : rp.setupLabel}`
+      : `Monthly fee: ${rp.discountedLabel}\nOne-time setup: ${rp.setupLabel}`;
+    summary.textContent = `Dealership: ${result.enrollment.dealer_name}\nProducts: ${result.selectedProducts.join(' + ')}\nTerm: ${rp.termLabel}\n${priceLines}\nSigner: ${result.signer.name} (${result.signer.title})\nSubmitted (UTC): ${result.server_timestamp}\nReceipt: ${result.receipt_id}\nAgreement version: ${result.agreementVersion}`;
     panel.append(summary);
     const email = document.createElement('p');
     email.textContent = 'Agreement copies are queued for ' + result.email_recipients.join(' and ') + '. The email provider accepted the request; inbox delivery is not confirmed.';
@@ -295,14 +299,17 @@
     signer.phone = signer.phone || ($('sig-phone') ? $('sig-phone').value.trim() : '');
     signer.email = signer.email || ($('sig-email') ? $('sig-email').value.trim() : '');
 
+    const termEl = document.getElementById('term-select');
+    const termId = termEl ? termEl.value : 'month-to-month';
     const payload = {
       submissionId,
+      termId,
       website: formValues.website || '',
       agreementVersion: agreement.version,
       agreementSha256:  agreement.sha256,
       agreementText:    agreement.terms.join('\n'),
       selectedProducts: selected(),
-      pricingSummary:   window.resolveEnrollmentPrice ? window.resolveEnrollmentPrice() : null,
+      pricingSummary:   window.resolveEnrollmentPrice ? window.resolveEnrollmentPrice() : null, // informational only; server re-resolves
       configuration:    $('configuration') ? $('configuration').value.trim() : '',
       enrollment:       formValues,
       signer:           signer,

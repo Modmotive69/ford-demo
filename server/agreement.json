@@ -93,7 +93,7 @@
       "price": 649,
       "label": "$649/mo"
     },
-    "FordEngage+eStore+VDP Widget": {
+    "FordEngage+VDP Widget+eStore": {
       "price": 899,
       "label": "$899/mo"
     },
@@ -101,11 +101,37 @@
       "price": null,
       "label": "Contact sales for pricing"
     },
-    "eStore+VDP Widget": {
+    "VDP Widget+eStore": {
       "price": null,
       "label": "Contact sales for pricing"
     }
   },
   "pricingResolved": true,
-  "pricingSource": "Published FordEngage enrollment plan cards, confirmed by user"
+  "pricingSource": "Published FordEngage enrollment plan cards, confirmed by user",
+  "termConfig": {
+    "month-to-month": {
+      "label": "Month-to-month",
+      "termMonths": null,
+      "discountPct": 0,
+      "discountFactor": 1.0,
+      "setupCents": 100000,
+      "setupLabel": "$1,000 one-time setup"
+    },
+    "1year": {
+      "label": "1-year (12 months)",
+      "termMonths": 12,
+      "discountPct": 10,
+      "discountFactor": 0.9,
+      "setupCents": 0,
+      "setupLabel": "Setup waived"
+    },
+    "2year": {
+      "label": "2-year (24 months)",
+      "termMonths": 24,
+      "discountPct": 25,
+      "discountFactor": 0.75,
+      "setupCents": 0,
+      "setupLabel": "Setup waived"
+    }
+  }
 }
