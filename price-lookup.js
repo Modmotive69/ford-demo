@@ -172,9 +172,10 @@
 
   function fmtC(cents) { return '$' + (cents / 100).toFixed(2).replace(/\.00$/, ''); }
 
-  function renderBYP() {
-    const prods  = selectedProducts();
-    const termId = selectedTerm();
+  function renderBYP(prods, termId) {
+    // Accept explicit values or read from DOM if not provided
+    if (!prods)  prods  = selectedProducts();
+    if (!termId) termId = selectedTerm();
     const r      = resolvePricing(prods, termId);
     const addons = prods.filter(p => p !== 'FordEngage');
 
@@ -273,8 +274,9 @@
     const termId  = selectedTerm();
 
     // Always update BYP cart panel + tile states (independent of legacy panel)
+    // Pass values explicitly so there's no risk of stale DOM re-read inside renderBYP
     syncProductCardState();
-    renderBYP();
+    renderBYP(prods, termId);
 
     // Legacy Product & Price Summary panel (signing summary block)
     const content = document.getElementById('pps-content');
@@ -311,7 +313,7 @@
       '</table>';
 
     syncProductCardState();
-    renderBYP();
+    renderBYP(prods, termId);
     updateSigningSummary();
   }
 
@@ -359,16 +361,16 @@
       updatePriceSummary();
     }
   });
-  // Wire BYP term label clicks: set radio checked, dispatch change, update
+  // Wire BYP term label clicks: set checked, call update synchronously with explicit term
   document.querySelectorAll('.byp-term-opt').forEach(lbl => {
     lbl.addEventListener('click', (e) => {
       const radio = lbl.querySelector('input[type=radio]');
-      if (radio && !radio.checked) {
-        radio.checked = true;
-        radio.dispatchEvent(new Event('change', { bubbles: true }));
-      }
-      // Always call updatePriceSummary on label click
-      setTimeout(updatePriceSummary, 0);
+      if (!radio) return;
+      // Set checked first
+      radio.checked = true;
+      // Call updatePriceSummary synchronously — don't wait for a change event
+      // because the radio change event may not fire reliably in all scenarios
+      updatePriceSummary();
     });
   });
 
