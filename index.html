@@ -780,6 +780,112 @@
     .testimonial-attr { font-size: 0.78rem; font-weight: 700; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.8px; }
 
     /* ─── FINAL CTA ─── */
+    /* ─── SHOWROOM SECTION ─── */
+    .section-showroom {
+      background: #f7f9fc;
+      padding: clamp(64px,8vw,110px) clamp(24px,6vw,64px);
+    }
+    .showroom-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .showroom-img-wrap {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 40px rgba(0,52,120,0.13);
+      aspect-ratio: 16/9;
+      background: #dce6f2;
+    }
+    .showroom-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .showroom-caption {
+      position: absolute;
+      bottom: 10px;
+      right: 14px;
+      font-size: 11px;
+      color: rgba(255,255,255,0.72);
+      letter-spacing: 0.5px;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+      pointer-events: none;
+    }
+    .showroom-copy {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .showroom-kicker {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #0562D2;
+    }
+    .showroom-heading {
+      font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+      font-weight: 900;
+      font-size: clamp(32px, 4vw, 54px);
+      line-height: 1.0;
+      letter-spacing: -0.5px;
+      color: #000e20;
+      margin: 0;
+    }
+    .showroom-body {
+      font-size: 16px;
+      line-height: 1.72;
+      color: #444;
+      margin: 0;
+    }
+    .showroom-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--ford-blue);
+      color: #fff;
+      font-weight: 700;
+      font-size: 15px;
+      padding: 14px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      align-self: flex-start;
+      transition: background 0.2s;
+    }
+    .showroom-cta:hover { background: #002060; }
+    .showroom-mode-pills {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .showroom-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #003478;
+      background: #e8eef8;
+      padding: 6px 14px;
+      border-radius: 20px;
+    }
+    @media (max-width: 860px) {
+      .showroom-inner {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+    }
+    @media (max-width: 480px) {
+      .showroom-heading { font-size: clamp(28px, 8vw, 40px); }
+      .showroom-body { font-size: 15px; }
+    }
+
     .section-finalcta { background: var(--ford-blue); color: var(--white); text-align: center; }
     .section-finalcta h2 { color: var(--white); margin-bottom: 36px; max-width: 680px; margin-left: auto; margin-right: auto; }
     .finalcta-email { display: block; margin-top: 20px; font-size: 0.85rem; color: rgba(255,255,255,0.55); letter-spacing: 0.3px; }
@@ -1188,6 +1294,42 @@
       </div>
     </div>
   </section>
+
+  <!-- ═══ SHOWROOM DISPLAYS ═══ -->
+  <section class="section-showroom" id="showroom-displays" aria-labelledby="showroom-heading">
+    <div class="showroom-inner">
+
+      <!-- Image -->
+      <div class="showroom-img-wrap">
+        <img
+          src="images/ford-showroom-render.webp"
+          alt="Curved LED wall with Ford Bronco on display, two kiosks and Yakima AR accessory table in a Ford dealership showroom"
+          width="1536"
+          height="864"
+          loading="lazy"
+          decoding="async"
+        >
+        <span class="showroom-caption">Showroom concept</span>
+      </div>
+
+      <!-- Copy -->
+      <div class="showroom-copy">
+        <p class="showroom-kicker">Showroom Experience</p>
+        <h2 class="showroom-heading" id="showroom-heading">Make 30 square feet your showroom's next profit center.</h2>
+        <div class="showroom-mode-pills">
+          <span class="showroom-pill"><i class="fa-solid fa-user" aria-hidden="true"></i> Sales Agent Mode</span>
+          <span class="showroom-pill"><i class="fa-solid fa-hand-pointer" aria-hidden="true"></i> Self-Drive Mode</span>
+        </div>
+        <p class="showroom-body">Bring accessories into every sales conversation. FordEngage supports Sales Agent mode for guided presentations and Self-Drive mode for customers to explore on their own. Pair the platform with immersive showroom displays and 4K kiosks to turn browsing into accessory sales.</p>
+        <a class="showroom-cta" href="enroll.html">
+          <i class="fa-solid fa-display" aria-hidden="true"></i>
+          Ask about showroom displays &amp; 4K kiosks
+        </a>
+      </div>
+
+    </div>
+  </section>
+
 
   <!-- ═══ FINAL CTA ═══ -->
   <section class="section-finalcta">
