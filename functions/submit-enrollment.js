@@ -222,4 +222,3 @@ export async function onRequestPost({request, env}) {
   }
 }
 
-export function onRequestGet() { return json({ok:false,error:'Use POST.'},405); }
