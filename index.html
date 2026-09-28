@@ -658,92 +658,56 @@
       max-width: 1140px;
       width: 100%;
       margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: clamp(28px, 5vw, 64px);
-      align-items: start;
     }
-    .engage-main-img {
-      width: 100%;
-      aspect-ratio: 4/3;
-      object-fit: cover;
-      border-radius: 8px;
-      display: block;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-      margin-bottom: 14px;
+    .engage-intro {
+      text-align: center;
+      margin-bottom: 48px;
     }
-    .engage-thumbs {
-      display: flex;
-      gap: 10px;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-      flex-wrap: nowrap;
-    }
-    .engage-thumbs::-webkit-scrollbar { display: none; }
-    .engage-thumb {
-      flex: 0 0 calc(33.333% - 7px);
-      min-width: 72px;
-      aspect-ratio: 4/3;
-      object-fit: cover;
-      border-radius: 6px;
-      cursor: pointer;
-      opacity: 0.65;
-      transition: opacity 0.18s, box-shadow 0.18s;
-      border: 2px solid transparent;
-    }
-    .engage-thumb.active,
-    .engage-thumb:hover {
-      opacity: 1;
-      border-color: var(--ford-blue);
-      box-shadow: 0 0 0 2px var(--ford-blue);
-    }
-    .engage-copy h2 { margin-bottom: 18px; }
-    .engage-body { font-size: 1rem; color: #555; line-height: 1.72; margin-bottom: 26px; }
-    .engage-bullets { list-style: none; margin-bottom: 36px; }
-    .engage-bullets li {
-      padding: 6px 0;
-      font-size: 0.95rem;
-      color: #333;
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-    }
-    .engage-bullets li::before {
-      content: '✓';
-      color: var(--ford-blue);
-      font-weight: 900;
-      font-size: 1rem;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-
-    /* ─── ENGAGE TABS ─── */
-    .engage-tabs {
-      display: flex;
-      gap: 0;
-      border-radius: 8px;
-      overflow: hidden;
-      border: 1.5px solid var(--ford-blue);
-      margin-bottom: 24px;
-      width: fit-content;
-    }
-    .engage-tab {
-      background: none;
-      border: none;
-      padding: 10px 22px;
-      font-size: 0.85rem;
+    .engage-intro h2 {
+      font-size: clamp(1.25rem, 2.8vw, 1.75rem);
       font-weight: 700;
-      color: var(--ford-blue);
-      cursor: pointer;
-      font-family: inherit;
-      letter-spacing: 0.3px;
-      transition: background 0.18s, color 0.18s;
-      border-right: 1.5px solid var(--ford-blue);
+      line-height: 1.5;
+      color: #111;
+      max-width: 860px;
+      margin: 0 auto;
     }
-    .engage-tab:last-child { border-right: none; }
-    .engage-tab.active { background: var(--ford-blue); color: var(--white); }
-    .engage-tab:hover:not(.active) { background: rgba(0,52,120,0.07); }
+    .engage-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .engage-card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 32px 28px 36px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .engage-card-eyebrow {
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--ford-blue);
+      margin-bottom: 12px;
+    }
+    .engage-card h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #111;
+      line-height: 1.3;
+      margin: 0;
+    }
+    .engage-card h3 .fe-bold { font-weight: 900; }
+    .engage-card h3 .fe-light { font-weight: 300; }
+    .engage-card-desc {
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 10px;
+      line-height: 1.5;
+    }
 
     /* ─── ROI CALCULATOR ─── */
     .section-roi { background: var(--white); }
@@ -833,7 +797,7 @@
     @media (max-width: 768px) {
       .nav-powered { font-size: 15px; font-weight: 700; color: #003478; white-space: nowrap; }
       .nav-brand { display: flex; overflow: visible; }
-      .engage-inner { grid-template-columns: 1fr; gap: 32px; }
+      .engage-cards { grid-template-columns: 1fr; gap: 16px; }
       .how-cards { grid-template-columns: 1fr 1fr; gap: 20px; }
       .testimonial-cards { grid-template-columns: 1fr 1fr; gap: 16px; }
       .hero-foreground { padding: 120px 24px 60px; flex-direction: column; align-items: flex-start; }
@@ -1149,47 +1113,26 @@
   <!-- ═══ ENGAGE360 ═══ -->
   <section class="section-engage" id="engage360">
     <div class="engage-inner">
-      <div class="engage-copy">
+      <div class="engage-intro">
         <p class="section-eyebrow">Engage360 by SmartDealer</p>
         <h2>A complete ecosystem designed to engage customers from the point of research to the showroom sale, all the way through installation, with CSI always in mind.</h2>
-
-        <div class="engage-tabs">
-          <button class="engage-tab active" data-tab="instore">In-Store</button>
-          <button class="engage-tab" data-tab="estore">eStore</button>
-          <button class="engage-tab" data-tab="vdp">VDP Widget</button>
+      </div>
+      <div class="engage-cards">
+        <div class="engage-card">
+          <p class="engage-card-eyebrow">Online</p>
+          <h3>eStore</h3>
+          <p class="engage-card-desc">Dealer-branded online accessory storefront, available 24/7.</p>
         </div>
-
-        <div class="engage-tab-content" data-content="instore">
-          <p class="engage-body">ENGAGE360 puts factory-accurate 4D accessory visualization in the hands of every sales associate, right on the showroom floor. Customers see their exact vehicle with accessories installed. The conversation closes itself.</p>
-          <ul class="engage-bullets">
-            <li>4D visualization on any Ford vehicle</li>
-            <li>Fitment and pricing in a single view</li>
-            <li>Tablet, desktop, and large-format display ready</li>
-            <li>Connected across F&amp;I, Parts, and Service</li>
-          </ul>
+        <div class="engage-card">
+          <p class="engage-card-eyebrow">Digital Retail</p>
+          <h3>Access VDP Widget</h3>
+          <p class="engage-card-desc">Accessory options embedded directly on your vehicle detail pages.</p>
         </div>
-
-        <div class="engage-tab-content" data-content="estore" style="display:none;">
-          <p class="engage-body">Give customers a branded online accessory store. They browse and configure before they arrive, you capture revenue before the deal even starts. Available 24/7, tied directly to your inventory.</p>
-          <ul class="engage-bullets">
-            <li>Dealer-branded online storefront</li>
-            <li>Factory-accurate Ford accessories catalog</li>
-            <li>Seamless checkout tied to your DMS</li>
-            <li>Capture online revenue around the clock</li>
-          </ul>
+        <div class="engage-card">
+          <p class="engage-card-eyebrow">In-store sales solution</p>
+          <h3><span class="fe-bold">Ford</span><span class="fe-light">Engage</span></h3>
+          <p class="engage-card-desc">Factory-accurate 4D accessory visualization on the showroom floor.</p>
         </div>
-
-        <div class="engage-tab-content" data-content="vdp" style="display:none;">
-          <p class="engage-body">Embed an accessories widget directly on your VDP, every shopper sees personalized, fitment-confirmed accessory options while viewing the vehicle they want. Converts online browsers into accessory buyers.</p>
-          <ul class="engage-bullets">
-            <li>Fits any website or inventory platform</li>
-            <li>Real-time fitment + pricing per VIN</li>
-            <li>Converts online shoppers to accessory buyers</li>
-            <li>Drops in with a single snippet, no dev work</li>
-          </ul>
-        </div>
-
-        <a class="btn btn-navy" href="enroll.html" style="margin-top:24px;display:inline-block;">Enroll Now</a>
       </div>
     </div>
   </section>
