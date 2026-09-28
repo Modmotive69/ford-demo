@@ -1,5 +1,5 @@
 #see-it-in-action { background:#f5f5f5; padding:60px 24px; text-align:center; scroll-margin-top:220px; }
-#see-it-in-action h2 { font-family:'Barlow Condensed','Arial Narrow',sans-serif; font-size:clamp(36px,5vw,60px); color:#003478; margin-bottom:24px; }
+#see-it-in-action h2 { font-family:'Barlow Condensed','Arial Narrow',sans-serif; font-size:clamp(28px,4.6vw,56px); line-height:1.04; color:#003478; margin:0 auto 24px; max-width:1100px; text-wrap:balance; overflow-wrap:anywhere; }
 #fe-demo-inline { position:relative; width:100%; max-width:1400px; height:760px; margin:0 auto; background:#fff; color:#111; border:1px solid #ddd; border-radius:12px; overflow:hidden; text-align:left; }
 #fe-demo-inline .fe-demo-frame { display:block; width:100%; height:100%; border:0; }
 #fe-demo-inline .fe-demo-status { position:absolute; inset:0; padding:24px; background:#fff; z-index:1; }
