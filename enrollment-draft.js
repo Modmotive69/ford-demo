@@ -437,7 +437,9 @@
 
     const termEl = document.getElementById('term-select');
     const _tr = document.querySelector('input[name="term"]:checked');
-    const termId = _tr ? _tr.value : (termEl ? termEl.value : 'month-to-month');
+    let termId = _tr ? _tr.value : (termEl ? termEl.value : 'month-to-month');
+    // WD: force locked term in payload regardless of radio state
+    if (priceInfo && priceInfo.isWD) termId = window.WD_LOCKED_TERM || agreement.wdTermLocked || '2year';
     const payload = {
       submissionId,
       termId,

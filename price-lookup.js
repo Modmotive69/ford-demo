@@ -1,19 +1,22 @@
 'use strict';
 /**
  * price-lookup.js — canonical enrollment pricing + Build Your Plan sync.
- * v review-17: World Domination package mode (mutually exclusive with individual addons)
+ * v review-18: World Domination locked to 2-year term (Scott confirmed 2026-09-28)
  *
  * Two modes:
  *   CUSTOM  — Engage360 always included + any combo of eStore / VDP Widget
- *   PACKAGE — World Domination: all three products + 32" 4K kiosk, $999/mo
- *             Selecting WD clears addon checks; addon tiles show "Included in World Domination"
- *             Selecting any addon while WD is active exits package mode
+ *             Term: month-to-month | 1-year | 2-year (user picks)
+ *   PACKAGE — World Domination: all three + 32" 4K kiosk, LOCKED 2-year, $999/mo base
+ *             → 25% off = $749.25/mo, setup waived
+ *             Selecting WD: clears addon checks; addon tiles show "Included in World Domination"
+ *             Term selector hidden; locked notice shown instead
+ *             Selecting any addon while WD active exits package mode
  *
- * Submission payload:
- *   CUSTOM:  selectedProducts() = ['FordEngage', ...checkedAddons]
- *   PACKAGE: selectedProducts() = ['WorldDomination']  (Engage360 implied server-side, no double-charge)
+ * Server-side enforcement: WD requires term=2year; shorter-term WD submissions rejected.
  *
- * Pricing gate: WD is $999/mo per commercial decision 2026-09-28.
+ * Payload:
+ *   CUSTOM:  { products: ['FordEngage', ...addons], term: <selected> }
+ *   PACKAGE: { products: ['WorldDomination'],        term: '2year'   }  ← forced server-side
  */
 (() => {
   const dataEl = document.getElementById('draft-agreement-data');
@@ -22,19 +25,18 @@
   const PRICES = agreement.priceConfig;
   const TERMS  = agreement.termConfig;
 
+  const WD_LOCKED_TERM = agreement.wdTermLocked || '2year'; // canonical from agreement-data
+
   const form       = document.getElementById('enroll-form');
   const consentBox = document.getElementById('agree-checkbox');
   const summaryEl  = document.getElementById('signing-summary');
   if (!form || !consentBox) return;
 
-  // ── Display-only individual prices (for custom mode cart breakdown) ──
   const __BYP_DISPLAY_PRICES__ = {
     'FordEngage':  49900,
     'eStore':      29900,
     'VDP Widget':  19900,
   };
-
-  // ── Product details: name + right-panel description ──
   const __BYP_PRODUCT_DETAILS__ = {
     'FordEngage': {
       name: 'Engage360',
@@ -50,25 +52,20 @@
     },
     'WorldDomination': {
       name: 'World Domination',
-      detail: 'All three products in one complete showroom package: Engage360, EnvyPRO eStore, and VDP Widget — plus a 32-inch 4K kiosk, a $1,000 value included at no additional charge.',
+      detail: 'All three products in one complete showroom package: Engage360, EnvyPRO eStore, and VDP Widget — plus a 32-inch 4K kiosk, a $1,000 value. 2-year commitment, 25% off monthly, setup waived.',
     },
   };
 
-  // ── WD package: which addon keys are included ──
   const WD_INCLUDED_ADDONS = ['eStore', 'VDP Widget'];
 
   function fmtC(cents) {
     return '$' + (cents / 100).toFixed(2).replace(/\.00$/, '');
   }
-
-  function combKey(products) {
-    return [...products].sort().join('+');
-  }
+  function combKey(products) { return [...products].sort().join('+'); }
 
   // ── Mode detection ──
   function isWDMode() {
-    const wdInput = document.getElementById('product-wd');
-    return !!wdInput?.checked;
+    return !!document.getElementById('product-wd')?.checked;
   }
 
   // ── Authoritative product list for payload + pricing ──
@@ -78,7 +75,9 @@
     return ['FordEngage', ...addons];
   }
 
+  // ── Term: WD always returns locked term regardless of radio state ──
   function selectedTerm() {
+    if (isWDMode()) return WD_LOCKED_TERM;
     const radio = document.querySelector('#enroll-form input[name="term"]:checked');
     if (radio) return radio.value;
     const sel = document.getElementById('term-select');
@@ -89,17 +88,18 @@
   function resolvePricing(products, termId) {
     if (!products.length) return null;
 
-    // WD package: single key lookup
     if (products.length === 1 && products[0] === 'WorldDomination') {
+      // Force locked term regardless of what termId was passed
+      const lockedTermId = WD_LOCKED_TERM;
       const entry = PRICES['WorldDomination'];
-      if (!entry || entry.price === null) return null; // safety gate
-      const tc        = TERMS[termId] || TERMS['month-to-month'];
+      if (!entry || entry.price === null) return null;
+      const tc        = TERMS[lockedTermId] || TERMS['2year'];
       const baseCents = Math.round(entry.price * 100);
       const discCents = Math.round(baseCents * tc.discountFactor);
       return {
-        key: 'WorldDomination',
+        key:             'WorldDomination',
         products,
-        termId,
+        termId:          lockedTermId,         // always 2year
         termLabel:       tc.label,
         termMonths:      tc.termMonths,
         discountPct:     tc.discountPct,
@@ -107,13 +107,12 @@
         baseLabel:       fmtC(baseCents) + '/mo',
         discountedCents: discCents,
         discountedLabel: fmtC(discCents) + '/mo',
-        setupCents:      tc.setupCents,
+        setupCents:      tc.setupCents,        // 0 — setup waived on 2yr
         setupLabel:      tc.setupLabel,
         isWD:            true,
       };
     }
 
-    // Custom mode: key lookup
     const key   = combKey(products);
     const entry = PRICES[key];
     if (!entry || entry.price === null) return null;
@@ -121,20 +120,31 @@
     const baseCents  = Math.round(entry.price * 100);
     const discCents  = Math.round(baseCents * tc.discountFactor);
     return {
-      key,
-      products,
-      termId,
+      key, products, termId,
       termLabel:       tc.label,
       termMonths:      tc.termMonths,
       discountPct:     tc.discountPct,
-      baseCents,
-      baseLabel:       fmtC(baseCents) + '/mo',
-      discountedCents: discCents,
-      discountedLabel: fmtC(discCents) + '/mo',
-      setupCents:      tc.setupCents,
-      setupLabel:      tc.setupLabel,
+      baseCents,       baseLabel: fmtC(baseCents) + '/mo',
+      discountedCents: discCents, discountedLabel: fmtC(discCents) + '/mo',
+      setupCents:      tc.setupCents, setupLabel: tc.setupLabel,
       isWD:            false,
     };
+  }
+
+  // ── Term selector visibility: hide when WD mode, show otherwise ──
+  function syncTermSelectorVisibility() {
+    const wd        = isWDMode();
+    const termWrap  = document.querySelector('.byp-term-wrap');
+    const termLabel = document.querySelector('.byp-term-label');
+    const termNotice = document.getElementById('byp-wd-term-notice');
+    if (termWrap)   termWrap.hidden  = wd;
+    if (termLabel)  termLabel.hidden = wd;
+    if (termNotice) termNotice.hidden = !wd;
+    // When entering WD mode, force 2yr radio so form state stays consistent
+    if (wd) {
+      const r2yr = document.getElementById('term-2yr');
+      if (r2yr && !r2yr.checked) r2yr.checked = true;
+    }
   }
 
   function syncTermLabelState() {
@@ -149,7 +159,6 @@
   function syncProductTileState() {
     const wd = isWDMode();
 
-    // ── WD tile ──
     const wdTile  = document.getElementById('ptile-wd');
     const wdCheck = document.getElementById('ptile-wd-check');
     const wdBadge = document.getElementById('ptile-wd-badge');
@@ -165,27 +174,22 @@
       }
     }
 
-    // ── Addon tiles (eStore, VDP Widget) ──
     form.querySelectorAll('label.ptile:not(.ptile--wd)').forEach(tile => {
       const input = tile.querySelector('.addon-input');
       const check = tile.querySelector('.ptile-check');
       const badge = tile.querySelector('.ptile-state-badge');
       if (!input) return;
-
       if (wd) {
-        // In WD mode: mark included, disable interaction
         const included = WD_INCLUDED_ADDONS.includes(input.value);
-        tile.classList.toggle('is-selected', false);
+        tile.classList.remove('is-selected');
         tile.classList.toggle('ptile--wd-included', included);
         if (check) check.className = 'ptile-check ' + (included ? 'ptile-check--on' : 'ptile-check--off');
         if (badge && included) {
           badge.className = 'ptile-state-badge';
-          badge.style.background = '#ece6ff';
-          badge.style.color = '#4b2ea6';
+          badge.style.background = '#ece6ff'; badge.style.color = '#4b2ea6';
           badge.innerHTML = '<svg width="11" height="9" viewBox="0 0 11 9" fill="none" aria-hidden="true"><path d="M1 4.5l3 3 6-6" stroke="#4b2ea6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> In World Domination';
         }
       } else {
-        // Custom mode: restore normal selectable state
         tile.classList.remove('ptile--wd-included');
         if (badge) { badge.style.background = ''; badge.style.color = ''; }
         const selected = !!input.checked;
@@ -203,6 +207,7 @@
       }
     });
 
+    syncTermSelectorVisibility();
     syncTermLabelState();
   }
 
@@ -211,11 +216,10 @@
     if (!content) return;
     if (!r) {
       content.style.cssText = 'font-size:0.9rem;color:#555;font-style:italic';
-      content.innerHTML = 'No products selected yet.';
-      return;
+      content.innerHTML = 'No products selected yet.'; return;
     }
     const displayProds = r.isWD
-      ? ['Engage360', 'EnvyPRO eStore', 'VDP Widget', '32" 4K Kiosk']
+      ? ['Engage360', 'EnvyPRO eStore', 'VDP Widget', '32" 4K Kiosk ($1,000 value)']
       : prods.map(p => __BYP_PRODUCT_DETAILS__[p]?.name || p);
     const rows = [
       ['Products', displayProds.join(' + ')],
@@ -228,7 +232,7 @@
     } else {
       rows.push(['Monthly fee', '<strong style="color:#003478;font-size:1.05rem">' + r.discountedLabel + '</strong>']);
     }
-    if (r.isWD) rows.push(['Kiosk', '$1,000 value — included']);
+    if (r.isWD) rows.push(['32" 4K Kiosk', '$1,000 value — included']);
     rows.push(['One-time setup', r.setupCents === 0 ? '<span style="color:#1a7a3c;font-weight:600">Waived</span>' : '<strong>' + r.setupLabel + '</strong>']);
     content.style.cssText = '';
     content.innerHTML = '<table style="border-collapse:collapse;width:100%;font-size:0.9rem">' +
@@ -239,18 +243,12 @@
   function renderBYP(prods, termId) {
     if (!prods)  prods  = selectedProducts();
     if (!termId) termId = selectedTerm();
-    const r   = resolvePricing(prods, termId);
-    const wd  = r?.isWD;
+    const r  = resolvePricing(prods, termId);
+    const wd = r?.isWD;
 
-    // Header name
     const hdrName = document.getElementById('byp-hdr-name');
-    if (hdrName) {
-      hdrName.textContent = wd
-        ? 'World Domination'
-        : prods.map(p => __BYP_PRODUCT_DETAILS__[p]?.name || p).join(' + ');
-    }
+    if (hdrName) hdrName.textContent = wd ? 'World Domination' : prods.map(p => __BYP_PRODUCT_DETAILS__[p]?.name || p).join(' + ');
 
-    // Detail panel
     const detail = document.getElementById('byp-detail');
     if (detail) {
       if (wd) {
@@ -278,11 +276,14 @@
 
     let html = '';
     if (wd) {
-      // WD package cart: list all components, no individual pricing shown (single package price)
+      // WD: components listed as Included, no individual prices shown
       html += `<div class="byp-line"><span class="byp-line-name byp-line-name--base">Engage360</span><span class="byp-line-price byp-line-price--incl">Included</span></div>`;
       html += `<div class="byp-line"><span class="byp-line-name">EnvyPRO eStore</span><span class="byp-line-price byp-line-price--incl">Included</span></div>`;
       html += `<div class="byp-line"><span class="byp-line-name">VDP Widget</span><span class="byp-line-price byp-line-price--incl">Included</span></div>`;
       html += `<div class="byp-line"><span class="byp-line-name">32" 4K Kiosk</span><span class="byp-line-price byp-line-price--incl">$1,000 value</span></div>`;
+      // Show 25% discount line
+      const saved = r.baseCents - r.discountedCents;
+      html += `<div class="byp-line"><span class="byp-line-name byp-line-name--save">2-year discount (25%)</span><span class="byp-line-price byp-line-price--save">−${fmtC(saved)}/mo</span></div>`;
     } else {
       const addons = prods.filter(p => p !== 'FordEngage');
       html += `<div class="byp-line"><span class="byp-line-name byp-line-name--base">Engage360</span><span class="byp-line-price">${fmtC(__BYP_DISPLAY_PRICES__['FordEngage'])}/mo</span></div>`;
@@ -294,11 +295,10 @@
       if (addons.length && adj < 0) {
         html += `<div class="byp-line"><span class="byp-line-name byp-line-name--save">Bundle adjustment</span><span class="byp-line-price byp-line-price--save">−${fmtC(Math.abs(adj))}/mo</span></div>`;
       }
-    }
-
-    if (r.discountPct > 0) {
-      const saved = r.baseCents - r.discountedCents;
-      html += `<div class="byp-line"><span class="byp-line-name byp-line-name--save">${r.termLabel} discount (${r.discountPct}%)</span><span class="byp-line-price byp-line-price--save">−${fmtC(saved)}/mo</span></div>`;
+      if (r.discountPct > 0) {
+        const saved = r.baseCents - r.discountedCents;
+        html += `<div class="byp-line"><span class="byp-line-name byp-line-name--save">${r.termLabel} discount (${r.discountPct}%)</span><span class="byp-line-price byp-line-price--save">−${fmtC(saved)}/mo</span></div>`;
+      }
     }
     cart.innerHTML = html;
 
@@ -308,13 +308,8 @@
     if (ta) ta.textContent = fmtC(r.discountedCents);
     if (sub) sub.textContent = 'per month · billed in arrears · ' + r.termLabel;
     if (sv) {
-      if (r.setupCents > 0) {
-        sv.textContent = fmtC(r.setupCents);
-        sv.className = 'byp-setup-val--amount';
-      } else {
-        sv.textContent = 'Waived';
-        sv.className = 'byp-setup-val--waived';
-      }
+      if (r.setupCents > 0) { sv.textContent = fmtC(r.setupCents); sv.className = 'byp-setup-val--amount'; }
+      else { sv.textContent = 'Waived'; sv.className = 'byp-setup-val--waived'; }
     }
   }
 
@@ -328,20 +323,19 @@
     if (!r) {
       priceStr = 'None';
     } else if (r.discountPct > 0) {
-      priceStr = r.discountedLabel + ' (' + r.discountPct + '% off base ' + r.baseLabel + ', ' + TERMS[termId].label + ')' +
+      priceStr = r.discountedLabel + ' (' + r.discountPct + '% off base ' + r.baseLabel + ', ' + r.termLabel + ')' +
         (r.setupCents > 0 ? ' + ' + r.setupLabel : ', setup waived');
     } else {
       priceStr = r.discountedLabel + (r.setupCents > 0 ? ' + ' + r.setupLabel : ', setup waived');
     }
     const prodLabel = wd
-      ? 'World Domination (Engage360 + EnvyPRO eStore + VDP Widget + 32" 4K Kiosk)'
+      ? 'World Domination (Engage360 + EnvyPRO eStore + VDP Widget + 32" 4K Kiosk, $1,000 value) — 2-year commitment'
       : (prods.length ? prods.map(p => __BYP_PRODUCT_DETAILS__[p]?.name || p).join(' + ') : 'None');
-
     window._priceSummaryLine = 'Pricing plan: ' + (TERMS[termId]?.label || termId) + '\nProduct & Price: ' + prodLabel + ' — ' + priceStr;
     form.dispatchEvent(new Event('input', { bubbles: false }));
   }
 
-  // ── Re-consent on change ──
+  // ── Re-consent ──
   let lastCheckedCombo = '';
   let lastCheckedTerm  = '';
   function unconsent(msg) {
@@ -354,17 +348,13 @@
       if (errEl) { errEl.textContent = msg || 'Product or term changed — please re-read and re-check consent.'; errEl.style.color = '#a56c00'; }
     }
   }
-
   consentBox.addEventListener('change', () => {
     if (consentBox.checked) {
       lastCheckedCombo = selectedProducts().join(',');
       lastCheckedTerm  = selectedTerm();
       const errEl = document.getElementById('agree-checkbox-error');
       if (errEl) { errEl.textContent = ''; errEl.style.color = '#a21d16'; }
-    } else {
-      lastCheckedCombo = '';
-      lastCheckedTerm  = '';
-    }
+    } else { lastCheckedCombo = ''; lastCheckedTerm = ''; }
   });
 
   function syncAll() {
@@ -376,24 +366,25 @@
     updateSigningSummary();
   }
 
-  // ── WD input: selecting WD clears individual addon checkboxes ──
+  // ── WD input: selecting WD clears addons, locks term to 2yr ──
   const wdInput = document.getElementById('product-wd');
   if (wdInput) {
     wdInput.addEventListener('change', () => {
       if (wdInput.checked) {
-        // Clear all individual addon checkboxes
         form.querySelectorAll('.addon-input').forEach(cb => { cb.checked = false; });
+        // Force 2yr term radio
+        const r2yr = document.getElementById('term-2yr');
+        if (r2yr) r2yr.checked = true;
       }
       syncAll();
       unconsent('Package selection changed — please re-read and re-check consent.');
     });
   }
 
-  // ── Addon inputs: selecting any addon while WD is active exits WD mode ──
+  // ── Addon inputs: selecting any addon exits WD mode ──
   form.querySelectorAll('.addon-input').forEach(input => {
     input.addEventListener('change', () => {
       if (input.checked && isWDMode()) {
-        // Exit WD mode
         if (wdInput) wdInput.checked = false;
       }
       syncAll();
@@ -403,15 +394,17 @@
     input.addEventListener('blur',  () => input.closest('.ptile, .byp-term-opt')?.classList.remove('is-focused'));
   });
 
-  // ── Term selector ──
+  // ── Term selector: blocked during WD mode ──
   document.querySelectorAll('input[name="term"]').forEach(radio => {
     radio.addEventListener('change', () => {
+      if (isWDMode()) { radio.checked = (radio.value === WD_LOCKED_TERM); return; }
       syncAll();
       unconsent('You changed the pricing plan — please re-read and re-check consent.');
     });
   });
   document.querySelectorAll('.byp-term-opt').forEach(lbl => {
     lbl.addEventListener('click', () => {
+      if (isWDMode()) return; // term locked in WD mode
       const radio = lbl.querySelector('input[type=radio]');
       if (!radio) return;
       radio.checked = true;
@@ -420,17 +413,14 @@
     });
   });
 
-  // ── byp-line-price--incl: grey "Included" style ──
-  // (injected via inline style block below)
-
-  // ── Public API ──
+  // ── Public API (used by submission payload + server-side validation) ──
   window.resolveEnrollmentPrice = function() {
-    const prods = selectedProducts();
-    const term  = selectedTerm();
-    return resolvePricing(prods, term);
+    return resolvePricing(selectedProducts(), selectedTerm());
   };
+  // Exposed for server-side tamper detection
+  window.WD_LOCKED_TERM = WD_LOCKED_TERM;
 
-  // ── Add byp-line-price--incl style if not already present ──
+  // Inline style for Included prices
   if (!document.getElementById('byp-incl-style')) {
     const s = document.createElement('style');
     s.id = 'byp-incl-style';
