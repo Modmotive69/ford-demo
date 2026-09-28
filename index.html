@@ -891,6 +891,49 @@
     .finalcta-email { display: block; margin-top: 20px; font-size: 0.85rem; color: rgba(255,255,255,0.55); letter-spacing: 0.3px; }
 
     /* ─── FOOTER ─── */
+
+    /* ─── SHARED BRANDED FOOTER ─── */
+    .site-footer {
+      background: #f0f2f5;
+      border-top: 1px solid #dde2ea;
+      padding: clamp(28px,4vw,44px) clamp(20px,5vw,40px) clamp(20px,3vw,32px);
+      text-align: center;
+    }
+    .site-footer-brand {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+    .site-footer-logo {
+      height: 32px;
+      width: auto;
+      display: block;
+      flex-shrink: 0;
+    }
+    .site-footer-tag {
+      font-size: 0.82rem;
+      color: #444;
+      font-family: 'Ford Antenna', FordAntenna, Arial, sans-serif;
+      letter-spacing: 0.2px;
+      white-space: nowrap;
+    }
+    .site-footer-copy {
+      font-size: 0.75rem;
+      color: #777;
+      line-height: 1.7;
+      margin: 0;
+    }
+    .site-footer-copy + .site-footer-copy {
+      margin-top: 4px;
+    }
+    @media (max-width: 480px) {
+      .site-footer-logo { height: 26px; }
+      .site-footer-brand { gap: 10px; }
+    }
+
     footer {
       background: var(--black);
       color: rgba(255,255,255,0.45);
@@ -1340,9 +1383,21 @@
   </section>
 
   <!-- ═══ FOOTER ═══ -->
-  <footer>
-    <p><strong>SmartDealer</strong> &copy; 2026 &nbsp;|&nbsp; A Ford Dealer Solutions partner</p>
-    <p style="margin-top:8px;">Dealer performance data verified by J.D. Power across 500+ Ford dealers, 2019–2024.</p>
+  <footer class="site-footer">
+    <div class="site-footer-brand">
+      <img
+        src="images/smartdealer-logo.png"
+        alt="SmartDealer Technologies"
+        class="site-footer-logo"
+        loading="lazy"
+        decoding="async"
+        width="503"
+        height="86"
+      >
+      <span class="site-footer-tag">A SmartDealer company</span>
+    </div>
+    <p class="site-footer-copy">&copy; 2026 SmartDealer Technologies, Inc. All rights reserved.</p>
+    <p class="site-footer-copy">Dealer performance data verified by J.D. Power across 500+ Ford dealers, 2019&ndash;2024.</p>
   </footer>
 
   <script>
