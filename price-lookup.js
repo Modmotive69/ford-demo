@@ -153,13 +153,7 @@
   // Bundle combos have a catalog price lower than sum of parts.
   // We show: base (Engage360 = $499), optional add-ons, then bundle adjustment.
   // Standalone catalog prices for breakdown display (NOT standalone enrollment):
-  const DISPLAY_PRICES = {
-    'FordEngage': 49900,       // $499/mo
-    'eStore':     29900,       // $299/mo
-    'VDP Widget': 19900,       // $199/mo
-  };
 
-  function fmtC(cents) {
     return '$' + (cents / 100).toFixed(2).replace(/\.00$/, '');
   }
 
