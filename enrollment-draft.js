@@ -41,7 +41,6 @@
     lastFocusBeforeModal = document.activeElement;
     modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
-    // Sync modal scroll to inline scroll position (best-effort)
     const ratio = inlineBox.scrollTop / Math.max(1, inlineBox.scrollHeight - inlineBox.clientHeight);
     modalBody.scrollTop = ratio * Math.max(0, modalBody.scrollHeight - modalBody.clientHeight);
     const firstFocusable = modal.querySelector('button, [tabindex="0"]');
@@ -57,13 +56,11 @@
   document.getElementById('btn-expand-modal').addEventListener('click', openModal);
   document.getElementById('modal-close').addEventListener('click', closeModal);
 
-  // Escape key closes modal; click on backdrop also closes
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') closeModal();
   });
   modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
 
-  // Focus trap inside modal
   modal.addEventListener('keydown', e => {
     if (e.key !== 'Tab' || modal.getAttribute('aria-hidden') !== 'false') return;
     const focusable = Array.from(modal.querySelectorAll(
@@ -83,7 +80,6 @@
     const priceInfo = window.resolveEnrollmentPrice ? window.resolveEnrollmentPrice() : null;
     document.getElementById('print-selected-products').textContent =
       'Selected products: ' + (sel.join(' + ') || 'None');
-    // Term and price rows (new)
     const termRow = document.getElementById('print-term-val');
     if (termRow) termRow.textContent = 'Term: ' + (termEl ? termEl.options[termEl.selectedIndex]?.text : 'Month-to-month');
     const priceRow = document.getElementById('print-price-val');
@@ -108,7 +104,6 @@
       'Consent: ' + (document.getElementById('agree-checkbox').checked
         ? 'Authorized and agreed — not yet submitted'
         : 'Not yet checked');
-    // Electronic signature block (pre-submission review copy)
     const esigName   = document.getElementById('print-esig-name');
     const esigDealer = document.getElementById('print-esig-dealer');
     const esigTime   = document.getElementById('print-esig-time');
@@ -123,13 +118,12 @@
     syncPrintSummary();
     document.getElementById('print-agreement-only').style.display = 'block';
     window.print();
-    // Restore after print dialog dismisses — use afterprint event with a fallback
     const restore = () => {
       document.getElementById('print-agreement-only').style.display = 'none';
       window.removeEventListener('afterprint', restore);
     };
     window.addEventListener('afterprint', restore);
-    setTimeout(restore, 8000); // safety fallback
+    setTimeout(restore, 8000);
   }
 
   document.getElementById('btn-print-agreement').addEventListener('click', triggerPrint);
@@ -146,20 +140,86 @@
   ];
   const phoneRe = /^(?:\+1[ .-]?)?(?:\([0-9]{3}\)|[0-9]{3})[ .-]?[0-9]{3}[ .-]?[0-9]{4}$/;
 
-  /* ── Signing summary (live) ──────────────────────────────────────────── */
+  /* ── Shared summary table renderer ──────────────────────────────────── */
+  /**
+   * Renders rows into a <tbody> as a two-column th/td table.
+   * rows: Array of { label, value, icon? }
+   *   icon: FA icon class string e.g. 'fa-solid fa-square-check'
+   *         Omit for plain rows. 'check' shorthand = fa-solid fa-square-check in ford-blue.
+   *   value: string; empty/null renders as em-dash placeholder.
+   * FA icons are aria-hidden=true + decorative; value text is the real content.
+   * Falls back gracefully when FA is unavailable (icon <i> renders invisible, text still present).
+   */
+  function renderSummaryRows(tbody, rows) {
+    tbody.innerHTML = '';
+    for (const { label, value, icon } of rows) {
+      const tr = document.createElement('tr');
+
+      const th = document.createElement('th');
+      th.scope = 'row';
+      th.textContent = label;
+
+      const td = document.createElement('td');
+      if (icon) {
+        const iconEl = document.createElement('i');
+        const cls = icon === 'check' ? 'fa-solid fa-square-check' : icon;
+        iconEl.className = cls + ' ss-icon';
+        iconEl.setAttribute('aria-hidden', 'true');
+        td.appendChild(iconEl);
+        // Plain-text fallback visible when FA CSS is not loaded (print/email)
+        const fallback = document.createElement('span');
+        fallback.className = 'ss-icon-fallback';
+        fallback.textContent = '☑ ';
+        td.appendChild(fallback);
+      }
+      const textNode = document.createTextNode(value || '—');
+      td.appendChild(textNode);
+
+      tr.appendChild(th);
+      tr.appendChild(td);
+      tbody.appendChild(tr);
+    }
+  }
+
+  /* ── Live signing summary ────────────────────────────────────────────── */
   function updateSummary() {
-    const v = id => $(id)?.value.trim() || 'Not entered';
-    $('signing-summary').textContent =
-      `Agreement version: ${version}\n` +
-      `Selected products: ${selected().join(' + ') || 'None — choose at least one'}\n` +
-      (window._priceSummaryLine ? window._priceSummaryLine + '\n' : '') +
-      `Dealership: ${v('dealer-name')}\n` +
-      `Name (Signature): ${v('sig-name')}\n` +
-      `Title: ${v('sig-title')}\n` +
-      `Phone: ${v('sig-phone')}\n` +
-      `Email: ${v('sig-email')}\n` +
-      `Consent: ${$('agree-checkbox').checked ? 'Checked — not submitted yet' : 'Not checked'}\n` +
-      `Status: Ready for submission after validation`;
+    const v = id => $(id)?.value.trim() || '';
+    const prods = selected();
+    const consentChecked = $('agree-checkbox').checked;
+
+    const tbody = $('ss-tbody');
+    if (!tbody) return; // guard: element might not exist
+
+    const rows = [
+      { label: 'Agreement version', value: version },
+      { label: 'Selected products', value: prods.length ? prods.join(' + ') : 'None — choose at least one' },
+    ];
+
+    // Insert pricing line if price-lookup.js has computed it
+    if (window._priceSummaryLine) {
+      // _priceSummaryLine is "Pricing plan: X\nProduct & Price: Y — Z"
+      for (const line of window._priceSummaryLine.split('\n')) {
+        const sep = line.indexOf(':');
+        if (sep < 0) continue;
+        rows.push({ label: line.slice(0, sep).trim(), value: line.slice(sep + 1).trim() });
+      }
+    }
+
+    rows.push(
+      { label: 'Dealership',        value: v('dealer-name') || 'Not entered' },
+      { label: 'Name (Signature)',   value: v('sig-name')    || 'Not entered' },
+      { label: 'Title',             value: v('sig-title')   || 'Not entered' },
+      { label: 'Phone',             value: v('sig-phone')   || 'Not entered' },
+      { label: 'Email',             value: v('sig-email')   || 'Not entered' },
+      {
+        label: 'Authorization',
+        value: consentChecked ? 'Authorized and agreed — not yet submitted' : 'Not yet checked',
+        icon: consentChecked ? 'check' : undefined,
+      },
+      { label: 'Status', value: 'Ready for submission after validation' },
+    );
+
+    renderSummaryRows(tbody, rows);
   }
 
   /* ── Clear per-field errors on input ────────────────────────────────── */
@@ -179,7 +239,7 @@
 
   /* ── Form events ─────────────────────────────────────────────────────── */
   const form = document.getElementById('enroll-form');
-  form.addEventListener('input', () => { updateSummary(); $('draft-status').textContent = ''; });
+  form.addEventListener('input',  () => { updateSummary(); $('draft-status').textContent = ''; });
   form.addEventListener('change', updateSummary);
   updateSummary();
 
@@ -220,7 +280,7 @@
         if (errEl) errEl.textContent = 'Enter a valid 10-digit phone, e.g. 555-555-0100.';
       }
     }
-    // Consent (independent — checked/unchecked does NOT depend on scroll/modal/print)
+    // Consent
     agreeCheckbox.removeAttribute('aria-invalid');
     $('agree-checkbox-error').textContent = '';
     if (!agreeCheckbox.checked) {
@@ -240,28 +300,58 @@
   let lastPayload = null;
   let accepted = null;
 
+  /* ── Confirmation panel (post-submit) ───────────────────────────────── */
   function showConfirmation(result) {
     accepted = result;
     submitted = true;
     form.hidden = true;
+
     const panel = document.createElement('section');
     panel.id = 'submission-confirmation';
     panel.tabIndex = -1;
     panel.style.cssText = 'padding:28px 0;overflow-wrap:anywhere';
+
     const heading = document.createElement('h2');
     heading.textContent = 'Congratulations—your agreement has been submitted.';
     panel.append(heading);
-    const summary = document.createElement('p');
-    summary.style.whiteSpace = 'pre-line';
+
+    // Build confirmation table using the shared renderer
     const rp = result.resolved_price;
-    const priceLines = rp.discountPct > 0
-      ? `Base monthly: ${rp.baseLabel}\nDiscount: ${rp.discountPct}%\nDiscounted monthly: ${rp.discountedLabel}\nOne-time setup: ${rp.setupCents === 0 ? 'Waived' : rp.setupLabel}`
-      : `Monthly fee: ${rp.discountedLabel}\nOne-time setup: ${rp.setupLabel}`;
-    summary.textContent = `Electronically signed by: ${result.signer.name} (${result.signer.title})\nOn behalf of: ${result.enrollment.dealer_name}\nProducts: ${result.selectedProducts.join(' + ')}\nPricing plan: ${rp.termLabel}\n${priceLines}\nAccepted (UTC): ${result.server_timestamp}\nReceipt: ${result.receipt_id}\nAgreement version: ${result.agreementVersion}`;
-    panel.append(summary);
+    const confirmRows = [
+      { label: 'Electronically signed by', value: result.signer.name + ' (' + result.signer.title + ')', icon: 'check' },
+      { label: 'On behalf of',             value: result.enrollment.dealer_name,                          icon: 'check' },
+      { label: 'Products',                 value: result.selectedProducts.join(' + '),                    icon: 'check' },
+      { label: 'Pricing plan',             value: rp.termLabel,                                           icon: 'check' },
+      { label: 'Base monthly',             value: rp.baseLabel },
+    ];
+    if (rp.discountPct > 0) {
+      confirmRows.push({ label: 'Discount',             value: rp.discountPct + '%' });
+      confirmRows.push({ label: 'Discounted monthly',   value: rp.discountedLabel, icon: 'check' });
+    } else {
+      confirmRows.push({ label: 'Monthly fee',          value: rp.discountedLabel, icon: 'check' });
+    }
+    confirmRows.push(
+      { label: 'One-time setup',    value: rp.setupCents === 0 ? 'Waived' : rp.setupLabel, icon: 'check' },
+      { label: 'Accepted (UTC)',    value: result.server_timestamp,  icon: 'check' },
+      { label: 'Receipt',          value: result.receipt_id,         icon: 'check' },
+      { label: 'Agreement version', value: result.agreementVersion }
+    );
+
+    const tableWrap = document.createElement('div');
+    tableWrap.className = 'ss-wrap';
+    tableWrap.style.marginBottom = '20px';
+    const table = document.createElement('table');
+    table.className = 'ss-table';
+    const tbody = document.createElement('tbody');
+    renderSummaryRows(tbody, confirmRows);
+    table.appendChild(tbody);
+    tableWrap.appendChild(table);
+    panel.append(tableWrap);
+
     const email = document.createElement('p');
     email.textContent = 'Agreement copies are queued for ' + result.email_recipients.join(' and ') + '. The email provider accepted the request; inbox delivery is not confirmed.';
     panel.append(email);
+
     const download = document.createElement('button');
     download.type = 'button'; download.className = 'btn-submit';
     download.textContent = 'Download Agreement (HTML)';
@@ -271,6 +361,7 @@
       setTimeout(() => URL.revokeObjectURL(url), 10000);
     });
     panel.append(download);
+
     const print = document.createElement('button'); print.type = 'button'; print.className = 'agreement-btn';
     print.textContent = 'Print / Save as PDF'; print.style.marginTop = '16px';
     print.addEventListener('click', () => {
@@ -279,21 +370,23 @@
       target.innerHTML = doc.body.innerHTML;
       target.style.display = 'block';
       const restore = () => { target.style.display = 'none'; window.removeEventListener('afterprint', restore); };
-      window.addEventListener('afterprint',restore);
+      window.addEventListener('afterprint', restore);
       window.print();
     });
     panel.append(print);
-    const note = document.createElement('p'); note.textContent = 'Keep this receipt and agreement for your records. Submission does not confirm service activation. PartSites will be in contact to complete onboarding.';
+
+    const note = document.createElement('p');
+    note.textContent = 'Keep this receipt and agreement for your records. Submission does not confirm service activation. PartSites will be in contact to complete onboarding.';
     panel.append(note);
+
     form.after(panel); panel.focus(); panel.scrollIntoView({block:'start',behavior:'instant'});
   }
 
-  /* Submit and display only a verified server acknowledgment. */
+  /* Submit — no changes to validation/payload/re-consent logic */
   form.addEventListener('submit', async e => {
     e.preventDefault();
     if (sending || submitted) return;
     $('draft-status').textContent = '';
-    // Check quote-required FIRST — before field validation, so it shows clearly
     const priceInfo = window.resolveEnrollmentPrice ? window.resolveEnrollmentPrice() : null;
     if (priceInfo && priceInfo.isQuoteRequired) {
       $('draft-status').textContent =
@@ -305,7 +398,6 @@
     const formValues = Object.fromEntries(new FormData(form));
     delete formValues.products;
     formValues.city = ($('city').style.display === 'none' ? $('city-text').value : $('city').value).trim();
-    // Split signer fields from dealership enrollment fields
     const signerKeys = ['sig_name','sig_title','sig_phone','sig_email'];
     const signer = {};
     for (const k of signerKeys) {
@@ -313,7 +405,6 @@
       signer[mapped === 'sig_name' ? 'name' : mapped === 'sig_title' ? 'title' : mapped === 'sig_phone' ? 'phone' : 'email'] = (formValues[k] || '').trim();
       delete formValues[k];
     }
-    // Also map by id if name differs
     signer.name  = signer.name  || ($('sig-name')  ? $('sig-name').value.trim()  : '');
     signer.title = signer.title || ($('sig-title') ? $('sig-title').value.trim() : '');
     signer.phone = signer.phone || ($('sig-phone') ? $('sig-phone').value.trim() : '');
@@ -329,7 +420,7 @@
       agreementSha256:  agreement.sha256,
       agreementText:    agreement.terms.join('\n'),
       selectedProducts: selected(),
-      pricingSummary:   window.resolveEnrollmentPrice ? window.resolveEnrollmentPrice() : null, // informational only; server re-resolves
+      pricingSummary:   window.resolveEnrollmentPrice ? window.resolveEnrollmentPrice() : null,
       enrollment:       formValues,
       signer:           signer,
       consent: {
