@@ -495,6 +495,215 @@
       margin-left: 2px;
     }
 
+    /* ─── PRODUCT SELECTION ─── */
+    .product-selection-fieldset {
+      border: 1px solid #d6e0ec;
+      border-radius: 24px;
+      padding: 24px;
+      background: linear-gradient(180deg, #fbfcfe 0%, #ffffff 100%);
+      box-shadow: 0 8px 30px rgba(0, 52, 120, 0.06);
+    }
+
+    .product-selection-fieldset[aria-invalid="true"] {
+      border-color: #a21d16;
+      box-shadow: 0 8px 30px rgba(162, 29, 22, 0.08);
+    }
+
+    .product-selection-legend {
+      margin-bottom: 10px;
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .product-selection-help {
+      margin: 0 0 18px;
+      font-size: 0.86rem;
+      color: #6e6e73;
+      line-height: 1.55;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .product-option {
+      position: relative;
+      display: block;
+      min-width: 0;
+      cursor: pointer;
+    }
+
+    .product-option-input {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .product-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-height: 220px;
+      padding: 24px 22px 22px;
+      background: #fff;
+      border: 1px solid #e5ebf2;
+      border-radius: 22px;
+      box-shadow: 0 12px 34px rgba(15, 42, 79, 0.08), 0 2px 8px rgba(15, 42, 79, 0.04);
+      transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease, background 0.18s ease;
+    }
+
+    .product-option:hover .product-card {
+      transform: translateY(-2px);
+      border-color: #bfd1e7;
+      box-shadow: 0 16px 38px rgba(15, 42, 79, 0.1), 0 4px 10px rgba(15, 42, 79, 0.05);
+    }
+
+    .product-option-input:focus-visible + .product-card,
+    .product-option.is-focused .product-card,
+    .product-option:has(.product-option-input:focus-visible) .product-card {
+      outline: 3px solid #0562D2;
+      outline-offset: 4px;
+    }
+
+    .product-option-input:checked + .product-card,
+    .product-option.is-selected .product-card,
+    .product-option:has(.product-option-input:checked) .product-card {
+      border-color: #003478;
+      background: linear-gradient(180deg, #ffffff 0%, #f5f8ff 100%);
+      box-shadow: 0 18px 42px rgba(0, 52, 120, 0.14), 0 4px 12px rgba(0, 52, 120, 0.08);
+    }
+
+    .product-option-input:checked + .product-card .product-card-check,
+    .product-option.is-selected .product-card .product-card-check,
+    .product-option:has(.product-option-input:checked) .product-card .product-card-check {
+      background: #003478;
+      border-color: #003478;
+      color: #fff;
+    }
+
+    .product-card-eyebrow {
+      margin: 0 0 14px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: #244f88;
+    }
+
+    .product-card-title {
+      margin: 0 0 12px;
+      color: #003478;
+      font-family: 'Ford Antenna', FordAntenna, Arial, sans-serif;
+      font-weight: 900;
+      font-size: 1.55rem;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+    }
+
+    .product-card-desc {
+      margin: 0;
+      color: #6e6e73;
+      font-size: 0.98rem;
+      line-height: 1.58;
+      max-width: 24ch;
+    }
+
+    .product-card-check {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 28px;
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      border: 1.5px solid #c4d0df;
+      background: #fff;
+      color: transparent;
+      font-size: 0.95rem;
+      font-weight: 700;
+      line-height: 1;
+      transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+    }
+
+    .product-card-footnote {
+      margin-top: auto;
+      padding-top: 18px;
+      font-size: 0.8rem;
+      color: #7a7a80;
+      line-height: 1.5;
+    }
+
+    .product-card--draft {
+      border-style: dashed;
+      background: linear-gradient(180deg, #ffffff 0%, #f9fbff 100%);
+    }
+
+    .product-card--draft:hover {
+      transform: none;
+    }
+
+    .product-card-badge {
+      align-self: flex-start;
+      margin-top: auto;
+      margin-bottom: 14px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(0, 52, 120, 0.08);
+      color: #003478;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+    }
+
+    .product-card-status {
+      margin-top: 16px;
+      color: #8b5b00;
+      font-size: 0.82rem;
+      font-weight: 600;
+      line-height: 1.45;
+    }
+
+    .product-selection-note {
+      margin: 18px 0 0;
+      font-size: 0.84rem;
+      color: #6e6e73;
+      line-height: 1.55;
+    }
+
+    .product-selection-note strong {
+      color: #003478;
+    }
+
+    @media (max-width: 700px) {
+      .product-selection-fieldset {
+        padding: 20px 18px;
+        border-radius: 20px;
+      }
+
+      .product-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .product-card {
+        min-height: 0;
+      }
+
+      .product-card-title {
+        font-size: 1.4rem;
+      }
+    }
+
     /* ─── AGREEMENT ─── */
     .agreement-link {
       display: inline-flex;
@@ -1361,8 +1570,54 @@
 
         <div class="section-divider"></div>
 
-<fieldset class="form-section" id="product-selection" aria-describedby="product-error" style="border:1px solid #ccd7e5;padding:20px"><legend class="section-label">Select products — at least one required</legend>
-<label style="display:block;margin:16px 0"><input type="checkbox" name="products" value="FordEngage" style="width:20px;height:20px;vertical-align:middle"> FordEngage</label><label style="display:block;margin:16px 0"><input type="checkbox" name="products" value="eStore" style="width:20px;height:20px;vertical-align:middle"> eStore</label><label style="display:block;margin:16px 0"><input type="checkbox" name="products" value="VDP Widget" style="width:20px;height:20px;vertical-align:middle"> VDP Widget</label><p id="product-error" style="color:#a21d16"></p><p>Price is determined by selected products and shown in the Product &amp; Price Summary below.</p></fieldset><div class="section-divider"></div>        <!-- SECTION: AGREEMENT -->
+<fieldset class="form-section product-selection-fieldset" id="product-selection" aria-describedby="product-help product-error product-preview-note">
+  <legend class="section-label product-selection-legend">Select products — at least one required</legend>
+  <p class="product-selection-help" id="product-help">Choose any live product cards below. Selected products drive the Product &amp; Price Summary and agreement block exactly as shown below.</p>
+
+  <div class="product-grid">
+    <label class="product-option" for="product-estore">
+      <input class="product-option-input" type="checkbox" id="product-estore" name="products" value="eStore" />
+      <span class="product-card">
+        <span class="product-card-check" aria-hidden="true">✓</span>
+        <span class="product-card-eyebrow">Online</span>
+        <span class="product-card-title">eStore</span>
+        <span class="product-card-desc">Dealer-branded online accessory storefront, available 24/7.</span>
+      </span>
+    </label>
+
+    <label class="product-option" for="product-vdp-widget">
+      <input class="product-option-input" type="checkbox" id="product-vdp-widget" name="products" value="VDP Widget" />
+      <span class="product-card">
+        <span class="product-card-check" aria-hidden="true">✓</span>
+        <span class="product-card-eyebrow">Digital Retail</span>
+        <span class="product-card-title">Access VDP Widget</span>
+        <span class="product-card-desc">Accessory options embedded directly on your vehicle detail pages.</span>
+      </span>
+    </label>
+
+    <label class="product-option" for="product-fordengage">
+      <input class="product-option-input" type="checkbox" id="product-fordengage" name="products" value="FordEngage" />
+      <span class="product-card">
+        <span class="product-card-check" aria-hidden="true">✓</span>
+        <span class="product-card-eyebrow">In-Store Sales Solution</span>
+        <span class="product-card-title">FordEngage</span>
+        <span class="product-card-desc">Factory-accurate 4D accessory visualization on the showroom floor.</span>
+      </span>
+    </label>
+
+    <div class="product-card product-card--draft" aria-labelledby="product-world-domination-title" aria-describedby="product-world-domination-desc product-preview-note">
+      <span class="product-card-check" aria-hidden="true">✓</span>
+      <span class="product-card-eyebrow">Bundle Preview</span>
+      <span class="product-card-title" id="product-world-domination-title">World Domination</span>
+      <span class="product-card-badge">Draft: 25% off + free 4K kiosk</span>
+      <span class="product-card-desc" id="product-world-domination-desc">Bundle preview implying eStore, Access VDP Widget, and FordEngage together. Financial eligibility, term handling, and any stacking treatment still need confirmation before this offer can go live.</span>
+      <span class="product-card-status">Preview only — not selectable yet.</span>
+    </div>
+  </div>
+
+  <p id="product-error" style="color:#a21d16"></p>
+  <p class="product-selection-note" id="product-preview-note"><strong>Draft preview only:</strong> “World Domination” is intentionally not wired into live pricing, consent, or submission until the promotion terms are confirmed.</p>
+</fieldset><div class="section-divider"></div>        <!-- SECTION: AGREEMENT -->
         <div class="form-section">
           <div class="section-label">Agreement</div>
 
@@ -1537,6 +1792,6 @@
     </div>
   </div>
 </div>
-<script type="application/json" id="draft-agreement-data">{"version": "FE-2026-09-28-review-11", "terms": ["TECHNOLOGY SERVICES AGREEMENT", "(FORD ENGAGE PROGRAM)", "", "THIS TECHNOLOGY SERVICES AGREEMENT (the \"Agreement\") dated as of the date set forth in the signature block affixed hereto (the \"Effective Date\"), is entered into between PartSites, LLC, a wholly owned subsidiary of SmartDealer Technologies, Inc., a Florida limited liability company with offices located at 175 SW 7th Street, Suite 2010, Miami, Florida 33130 (the \"Company\") and the undersigned Ford or Lincoln franchise dealer (the \"Dealer\").  the Company and the Dealer are sometimes referred to herein respectively as a \u201cParty,\u201d and collectively as the \u201cParties.\u201d", "", "RECITALS", "", "WHEREAS, the Company designs, develops, and provides certain technology products and related services to facilitate the online sale of automotive parts and accessories by automotive manufacturers and franchised automotive dealers (the \"Company Technology\"); and", "", "WHEREAS, The Dealer desires to license certain products of the Company Technology (the \u201cCompany Products\") for use in its automotive dealership enterprise. ", "", "NOW THEREFORE, in consideration of the foregoing, the mutual covenants contained in this Agreement, and of other good and valuable consideration, the receipt and sufficiency of which are hereby acknowledged, the Parties agree as follows:", "", "AGREEMENT", "", "Licensed Technology and Services.", "", "Licensed Products Defined.", "", "(a)Ford Accessories Digital Solution.The Company\u2019s accessories instore digital solution including DMS and FAD integration and reporting tools presently deployed by certain Dealers and branded for Ford and Lincoln Dealers in connection with an agreement between the Dealer and Chrome Data Solutions (the \u201cExisting DSS Solution\u201d).", "", "(b)FordEngage. The Company's Engage360 platform with 3D visualization and instore digital solution including DMS and FAD integration and reporting tools, branded for Ford and Lincoln franchise dealers.", "", "(c)VDP Widget.The Company\u2019s \u201cvehicle-specific\u201d accessories widget embedded in the Dealer\u2019s website vehicle detail pages allowing dealer customers to request and view the financed  pricing for accessories within the vehicle sales quote.", "", "(d)\u2003eStore. The Company\u2019s dealer-branded OEM parts and accessories eStore, combining catalog discovery, VIN and vehicle fitment, checkout, and order operations. The eStore is a dealer-branded storefront; a widget on the Dealer\u2019s existing website may direct shoppers to it. The Dealer controls storefront pricing and fulfillment within the platform. Specific product selection is identified in the Product Selection block.", "1.2Technology License.The Company hereby grants The Dealer a limited, non-transferable, non-assignable, non-exclusive license to use only the products selected in the Product Selection block (the \u201cCompany Products\u201d) for the purposes contemplated by this Agreement. The license of the Company Products shall include all upgrades, updates, improvements, modifications and enhancements made thereto and all related support services.  ", "", "1.3Transitioning Dealers and New Dealers.The Company is the owner and developer of the Company Products, including the Existing DSS Solution.  Dealers using the DSS Solution and executing this Agreement on the Effective Date (the \u201cTransitioning Dealers\u201d), shall receive a license for the continued use of the Existing DSS Solution effective upon execution, but provided by the Company instead of Chrome Data.  The Existing DSS Solution will be retired from use by the Company on or about December 31, 2026 (the \u201cDSS Retirement Date\u201d).  The Transitioning Dealers will be upgraded to a license for the Company Products selected in the Product Selection block in the interim period prior to retirement of the Existing DSS Solution.  Dealers executing this Agreement but not using the Existing DSS Solution on the Effective Date (the \u201cNew Dealers\u201d) will receive a license for the Company Products selected in the Product Selection block upon execution of this Agreement.", "", "Ownership and Acceptable Use.", "", "2.1Ownership of Company Technology.The Company retains all right, title and interest, including all copyright, patent, trade secret, trademark, and any other intellectual property rights, in and to the Company Technology.  The Dealer acknowledges and agrees that it gains no right, title or interest in the Company Technology by virtue of this Agreement, other than the license granted in connection with this Agreement.", "", "2.2Acceptable Use.The Dealer agrees not to: (i) resell, sublicense, or permit unauthorized access to the Company Products; (ii) reverse engineer, copy, or create derivative works from the Company Products; (iii) Use the Company Products  in violation of applicable law or third-party rights; (iv) interfere with platform performance or other dealers' access; and (v) Use the Company Products for any purpose other than automotive accessory sales.", "", "3.Term and Termination.", "", "3.1Term.The term of this Agreement shall commence upon the Effective Date and shall continue unless terminated by the Dealer with thirty (30) days\u2019 prior written notice. the Company may terminate this Agreement for a material breach by the Dealer of any term in this Agreement upon thirty (30) days\u2019 written notice.  Termination by either Party is without prejudice to any other rights or remedies.", "", "3.2Termination and Survival of Rights and Obligations.    Upon termination of this Agreement: (i) the Dealer shall immediately pay all License Fees owed to the Company for performance provided by the Company up to the effective date of termination.; (ii) the rights and licenses granted hereunder shall automatically terminate; and (iii)\u00a0each Party agrees to return or destroy, at the other Party\u2019s option, all Confidential Information of such other Party. Notwithstanding the provisions set forth in this paragraph, Articles 4, 5, 8 and 9 of this Agreement shall survive termination of the Agreement.", "", "4.Confidentiality and Non-Disclosure.Each Party agrees that all confidential, proprietary and trade secret information of the disclosing Party (the \u201cDisclosing Party\u201d) that the other Party receives (the \u201cReceiving Party\u201d) shall be presumed to be \u201cConfidential Information\u201d of the Disclosing Party.  Each Party will protect the other's non-public confidential information using reasonable care and will not disclose it to third parties without written consent, except as required by law. This obligation survives termination for three (3) years.", "", "5.License Fees. Upon delivery of the Company Products, the Dealer shall pay the Company the monthly license fee applicable to the Product Selection made in the signature block of this Agreement (the \u201cLicense Fees\u201d), as set forth in the Product & Price Summary incorporated herein. The applicable monthly fee is determined by the selected combination of Company Products at the time of execution and is identified in the Product & Price Summary above the Dealer\u2019s signature. The Company shall invoice the Dealer monthly in arrears for the License Fees. Invoices are payable within 30 days of receipt by the Dealer.", "", "6.Technology Warranty.The Company warrants and represents that the Company Products shall be: (i) of a quality that meets industry standards for like material and applications: and (ii)\u00a0will be free from any viruses, worms, disabling programming codes, instructions or other such items that may threaten, infect, damage, disable, or otherwise interfere with the permitted use of the Company Products as applicable.", "", "7.Onboarding and Support.The Company will provide onboarding services necessary to integrate and deploy the Company Products.  Onboarding services shall include, but are not limited to, product setup, initial training and interface with the Licensee\u2019s website provider and DMS providers (as required). The Company will provide customer support  during regular business hours including, responding to initial telephone and electronic client contact and inquiry, providing all basic customer support and troubleshooting such as user interface instructions, administrative user instructions, password resets, and break/fix instructions", "", "8.Limitations of Liability.THE COMPANY PRODUCTS ARE PROVIDED \"AS IS.\" THE COMPANY MAKES NO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR UNINTERRUPTED SERVICE.  THE TOTAL LIABILITY OF EITHER PARTY UNDER THIS AGREEMENT SHALL NOT EXCEED FEES PAID BY DEALER IN THE PRIOR TWELVE (12) MONTHS. THE PARTIES ARE NOT LIABLE FOR INDIRECT, INCIDENTAL, OR CONSEQUENTIAL DAMAGES.  PROVIDED, HOWEVER, THAT THIS LIMITATION OF LIABILITY DOES NOT APPLY TO GROSS NEGLIGENCE, WILLFUL MISCONDUCT, BREACH OF CONFIDENTIALITY, PERSONAL INJURY, OR REAL OR TANGIBLE PERSONAL PROPERTY DAMAGE.", "", "9.General Provisions.", "", "9.1Governing Law. This Agreement is governed by the laws of the State of Florida. Disputes shall be resolved in Miami-Dade County, Florida.", "", "9.2Entire Agreement. This Agreement supersedes all prior agreements, understandings, negotiations and discussions of the Parties whether oral or written pertaining to such subject matter. There are no warranties, representations or other agreements between the Parties in connection with the subject matter hereof except those specifically set out herein.", " ", "9.3Assignment. The Dealer may not assign this Agreement without Company's prior written consent. The Company may assign in connection with a merger or acquisition transaction.", "", "9.4Amendments. This Agreement may only be amended by a signed written instrument from both Parties.", "", "9.5Electronic Acceptance.  The Dealer accepts this Agreement electronically by completing and submitting the online enrollment form hosted by the Company.  Electronic submission by an authorized representative of the Dealer constitutes the Dealer's acceptance of and agreement to be bound by the terms herein.  A server-issued receipt confirming the submission timestamp, agreement version, and selected products serves as the record of acceptance.", "", "", "Licensee acknowledges and agrees that the monthly fees commence after onboarding of the first user is complete. If Licensee\u2019s onboarding is completed between the first (1st) and the tenth (10th) of the month, the applicable monthly fees will be effective on the first (1st) day of that month. If Licensee\u2019s onboarding is completed after the tenth (10th) of the month, the applicable monthly fees will be effective on the first (1st) day of the following month. All monthly fees, plus applicable taxes, are due and payable to PartSites, LLC, a wholly owned subsidiary of SmartDealer Technologies, Inc. within thirty (30) days of receipt of PartSites invoice."], "sha256": "fbfd9b4d4a970d389db1b98430d47ad039f5433dc91f4760080c70c9fcc2069e", "consent": "I certify I am authorized to submit this information on behalf of the dealership and have read and agree to the terms.", "payee": "PartSites, LLC, a wholly owned subsidiary of SmartDealer Technologies, Inc.", "payeeResolved": true, "deadlineResolved": true, "eStoreResolved": true, "eStoreSource": "partsites.com / smartdealer.com/partsites/ \u2014 widget sentence narrowed per review", "deadline": "net-30 \u2014 thirty (30) days from receipt of PartSites invoice", "priceConfig": {"FordEngage": {"price": 499, "label": "$499/mo"}, "eStore": {"price": 299, "label": "$299/mo"}, "VDP Widget": {"price": 199, "label": "$199/mo"}, "FordEngage+VDP Widget": {"price": 649, "label": "$649/mo"}, "FordEngage+VDP Widget+eStore": {"price": 899, "label": "$899/mo"}, "FordEngage+eStore": {"price": 798, "label": "$798/mo"}, "VDP Widget+eStore": {"price": 498, "label": "$498/mo"}}, "pricingResolved": true, "pricingSource": "Published individual and bundle plan cards; unlisted combos use additive pricing (sum of standalone prices).", "termConfig": {"month-to-month": {"label": "Month-to-month", "termMonths": null, "discountPct": 0, "discountFactor": 1.0, "setupCents": 100000, "setupLabel": "$1,000 one-time setup"}, "1year": {"label": "1-year (12 months)", "termMonths": 12, "discountPct": 10, "discountFactor": 0.9, "setupCents": 0, "setupLabel": "Setup waived"}, "2year": {"label": "2-year (24 months)", "termMonths": 24, "discountPct": 25, "discountFactor": 0.75, "setupCents": 0, "setupLabel": "Setup waived"}}}</script><script src="zip-lookup.js?v=review11"></script><script src="dealer-suggest.js?v=review11"></script><script src="price-lookup.js?v=review11a"></script><script src="enrollment-draft.js?v=review11"></script>
+<script type="application/json" id="draft-agreement-data">{"version": "FE-2026-09-28-review-11", "terms": ["TECHNOLOGY SERVICES AGREEMENT", "(FORD ENGAGE PROGRAM)", "", "THIS TECHNOLOGY SERVICES AGREEMENT (the \"Agreement\") dated as of the date set forth in the signature block affixed hereto (the \"Effective Date\"), is entered into between PartSites, LLC, a wholly owned subsidiary of SmartDealer Technologies, Inc., a Florida limited liability company with offices located at 175 SW 7th Street, Suite 2010, Miami, Florida 33130 (the \"Company\") and the undersigned Ford or Lincoln franchise dealer (the \"Dealer\").  the Company and the Dealer are sometimes referred to herein respectively as a \u201cParty,\u201d and collectively as the \u201cParties.\u201d", "", "RECITALS", "", "WHEREAS, the Company designs, develops, and provides certain technology products and related services to facilitate the online sale of automotive parts and accessories by automotive manufacturers and franchised automotive dealers (the \"Company Technology\"); and", "", "WHEREAS, The Dealer desires to license certain products of the Company Technology (the \u201cCompany Products\") for use in its automotive dealership enterprise. ", "", "NOW THEREFORE, in consideration of the foregoing, the mutual covenants contained in this Agreement, and of other good and valuable consideration, the receipt and sufficiency of which are hereby acknowledged, the Parties agree as follows:", "", "AGREEMENT", "", "Licensed Technology and Services.", "", "Licensed Products Defined.", "", "(a)Ford Accessories Digital Solution.The Company\u2019s accessories instore digital solution including DMS and FAD integration and reporting tools presently deployed by certain Dealers and branded for Ford and Lincoln Dealers in connection with an agreement between the Dealer and Chrome Data Solutions (the \u201cExisting DSS Solution\u201d).", "", "(b)FordEngage. The Company's Engage360 platform with 3D visualization and instore digital solution including DMS and FAD integration and reporting tools, branded for Ford and Lincoln franchise dealers.", "", "(c)VDP Widget.The Company\u2019s \u201cvehicle-specific\u201d accessories widget embedded in the Dealer\u2019s website vehicle detail pages allowing dealer customers to request and view the financed  pricing for accessories within the vehicle sales quote.", "", "(d)\u2003eStore. The Company\u2019s dealer-branded OEM parts and accessories eStore, combining catalog discovery, VIN and vehicle fitment, checkout, and order operations. The eStore is a dealer-branded storefront; a widget on the Dealer\u2019s existing website may direct shoppers to it. The Dealer controls storefront pricing and fulfillment within the platform. Specific product selection is identified in the Product Selection block.", "1.2Technology License.The Company hereby grants The Dealer a limited, non-transferable, non-assignable, non-exclusive license to use only the products selected in the Product Selection block (the \u201cCompany Products\u201d) for the purposes contemplated by this Agreement. The license of the Company Products shall include all upgrades, updates, improvements, modifications and enhancements made thereto and all related support services.  ", "", "1.3Transitioning Dealers and New Dealers.The Company is the owner and developer of the Company Products, including the Existing DSS Solution.  Dealers using the DSS Solution and executing this Agreement on the Effective Date (the \u201cTransitioning Dealers\u201d), shall receive a license for the continued use of the Existing DSS Solution effective upon execution, but provided by the Company instead of Chrome Data.  The Existing DSS Solution will be retired from use by the Company on or about December 31, 2026 (the \u201cDSS Retirement Date\u201d).  The Transitioning Dealers will be upgraded to a license for the Company Products selected in the Product Selection block in the interim period prior to retirement of the Existing DSS Solution.  Dealers executing this Agreement but not using the Existing DSS Solution on the Effective Date (the \u201cNew Dealers\u201d) will receive a license for the Company Products selected in the Product Selection block upon execution of this Agreement.", "", "Ownership and Acceptable Use.", "", "2.1Ownership of Company Technology.The Company retains all right, title and interest, including all copyright, patent, trade secret, trademark, and any other intellectual property rights, in and to the Company Technology.  The Dealer acknowledges and agrees that it gains no right, title or interest in the Company Technology by virtue of this Agreement, other than the license granted in connection with this Agreement.", "", "2.2Acceptable Use.The Dealer agrees not to: (i) resell, sublicense, or permit unauthorized access to the Company Products; (ii) reverse engineer, copy, or create derivative works from the Company Products; (iii) Use the Company Products  in violation of applicable law or third-party rights; (iv) interfere with platform performance or other dealers' access; and (v) Use the Company Products for any purpose other than automotive accessory sales.", "", "3.Term and Termination.", "", "3.1Term.The term of this Agreement shall commence upon the Effective Date and shall continue unless terminated by the Dealer with thirty (30) days\u2019 prior written notice. the Company may terminate this Agreement for a material breach by the Dealer of any term in this Agreement upon thirty (30) days\u2019 written notice.  Termination by either Party is without prejudice to any other rights or remedies.", "", "3.2Termination and Survival of Rights and Obligations.    Upon termination of this Agreement: (i) the Dealer shall immediately pay all License Fees owed to the Company for performance provided by the Company up to the effective date of termination.; (ii) the rights and licenses granted hereunder shall automatically terminate; and (iii)\u00a0each Party agrees to return or destroy, at the other Party\u2019s option, all Confidential Information of such other Party. Notwithstanding the provisions set forth in this paragraph, Articles 4, 5, 8 and 9 of this Agreement shall survive termination of the Agreement.", "", "4.Confidentiality and Non-Disclosure.Each Party agrees that all confidential, proprietary and trade secret information of the disclosing Party (the \u201cDisclosing Party\u201d) that the other Party receives (the \u201cReceiving Party\u201d) shall be presumed to be \u201cConfidential Information\u201d of the Disclosing Party.  Each Party will protect the other's non-public confidential information using reasonable care and will not disclose it to third parties without written consent, except as required by law. This obligation survives termination for three (3) years.", "", "5.License Fees. Upon delivery of the Company Products, the Dealer shall pay the Company the monthly license fee applicable to the Product Selection made in the signature block of this Agreement (the \u201cLicense Fees\u201d), as set forth in the Product & Price Summary incorporated herein. The applicable monthly fee is determined by the selected combination of Company Products at the time of execution and is identified in the Product & Price Summary above the Dealer\u2019s signature. The Company shall invoice the Dealer monthly in arrears for the License Fees. Invoices are payable within 30 days of receipt by the Dealer.", "", "6.Technology Warranty.The Company warrants and represents that the Company Products shall be: (i) of a quality that meets industry standards for like material and applications: and (ii)\u00a0will be free from any viruses, worms, disabling programming codes, instructions or other such items that may threaten, infect, damage, disable, or otherwise interfere with the permitted use of the Company Products as applicable.", "", "7.Onboarding and Support.The Company will provide onboarding services necessary to integrate and deploy the Company Products.  Onboarding services shall include, but are not limited to, product setup, initial training and interface with the Licensee\u2019s website provider and DMS providers (as required). The Company will provide customer support  during regular business hours including, responding to initial telephone and electronic client contact and inquiry, providing all basic customer support and troubleshooting such as user interface instructions, administrative user instructions, password resets, and break/fix instructions", "", "8.Limitations of Liability.THE COMPANY PRODUCTS ARE PROVIDED \"AS IS.\" THE COMPANY MAKES NO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR UNINTERRUPTED SERVICE.  THE TOTAL LIABILITY OF EITHER PARTY UNDER THIS AGREEMENT SHALL NOT EXCEED FEES PAID BY DEALER IN THE PRIOR TWELVE (12) MONTHS. THE PARTIES ARE NOT LIABLE FOR INDIRECT, INCIDENTAL, OR CONSEQUENTIAL DAMAGES.  PROVIDED, HOWEVER, THAT THIS LIMITATION OF LIABILITY DOES NOT APPLY TO GROSS NEGLIGENCE, WILLFUL MISCONDUCT, BREACH OF CONFIDENTIALITY, PERSONAL INJURY, OR REAL OR TANGIBLE PERSONAL PROPERTY DAMAGE.", "", "9.General Provisions.", "", "9.1Governing Law. This Agreement is governed by the laws of the State of Florida. Disputes shall be resolved in Miami-Dade County, Florida.", "", "9.2Entire Agreement. This Agreement supersedes all prior agreements, understandings, negotiations and discussions of the Parties whether oral or written pertaining to such subject matter. There are no warranties, representations or other agreements between the Parties in connection with the subject matter hereof except those specifically set out herein.", " ", "9.3Assignment. The Dealer may not assign this Agreement without Company's prior written consent. The Company may assign in connection with a merger or acquisition transaction.", "", "9.4Amendments. This Agreement may only be amended by a signed written instrument from both Parties.", "", "9.5Electronic Acceptance.  The Dealer accepts this Agreement electronically by completing and submitting the online enrollment form hosted by the Company.  Electronic submission by an authorized representative of the Dealer constitutes the Dealer's acceptance of and agreement to be bound by the terms herein.  A server-issued receipt confirming the submission timestamp, agreement version, and selected products serves as the record of acceptance.", "", "", "Licensee acknowledges and agrees that the monthly fees commence after onboarding of the first user is complete. If Licensee\u2019s onboarding is completed between the first (1st) and the tenth (10th) of the month, the applicable monthly fees will be effective on the first (1st) day of that month. If Licensee\u2019s onboarding is completed after the tenth (10th) of the month, the applicable monthly fees will be effective on the first (1st) day of the following month. All monthly fees, plus applicable taxes, are due and payable to PartSites, LLC, a wholly owned subsidiary of SmartDealer Technologies, Inc. within thirty (30) days of receipt of PartSites invoice."], "sha256": "fbfd9b4d4a970d389db1b98430d47ad039f5433dc91f4760080c70c9fcc2069e", "consent": "I certify I am authorized to submit this information on behalf of the dealership and have read and agree to the terms.", "payee": "PartSites, LLC, a wholly owned subsidiary of SmartDealer Technologies, Inc.", "payeeResolved": true, "deadlineResolved": true, "eStoreResolved": true, "eStoreSource": "partsites.com / smartdealer.com/partsites/ \u2014 widget sentence narrowed per review", "deadline": "net-30 \u2014 thirty (30) days from receipt of PartSites invoice", "priceConfig": {"FordEngage": {"price": 499, "label": "$499/mo"}, "eStore": {"price": 299, "label": "$299/mo"}, "VDP Widget": {"price": 199, "label": "$199/mo"}, "FordEngage+VDP Widget": {"price": 649, "label": "$649/mo"}, "FordEngage+VDP Widget+eStore": {"price": 899, "label": "$899/mo"}, "FordEngage+eStore": {"price": 798, "label": "$798/mo"}, "VDP Widget+eStore": {"price": 498, "label": "$498/mo"}}, "pricingResolved": true, "pricingSource": "Published individual and bundle plan cards; unlisted combos use additive pricing (sum of standalone prices).", "termConfig": {"month-to-month": {"label": "Month-to-month", "termMonths": null, "discountPct": 0, "discountFactor": 1.0, "setupCents": 100000, "setupLabel": "$1,000 one-time setup"}, "1year": {"label": "1-year (12 months)", "termMonths": 12, "discountPct": 10, "discountFactor": 0.9, "setupCents": 0, "setupLabel": "Setup waived"}, "2year": {"label": "2-year (24 months)", "termMonths": 24, "discountPct": 25, "discountFactor": 0.75, "setupCents": 0, "setupLabel": "Setup waived"}}}</script><script src="zip-lookup.js?v=review11"></script><script src="dealer-suggest.js?v=review11"></script><script src="price-lookup.js?v=review11b"></script><script src="enrollment-draft.js?v=review11"></script>
 </body>
 </html>

@@ -34,6 +34,28 @@
     return el ? el.value : 'month-to-month';
   }
 
+  function syncProductCardState() {
+    form.querySelectorAll('.product-option').forEach(option => {
+      const input = option.querySelector('.product-option-input');
+      const card = option.querySelector('.product-card');
+      const check = option.querySelector('.product-card-check');
+      const selected = !!input?.checked;
+      option.classList.toggle('is-selected', selected);
+      if (card) {
+        card.style.borderColor = selected ? '#003478' : '#e5ebf2';
+        card.style.background = selected ? 'linear-gradient(180deg, #ffffff 0%, #f5f8ff 100%)' : '#fff';
+        card.style.boxShadow = selected
+          ? '0 18px 42px rgba(0, 52, 120, 0.14), 0 4px 12px rgba(0, 52, 120, 0.08)'
+          : '0 12px 34px rgba(15, 42, 79, 0.08), 0 2px 8px rgba(15, 42, 79, 0.04)';
+      }
+      if (check) {
+        check.style.backgroundColor = selected ? '#003478' : '#fff';
+        check.style.borderColor = selected ? '#003478' : '#c4d0df';
+        check.style.color = selected ? '#fff' : 'transparent';
+      }
+    });
+  }
+
   /** Cents-safe: all arithmetic in integer cents, convert at display only */
   function resolvePricing(products, termId) {
     if (!products.length) return null;
@@ -122,6 +144,7 @@
     if (!prods.length) {
       content.style.cssText = 'font-size:0.9rem;color:#555;font-style:italic';
       content.innerHTML = 'No products selected yet.';
+      syncProductCardState();
       return;
     }
 
@@ -149,6 +172,7 @@
       rows.map(([k,v]) => `<tr><td style="padding:4px 12px 4px 0;color:#555;white-space:nowrap;vertical-align:top">${k}</td><td style="padding:4px 0">${v}</td></tr>`).join('') +
       '</table>';
 
+    syncProductCardState();
     updateSigningSummary();
   }
 
@@ -180,6 +204,11 @@
   });
 
   // ── Wire product checkboxes ──────────────────────────────────────────────
+  form.querySelectorAll('.product-option-input').forEach(input => {
+    input.addEventListener('focus', () => input.closest('.product-option')?.classList.add('is-focused'));
+    input.addEventListener('blur', () => input.closest('.product-option')?.classList.remove('is-focused'));
+  });
+
   form.addEventListener('change', e => {
     if (e.target.name === 'products') {
       updatePriceSummary();
