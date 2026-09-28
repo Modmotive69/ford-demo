@@ -1339,23 +1339,32 @@
     nav:not(.sidebar):not(.scrolled) .btn-outline-white { color: #fff !important; border-color: #fff !important; }
 
     /* ─── ENROLL HERO RESPONSIVE ─── */
+    /* ── Mobile hero clearance: JS sets --actual-nav-h after font load+reflow.
+       calc() guarantees headline starts BELOW full nav height + 28px gap.
+       Fallback 220px fires before JS runs (safe conservative estimate). ── */
     @media (max-width: 700px) {
       .hero { min-height: 60vh; }
       .hero-bg-img { object-position: 38% 65%; }
       .hero-sand-fade { height: 200px; }
-      .hero-foreground { padding: clamp(130px,16vw,160px) 20px 0; text-align: center; }
+      .hero-foreground {
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 0;
+        padding-top: calc(var(--actual-nav-h, 220px) + 28px);
+        text-align: center;
+      }
       .enroll-page-heading { font-size: clamp(1.8rem, 8vw, 3rem) !important; letter-spacing: -0.5px !important; text-align: center; }
       .enroll-form-overlap { margin-top: clamp(-140px, -12vw, -100px); }
     }
     @media (max-width: 420px) {
       .hero { min-height: 55vh; }
       .hero-bg-img { object-position: 36% 68%; }
-      .hero-foreground { padding-top: clamp(180px,24vw,210px); }
+      .hero-foreground { padding-top: calc(var(--actual-nav-h, 220px) + 28px); }
       .enroll-page-heading { font-size: clamp(1.6rem, 9vw, 2.6rem) !important; text-align: center; }
       .enroll-form-overlap { margin-top: clamp(-120px, -11vw, -80px); }
     }
     @media (max-width: 360px) {
-      .hero-foreground { padding-top: 210px; }
+      .hero-foreground { padding-top: calc(var(--actual-nav-h, 220px) + 28px); }
       .enroll-page-heading { font-size: clamp(1.45rem, 9vw, 2rem) !important; }
       .enroll-form-overlap { margin-top: clamp(-100px, -9vw, -68px); }
     }
@@ -2052,6 +2061,30 @@
       }
       window.addEventListener('scroll', onScroll, { passive: true });
       onScroll();
+    })();
+
+    /* ── Measure sticky nav height → --actual-nav-h for mobile hero clearance ──
+       Runs immediately, after fonts.ready, and on resize/reflow via ResizeObserver.
+       Avoids brittle static offsets that break when nav text wraps differently. */
+    (function() {
+      function setNavH() {
+        var nav = document.querySelector('nav:not(.sidebar)');
+        if (!nav) return;
+        var h = nav.getBoundingClientRect().height || nav.offsetHeight;
+        if (h > 0) document.documentElement.style.setProperty('--actual-nav-h', h + 'px');
+      }
+      setNavH();
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(function() {
+          setNavH();
+          requestAnimationFrame(function() { requestAnimationFrame(setNavH); });
+        });
+      }
+      if (typeof ResizeObserver !== 'undefined') {
+        var ro = new ResizeObserver(setNavH);
+        var navEl = document.querySelector('nav:not(.sidebar)');
+        if (navEl) ro.observe(navEl);
+      }
     })();
     </script>
 
