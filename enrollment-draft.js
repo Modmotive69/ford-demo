@@ -78,7 +78,8 @@
   const addonSel = Array.from(document.querySelectorAll('.addon-input:checked'), x => x.value);
   const sel = ['FordEngage', ...addonSel];
     const termEl = document.getElementById('term-select');
-    const termId = termEl ? termEl.value : 'month-to-month';
+    const _tr = document.querySelector('input[name="term"]:checked');
+    const termId = _tr ? _tr.value : (termEl ? termEl.value : 'month-to-month');
     const priceInfo = window.resolveEnrollmentPrice ? window.resolveEnrollmentPrice() : null;
     document.getElementById('print-selected-products').textContent =
       'Selected products: ' + (sel.join(' + ') || 'None');
@@ -262,6 +263,7 @@
   });
   const termSelectEl = document.getElementById('term-select');
   if (termSelectEl) termSelectEl.addEventListener('change', requireReconsent);
+  document.querySelectorAll('input[name="term"]').forEach(r => { r.addEventListener('change', requireReconsent); });
 
   updateSummary();
 
@@ -434,7 +436,8 @@
     signer.email = signer.email || ($('sig-email') ? $('sig-email').value.trim() : '');
 
     const termEl = document.getElementById('term-select');
-    const termId = termEl ? termEl.value : 'month-to-month';
+    const _tr = document.querySelector('input[name="term"]:checked');
+    const termId = _tr ? _tr.value : (termEl ? termEl.value : 'month-to-month');
     const payload = {
       submissionId,
       termId,

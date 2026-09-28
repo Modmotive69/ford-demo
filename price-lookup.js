@@ -32,37 +32,39 @@
   }
 
   function selectedTerm() {
+    // BYP panel uses radio[name=term]; fallback to old select for compatibility
+    const radio = form ? form.querySelector('input[name="term"]:checked') : null;
+    if (radio) return radio.value;
     const el = document.getElementById('term-select');
     return el ? el.value : 'month-to-month';
   }
 
   function syncProductCardState() {
-    // New: sync prow check-wrap state for addon rows
-    form.querySelectorAll('.prow.product-addon').forEach(row => {
-      const input = row.querySelector('.addon-input');
-      const checkWrap = row.querySelector('.prow-check-wrap');
-      const selected = !!input?.checked;
-      row.classList.toggle('is-selected', selected);
-      if (checkWrap) {
-        checkWrap.classList.toggle('is-checked', selected);
-      }
-    });
-    // Legacy: also sync .product-option .product-card if any remain
-    form.querySelectorAll('.product-option:not(.prow)').forEach(option => {
-      const input = option.querySelector('.product-option-input');
-      const card = option.querySelector('.product-card');
-      const check = option.querySelector('.product-card-check');
-      const selected = !!input?.checked;
-      option.classList.toggle('is-selected', selected);
-      if (card) {
-        card.style.borderColor = selected ? '#003478' : '#e5ebf2';
-        card.style.background = selected ? 'linear-gradient(180deg, #ffffff 0%, #f5f8ff 100%)' : '#fff';
-      }
-      if (check) {
-        check.style.backgroundColor = selected ? '#003478' : '#fff';
-        check.style.borderColor = selected ? '#003478' : '#c4d0df';
-        check.style.color = selected ? '#fff' : 'transparent';
-      }
+    // BYP ptile layout — update check icons and state badges
+    if (form) {
+      form.querySelectorAll('label.ptile').forEach(tile => {
+        const input   = tile.querySelector('.addon-input');
+        const check   = tile.querySelector('.ptile-check');
+        const badge   = tile.querySelector('.ptile-state-badge');
+        const sel     = !!input?.checked;
+        tile.classList.toggle('is-selected', sel);
+        if (check) check.className = 'ptile-check ' + (sel ? 'ptile-check--on' : 'ptile-check--off');
+        if (badge) {
+          if (sel) {
+            badge.className = 'ptile-state-badge ptile-state-badge--added';
+            badge.innerHTML = '<svg width="11" height="9" viewBox="0 0 11 9" fill="none" aria-hidden="true"><path d="M1 4.5l3 3 6-6" stroke="#0a6630" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Added';
+          } else {
+            badge.className = 'ptile-state-badge ptile-state-badge--add';
+            badge.innerHTML = '+ Add';
+          }
+        }
+      });
+    }
+    // Sync BYP term radio label highlights
+    const termVal = selectedTerm();
+    [['mtm','month-to-month'],['1yr','1year'],['2yr','2year']].forEach(([k,v]) => {
+      const lbl = document.getElementById('byp-term-lbl-' + k);
+      if (lbl) lbl.classList.toggle('byp-term-opt--active', termVal === v);
     });
   }
 
@@ -94,7 +96,9 @@
 
   // ── Inject term selector immediately after product fieldset closes ────────
   const productFieldset = document.getElementById('product-selection');
-  if (productFieldset && !document.getElementById('term-selector-section')) {
+  // Skip old term-select injection when BYP panel radios are present
+  const hasBypPanel = !!document.getElementById('byp-cart');
+  if (productFieldset && !document.getElementById('term-selector-section') && !hasBypPanel) {
     const termSection = document.createElement('div');
     termSection.id = 'term-selector-section';
     termSection.setAttribute('aria-live', 'polite');
@@ -159,78 +163,109 @@
     return '$' + (cents / 100).toFixed(2).replace(/\.00$/, '');
   }
 
-  function renderCart() {
-    const cartBody = document.getElementById('pcart-body');
-    if (!cartBody) return;
+  const DISPLAY_PRICES = { 'FordEngage': 49900, 'eStore': 29900, 'VDP Widget': 19900 };
+  const PRODUCT_DETAILS = {
+    'FordEngage': ['Engage360', 'Factory-accurate 4D accessory visualization on the showroom floor. Demonstrate any Ford or Lincoln accessory on the customer\u2019s actual vehicle \u2014 live, in color, from every angle.'],
+    'eStore':     ['EnvyPRO eStore', 'Your dealer-branded accessory storefront, open 24/7. Customers browse, build, and buy genuine Ford accessories online \u2014 turning every web visit into accessory revenue.'],
+    'VDP Widget': ['VDP Widget', 'Start the accessory sale before the showroom visit. Customers shop accessories alongside their vehicle on your VDP \u2014 with financed pricing, right next to the vehicle price.'],
+  };
 
+  function fmtC(cents) { return '$' + (cents / 100).toFixed(2).replace(/\.00$/, ''); }
+
+  function renderBYP() {
     const prods  = selectedProducts();
     const termId = selectedTerm();
     const r      = resolvePricing(prods, termId);
     const addons = prods.filter(p => p !== 'FordEngage');
 
+    // ── Panel header: show all selected product names ──────────────────────
+    const hdrName = document.getElementById('byp-hdr-name');
+    if (hdrName) {
+      const names = prods.map(p => PRODUCT_DETAILS[p]?.[0] || p);
+      hdrName.textContent = names.join(' + ');
+    }
+
+    // ── Product detail: description of last-selected addon (or base) ───────
+    const detail = document.getElementById('byp-detail');
+    if (detail) {
+      // Show base description when only base; show most-recently-added addon desc otherwise
+      const focusProd = addons.length ? addons[addons.length - 1] : 'FordEngage';
+      const d = PRODUCT_DETAILS[focusProd];
+      detail.textContent = d ? d[1] : '';
+    }
+
+    // ── Cart line items ────────────────────────────────────────────────────
+    const cart = document.getElementById('byp-cart');
+    if (!cart) return;
+
     if (!r) {
-      cartBody.className = 'pcart-empty';
-      cartBody.innerHTML = 'Select add-ons to see pricing.';
+      cart.innerHTML = '<div class="byp-cart-empty">Select add-ons to see pricing.</div>';
+      const ta = document.getElementById('byp-total-amount');
+      if (ta) ta.textContent = '—';
+      const sub = document.getElementById('byp-total-sub');
+      if (sub) sub.textContent = 'per month · billed in arrears';
       return;
     }
 
-    cartBody.className = '';
+    let html = '';
 
-    // Build line items
-    const items = [];
-    // Base
-    items.push({ name: 'Engage360', price: DISPLAY_PRICES['FordEngage'], cls: 'pcart-base', adj: false });
-    // Addons
-    for (const a of addons) {
-      items.push({ name: a === 'eStore' ? 'EnvyPRO eStore' : 'VDP Widget', price: DISPLAY_PRICES[a], cls: 'pcart-addon', adj: false });
-    }
-    // Bundle adjustment (catalog price vs sum of parts)
+    // Base line
+    html += `<div class="byp-line">
+      <span class="byp-line-name byp-line-name--base">Engage360</span>
+      <span class="byp-line-price">${fmtC(DISPLAY_PRICES['FordEngage'])}/mo</span>
+    </div>`;
+
+    // Addon lines
+    addons.forEach(a => {
+      html += `<div class="byp-line">
+        <span class="byp-line-name">${a === 'eStore' ? 'EnvyPRO eStore' : 'VDP Widget'}</span>
+        <span class="byp-line-price">${fmtC(DISPLAY_PRICES[a])}/mo</span>
+      </div>`;
+    });
+
+    // Bundle adjustment (when catalog price < sum of parts)
     const sumParts = prods.reduce((s, p) => s + (DISPLAY_PRICES[p] || 0), 0);
-    const catalogBase = r.baseCents;  // undiscounted catalog price for this combo
-    const adjustment  = catalogBase - sumParts; // negative = bundle saves, 0 = no adj
-    if (addons.length && adjustment < 0) {
-      items.push({ name: 'Bundle adjustment', price: adjustment, cls: 'pcart-adj', adj: true });
-    }
-
-    // Render items
-    let html = items.map(item => `
-      <div class="pcart-item">
-        <span class="pcart-item-name ${item.cls}">${item.name}</span>
-        <span class="pcart-item-price ${item.adj ? 'pcart-adj-price' : ''}">${item.adj ? '−' + fmtC(Math.abs(item.price)) : fmtC(item.price)}/mo</span>
-      </div>`).join('');
-
-    // Subtotal before discount (= catalog bundle price)
-    const subtotal = catalogBase;
-    html += `<hr class="pcart-divider">`;
-
-    // Discount
-    if (r.discountPct > 0) {
-      html += `
-      <div class="pcart-item">
-        <span class="pcart-item-name pcart-adj">${r.termLabel} discount (${r.discountPct}%)</span>
-        <span class="pcart-item-price pcart-adj-price">−${fmtC(subtotal - r.discountedCents)}/mo</span>
+    const adj = r.baseCents - sumParts; // negative = bundle saves
+    if (addons.length && adj < 0) {
+      html += `<div class="byp-line">
+        <span class="byp-line-name byp-line-name--save">Bundle adjustment</span>
+        <span class="byp-line-price byp-line-price--save">−${fmtC(Math.abs(adj))}/mo</span>
       </div>`;
     }
 
-    // Monthly total
-    html += `
-    <div class="pcart-total-row" style="margin-top:8px">
-      <span class="pcart-total-label">Monthly</span>
-      <span class="pcart-total-val">${fmtC(r.discountedCents)}/mo</span>
-    </div>`;
-
-    // Setup
-    if (r.setupCents > 0) {
-      html += `<div class="pcart-setup-row"><span>One-time setup</span><span style="font-weight:600;color:#003478">${fmtC(r.setupCents)}</span></div>`;
-    } else {
-      html += `<div class="pcart-setup-row"><span>One-time setup</span><span style="color:#1a7a3c;font-weight:600">Waived</span></div>`;
+    // Term discount
+    if (r.discountPct > 0) {
+      const saved = r.baseCents - r.discountedCents;
+      html += `<div class="byp-line">
+        <span class="byp-line-name byp-line-name--save">${r.termLabel} discount (${r.discountPct}%)</span>
+        <span class="byp-line-price byp-line-price--save">−${fmtC(saved)}/mo</span>
+      </div>`;
     }
 
-    // Term note
-    html += `<p class="pcart-term-note">Pricing plan: ${r.termLabel}. Monthly fees billed in arrears, payable within 30 days of PartSites invoice.</p>`;
+    cart.innerHTML = html;
 
-    cartBody.innerHTML = html;
+    // ── Monthly total ──────────────────────────────────────────────────────
+    const ta  = document.getElementById('byp-total-amount');
+    const sub = document.getElementById('byp-total-sub');
+    if (ta)  ta.textContent  = fmtC(r.discountedCents);
+    if (sub) sub.textContent = 'per month · billed in arrears · ' + r.termLabel;
+
+    // ── Setup fee ──────────────────────────────────────────────────────────
+    const sv  = document.getElementById('byp-setup-val');
+    if (sv) {
+      if (r.setupCents > 0) {
+        sv.textContent  = fmtC(r.setupCents);
+        sv.className    = 'byp-setup-val--amount';
+      } else {
+        sv.textContent  = 'Waived';
+        sv.className    = 'byp-setup-val--waived';
+      }
+    }
   }
+
+  // Legacy renderCart() alias — keeps old pcart-body working if present
+  function renderCart() { renderBYP(); }
+
 
   // ── Update Price Summary block ───────────────────────────────────────────
   function updatePriceSummary() {
@@ -243,7 +278,7 @@
       content.style.cssText = 'font-size:0.9rem;color:#555;font-style:italic';
       content.innerHTML = 'No products selected yet.';
       syncProductCardState();
-      renderCart();
+      renderBYP();
       return;
     }
 
@@ -272,7 +307,7 @@
       '</table>';
 
     syncProductCardState();
-    renderCart();
+    renderBYP();
     updateSigningSummary();
   }
 
@@ -304,6 +339,14 @@
   });
 
   // ── Wire product checkboxes ──────────────────────────────────────────────
+  // Wire BYP term radios
+  form.querySelectorAll('input[name="term"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      updatePriceSummary();
+      unconsent('You changed the pricing plan — please re-read and re-check consent.');
+    });
+  });
+
   form.querySelectorAll('.product-option-input, .addon-input').forEach(input => {
     input.addEventListener('focus', () => input.closest('.prow, .product-option')?.classList.add('is-focused'));
     input.addEventListener('blur', () => input.closest('.prow, .product-option')?.classList.remove('is-focused'));

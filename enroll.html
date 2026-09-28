@@ -1623,6 +1623,393 @@
       .prow-title { font-size: 0.9rem; }
     }
 
+
+    /* ═══════════════════════════════════════════════════════════════
+       BUILD YOUR PLAN — Premium two-column product selector
+       Left: product tile stack with box art
+       Right: sticky plan detail + cart panel
+    ════════════════════════════════════════════════════════════════ */
+
+    .byp-layout {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 0;
+      align-items: start;
+    }
+
+    /* ── LEFT: Product tiles ────────────────────────────── */
+    .byp-tiles {
+      padding-right: 32px;
+      border-right: 1px solid #dde4ee;
+    }
+
+    .byp-tiles-heading {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #8898ae;
+      margin-bottom: 16px;
+    }
+
+    /* Product tile */
+    .ptile {
+      display: grid;
+      grid-template-columns: 160px 1fr 32px;
+      gap: 0 20px;
+      align-items: center;
+      padding: 18px 16px 18px 0;
+      border-bottom: 1px solid #eaeff6;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.15s;
+      position: relative;
+    }
+    .ptile:first-child { border-top: 1px solid #eaeff6; }
+    .ptile--locked { cursor: default; }
+    .ptile--draft  { cursor: default; opacity: 0.80; }
+    .ptile.is-selected {
+      background: #f0f5ff;
+      margin: 0 -8px;
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .ptile { transition: background 0.18s ease; }
+      .ptile-check { transition: background 0.15s, border-color 0.15s; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .ptile, .ptile-check { transition: none; }
+    }
+
+    /* Box art column */
+    .ptile-art {
+      width: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .ptile-art img {
+      width: 160px;
+      height: auto;
+      max-height: 160px;
+      object-fit: contain;
+      display: block;
+      pointer-events: none;
+      filter: drop-shadow(0 4px 14px rgba(0,0,0,0.13));
+    }
+    .ptile--draft .ptile-art img {
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.10)) grayscale(0.15);
+    }
+
+    /* Text body */
+    .ptile-body { min-width: 0; }
+    .ptile-eyebrow {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: #0562D2;
+      margin-bottom: 4px;
+    }
+    .ptile-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #003478;
+      line-height: 1.15;
+      margin-bottom: 5px;
+    }
+    .ptile-benefit {
+      font-size: 0.82rem;
+      color: #5a6479;
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+    .ptile-state-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      border-radius: 20px;
+      padding: 4px 10px;
+    }
+    .ptile-state-badge--included {
+      color: #003478;
+      background: #d0e0f5;
+    }
+    .ptile-state-badge--added {
+      color: #0a6630;
+      background: #d4f0de;
+    }
+    .ptile-state-badge--add {
+      color: #5a6479;
+      background: #eaeff6;
+    }
+    .ptile-state-badge--draft {
+      color: #7a6400;
+      background: #fef5c0;
+    }
+    .ptile-price-hint {
+      font-size: 0.75rem;
+      color: #8898ae;
+      margin-top: 4px;
+    }
+
+    /* Checkbox column */
+    .ptile-check {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 2px solid #c4d0df;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      pointer-events: none;
+    }
+    .ptile-check--on  { background: #003478; border-color: #003478; }
+    .ptile-check--lock { background: #003478; border-color: #003478; }
+    .ptile-check--off  { background: #fff; border-color: #c4d0df; }
+    .ptile-check--draft { background: #f0f3f8; border-color: #d0d8e5; }
+    label.ptile:focus-within .ptile-check {
+      outline: 3px solid #0562D2;
+      outline-offset: 2px;
+    }
+
+    /* Hidden real checkbox; ptile-check is purely visual */
+    label.ptile .addon-input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+
+    /* ── RIGHT: Your Plan panel ─────────────────────────── */
+    .byp-plan-col {
+      padding-left: 32px;
+      position: sticky;
+      top: 108px;
+      max-height: calc(100vh - 120px);
+      overflow-y: auto;
+      scrollbar-width: thin;
+    }
+
+    .byp-panel {
+      background: #fff;
+      border: 1.5px solid #c8d8ee;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    /* Plan header */
+    .byp-panel-hdr {
+      background: #003478;
+      color: #fff;
+      padding: 16px 20px 14px;
+    }
+    .byp-panel-hdr-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      opacity: 0.72;
+      margin-bottom: 3px;
+    }
+    .byp-panel-hdr-name {
+      font-size: 1.15rem;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    /* Plan body */
+    .byp-panel-body { padding: 16px 20px; }
+
+    /* Product detail area */
+    .byp-detail {
+      font-size: 0.82rem;
+      color: #445;
+      line-height: 1.55;
+      margin-bottom: 14px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #eaeff6;
+      min-height: 48px;
+    }
+    .byp-detail-empty {
+      color: #9aabbf;
+      font-style: italic;
+    }
+
+    /* Term selector */
+    .byp-term-wrap {
+      margin-bottom: 14px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #eaeff6;
+    }
+    .byp-term-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #003478;
+      margin-bottom: 8px;
+    }
+    .byp-term-options {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .byp-term-opt {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border: 1.5px solid #dde4ee;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.82rem;
+      color: #334;
+      transition: border-color 0.12s, background 0.12s;
+    }
+    .byp-term-opt.byp-term-opt--active {
+      border-color: #003478;
+      background: #f0f5ff;
+      color: #003478;
+      font-weight: 600;
+    }
+    .byp-term-opt input[type=radio] {
+      accent-color: #003478;
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+    }
+    .byp-term-badge {
+      margin-left: auto;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: #0a6630;
+      background: #d4f0de;
+      border-radius: 20px;
+      padding: 2px 8px;
+      white-space: nowrap;
+    }
+
+    /* Cart line items */
+    .byp-cart { margin-bottom: 14px; }
+    .byp-cart-empty {
+      font-size: 0.8rem;
+      color: #9aabbf;
+      font-style: italic;
+      padding: 8px 0;
+    }
+    .byp-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+      padding: 5px 0;
+      font-size: 0.82rem;
+    }
+    .byp-line + .byp-line { border-top: 1px dashed #dde6f4; }
+    .byp-line-name { color: #445; flex: 1; }
+    .byp-line-name--base { font-weight: 600; color: #003478; }
+    .byp-line-name--save { color: #1a7a3c; font-style: italic; }
+    .byp-line-price { white-space: nowrap; font-weight: 600; color: #003478; }
+    .byp-line-price--save { color: #1a7a3c; }
+
+    /* Divider */
+    .byp-divider { border: none; border-top: 1.5px solid #dde4ee; margin: 12px 0; }
+
+    /* Total block */
+    .byp-total-block {
+      background: #003478;
+      color: #fff;
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+    }
+    .byp-total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .byp-total-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      opacity: 0.8;
+    }
+    .byp-total-amount {
+      font-size: 1.55rem;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+    }
+    .byp-total-sub {
+      font-size: 0.72rem;
+      opacity: 0.7;
+      margin-top: 6px;
+    }
+    .byp-total-placeholder {
+      font-size: 0.82rem;
+      opacity: 0.7;
+      font-style: italic;
+    }
+
+    /* Setup row */
+    .byp-setup-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      color: #6e7f94;
+      padding: 6px 0;
+      border-top: 1px solid #eaeff6;
+    }
+    .byp-setup-val--waived { color: #0a6630; font-weight: 700; }
+    .byp-setup-val--amount { color: #003478; font-weight: 600; }
+
+    /* Product error */
+    #product-error {
+      font-size: 0.82rem;
+      color: #a21d16;
+      margin-top: 10px;
+      min-height: 0;
+    }
+
+    /* Mobile */
+    @media (max-width: 780px) {
+      .byp-layout {
+        grid-template-columns: 1fr;
+      }
+      .byp-tiles {
+        border-right: none;
+        border-bottom: 1px solid #dde4ee;
+        padding-right: 0;
+        padding-bottom: 20px;
+      }
+      .byp-plan-col {
+        padding-left: 0;
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+        margin-top: 20px;
+      }
+    }
+    @media (max-width: 520px) {
+      .ptile {
+        grid-template-columns: 120px 1fr 26px;
+        gap: 0 14px;
+      }
+      .ptile-art { width: 120px; }
+      .ptile-art img { width: 120px; max-height: 120px; }
+      .ptile-title { font-size: 1rem; }
+    }
+    @media (max-width: 380px) {
+      .ptile {
+        grid-template-columns: 90px 1fr 22px;
+        gap: 0 10px;
+      }
+      .ptile-art { width: 90px; }
+      .ptile-art img { width: 90px; max-height: 90px; }
+    }
     /* ─── SHARED BRANDED FOOTER ─── */
     .site-footer {
       background: #f0f2f5;
@@ -1882,97 +2269,165 @@
         <div class="section-divider"></div>
 
 <fieldset class="form-section product-selection-fieldset" id="product-selection" aria-describedby="product-help product-error product-preview-note">
-  <legend class="section-label product-selection-legend">Your plan</legend>
-  <p class="product-selection-help" id="product-help">Engage360 is your required base. Add EnvyPRO eStore or VDP Widget to expand your revenue channels.</p>
+  <legend class="section-label product-selection-legend">Build your plan</legend>
+  <p class="product-selection-help" id="product-help">Engage360 is included with every enrollment. Add products to expand your revenue channels.</p>
 
-  <!-- Hidden input always carries FordEngage (disabled checkbox excluded from FormData) -->
+  <!-- FordEngage always in payload (disabled checkbox excluded from FormData) -->
   <input type="hidden" name="products" value="FordEngage" id="product-fordengage-hidden" />
 
-  <div class="product-chooser">
+  <div class="byp-layout">
 
-    <!-- ══ LEFT: Product list ══ -->
-    <div class="product-list-col">
+    <!-- ════ LEFT: Product tile stack ════ -->
+    <div class="byp-tiles">
+      <p class="byp-tiles-heading">Select your products</p>
 
-      <!-- Engage360 — required, locked -->
-      <div class="prow prow--locked" aria-label="Engage360 — required and included">
-        <div class="prow-thumb" aria-hidden="true">
-          <img src="images/product/engage360-product-thumb.webp?v=1" alt="" width="400" height="341" loading="eager" decoding="async" />
+      <!-- Engage360 — included, locked -->
+      <div class="ptile ptile--locked" role="group" aria-label="Engage360 — required and included">
+        <div class="ptile-art" aria-hidden="true">
+          <img src="images/product/box-engage360.webp?v=1"
+               alt="" width="400" height="520" loading="eager" decoding="async" />
         </div>
-        <div class="prow-body">
-          <div class="prow-eyebrow">In-Store Sales Solution</div>
-          <div class="prow-title">Engage360</div>
-          <div class="prow-desc">Factory-accurate 4D accessory visualization on the showroom floor. Demonstrate any Ford or Lincoln accessory on the customer's actual vehicle — live, in color, from every angle.</div>
-          <span class="prow-badge" id="base-product-required-note">
-            <svg width="11" height="11" viewBox="0 0 13 13" fill="none" aria-hidden="true"><circle cx="6.5" cy="6.5" r="6.5" fill="#003478"/><path d="M5.8 9.1L3 6.3l.9-.9 1.9 1.9 3.3-3.3.9.9z" fill="#fff"/></svg>
-            Required &amp; included
+        <div class="ptile-body">
+          <div class="ptile-eyebrow">Core Platform</div>
+          <div class="ptile-title">Engage360</div>
+          <p class="ptile-benefit">Factory-accurate 4D accessory visualization on the showroom floor. Demonstrate any Ford or Lincoln accessory on the customer's actual vehicle — live, in color, from every angle.</p>
+          <span class="ptile-state-badge ptile-state-badge--included" id="base-product-required-note">
+            <svg width="11" height="9" viewBox="0 0 11 9" fill="none" aria-hidden="true"><path d="M1 4.5l3 3 6-6" stroke="#003478" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Included
           </span>
         </div>
-        <div class="prow-check-wrap is-locked" aria-hidden="true">
-          <svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4l3 3 6-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="ptile-check ptile-check--lock" aria-hidden="true">
+          <svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
       </div>
 
       <!-- EnvyPRO eStore — optional -->
-      <label class="prow product-option product-addon" for="product-estore">
-        <input class="product-option-input addon-input" type="checkbox" id="product-estore" name="products" value="eStore" />
-        <div class="prow-thumb" aria-hidden="true">
-          <img src="images/product/envypro-estore-thumb.webp?v=1" alt="" width="400" height="267" loading="lazy" decoding="async" />
+      <label class="ptile" for="product-estore" id="ptile-estore">
+        <input class="addon-input" type="checkbox" id="product-estore" name="products" value="eStore"
+               aria-describedby="ptile-estore-badge" />
+        <div class="ptile-art" aria-hidden="true">
+          <img src="images/product/box-envypro-estore.webp?v=1"
+               alt="" width="400" height="520" loading="lazy" decoding="async" />
         </div>
-        <div class="prow-body">
-          <div class="prow-eyebrow">Online Revenue</div>
-          <div class="prow-title">EnvyPRO eStore</div>
-          <div class="prow-desc">Your dealer-branded accessory storefront, open 24/7. Customers browse, build, and buy genuine Ford accessories online — before and after the showroom visit — turning every VDP click into accessory revenue.</div>
+        <div class="ptile-body">
+          <div class="ptile-eyebrow">Add-On</div>
+          <div class="ptile-title">EnvyPRO eStore</div>
+          <p class="ptile-benefit">Your dealer-branded accessory storefront, open 24/7. Customers browse and buy genuine Ford accessories online — turning every web visit into accessory revenue.</p>
+          <span class="ptile-state-badge ptile-state-badge--add" id="ptile-estore-badge">+ Add</span>
         </div>
-        <div class="prow-check-wrap" aria-hidden="true">
-          <svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4l3 3 6-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="ptile-check ptile-check--off" aria-hidden="true">
+          <svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
       </label>
 
       <!-- VDP Widget — optional -->
-      <label class="prow product-option product-addon" for="product-vdp-widget">
-        <input class="product-option-input addon-input" type="checkbox" id="product-vdp-widget" name="products" value="VDP Widget" />
-        <div class="prow-thumb" aria-hidden="true">
-          <img src="images/product/vdp-widget-thumb.webp?v=1" alt="" width="400" height="679" loading="lazy" decoding="async" />
+      <label class="ptile" for="product-vdp-widget" id="ptile-vdp">
+        <input class="addon-input" type="checkbox" id="product-vdp-widget" name="products" value="VDP Widget"
+               aria-describedby="ptile-vdp-badge" />
+        <div class="ptile-art" aria-hidden="true">
+          <img src="images/product/box-vdp-widget.webp?v=1"
+               alt="" width="400" height="520" loading="lazy" decoding="async" />
         </div>
-        <div class="prow-body">
-          <div class="prow-eyebrow">Digital Retail</div>
-          <div class="prow-title">VDP Widget</div>
-          <div class="prow-desc">Start the accessory sale before the showroom visit. Customers shop accessories alongside their vehicle on your VDP — seeing financed pricing for every add-on, right next to the vehicle price.</div>
+        <div class="ptile-body">
+          <div class="ptile-eyebrow">Add-On</div>
+          <div class="ptile-title">VDP Widget</div>
+          <p class="ptile-benefit">Start the accessory sale before the showroom visit. Customers shop accessories alongside their vehicle on your VDP — with financed pricing, right next to the vehicle price.</p>
+          <span class="ptile-state-badge ptile-state-badge--add" id="ptile-vdp-badge">+ Add</span>
         </div>
-        <div class="prow-check-wrap" aria-hidden="true">
-          <svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4l3 3 6-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="ptile-check ptile-check--off" aria-hidden="true">
+          <svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
       </label>
 
-      <!-- World Domination — draft, not selectable -->
-      <div class="prow prow--draft" aria-labelledby="product-world-domination-title" aria-describedby="product-world-domination-desc product-preview-note">
-        <div class="prow-thumb" aria-hidden="true">
-          <img src="images/product/world-domination-thumb.webp?v=1" alt="" width="400" height="400" loading="lazy" decoding="async" />
+      <!-- World Domination — draft, non-selectable -->
+      <div class="ptile ptile--draft" aria-labelledby="wd-title" aria-describedby="wd-desc product-preview-note" role="group">
+        <div class="ptile-art" aria-hidden="true">
+          <img src="images/product/box-world-domination.webp?v=1"
+               alt="" width="500" height="500" loading="lazy" decoding="async" />
         </div>
-        <div class="prow-body">
-          <div class="prow-eyebrow">Bundle Preview</div>
-          <div class="prow-title" id="product-world-domination-title">World Domination</div>
-          <div class="prow-desc" id="product-world-domination-desc">The complete showroom package — Engage360 + EnvyPRO eStore + VDP Widget, plus a free 4K kiosk. Pending final pricing confirmation.</div>
-          <span class="prow-draft-badge">Draft — not yet available</span>
+        <div class="ptile-body">
+          <div class="ptile-eyebrow">Complete Suite — Preview</div>
+          <div class="ptile-title" id="wd-title">World Domination</div>
+          <p class="ptile-benefit" id="wd-desc">Engage360 + EnvyPRO eStore + VDP Widget, plus a free 4K kiosk. The complete showroom package. Pending final pricing confirmation — not yet available.</p>
+          <span class="ptile-state-badge ptile-state-badge--draft">Coming soon</span>
         </div>
-        <div class="prow-check-wrap is-draft" aria-hidden="true">
+        <div class="ptile-check ptile-check--draft" aria-hidden="true">
           <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 8l6-6M2 2l6 6" stroke="#aab" stroke-width="1.5" stroke-linecap="round"/></svg>
         </div>
       </div>
 
-      <p id="product-error" style="color:#a21d16;margin-top:8px;" role="alert"></p>
-      <p class="product-selection-note" id="product-preview-note" style="margin-top:12px"><strong>Draft preview only:</strong> "World Domination" is not wired into pricing, consent, or submission until promotion terms are confirmed.</p>
-    </div><!-- /product-list-col -->
+      <p id="product-error" role="alert"></p>
+      <p class="product-selection-note" id="product-preview-note" style="margin-top:10px;font-size:0.75rem;color:#8898ae"><strong>Preview only:</strong> "World Domination" is not wired into pricing or submission until promotion terms are confirmed.</p>
+    </div><!-- /byp-tiles -->
 
-    <!-- ══ RIGHT: Live cart summary ══ -->
-    <div class="product-cart-col" aria-live="polite" aria-label="Order summary">
-      <div class="pcart" id="product-cart-panel">
-        <div class="pcart-title">Order summary</div>
-        <div id="pcart-body" class="pcart-empty">Select add-ons to see pricing.</div>
-      </div>
-    </div><!-- /product-cart-col -->
+    <!-- ════ RIGHT: Your Plan panel ════ -->
+    <div class="byp-plan-col" aria-live="polite" aria-atomic="false" aria-label="Your plan summary">
+      <div class="byp-panel">
 
-  </div><!-- /product-chooser -->
+        <!-- Panel header — shows selected product name -->
+        <div class="byp-panel-hdr">
+          <div class="byp-panel-hdr-title">Your plan</div>
+          <div class="byp-panel-hdr-name" id="byp-hdr-name">Engage360</div>
+        </div>
+
+        <div class="byp-panel-body">
+
+          <!-- Product description / feature detail -->
+          <div class="byp-detail" id="byp-detail">
+            Factory-accurate 4D accessory visualization on the showroom floor. Demonstrate any Ford or Lincoln accessory on the customer's actual vehicle — live, in color, from every angle.
+          </div>
+
+          <!-- Term selector -->
+          <div class="byp-term-wrap">
+            <div class="byp-term-label">Pricing plan</div>
+            <div class="byp-term-options" role="group" aria-label="Select pricing term">
+              <label class="byp-term-opt byp-term-opt--active" id="byp-term-lbl-mtm">
+                <input type="radio" name="term" value="month-to-month" id="term-mtm" checked aria-label="Month-to-month" />
+                Month-to-month
+              </label>
+              <label class="byp-term-opt" id="byp-term-lbl-1yr">
+                <input type="radio" name="term" value="1year" id="term-1yr" aria-label="1-year — 10% off, setup waived" />
+                1-year commitment
+                <span class="byp-term-badge">10% off + no setup</span>
+              </label>
+              <label class="byp-term-opt" id="byp-term-lbl-2yr">
+                <input type="radio" name="term" value="2year" id="term-2yr" aria-label="2-year — 25% off, setup waived" />
+                2-year commitment
+                <span class="byp-term-badge">25% off + no setup</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Cart line items -->
+          <div class="byp-cart" id="byp-cart">
+            <div class="byp-line">
+              <span class="byp-line-name byp-line-name--base">Engage360</span>
+              <span class="byp-line-price">$499/mo</span>
+            </div>
+          </div>
+
+          <hr class="byp-divider" />
+
+          <!-- Total block -->
+          <div class="byp-total-block" id="byp-total-block">
+            <div class="byp-total-row">
+              <span class="byp-total-label">Monthly total</span>
+              <span class="byp-total-amount" id="byp-total-amount">$499</span>
+            </div>
+            <div class="byp-total-sub" id="byp-total-sub">per month · billed in arrears</div>
+          </div>
+
+          <!-- Setup fee row -->
+          <div class="byp-setup-row">
+            <span>One-time setup</span>
+            <span id="byp-setup-val" class="byp-setup-val--amount">$1,000</span>
+          </div>
+
+        </div><!-- /byp-panel-body -->
+      </div><!-- /byp-panel -->
+    </div><!-- /byp-plan-col -->
+
+  </div><!-- /byp-layout -->
 </fieldset>
 <div class="section-divider"></div>        <!-- SECTION: AGREEMENT -->
         <div class="form-section">
