@@ -74,7 +74,7 @@
 
   /* ── Print ───────────────────────────────────────────────────────────── */
   function syncPrintSummary() {
-    // Base (FordEngage) always included via hidden input; addons from checked checkboxes
+    // Base via hidden input + checked addon-inputs
   const addonSel = Array.from(document.querySelectorAll('.addon-input:checked'), x => x.value);
   const sel = ['FordEngage', ...addonSel];
     const termEl = document.getElementById('term-select');
@@ -197,7 +197,7 @@
 
     const rows = [
       { label: 'Agreement version', value: version },
-      { label: 'Selected products', value: prods.map(p => p === 'FordEngage' ? 'Engage360' : p).join(' + ') },
+      { label: 'Selected products', value: prods.map(p => p === 'FordEngage' ? 'Engage360' : p === 'eStore' ? 'EnvyPRO eStore' : p).join(' + ') },
     ];
 
     // Insert pricing line if price-lookup.js has computed it

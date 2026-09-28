@@ -26,7 +26,9 @@
   }
 
   function selectedProducts() {
-    return Array.from(form.querySelectorAll('[name=products]:checked'), e => e.value);
+    // Base always included via hidden input; addons from checked addon-inputs
+    const addons = Array.from(form.querySelectorAll('.addon-input:checked'), e => e.value);
+    return ['FordEngage', ...addons];
   }
 
   function selectedTerm() {
@@ -35,7 +37,18 @@
   }
 
   function syncProductCardState() {
-    form.querySelectorAll('.product-option').forEach(option => {
+    // New: sync prow check-wrap state for addon rows
+    form.querySelectorAll('.prow.product-addon').forEach(row => {
+      const input = row.querySelector('.addon-input');
+      const checkWrap = row.querySelector('.prow-check-wrap');
+      const selected = !!input?.checked;
+      row.classList.toggle('is-selected', selected);
+      if (checkWrap) {
+        checkWrap.classList.toggle('is-checked', selected);
+      }
+    });
+    // Legacy: also sync .product-option .product-card if any remain
+    form.querySelectorAll('.product-option:not(.prow)').forEach(option => {
       const input = option.querySelector('.product-option-input');
       const card = option.querySelector('.product-card');
       const check = option.querySelector('.product-card-check');
@@ -44,9 +57,6 @@
       if (card) {
         card.style.borderColor = selected ? '#003478' : '#e5ebf2';
         card.style.background = selected ? 'linear-gradient(180deg, #ffffff 0%, #f5f8ff 100%)' : '#fff';
-        card.style.boxShadow = selected
-          ? '0 18px 42px rgba(0, 52, 120, 0.14), 0 4px 12px rgba(0, 52, 120, 0.08)'
-          : '0 12px 34px rgba(15, 42, 79, 0.08), 0 2px 8px rgba(15, 42, 79, 0.04)';
       }
       if (check) {
         check.style.backgroundColor = selected ? '#003478' : '#fff';
@@ -134,6 +144,94 @@
     termSection.insertAdjacentElement('afterend', div);
   }
 
+
+  // ── CATALOG display prices (for breakdown only) ───────────────────────────
+  // Bundle combos have a catalog price lower than sum of parts.
+  // We show: base (Engage360 = $499), optional add-ons, then bundle adjustment.
+  // Standalone catalog prices for breakdown display (NOT standalone enrollment):
+  const DISPLAY_PRICES = {
+    'FordEngage': 49900,       // $499/mo
+    'eStore':     29900,       // $299/mo
+    'VDP Widget': 19900,       // $199/mo
+  };
+
+  function fmtC(cents) {
+    return '$' + (cents / 100).toFixed(2).replace(/\.00$/, '');
+  }
+
+  function renderCart() {
+    const cartBody = document.getElementById('pcart-body');
+    if (!cartBody) return;
+
+    const prods  = selectedProducts();
+    const termId = selectedTerm();
+    const r      = resolvePricing(prods, termId);
+    const addons = prods.filter(p => p !== 'FordEngage');
+
+    if (!r) {
+      cartBody.className = 'pcart-empty';
+      cartBody.innerHTML = 'Select add-ons to see pricing.';
+      return;
+    }
+
+    cartBody.className = '';
+
+    // Build line items
+    const items = [];
+    // Base
+    items.push({ name: 'Engage360', price: DISPLAY_PRICES['FordEngage'], cls: 'pcart-base', adj: false });
+    // Addons
+    for (const a of addons) {
+      items.push({ name: a === 'eStore' ? 'EnvyPRO eStore' : 'VDP Widget', price: DISPLAY_PRICES[a], cls: 'pcart-addon', adj: false });
+    }
+    // Bundle adjustment (catalog price vs sum of parts)
+    const sumParts = prods.reduce((s, p) => s + (DISPLAY_PRICES[p] || 0), 0);
+    const catalogBase = r.baseCents;  // undiscounted catalog price for this combo
+    const adjustment  = catalogBase - sumParts; // negative = bundle saves, 0 = no adj
+    if (addons.length && adjustment < 0) {
+      items.push({ name: 'Bundle adjustment', price: adjustment, cls: 'pcart-adj', adj: true });
+    }
+
+    // Render items
+    let html = items.map(item => `
+      <div class="pcart-item">
+        <span class="pcart-item-name ${item.cls}">${item.name}</span>
+        <span class="pcart-item-price ${item.adj ? 'pcart-adj-price' : ''}">${item.adj ? '−' + fmtC(Math.abs(item.price)) : fmtC(item.price)}/mo</span>
+      </div>`).join('');
+
+    // Subtotal before discount (= catalog bundle price)
+    const subtotal = catalogBase;
+    html += `<hr class="pcart-divider">`;
+
+    // Discount
+    if (r.discountPct > 0) {
+      html += `
+      <div class="pcart-item">
+        <span class="pcart-item-name pcart-adj">${r.termLabel} discount (${r.discountPct}%)</span>
+        <span class="pcart-item-price pcart-adj-price">−${fmtC(subtotal - r.discountedCents)}/mo</span>
+      </div>`;
+    }
+
+    // Monthly total
+    html += `
+    <div class="pcart-total-row" style="margin-top:8px">
+      <span class="pcart-total-label">Monthly</span>
+      <span class="pcart-total-val">${fmtC(r.discountedCents)}/mo</span>
+    </div>`;
+
+    // Setup
+    if (r.setupCents > 0) {
+      html += `<div class="pcart-setup-row"><span>One-time setup</span><span style="font-weight:600;color:#003478">${fmtC(r.setupCents)}</span></div>`;
+    } else {
+      html += `<div class="pcart-setup-row"><span>One-time setup</span><span style="color:#1a7a3c;font-weight:600">Waived</span></div>`;
+    }
+
+    // Term note
+    html += `<p class="pcart-term-note">Pricing plan: ${r.termLabel}. Monthly fees billed in arrears, payable within 30 days of PartSites invoice.</p>`;
+
+    cartBody.innerHTML = html;
+  }
+
   // ── Update Price Summary block ───────────────────────────────────────────
   function updatePriceSummary() {
     const prods   = selectedProducts();
@@ -145,6 +243,7 @@
       content.style.cssText = 'font-size:0.9rem;color:#555;font-style:italic';
       content.innerHTML = 'No products selected yet.';
       syncProductCardState();
+      renderCart();
       return;
     }
 
@@ -157,7 +256,7 @@
       return;
     }
     const rows = [
-      ['Products',       prods.join(' + ')],
+      ['Products',       prods.map(p => p==='FordEngage'?'Engage360':p==='eStore'?'EnvyPRO eStore':p).join(' + ')],
       ['Pricing plan',   r.termLabel],
       ['Base monthly',   r.baseLabel],
     ];
@@ -173,6 +272,7 @@
       '</table>';
 
     syncProductCardState();
+    renderCart();
     updateSigningSummary();
   }
 
@@ -204,9 +304,9 @@
   });
 
   // ── Wire product checkboxes ──────────────────────────────────────────────
-  form.querySelectorAll('.product-option-input').forEach(input => {
-    input.addEventListener('focus', () => input.closest('.product-option')?.classList.add('is-focused'));
-    input.addEventListener('blur', () => input.closest('.product-option')?.classList.remove('is-focused'));
+  form.querySelectorAll('.product-option-input, .addon-input').forEach(input => {
+    input.addEventListener('focus', () => input.closest('.prow, .product-option')?.classList.add('is-focused'));
+    input.addEventListener('blur', () => input.closest('.prow, .product-option')?.classList.remove('is-focused'));
   });
 
   form.addEventListener('change', e => {
@@ -231,7 +331,7 @@
       priceStr = r.discountedLabel + ' + ' + r.setupLabel;
 
     window._priceSummaryLine = 'Pricing plan: ' + (TERMS[termId]?.label || termId) + '\nProduct & Price: ' +
-      (prods.length ? prods.join(' + ') : 'None') + ' — ' + priceStr;
+      (prods.length ? prods.map(p => p==='FordEngage'?'Engage360':p==='eStore'?'EnvyPRO eStore':p).join(' + ') : 'None') + ' — ' + priceStr;
     form.dispatchEvent(new Event('input', { bubbles: false }));
   }
 
