@@ -339,18 +339,29 @@
   });
 
   // ── Wire product checkboxes ──────────────────────────────────────────────
-  // Wire BYP term radios — 'change' fires on radio input, 'click' on label
-  form.querySelectorAll('input[name="term"]').forEach(radio => {
-    radio.addEventListener('change', () => {
+  // Wire BYP term radios via delegated form listener (catches all change events
+  // regardless of trusted/synthetic origin) + direct per-radio listeners
+  form.addEventListener('change', (e) => {
+    if (e.target && e.target.name === 'term') {
       updatePriceSummary();
-      unconsent('You changed the pricing plan \u2014 please re-read and re-check consent.');
-    });
-    // Belt-and-suspenders: also update on click in case change doesn't fire
-    radio.addEventListener('click', () => { setTimeout(updatePriceSummary, 0); });
+      if (e.target.value !== 'month-to-month') {
+        unconsent('You changed the pricing plan \u2014 please re-read and re-check consent.');
+      }
+    }
   });
-  // Wire clicks on term label rows too (label wraps radio, click propagates)
+  // Belt: also listen at document level in case event doesn't bubble through form
+  document.addEventListener('change', (e) => {
+    if (e.target && e.target.name === 'term' && e.target.closest('#enroll-form')) {
+      updatePriceSummary();
+    }
+  });
   form.querySelectorAll('.byp-term-opt').forEach(lbl => {
-    lbl.addEventListener('click', () => { setTimeout(updatePriceSummary, 0); });
+    lbl.addEventListener('click', () => {
+      // Ensure radio is checked before updating
+      const radio = lbl.querySelector('input[type=radio]');
+      if (radio) radio.checked = true;
+      setTimeout(updatePriceSummary, 0);
+    });
   });
 
   form.querySelectorAll('.product-option-input, .addon-input').forEach(input => {
