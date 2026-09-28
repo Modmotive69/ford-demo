@@ -347,20 +347,8 @@
   // ── Wire product checkboxes ──────────────────────────────────────────────
   // Wire BYP term radios via delegated form listener (catches all change events
   // regardless of trusted/synthetic origin) + direct per-radio listeners
-  form.addEventListener('change', (e) => {
-    if (e.target && e.target.name === 'term') {
-      updatePriceSummary();
-      if (e.target.value !== 'month-to-month') {
-        unconsent('You changed the pricing plan \u2014 please re-read and re-check consent.');
-      }
-    }
-  });
-  // Belt: also listen at document level in case event doesn't bubble through form
-  document.addEventListener('change', (e) => {
-    if (e.target && e.target.name === 'term' && e.target.closest('#enroll-form')) {
-      updatePriceSummary();
-    }
-  });
+  // Term changes are handled exclusively by .byp-term-opt click handlers above.
+  // Do NOT add form.change listeners for name=term — they cause stale-state re-renders.
   // Wire BYP term label clicks: force-set checked, then render with explicit termId
   // (never rely on DOM query for the term — the browser may not have committed
   // radio.checked to the DOM yet when our synchronous handler fires)
@@ -393,11 +381,13 @@
     input.addEventListener('blur', () => input.closest('.prow, .product-option')?.classList.remove('is-focused'));
   });
 
+  // Product addon checkbox changes → update cart + reconsent
   form.addEventListener('change', e => {
-    if (e.target.name === 'products') {
+    if (e.target && e.target.name === 'products') {
       updatePriceSummary();
       unconsent('You changed the product selection — please re-read and re-check consent.');
     }
+    // Ignore name=term (handled by .byp-term-opt click)
   });
 
   // ── Update signing summary (called by enrollment-draft.js via input event) ─
