@@ -48,7 +48,7 @@ export function renderAgreement(r) {
     ['Agreement version',           r.agreementVersion],
     ['SHA-256',                     r.agreementSha256],
     ['Products',                    r.selectedProducts.join(' + ')],
-    ['Commitment term',             p.termLabel],
+    ['Pricing plan selected',       p.termLabel],
     ['Base monthly fee',            p.baseLabel],
     ...(p.discountPct > 0 ? [
       ['Discount',                  p.discountPct + '%'],
@@ -115,7 +115,7 @@ export async function onRequestPost({request, env}) {
   // Term validation — server-authoritative; reject unknown or tampered term
   const termId = p.termId;
   if (!termId || !agreement.termConfig[termId])
-    return json({ok:false,error:'Select a valid commitment term (month-to-month, 1year, or 2year).'},400);
+    return json({ok:false,error:'Select a valid pricing plan (month-to-month, 1year, or 2year).'},400);
 
   // Server resolves price from authoritative config — client price never trusted
   const resolved = resolvePricingServer(products, termId);

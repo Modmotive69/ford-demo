@@ -260,7 +260,7 @@
     const priceLines = rp.discountPct > 0
       ? `Base monthly: ${rp.baseLabel}\nDiscount: ${rp.discountPct}%\nDiscounted monthly: ${rp.discountedLabel}\nOne-time setup: ${rp.setupCents === 0 ? 'Waived' : rp.setupLabel}`
       : `Monthly fee: ${rp.discountedLabel}\nOne-time setup: ${rp.setupLabel}`;
-    summary.textContent = `Electronically signed by: ${result.signer.name} (${result.signer.title})\nOn behalf of: ${result.enrollment.dealer_name}\nProducts: ${result.selectedProducts.join(' + ')}\nTerm: ${rp.termLabel}\n${priceLines}\nAccepted (UTC): ${result.server_timestamp}\nReceipt: ${result.receipt_id}\nAgreement version: ${result.agreementVersion}`;
+    summary.textContent = `Electronically signed by: ${result.signer.name} (${result.signer.title})\nOn behalf of: ${result.enrollment.dealer_name}\nProducts: ${result.selectedProducts.join(' + ')}\nPricing plan: ${rp.termLabel}\n${priceLines}\nAccepted (UTC): ${result.server_timestamp}\nReceipt: ${result.receipt_id}\nAgreement version: ${result.agreementVersion}`;
     panel.append(summary);
     const email = document.createElement('p');
     email.textContent = 'Agreement copies are queued for ' + result.email_recipients.join(' and ') + '. The email provider accepted the request; inbox delivery is not confirmed.';

@@ -70,23 +70,23 @@
     termSection.style.cssText = 'margin:20px 0 0';
     termSection.innerHTML = `
       <label for="term-select" style="font-weight:600;color:#003478;display:block;margin-bottom:8px">
-        Commitment term
+        Pricing plan
       </label>
       <select id="term-select" name="term"
               style="width:100%;padding:12px;border:1px solid #718096;border-radius:4px;font:inherit;background:#fff;appearance:auto"
               aria-describedby="term-note">
-        <option value="month-to-month">Month-to-month — $1,000 one-time setup, no commitment</option>
+        <option value="month-to-month">Month-to-month pricing — $1,000 one-time setup</option>
         <option value="1year">1-year (12 months) — setup waived, 10% off monthly</option>
         <option value="2year">2-year (24 months) — setup waived, 25% off monthly</option>
       </select>
       <p id="term-note" style="font-size:0.78rem;color:#6e6e73;margin:6px 0 0">
-        Term applies to any priced product or bundle. Quote-required combinations cannot be selected here.
+        Pricing plan selection applies to any priced product or bundle. Current agreement §3.1 still permits termination on 30 days' prior written notice; no early-exit fee or noncancelable minimum term is stated here. Quote-required combinations cannot be selected here.
       </p>`;
     productFieldset.insertAdjacentElement('afterend', termSection);
 
     document.getElementById('term-select').addEventListener('change', () => {
       updatePriceSummary();
-      unconsent('You changed the commitment term — please re-read and re-check consent.');
+      unconsent('You changed the pricing plan selection — please re-read and re-check consent.');
     });
   }
 
@@ -145,7 +145,7 @@
       const termLabel = TERMS[termId].label;
       const rows = [
         ['Products',       prods.join(' + ')],
-        ['Term',           termLabel],
+        ['Pricing plan',   termLabel],
         ['Base monthly',   r.baseLabel],
       ];
       if (r.discountPct > 0) {
@@ -214,7 +214,7 @@
     else
       priceStr = r.discountedLabel + ' + ' + r.setupLabel;
 
-    window._priceSummaryLine = 'Term: ' + (TERMS[termId]?.label || termId) + '\nProduct & Price: ' +
+    window._priceSummaryLine = 'Pricing plan: ' + (TERMS[termId]?.label || termId) + '\nProduct & Price: ' +
       (prods.length ? prods.join(' + ') : 'None') + ' — ' + priceStr;
     form.dispatchEvent(new Event('input', { bubbles: false }));
   }

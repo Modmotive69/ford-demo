@@ -1,10 +1,10 @@
 {
-  "version": "FE-2026-09-28-review-8",
+  "version": "FE-2026-09-28-review-9",
   "terms": [
     "TECHNOLOGY SERVICES AGREEMENT",
     "(FORD ENGAGE PROGRAM)",
     "",
-    "THIS TECHNOLOGY SERVICES AGREEMENT (the \"Agreement\") dated as of the date set forth in the signature block affixed hereto (the \"Effective Date\"), is entered into between PartSites, LLC, a SmartDealer Technologies Company, a Florida limited liability company with offices located at 175 SW 7th Street, Suite 2010, Miami, Florida 33130 (the \"Company\") and the undersigned Ford or Lincoln franchise dealer (the \"Dealer\").  the Company and the Dealer are sometimes referred to herein respectively as a “Party,” and collectively as the “Parties.”",
+    "THIS TECHNOLOGY SERVICES AGREEMENT (the \"Agreement\") dated as of the date set forth in the signature block affixed hereto (the \"Effective Date\"), is entered into between PartSites, LLC, a wholly owned subsidiary of SmartDealer Technologies, Inc., a Florida limited liability company with offices located at 175 SW 7th Street, Suite 2010, Miami, Florida 33130 (the \"Company\") and the undersigned Ford or Lincoln franchise dealer (the \"Dealer\").  the Company and the Dealer are sometimes referred to herein respectively as a “Party,” and collectively as the “Parties.”",
     "",
     "RECITALS",
     "",
@@ -66,11 +66,11 @@
     "9.5Electronic Acceptance.  The Dealer accepts this Agreement electronically by completing and submitting the online enrollment form hosted by the Company.  Electronic submission by an authorized representative of the Dealer constitutes the Dealer's acceptance of and agreement to be bound by the terms herein.  A server-issued receipt confirming the submission timestamp, agreement version, and selected products serves as the record of acceptance.",
     "",
     "",
-    "Licensee acknowledges and agrees that the monthly fees commence after onboarding of the first user is complete. If Licensee’s onboarding is completed between the first (1st) and the tenth (10th) of the month, the applicable monthly fees will be effective on the first (1st) day of that month. If Licensee’s onboarding is completed after the tenth (10th) of the month, the applicable monthly fees will be effective on the first (1st) day of the following month. All monthly fees, plus applicable taxes, are due and payable to PartSites, LLC, a SmartDealer Technologies Company within thirty (30) days of receipt of PartSites invoice."
+    "Licensee acknowledges and agrees that the monthly fees commence after onboarding of the first user is complete. If Licensee’s onboarding is completed between the first (1st) and the tenth (10th) of the month, the applicable monthly fees will be effective on the first (1st) day of that month. If Licensee’s onboarding is completed after the tenth (10th) of the month, the applicable monthly fees will be effective on the first (1st) day of the following month. All monthly fees, plus applicable taxes, are due and payable to PartSites, LLC, a wholly owned subsidiary of SmartDealer Technologies, Inc. within thirty (30) days of receipt of PartSites invoice."
   ],
-  "sha256": "bd6e78b42b7592484b6d85561cfbe92b8f77d6b99842c881c913dced9c2f30c3",
+  "sha256": "ab7576825360b7391d9d5870c7fc95364feed828c5bd98a3e74e0d0357ab6b78",
   "consent": "I certify I am authorized to submit this information on behalf of the dealership and have read and agree to the terms.",
-  "payee": "PartSites, LLC, a SmartDealer Technologies Company",
+  "payee": "PartSites, LLC, a wholly owned subsidiary of SmartDealer Technologies, Inc.",
   "payeeResolved": true,
   "deadlineResolved": true,
   "eStoreResolved": true,
