@@ -122,7 +122,6 @@
     if (!prods.length) {
       content.style.cssText = 'font-size:0.9rem;color:#555;font-style:italic';
       content.innerHTML = 'No products selected yet.';
-      notice.style.display = 'none';
       return;
     }
 
