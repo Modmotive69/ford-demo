@@ -361,16 +361,30 @@
       updatePriceSummary();
     }
   });
-  // Wire BYP term label clicks: set checked, call update synchronously with explicit term
+  // Wire BYP term label clicks: force-set checked, then render with explicit termId
+  // (never rely on DOM query for the term — the browser may not have committed
+  // radio.checked to the DOM yet when our synchronous handler fires)
   document.querySelectorAll('.byp-term-opt').forEach(lbl => {
     lbl.addEventListener('click', (e) => {
       const radio = lbl.querySelector('input[type=radio]');
       if (!radio) return;
-      // Set checked first
+      // Force all term radios unchecked, then check this one
+      document.querySelectorAll('#enroll-form input[name="term"]').forEach(r => { r.checked = false; });
       radio.checked = true;
-      // Call updatePriceSummary synchronously — don't wait for a change event
-      // because the radio change event may not fire reliably in all scenarios
-      updatePriceSummary();
+      const termId = radio.value; // read value NOW, not after any async step
+      // Update active label styles immediately
+      document.querySelectorAll('.byp-term-opt').forEach(l => l.classList.remove('byp-term-opt--active'));
+      lbl.classList.add('byp-term-opt--active');
+      // Render with explicit term — bypass selectedTerm() DOM query entirely
+      const prods = selectedProducts();
+      syncProductCardState();
+      renderBYP(prods, termId);
+      // Also update the legacy signing summary if present
+      if (typeof updateSigningSummary === 'function') updateSigningSummary();
+      // Trigger reconsent if needed
+      if (termId !== 'month-to-month') {
+        unconsent('You changed the pricing plan — please re-read and re-check consent.');
+      }
     });
   });
 
