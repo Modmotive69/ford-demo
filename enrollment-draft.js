@@ -198,7 +198,7 @@
 
     const rows = [
       { label: 'Agreement version', value: version },
-      { label: 'Selected products', value: prods.map(p => p === 'FordEngage' ? 'Engage360' : p === 'eStore' ? 'EnvyPRO eStore' : p).join(' + ') },
+      { label: 'Selected products', value: prods.map(p => p === 'FordEngage' ? 'FordEngage' : p === 'eStore' ? 'EnvyPRO eStore' : p === 'WorldDomination' ? 'World Domination (FordEngage + EnvyPRO eStore + VDP Widget + 32\" 4K Kiosk)' : p).join(' + ') },
     ];
 
     // Insert pricing line if price-lookup.js has computed it

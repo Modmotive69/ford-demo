@@ -39,7 +39,7 @@
   };
   const __BYP_PRODUCT_DETAILS__ = {
     'FordEngage': {
-      name: 'Engage360',
+      name: 'FordEngage',
       detail: 'Factory-accurate 4D accessory visualization on the showroom floor. Demonstrate any Ford or Lincoln accessory on the customer\'s actual vehicle — live, in color, from every angle.',
     },
     'eStore': {
@@ -52,7 +52,7 @@
     },
     'WorldDomination': {
       name: 'World Domination',
-      detail: 'All three products in one complete showroom package: Engage360, EnvyPRO eStore, and VDP Widget — plus a 32-inch 4K kiosk, a $1,000 value. 2-year commitment, 25% off monthly, setup waived.',
+      detail: 'All three products in one complete showroom package: Engage360, EnvyPRO eStore, and VDP Widget — plus a 32-inch 4K kiosk, a $1,000 value. 2-year commitment, 25% off monthly, setup waived. Priority support included.',
     },
   };
 
@@ -277,7 +277,7 @@
     let html = '';
     if (wd) {
       // WD: components listed as Included, no individual prices shown
-      html += `<div class="byp-line"><span class="byp-line-name byp-line-name--base">Engage360</span><span class="byp-line-price byp-line-price--incl">Included</span></div>`;
+      html += `<div class="byp-line"><span class="byp-line-name byp-line-name--base">FordEngage</span><span class="byp-line-price byp-line-price--incl">Included</span></div>`;
       html += `<div class="byp-line"><span class="byp-line-name">EnvyPRO eStore</span><span class="byp-line-price byp-line-price--incl">Included</span></div>`;
       html += `<div class="byp-line"><span class="byp-line-name">VDP Widget</span><span class="byp-line-price byp-line-price--incl">Included</span></div>`;
       html += `<div class="byp-line"><span class="byp-line-name">32" 4K Kiosk</span><span class="byp-line-price byp-line-price--incl">$1,000 value</span></div>`;
@@ -286,7 +286,7 @@
       html += `<div class="byp-line"><span class="byp-line-name byp-line-name--save">2-year discount (25%)</span><span class="byp-line-price byp-line-price--save">−${fmtC(saved)}/mo</span></div>`;
     } else {
       const addons = prods.filter(p => p !== 'FordEngage');
-      html += `<div class="byp-line"><span class="byp-line-name byp-line-name--base">Engage360</span><span class="byp-line-price">${fmtC(__BYP_DISPLAY_PRICES__['FordEngage'])}/mo</span></div>`;
+      html += `<div class="byp-line"><span class="byp-line-name byp-line-name--base">FordEngage</span><span class="byp-line-price">${fmtC(__BYP_DISPLAY_PRICES__['FordEngage'])}/mo</span></div>`;
       addons.forEach(a => {
         html += `<div class="byp-line"><span class="byp-line-name">${__BYP_PRODUCT_DETAILS__[a]?.name || a}</span><span class="byp-line-price">${fmtC(__BYP_DISPLAY_PRICES__[a])}/mo</span></div>`;
       });
@@ -329,7 +329,7 @@
       priceStr = r.discountedLabel + (r.setupCents > 0 ? ' + ' + r.setupLabel : ', setup waived');
     }
     const prodLabel = wd
-      ? 'World Domination (Engage360 + EnvyPRO eStore + VDP Widget + 32" 4K Kiosk, $1,000 value) — 2-year commitment'
+      ? 'World Domination (FordEngage + EnvyPRO eStore + VDP Widget + 32" 4K Kiosk, $1,000 value) — 2-year commitment'
       : (prods.length ? prods.map(p => __BYP_PRODUCT_DETAILS__[p]?.name || p).join(' + ') : 'None');
     window._priceSummaryLine = 'Pricing plan: ' + (TERMS[termId]?.label || termId) + '\nProduct & Price: ' + prodLabel + ' — ' + priceStr;
     form.dispatchEvent(new Event('input', { bubbles: false }));
