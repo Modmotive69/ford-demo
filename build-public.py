@@ -27,6 +27,14 @@ for name,src in sorted(files.items()):
         raise SystemExit('Asset exceeds Pages limit: '+name)
     dest=out/name;dest.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(src,dest)
     manifest.append({'path':name,'bytes':dest.stat().st_size,'sha256':hashlib.sha256(dest.read_bytes()).hexdigest()})
-(out/'_headers').write_text('/enroll\n  Cache-Control: no-store\n/enroll.html\n  Cache-Control: no-store\n/enrollment-draft.js\n  Cache-Control: no-cache\n/dealer-agreement\n  Cache-Control: no-cache\n')
+(out/'_headers').write_text(
+'/enroll\n  Cache-Control: no-store\n'
+'/enroll.html\n  Cache-Control: no-store\n'
+'/enrollment-draft.js\n  Cache-Control: no-cache\n'
+'/dealer-agreement\n  Cache-Control: no-cache\n'
+'/images/*.webp\n  Content-Type: image/webp\n  X-Content-Type-Options: nosniff\n'
+'/images/*.png\n  Content-Type: image/png\n  X-Content-Type-Options: nosniff\n'
+'/images/*.jpg\n  Content-Type: image/jpeg\n  X-Content-Type-Options: nosniff\n'
+)
 report=root/'test-results/submission-release-manifest.json';report.parent.mkdir(exist_ok=True);report.write_text(json.dumps(manifest,indent=2))
 print('Staged',len(manifest),'public files; no functions/server/tests/config/secrets in asset directory.')
