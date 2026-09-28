@@ -163,51 +163,101 @@
 
 
     /* ─── HERO ─── */
+    /* ─── ENROLL HERO — full-bleed, matches homepage style ─── */
     .hero {
-      background: linear-gradient(180deg, #f6f9fd 0%, #ffffff 32%, #ffffff 100%);
-      padding: clamp(28px, 5vw, 56px) clamp(20px, 5vw, 80px) 0;
-      text-align: center;
+      position: relative;
       overflow: hidden;
+      min-height: 85vh;
+      display: flex;
+      align-items: flex-end;
+      background: #000e20;
+    }
+
+    /* Dark gradient behind fixed nav — same as homepage ::before pattern */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 180px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.62) 0%, transparent 100%);
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* Full-bleed vehicle background image */
+    .hero-bg-img {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center 62%;
+      z-index: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* Soft white fade at bottom — same as homepage hero-sand-fade */
+    .hero-sand-fade {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 240px;
+      background: linear-gradient(to bottom, transparent 0%, #fff 100%);
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    /* Foreground content — above bg + fade */
+    .hero-foreground {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      text-align: center;
+      padding: 48px clamp(20px,5vw,80px) clamp(60px,10vw,120px);
     }
 
     .enroll-page-heading {
-      margin: 0 auto 18px;
+      margin: 0 auto 16px;
       max-width: 860px;
       text-align: center;
       text-wrap: balance;
       overflow-wrap: anywhere;
-      color: var(--ford-blue);
+      color: #fff;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.45);
       font-family: 'Ford Antenna', FordAntenna, Arial, sans-serif !important;
       font-weight: 900 !important;
-      font-size: clamp(1.6rem, 3.2vw, 2.35rem) !important;
-      line-height: 1.08 !important;
+      font-size: clamp(2rem, 4.5vw, 3.2rem) !important;
+      line-height: 1.06 !important;
       letter-spacing: -0.4px !important;
     }
+
     .hero-eyebrow {
       display: inline-block;
       font-size: 0.72rem;
       font-weight: 600;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: rgba(0,52,120,0.72);
-      margin-bottom: 18px;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 20px;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.4);
     }
 
     .hero h1 {
       font-size: clamp(1.75rem, 5vw, 3.25rem);
       font-weight: 700;
-      color: var(--ford-blue);
+      color: #fff;
       letter-spacing: -0.03em;
       line-height: 1.05;
       margin-bottom: 16px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.4);
     }
 
     .hero-sub {
       font-size: 1.05rem;
-      color: #44556a;
+      color: rgba(255,255,255,0.88);
       max-width: 520px;
       margin: 0 auto 28px;
       line-height: 1.55;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.35);
     }
 
     .hero-pills {
@@ -222,31 +272,19 @@
     .hero-pill {
       font-size: 0.85rem;
       font-weight: 600;
-      color: var(--ford-blue);
+      color: #fff;
       padding: 8px 20px;
-      background: rgba(0,52,120,0.06);
+      background: rgba(255,255,255,0.15);
       border-radius: 40px;
-      border: 1px solid rgba(0,52,120,0.14);
+      border: 1px solid rgba(255,255,255,0.32);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
     }
 
     .hero-pill-divider {
-      color: rgba(0,52,120,0.28);
+      color: rgba(255,255,255,0.4);
       font-size: 1rem;
       padding: 0 8px;
-    }
-
-    .hero-image-wrap {
-      max-width: 980px;
-      margin: clamp(24px, 4vw, 36px) auto 0;
-      pointer-events: none;
-    }
-    .hero-image {
-      display: block;
-      width: 100%;
-      height: auto;
-      margin: 0 auto;
-      user-select: none;
-      -webkit-user-drag: none;
     }
 
     /* ─── MAIN LAYOUT ─── */
@@ -1152,64 +1190,7 @@
     }
   
     /* ─── HERO ─── */
-    .hero {
-      background: linear-gradient(180deg, #f6f9fd 0%, #ffffff 32%, #ffffff 100%);
-      padding: clamp(28px, 5vw, 56px) clamp(20px, 5vw, 80px) 0;
-      text-align: center;
-      overflow: hidden;
-    }
-
-    .hero-eyebrow {
-      display: inline-block;
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: rgba(0,52,120,0.72);
-      margin-bottom: 18px;
-    }
-
-    .hero h1 {
-      font-size: clamp(1.75rem, 5vw, 3.25rem);
-      font-weight: 700;
-      color: var(--ford-blue);
-      letter-spacing: -0.03em;
-      line-height: 1.05;
-      margin-bottom: 16px;
-    }
-
-    .hero-sub {
-      font-size: 1.05rem;
-      color: #44556a;
-      max-width: 520px;
-      margin: 0 auto 28px;
-      line-height: 1.55;
-    }
-
-    .hero-pills {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0;
-      flex-wrap: wrap;
-      row-gap: 10px;
-    }
-
-    .hero-pill {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--ford-blue);
-      padding: 8px 20px;
-      background: rgba(0,52,120,0.06);
-      border-radius: 40px;
-      border: 1px solid rgba(0,52,120,0.14);
-    }
-
-    .hero-pill-divider {
-      color: rgba(0,52,120,0.28);
-      font-size: 1rem;
-      padding: 0 8px;
-    }
+/* hero CSS consolidated above */
 /* ─── FORM CARD ─── */
     .form-card {
       background: var(--white);
@@ -1386,8 +1367,21 @@
 
     nav:not(.sidebar) { font-family: 'Ford Antenna', 'FordAntenna', Arial, sans-serif; }
     nav:not(.sidebar):not(.scrolled) .btn-outline-white { color: #fff !important; border-color: #fff !important; }
-    .hero { padding-top: 140px; }
-    @media (max-width: 1100px) { .hero { padding-top: 220px; } }
+
+    /* ─── ENROLL HERO RESPONSIVE ─── */
+    @media (max-width: 700px) {
+      .hero { min-height: 70vh; }
+      .hero-bg-img { object-position: 38% 65%; }
+      .hero-sand-fade { height: 160px; }
+      .hero-foreground { padding: 36px 20px clamp(40px,8vw,80px); }
+      .enroll-page-heading { font-size: clamp(1.6rem, 7vw, 2.4rem) !important; }
+    }
+    @media (max-width: 420px) {
+      .hero { min-height: 65vh; }
+      .hero-bg-img { object-position: 36% 68%; }
+    }
+
+    /* hero padding-top removed — fixed nav floats; content is flex-aligned to bottom */
 
     /* Keep the existing header content reachable at narrow widths. */
     @media (max-width: 1100px) {
@@ -1435,21 +1429,39 @@
     </div>
   </nav>
 
-  <!-- ─── HERO ─── -->
+  <!-- ─── HERO — full-bleed, homepage style ─── -->
   <section class="hero">
-    <h2 class="enroll-page-heading">Live on your floor in days.</h2>
-    <span class="hero-eyebrow">Ford Dealer Enrollment</span>
-    <h1>Enroll Now.</h1>
-    <p class="hero-sub">Join hundreds of Ford dealers already grossing $805 more per vehicle.</p>
-    <div class="hero-pills">
-      <span class="hero-pill">$805 avg</span>
-      <span class="hero-pill-divider">·</span>
-      <span class="hero-pill">155% PNVR</span>
-      <span class="hero-pill-divider">·</span>
-      <span class="hero-pill">500+ dealers</span>
-    </div>
-    <div class="hero-image-wrap" aria-hidden="true">
-      <img class="hero-image" src="images/enroll-hero.png" alt="" width="1280" height="853" loading="eager" decoding="async">
+    <!-- Full-bleed background vehicle image (z-index: 1) -->
+    <img
+      class="hero-bg-img"
+      src="images/enroll-hero.png"
+      alt=""
+      aria-hidden="true"
+      width="1280"
+      height="853"
+      loading="eager"
+      decoding="async"
+      fetchpriority="high"
+    >
+
+    <!-- Dark gradient behind nav (z-index: 2, via ::before) -->
+
+    <!-- White sand fade at bottom (z-index: 3) -->
+    <div class="hero-sand-fade" aria-hidden="true"></div>
+
+    <!-- Foreground content (z-index: 10) -->
+    <div class="hero-foreground">
+      <h2 class="enroll-page-heading">Live on your floor in days.</h2>
+      <span class="hero-eyebrow">Ford Dealer Enrollment</span>
+      <h1>Enroll Now.</h1>
+      <p class="hero-sub">Join hundreds of Ford dealers already grossing $805 more per vehicle.</p>
+      <div class="hero-pills">
+        <span class="hero-pill">$805 avg</span>
+        <span class="hero-pill-divider">·</span>
+        <span class="hero-pill">155% PNVR</span>
+        <span class="hero-pill-divider">·</span>
+        <span class="hero-pill">500+ dealers</span>
+      </div>
     </div>
   </section>
 
