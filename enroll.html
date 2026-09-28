@@ -173,7 +173,7 @@
       overflow: hidden;
       min-height: 72vh;
       display: flex;
-      align-items: flex-end;
+      align-items: flex-start;
       background: #000e20;
     }
 
@@ -210,19 +210,19 @@
       pointer-events: none;
     }
 
-    /* Foreground content — above bg + fade */
+    /* Foreground content — above bg + fade; left-aligned to match homepage gutter */
     .hero-foreground {
       position: relative;
       z-index: 10;
       width: 100%;
-      text-align: center;
-      padding: 48px clamp(20px,5vw,80px) clamp(40px,6vw,80px);
+      text-align: left;
+      padding: clamp(100px,14vw,160px) clamp(20px,5vw,8.9%) 0;
     }
 
     .enroll-page-heading {
-      margin: 0 auto 0;
-      max-width: 900px;
-      text-align: center;
+      margin: 0 0 0;
+      max-width: 820px;
+      text-align: left;
       text-wrap: balance;
       overflow-wrap: anywhere;
       color: #fff;
@@ -235,11 +235,11 @@
       text-transform: uppercase !important;
     }
 
-    /* Form card overlaps lower hero */
+    /* Form card overlaps lower hero — pulls up from white fade zone */
     .enroll-form-overlap {
       position: relative;
       z-index: 20;
-      margin-top: clamp(-80px, -6vw, -48px);
+      margin-top: clamp(-180px, -14vw, -120px);
     }
 
     /* hero-eyebrow/sub/pills removed — copy replaced with single headline */
@@ -1331,14 +1331,16 @@
       .hero { min-height: 60vh; }
       .hero-bg-img { object-position: 38% 65%; }
       .hero-sand-fade { height: 180px; }
-      .hero-foreground { padding: 36px 20px clamp(30px,6vw,60px); }
-      .enroll-page-heading { font-size: clamp(1.8rem, 8vw, 3rem) !important; letter-spacing: -0.5px !important; }
-      .enroll-form-overlap { margin-top: clamp(-60px, -5vw, -36px); }
+      .hero-foreground { padding: clamp(80px,12vw,120px) 20px 0; text-align: left; }
+      .enroll-page-heading { font-size: clamp(1.8rem, 8vw, 3rem) !important; letter-spacing: -0.5px !important; text-align: left; }
+      .enroll-form-overlap { margin-top: clamp(-120px, -11vw, -80px); }
     }
     @media (max-width: 420px) {
       .hero { min-height: 55vh; }
       .hero-bg-img { object-position: 36% 68%; }
-      .enroll-page-heading { font-size: clamp(1.6rem, 9vw, 2.6rem) !important; }
+      .hero-foreground { padding-top: clamp(140px,18vw,180px); }
+      .enroll-page-heading { font-size: clamp(1.6rem, 9vw, 2.6rem) !important; text-align: left; }
+      .enroll-form-overlap { margin-top: clamp(-100px, -10vw, -72px); }
     }
 
     /* hero padding-top removed — fixed nav floats; content is flex-aligned to bottom */
