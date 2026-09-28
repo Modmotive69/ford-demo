@@ -1061,6 +1061,18 @@
     a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
       outline: 3px solid #0562D2; outline-offset: 3px;
     }
+
+    .btn-submit { display:block; width:100%; min-height:52px; padding:16px 22px; margin-top:20px; border:0; border-radius:4px; background:var(--ford-blue); color:#fff; font:700 1rem var(--font); letter-spacing:.5px; cursor:pointer; transition:background .18s; white-space:normal; }
+    .btn-submit:hover { background:#002a60; }
+    .btn-submit:disabled { opacity:.65; cursor:wait; }
+    #submission-confirmation { scroll-margin-top:230px; }
+    #submission-confirmation h2 { color:var(--ford-blue); font-size:clamp(1.3rem,3vw,1.8rem); line-height:1.3; }
+    #submission-confirmation p { margin:20px 0; line-height:1.65; }
+    #print-agreement-only pre {white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;}
+    #print-agreement-only table {width:100%;border-collapse:collapse;table-layout:fixed;}
+    #print-agreement-only th,#print-agreement-only td {text-align:left;vertical-align:top;overflow-wrap:anywhere;padding:6px;border-bottom:1px solid #ddd;}
+    #print-agreement-only th {width:32%;}
+    @media print {#print-agreement-only tr {break-inside:avoid;} #print-agreement-only h1,#print-agreement-only h2 {margin:14pt 0 8pt;}}
   </style>
 </head>
 <body>
@@ -1275,7 +1287,7 @@
 
           <!-- Inline scroll box -->
           <div class="agreement-scroll-header">
-            <span class="agreement-scroll-title" id="agmt-region-label">Technology Services Agreement — Review Draft</span>
+            <span class="agreement-scroll-title" id="agmt-region-label">Technology Services Agreement</span>
             <div class="agreement-scroll-actions">
               <button type="button" class="agreement-btn" id="btn-expand-modal" aria-label="Open agreement in larger view">Expand</button>
               <button type="button" class="agreement-btn" id="btn-print-agreement" aria-label="Print agreement">Print</button>
@@ -1326,16 +1338,16 @@
           </div>
         </div>
 
-<h2 style="font-size:1.25rem;color:#003478">Signing summary</h2><div id="signing-summary" aria-live="polite" style="white-space:pre-wrap;overflow-wrap:anywhere;background:#f5f7fb;padding:18px"></div><div id="draft-errors" role="alert" tabindex="-1" style="color:#a21d16"></div><p id="draft-status" role="status"></p><p>Prepare a local JSON review copy containing your entries and the agreement text. This does not submit or execute an agreement.</p>
+<h2 style="font-size:1.25rem;color:#003478">Signing summary</h2><div id="signing-summary" aria-live="polite" style="white-space:pre-wrap;overflow-wrap:anywhere;background:#f5f7fb;padding:18px"></div><div id="draft-errors" role="alert" tabindex="-1" style="color:#a21d16"></div><p id="draft-status" role="status"></p><p>Submit your agreement securely. After confirmation, download your agreement and retain your receipt. An email copy will be queued to your primary contact and our enrollment team.</p>
         <!-- SUBMIT -->
-        <button type="submit" class="btn-submit" id="submit-btn">
-          Prepare local draft copy &nbsp;→
+        <div aria-hidden="true" style="position:absolute;left:-10000px"><label>Leave blank<input name="website" tabindex="-1" autocomplete="off"></label></div><button type="submit" class="btn-submit" id="submit-btn">
+          Submit Agreement
         </button>
 
       </form>
 
       <!-- FOOTER NOTE -->
-      <p class="footer-note" id="footer-note">Review draft only. Fees and any commercial offers require approval before execution.</p>
+      <p class="footer-note" id="footer-note">Submission does not confirm service activation or a Company countersignature.</p>
 
     </div>
   </div>
@@ -1409,7 +1421,7 @@
 <div id="agreement-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title-text" aria-hidden="true">
   <div class="modal-panel" id="modal-panel">
     <div class="modal-header">
-      <span class="modal-title" id="modal-title-text">Technology Services Agreement — Review Draft</span>
+      <span class="modal-title" id="modal-title-text">Technology Services Agreement</span>
       <div class="modal-header-actions">
         <button type="button" class="agreement-btn" id="modal-btn-print" aria-label="Print agreement">Print</button>
         <button type="button" class="modal-close-btn" id="modal-close" aria-label="Close agreement view">✕</button>
@@ -1422,7 +1434,7 @@
 <!-- ── PRINT-ONLY AGREEMENT ──────────────────────────────────────────── -->
 <div id="print-agreement-only" style="display:none">
   <div class="print-title">Technology Services Agreement</div>
-  <div class="print-meta">Ford Engage Program · Review Draft · Version: <span id="print-version"></span></div>
+  <div class="print-meta">Ford Engage Program · Version: <span id="print-version"></span></div>
   <div class="print-terms" id="print-terms-body"><!-- populated by JS --></div>
   <div class="print-summary" id="print-summary">
     <h2>Product Selection &amp; Signing Summary</h2>
@@ -1435,7 +1447,7 @@
     <p id="print-email-val"></p>
     <p id="print-consent"></p>
     <p style="margin-top:18pt;"><strong>Dealer Date:</strong> _____________________</p>
-    <p><strong>PARTSITES, LLC</strong> (entity pending approval)</p>
+    <p><strong>PARTSITES, LLC</strong> </p>
     <p>Authorized signature: _____________________</p>
     <p>By: David P. Lemoie, President (printed name only — not a signature)</p>
     <p>Date: _____________________</p>

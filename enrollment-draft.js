@@ -94,7 +94,7 @@
       'Email: ' + (document.getElementById('sig-email').value.trim() || 'Not entered');
     document.getElementById('print-consent').textContent =
       'Consent: ' + (document.getElementById('agree-checkbox').checked
-        ? 'Checked in this local draft — not a server acknowledgment'
+        ? 'Checked — not submitted yet'
         : 'Not checked');
   }
 
@@ -138,9 +138,8 @@
       `Title: ${v('sig-title')}\n` +
       `Phone: ${v('sig-phone')}\n` +
       `Email: ${v('sig-email')}\n` +
-      `Consent: ${$('agree-checkbox').checked ? 'Checked in this local draft only — not a server acknowledgment' : 'Not checked'}\n` +
-      `Pricing: unresolved — no amount assigned by product selection\n` +
-      `Status: REVIEW DRAFT — not submitted or executed`;
+      `Consent: ${$('agree-checkbox').checked ? 'Checked — not submitted yet' : 'Not checked'}\n` +
+      `Status: Ready for submission after validation`;
   }
 
   /* ── Clear per-field errors on input ────────────────────────────────── */
@@ -167,6 +166,11 @@
   /* ── Validation ──────────────────────────────────────────────────────── */
   function validate() {
     const errors = [];
+    for (const el of form.querySelectorAll('input[required], select[required]')) {
+      if (el.id === 'city' && el.style.display === 'none') continue;
+      if (el.id === 'city-text' && el.style.display === 'none') continue;
+      if (!el.validity.valid) { errors.push('Complete a valid ' + (form.querySelector('label[for="' + el.id + '"]')?.textContent || el.name) + '.'); el.setAttribute('aria-invalid','true'); }
+    }
     // Products
     $('product-selection').removeAttribute('aria-invalid');
     $('product-error').textContent = '';
@@ -210,9 +214,60 @@
     return !errors.length;
   }
 
-  /* ── Submit: produce local review copy ──────────────────────────────── */
+  let sending = false;
+  let submitted = false;
+  let submissionId = crypto.randomUUID();
+  let lastPayload = null;
+  let accepted = null;
+
+  function showConfirmation(result) {
+    accepted = result;
+    submitted = true;
+    form.hidden = true;
+    const panel = document.createElement('section');
+    panel.id = 'submission-confirmation';
+    panel.tabIndex = -1;
+    panel.style.cssText = 'padding:28px 0;overflow-wrap:anywhere';
+    const heading = document.createElement('h2');
+    heading.textContent = 'Congratulations—your agreement has been submitted.';
+    panel.append(heading);
+    const summary = document.createElement('p');
+    summary.style.whiteSpace = 'pre-line';
+    summary.textContent = `Dealership: ${result.enrollment.dealer_name}\nProducts: ${result.selectedProducts.join(' + ')}\nMonthly fee: ${result.resolved_price.label}\nSigner: ${result.signer.name} (${result.signer.title})\nSubmitted (UTC): ${result.server_timestamp}\nReceipt: ${result.receipt_id}\nAgreement version: ${result.agreementVersion}`;
+    panel.append(summary);
+    const email = document.createElement('p');
+    email.textContent = 'Agreement copies are queued for ' + result.email_recipients.join(' and ') + '. The email provider accepted the request; inbox delivery is not confirmed.';
+    panel.append(email);
+    const download = document.createElement('button');
+    download.type = 'button'; download.className = 'btn-submit';
+    download.textContent = 'Download Agreement (HTML)';
+    download.addEventListener('click', () => {
+      const url = URL.createObjectURL(new Blob([accepted.agreement_html], {type:'text/html;charset=utf-8'}));
+      const a = document.createElement('a'); a.href = url; a.download = 'FordEngage-Agreement-' + accepted.receipt_id + '.html'; a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 10000);
+    });
+    panel.append(download);
+    const print = document.createElement('button'); print.type = 'button'; print.className = 'agreement-btn';
+    print.textContent = 'Print / Save as PDF'; print.style.marginTop = '16px';
+    print.addEventListener('click', () => {
+      const target = $('print-agreement-only');
+      const doc = new DOMParser().parseFromString(accepted.agreement_html,'text/html');
+      target.innerHTML = doc.body.innerHTML;
+      target.style.display = 'block';
+      const restore = () => { target.style.display = 'none'; window.removeEventListener('afterprint', restore); };
+      window.addEventListener('afterprint',restore);
+      window.print();
+    });
+    panel.append(print);
+    const note = document.createElement('p'); note.textContent = 'Keep this receipt and agreement for your records. Submission does not confirm service activation or a Company countersignature.';
+    panel.append(note);
+    form.after(panel); panel.focus(); panel.scrollIntoView({block:'start',behavior:'instant'});
+  }
+
+  /* Submit and display only a verified server acknowledgment. */
   form.addEventListener('submit', async e => {
     e.preventDefault();
+    if (sending || submitted) return;
     $('draft-status').textContent = '';
     // Check quote-required FIRST — before field validation, so it shows clearly
     const priceInfo = window.resolveEnrollmentPrice ? window.resolveEnrollmentPrice() : null;
@@ -225,6 +280,7 @@
     if (!validate()) return;
     const formValues = Object.fromEntries(new FormData(form));
     delete formValues.products;
+    formValues.city = ($('city').style.display === 'none' ? $('city-text').value : $('city').value).trim();
     // Split signer fields from dealership enrollment fields
     const signerKeys = ['sig_name','sig_title','sig_phone','sig_email'];
     const signer = {};
@@ -240,7 +296,8 @@
     signer.email = signer.email || ($('sig-email') ? $('sig-email').value.trim() : '');
 
     const payload = {
-      test: false,
+      submissionId,
+      website: formValues.website || '',
       agreementVersion: agreement.version,
       agreementSha256:  agreement.sha256,
       agreementText:    agreement.terms.join('\n'),
@@ -256,9 +313,17 @@
       },
     };
 
+    const identity = JSON.stringify({...payload, submissionId:undefined, consent:{...payload.consent,capturedAtClient:undefined}});
+    if (lastPayload && identity !== lastPayload) {
+      $('draft-status').textContent = 'Your previous attempt needs a status check. Restore those entries and retry, or contact support before submitting a different agreement.';
+      return;
+    }
+    lastPayload = identity;
+    sending = true;
     $('draft-status').textContent = 'Submitting…';
+    form.setAttribute('aria-busy','true');
     const submitBtn = form.querySelector('button[type=submit]');
-    if (submitBtn) submitBtn.disabled = true;
+    if (submitBtn) {submitBtn.disabled = true; submitBtn.textContent = 'Submitting…';}
 
     let result;
     try {
@@ -268,23 +333,21 @@
         body: JSON.stringify(payload),
       });
       result = await resp.json();
-      if (!resp.ok || !result.ok) throw new Error(result.error || `HTTP ${resp.status}`);
+      if (!resp.ok || !result.ok) {
+        if ([400,413,415,429].includes(resp.status)) lastPayload = null;
+        throw new Error((result.error || `HTTP ${resp.status}`) + (result.receipt_id ? ' Receipt: ' + result.receipt_id : ''));
+      }
+      if (!result.receipt_id || !result.server_timestamp || !result.agreement_html || result.email_status !== 'queued') throw new Error('Server confirmation is incomplete.');
     } catch (err) {
-      $('draft-status').textContent =
-        'Submission failed: ' + err.message +
-        ' — your enrollment was NOT sent. Please try again or contact support.';
-      if (submitBtn) submitBtn.disabled = false;
+      $('draft-status').textContent = 'Submission not confirmed: ' + err.message + ' Your entries are preserved. Retry checks the same submission; a network error does not prove that no email was queued.';
+      sending = false;
+      form.removeAttribute('aria-busy');
+      if (submitBtn) {submitBtn.disabled = false; submitBtn.textContent = 'Check / Retry Submission';}
       return;
     }
-
-    // Show receipt — server acknowledged
-    $('draft-status').textContent =
-      '✓ Enrollment submitted. Receipt ID: ' + result.receipt_id +
-      ' | ' + result.server_timestamp +
-      ' | Provider: ' + result.provider +
-      (result.is_test ? ' | ⚠ TEST ONLY' : '') +
-      ' | Note: ' + result.note;
-    if (submitBtn) submitBtn.disabled = false;
+    sending = false;
+    form.removeAttribute('aria-busy');
+    showConfirmation(result);
   });
 
 })();
