@@ -20,12 +20,12 @@
   const summaryEl  = document.getElementById('signing-summary');
   if (!form || !consentBox) return;
 
-  const DISPLAY_PRICES = {
+  const __BYP_DISPLAY_PRICES__ = {
     'FordEngage': 49900,
     'eStore': 29900,
     'VDP Widget': 19900,
   };
-  const PRODUCT_DETAILS = {
+  const __BYP_PRODUCT_DETAILS__ = {
     'FordEngage': {
       name: 'Engage360',
       detail: 'Factory-accurate 4D accessory visualization on the showroom floor. Demonstrate any Ford or Lincoln accessory on the customer\'s actual vehicle — live, in color, from every angle.',
@@ -122,7 +122,7 @@
       return;
     }
     const rows = [
-      ['Products', prods.map(p => PRODUCT_DETAILS[p]?.name || p).join(' + ')],
+      ['Products', prods.map(p => __BYP_PRODUCT_DETAILS__[p]?.name || p).join(' + ')],
       ['Pricing plan', r.termLabel],
       ['Base monthly', r.baseLabel],
     ];
@@ -145,12 +145,12 @@
     const addons = prods.filter(p => p !== 'FordEngage');
 
     const hdrName = document.getElementById('byp-hdr-name');
-    if (hdrName) hdrName.textContent = prods.map(p => PRODUCT_DETAILS[p]?.name || p).join(' + ');
+    if (hdrName) hdrName.textContent = prods.map(p => __BYP_PRODUCT_DETAILS__[p]?.name || p).join(' + ');
 
     const detail = document.getElementById('byp-detail');
     if (detail) {
       const focus = addons.length ? addons[addons.length - 1] : 'FordEngage';
-      detail.textContent = PRODUCT_DETAILS[focus]?.detail || '';
+      detail.textContent = __BYP_PRODUCT_DETAILS__[focus]?.detail || '';
     }
 
     const cart = document.getElementById('byp-cart');
@@ -168,12 +168,12 @@
     }
 
     let html = '';
-    html += `<div class="byp-line"><span class="byp-line-name byp-line-name--base">Engage360</span><span class="byp-line-price">${fmtC(DISPLAY_PRICES['FordEngage'])}/mo</span></div>`;
+    html += `<div class="byp-line"><span class="byp-line-name byp-line-name--base">Engage360</span><span class="byp-line-price">${fmtC(__BYP_DISPLAY_PRICES__['FordEngage'])}/mo</span></div>`;
     addons.forEach(a => {
-      html += `<div class="byp-line"><span class="byp-line-name">${PRODUCT_DETAILS[a]?.name || a}</span><span class="byp-line-price">${fmtC(DISPLAY_PRICES[a])}/mo</span></div>`;
+      html += `<div class="byp-line"><span class="byp-line-name">${__BYP_PRODUCT_DETAILS__[a]?.name || a}</span><span class="byp-line-price">${fmtC(__BYP_DISPLAY_PRICES__[a])}/mo</span></div>`;
     });
 
-    const sumParts = prods.reduce((s,p)=>s + (DISPLAY_PRICES[p] || 0), 0);
+    const sumParts = prods.reduce((s,p)=>s + (__BYP_DISPLAY_PRICES__[p] || 0), 0);
     const adj = r.baseCents - sumParts;
     if (addons.length && adj < 0) {
       html += `<div class="byp-line"><span class="byp-line-name byp-line-name--save">Bundle adjustment</span><span class="byp-line-price byp-line-price--save">−${fmtC(Math.abs(adj))}/mo</span></div>`;
@@ -215,7 +215,7 @@
       priceStr = r.discountedLabel + ' + ' + r.setupLabel;
     }
     window._priceSummaryLine = 'Pricing plan: ' + (TERMS[termId]?.label || termId) + '\nProduct & Price: ' +
-      (prods.length ? prods.map(p => PRODUCT_DETAILS[p]?.name || p).join(' + ') : 'None') + ' — ' + priceStr;
+      (prods.length ? prods.map(p => __BYP_PRODUCT_DETAILS__[p]?.name || p).join(' + ') : 'None') + ' — ' + priceStr;
     form.dispatchEvent(new Event('input', { bubbles: false }));
   }
 
