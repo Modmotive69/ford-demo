@@ -271,14 +271,18 @@
   function updatePriceSummary() {
     const prods   = selectedProducts();
     const termId  = selectedTerm();
+
+    // Always update BYP cart panel + tile states (independent of legacy panel)
+    syncProductCardState();
+    renderBYP();
+
+    // Legacy Product & Price Summary panel (signing summary block)
     const content = document.getElementById('pps-content');
-    if (!content) return;
+    if (!content) return; // BYP-only layout — done after renderBYP above
 
     if (!prods.length) {
       content.style.cssText = 'font-size:0.9rem;color:#555;font-style:italic';
       content.innerHTML = 'No products selected yet.';
-      syncProductCardState();
-      renderBYP();
       return;
     }
 
