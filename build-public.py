@@ -32,9 +32,7 @@ for name,src in sorted(files.items()):
 '/enroll.html\n  Cache-Control: no-store\n'
 '/enrollment-draft.js\n  Cache-Control: no-cache\n'
 '/dealer-agreement\n  Cache-Control: no-cache\n'
-'/images/*.webp\n  Content-Type: image/webp\n  X-Content-Type-Options: nosniff\n'
-'/images/*.png\n  Content-Type: image/png\n  X-Content-Type-Options: nosniff\n'
-'/images/*.jpg\n  Content-Type: image/jpeg\n  X-Content-Type-Options: nosniff\n'
+'/images/ford-showroom-render.webp\n  Content-Type: image/webp\n  X-Content-Type-Options: nosniff\n'
 )
 report=root/'test-results/submission-release-manifest.json';report.parent.mkdir(exist_ok=True);report.write_text(json.dumps(manifest,indent=2))
 print('Staged',len(manifest),'public files; no functions/server/tests/config/secrets in asset directory.')
