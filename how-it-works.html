@@ -1244,6 +1244,178 @@
       .hiw-step-inner { gap: 24px; }
     }
   </style>
+  <style>
+    /* ── Best Practice callouts ─────────────────────────────── */
+    .hiw-best-practice {
+      margin: 22px 0 4px;
+      padding: 18px 20px;
+      background: #f0f5ff;
+      border-left: 3px solid #003478;
+      border-radius: 0 10px 10px 0;
+    }
+    .hiw-bp-label {
+      font-family: Arial, sans-serif;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      color: #003478; margin: 0 0 10px;
+    }
+    .hiw-bp-why, .hiw-bp-how {
+      font-family: Arial, sans-serif;
+      font-size: 13.5px; color: #3a4a5e;
+      line-height: 1.6; margin: 0 0 8px;
+    }
+    .hiw-bp-how { margin-bottom: 0; }
+    .hiw-bp-why strong, .hiw-bp-how strong { color: #003478; }
+
+    /* ── Journey diagram ────────────────────────────────────── */
+    .hiw-diagram {
+      background: #001840;
+      padding: clamp(64px,8vw,100px) clamp(24px,5vw,48px);
+    }
+    .hiw-diagram-inner { max-width: 1100px; margin: 0 auto; text-align: center; }
+    .hiw-diagram-heading {
+      font-family: 'Barlow Condensed', 'Arial Narrow', Arial, sans-serif;
+      font-weight: 900; font-size: clamp(28px,4vw,48px);
+      color: #fff; line-height: 1.05; margin: 0 0 12px;
+    }
+    .hiw-diagram-sub {
+      font-family: Arial, sans-serif; font-size: 16px;
+      color: rgba(255,255,255,.7); line-height: 1.6;
+      max-width: 560px; margin: 0 auto 48px;
+    }
+    .hiw-diagram-note {
+      font-family: Arial, sans-serif; font-size: 12px;
+      color: rgba(255,255,255,.4); margin: 32px auto 0;
+      max-width: 560px; line-height: 1.5;
+    }
+
+    .hiw-journey-map {
+      display: flex; align-items: center; justify-content: center;
+      gap: 0; flex-wrap: wrap;
+    }
+    .hiw-jnode {
+      flex: 0 0 210px; max-width: 210px;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.13);
+      border-radius: 14px; padding: 24px 18px 20px;
+      text-align: center; position: relative;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+    }
+    .hiw-jnode--core {
+      background: rgba(5,98,210,.25);
+      border-color: rgba(5,98,210,.45);
+    }
+    .hiw-jnode-icon {
+      width: 48px; height: 48px;
+      background: rgba(255,255,255,.1);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,.85);
+      margin-bottom: 4px;
+    }
+    .hiw-jnode--core .hiw-jnode-icon { background: rgba(5,98,210,.35); }
+    .hiw-jnode-label {
+      font-family: Arial, sans-serif;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(255,255,255,.5); margin: 0;
+    }
+    .hiw-jnode-name {
+      font-family: 'Barlow Condensed', 'Arial Narrow', Arial, sans-serif;
+      font-weight: 900; font-size: 20px;
+      color: #fff; margin: 0; line-height: 1.1;
+    }
+    .hiw-jnode-desc {
+      font-family: Arial, sans-serif;
+      font-size: 12.5px; color: rgba(255,255,255,.65);
+      line-height: 1.5; margin: 0;
+    }
+    .hiw-jnode-badge {
+      display: inline-block;
+      font-family: Arial, sans-serif;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      color: rgba(255,255,255,.6);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 999px; padding: 3px 10px;
+      margin-top: 4px;
+    }
+    .hiw-jnode-badge--core {
+      color: #6bc2ff; border-color: rgba(107,194,255,.4);
+    }
+
+    .hiw-jarrow {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 6px;
+      padding: 0 8px; flex-shrink: 0;
+    }
+    .hiw-jarrow-label {
+      font-family: Arial, sans-serif;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(255,255,255,.35);
+    }
+
+    @media (max-width: 780px) {
+      .hiw-journey-map { flex-direction: column; gap: 0; }
+      .hiw-jnode { max-width: 100%; width: 100%; flex: none; border-radius: 12px; }
+      .hiw-jarrow { transform: rotate(90deg); padding: 6px 0; }
+    }
+
+    /* ── Dealer playbook ────────────────────────────────────── */
+    .hiw-playbook {
+      background: #fff;
+      padding: clamp(64px,8vw,100px) clamp(24px,5vw,48px);
+    }
+    .hiw-playbook-inner { max-width: 1100px; margin: 0 auto; }
+    .hiw-playbook-hdr { text-align: center; margin-bottom: 52px; }
+    .hiw-playbook-heading {
+      font-family: 'Barlow Condensed', 'Arial Narrow', Arial, sans-serif;
+      font-weight: 900; font-size: clamp(30px,4vw,52px);
+      color: #003478; line-height: 1.05; margin: 0 0 12px;
+    }
+    .hiw-playbook-sub {
+      font-family: Arial, sans-serif; font-size: 15px;
+      color: #6e7f94; line-height: 1.6;
+      max-width: 520px; margin: 0 auto;
+    }
+
+    .hiw-plays-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .hiw-play {
+      padding: 26px 22px 24px;
+      border: 1.5px solid #e4eaf4;
+      border-radius: 14px;
+      position: relative;
+    }
+    .hiw-play-num {
+      font-family: 'Barlow Condensed', 'Arial Narrow', Arial, sans-serif;
+      font-weight: 900; font-size: 56px;
+      line-height: 1; color: #003478; opacity: .1;
+      margin: 0 0 -8px; user-select: none;
+    }
+    .hiw-play-name {
+      font-family: 'Barlow Condensed', 'Arial Narrow', Arial, sans-serif;
+      font-weight: 900; font-size: 20px;
+      color: #003478; line-height: 1.15;
+      margin: 0 0 10px;
+    }
+    .hiw-play-body {
+      font-family: Arial, sans-serif;
+      font-size: 14px; color: #445;
+      line-height: 1.65; margin: 0;
+    }
+
+    @media (max-width: 900px) {
+      .hiw-plays-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 560px) {
+      .hiw-plays-grid { grid-template-columns: 1fr; }
+    }
+  </style>
   <script>
     // Reveal on scroll
     (function() {
@@ -1312,6 +1484,11 @@
             <li>Accessory inquiry captured and routed to your sales team</li>
             <li>Financed accessory pricing shown alongside vehicle price</li>
           </ul>
+          <div class="hiw-best-practice">
+            <p class="hiw-bp-label">Best Practice</p>
+            <p class="hiw-bp-why"><strong>Why it matters:</strong> Shoppers shortlist vehicles before they visit. Introducing accessories during that research phase means your team walks into a conversation the customer already started, not a cold pitch.</p>
+            <p class="hiw-bp-how"><strong>How FordEngage helps:</strong> The VDP Widget surfaces vehicle-specific accessories inside the listing your customer is already reading, turning passive browsing into an active inquiry your team can act on before the visit.</p>
+          </div>
           <div class="hiw-step-badge hiw-badge--addon">
             <span class="hiw-badge-label">Optional Add-On</span>
             <strong>VDP Widget</strong>
@@ -1343,16 +1520,21 @@
           <p class="hiw-step-num" aria-label="Step 2">02</p>
           <p class="hiw-step-label">In-Showroom Visualization</p>
           <h2 id="step-2-heading" class="hiw-step-heading">Seeing Is Believing. Show Every Accessory in Real 3D and AR.</h2>
-          <p class="hiw-step-body">Your sales team presents every accessory on the customer's exact vehicle, live in the showroom. Factory-accurate 3D and AR visualization removes every objection before it forms. Customers see it. They want it.</p>
+          <p class="hiw-step-body">Your sales team presents every accessory on the customer's exact vehicle, live in the showroom. Factory-accurate 3D and AR visualization puts the product in front of the customer, in context, on their actual vehicle.</p>
           <div class="hiw-modes-row">
             <div class="hiw-mode-card">
               <p class="hiw-mode-name">Sales Agent Mode</p>
-              <p class="hiw-mode-desc">Guided presentation flow for your sales team. Every accessory, every vehicle, every deal.</p>
+              <p class="hiw-mode-desc">Your associate guides the presentation, asking lifestyle and use-case questions to surface the accessories that fit this customer, on this vehicle.</p>
             </div>
             <div class="hiw-mode-card">
               <p class="hiw-mode-name">Self-Drive Mode</p>
-              <p class="hiw-mode-desc">Customer-facing touchscreen experience. Shoppers build their own accessory package while they wait.</p>
+              <p class="hiw-mode-desc">A customer-facing touchscreen or kiosk lets shoppers explore on their own, at their pace, while they wait or browse the floor independently.</p>
             </div>
+          </div>
+          <div class="hiw-best-practice">
+            <p class="hiw-bp-label">Best Practice</p>
+            <p class="hiw-bp-why"><strong>Why it matters:</strong> A catalog recitation closes fewer deals than a conversation. Asking "Do you plan to tow, haul, or go off-road?" and showing that answer on the customer's vehicle is more persuasive than listing options. Customers also respond differently to self-directed exploration versus a guided pitch, so giving both paths converts more buyers.</p>
+            <p class="hiw-bp-how"><strong>How FordEngage helps:</strong> Sales Agent mode gives your associate a structured, question-driven flow. Self-Drive mode hands the touchscreen to the customer. Both paths lead to the same outcome: a visible, configured accessory package the customer chose.</p>
           </div>
           <div class="hiw-step-badge hiw-badge--core">
             <span class="hiw-badge-label">Core Platform</span>
@@ -1367,14 +1549,19 @@
       <div class="hiw-step-inner hiw-step--image-right" data-reveal>
         <div class="hiw-step-content">
           <p class="hiw-step-num" aria-label="Step 3">03</p>
-          <p class="hiw-step-label">Selection and Purchase</p>
-          <h2 id="step-3-heading" class="hiw-step-heading">Online Accessory Revenue, 24 Hours a Day</h2>
-          <p class="hiw-step-body">When customers are not in your showroom, they are still buying. The EnvyPRO eStore is your dealer-branded online accessory storefront, open around the clock. Genuine Ford accessories, your branding, your revenue.</p>
+          <p class="hiw-step-label">Online Purchase and Follow-Through</p>
+          <h2 id="step-3-heading" class="hiw-step-heading">Keep the Sale Moving After They Leave the Lot</h2>
+          <p class="hiw-step-body">Not every customer decides in the showroom. The EnvyPRO eStore gives customers a clear next step: your dealer-branded online storefront where they can browse genuine Ford accessories on their own time and submit an inquiry or order.</p>
           <ul class="hiw-step-bullets">
             <li>Your dealer branding, your storefront, your pricing control</li>
-            <li>Genuine Ford accessories with full catalog and fitment</li>
-            <li>Order operations built in</li>
+            <li>Genuine Ford accessories with full catalog and vehicle fitment</li>
+            <li>Accessory inquiry and order operations built in</li>
           </ul>
+          <div class="hiw-best-practice">
+            <p class="hiw-bp-label">Best Practice</p>
+            <p class="hiw-bp-why"><strong>Why it matters:</strong> Making the next step obvious is the single biggest driver of follow-through. Customers who leave without a clear action rarely return to discuss accessories. An always-available online path keeps the conversation open.</p>
+            <p class="hiw-bp-how"><strong>How FordEngage helps:</strong> The eStore gives you a branded, vehicle-specific destination to hand customers at the end of a showroom visit or share as a follow-up link, so the sale has a place to continue on their schedule.</p>
+          </div>
           <div class="hiw-step-badge hiw-badge--addon">
             <span class="hiw-badge-label">Optional Add-On</span>
             <strong>EnvyPRO eStore</strong>
@@ -1385,6 +1572,110 @@
             <img src="images/product/box-envypro-estore.webp" alt="EnvyPRO eStore product box" width="600" height="760" loading="eager" decoding="async">
             <p class="hiw-product-desc">Online parts and accessories</p>
           </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ═══ VISUAL JOURNEY DIAGRAM ═══ -->
+    <section class="hiw-diagram" id="journey-map" aria-labelledby="diagram-heading">
+      <div class="hiw-diagram-inner" data-reveal>
+        <p class="hiw-eyebrow hiw-eyebrow--dark">How the pieces connect</p>
+        <h2 id="diagram-heading" class="hiw-diagram-heading">Discovery to Purchase, One Continuous Journey</h2>
+        <p class="hiw-diagram-sub">Each product occupies a distinct moment in the customer's path. Together they close the gap between online research and in-store sale.</p>
+
+        <div class="hiw-journey-map" role="img" aria-label="Customer journey: VDP discovery leads to Engage360 showroom visualization, then to optional eStore purchase">
+          <div class="hiw-jnode hiw-jnode--addon">
+            <div class="hiw-jnode-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="2" y="4" width="24" height="18" rx="2.5" stroke="currentColor" stroke-width="1.8" fill="none"/><path d="M2 10h24M9 10v12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </div>
+            <p class="hiw-jnode-label">Online</p>
+            <p class="hiw-jnode-name">VDP Widget</p>
+            <p class="hiw-jnode-desc">Customer browses accessories alongside their vehicle on your website and submits an inquiry.</p>
+            <span class="hiw-jnode-badge">Optional</span>
+          </div>
+
+          <div class="hiw-jarrow" aria-hidden="true">
+            <svg width="48" height="24" viewBox="0 0 48 24" fill="none"><path d="M4 12h38M34 5l8 7-8 7" stroke="rgba(255,255,255,.5)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="hiw-jarrow-label">Visit</span>
+          </div>
+
+          <div class="hiw-jnode hiw-jnode--core">
+            <div class="hiw-jnode-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 3L3 8.5V19.5L14 25L25 19.5V8.5L14 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" fill="none"/><path d="M14 3V25M3 8.5L14 14M25 8.5L14 14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            </div>
+            <p class="hiw-jnode-label">In-Showroom</p>
+            <p class="hiw-jnode-name">Engage360</p>
+            <p class="hiw-jnode-desc">Sales team or customer explores accessories in real 3D and AR on the actual vehicle. Inquiry or selection recorded.</p>
+            <span class="hiw-jnode-badge hiw-jnode-badge--core">Included</span>
+          </div>
+
+          <div class="hiw-jarrow" aria-hidden="true">
+            <svg width="48" height="24" viewBox="0 0 48 24" fill="none"><path d="M4 12h38M34 5l8 7-8 7" stroke="rgba(255,255,255,.5)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="hiw-jarrow-label">Follow-up</span>
+          </div>
+
+          <div class="hiw-jnode hiw-jnode--addon">
+            <div class="hiw-jnode-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="4" y="4" width="20" height="20" rx="2.5" stroke="currentColor" stroke-width="1.8" fill="none"/><path d="M9 14h10M14 9v10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </div>
+            <p class="hiw-jnode-label">Online Purchase</p>
+            <p class="hiw-jnode-name">EnvyPRO eStore</p>
+            <p class="hiw-jnode-desc">Customer returns on their own time to browse and purchase on your dealer-branded storefront.</p>
+            <span class="hiw-jnode-badge">Optional</span>
+          </div>
+        </div>
+
+        <p class="hiw-diagram-note">Note: each product functions independently. Customer data is not automatically shared between touchpoints. Your team connects the dots.</p>
+      </div>
+    </section>
+
+    <!-- ═══ DEALER PLAYBOOK ═══ -->
+    <section class="hiw-playbook" id="playbook" aria-labelledby="playbook-heading">
+      <div class="hiw-playbook-inner" data-reveal>
+        <div class="hiw-playbook-hdr">
+          <p class="hiw-eyebrow">Dealer Playbook</p>
+          <h2 id="playbook-heading" class="hiw-playbook-heading">Six Moves That Make It Work</h2>
+          <p class="hiw-playbook-sub">Best practice guidance for getting the most from FordEngage on your floor. These are process recommendations, not guaranteed outcomes.</p>
+        </div>
+        <div class="hiw-plays-grid">
+
+          <div class="hiw-play">
+            <p class="hiw-play-num">1</p>
+            <h3 class="hiw-play-name">Start the conversation before the visit</h3>
+            <p class="hiw-play-body">Enable the VDP Widget so accessory options appear alongside every vehicle listing. When a customer walks in after browsing your site, your associate already has a starting point: what they looked at. Use that to open the accessories conversation naturally rather than pitching cold.</p>
+          </div>
+
+          <div class="hiw-play">
+            <p class="hiw-play-num">2</p>
+            <h3 class="hiw-play-name">Ask lifestyle questions, not catalog questions</h3>
+            <p class="hiw-play-body">Use Sales Agent mode to start with how the customer plans to use their vehicle: towing, off-road, hauling, family, work. Surface accessories that fit their answer. A customer who says they camp every summer will respond to roof racks and cargo solutions far better than a product list read from a screen.</p>
+          </div>
+
+          <div class="hiw-play">
+            <p class="hiw-play-num">3</p>
+            <h3 class="hiw-play-name">Show it on their vehicle, not a generic one</h3>
+            <p class="hiw-play-body">The most effective accessory presentation is one where the customer sees the product on the color and trim they are actually buying. Use Engage360 to configure to their exact vehicle. When Self-Drive mode or a kiosk is available in your waiting area or showroom floor, let customers explore independently while they wait.</p>
+          </div>
+
+          <div class="hiw-play">
+            <p class="hiw-play-num">4</p>
+            <h3 class="hiw-play-name">Give customers a path when they leave undecided</h3>
+            <p class="hiw-play-body">If a customer did not select accessories in the showroom, make the next step concrete. Share a direct link to your EnvyPRO eStore so they have a destination to return to on their own schedule. A customer without a next step rarely comes back to the topic.</p>
+          </div>
+
+          <div class="hiw-play">
+            <p class="hiw-play-num">5</p>
+            <h3 class="hiw-play-name">Treat every deal as an accessories deal</h3>
+            <p class="hiw-play-body">Consistent presentation on every deal matters more than heroic individual efforts. Use Sales Agent mode as a standard step in your delivery process, not an optional add-on. The associate who runs the presentation every time will outperform the one who runs it occasionally.</p>
+          </div>
+
+          <div class="hiw-play">
+            <p class="hiw-play-num">6</p>
+            <h3 class="hiw-play-name">Track what you can and review it weekly</h3>
+            <p class="hiw-play-body">Consider tracking accessory attachment rate, accessory gross per vehicle sold, and inquiry-to-sale conversion as team KPIs. Reviewing these weekly in your sales meeting keeps accessories front of mind without requiring new technology. FordEngage surfaces inquiry activity; how you act on it is a process decision your team owns.</p>
+          </div>
+
         </div>
       </div>
     </section>
