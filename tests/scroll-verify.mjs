@@ -137,14 +137,16 @@ for (const width of [390, 1440]) {
     assert.ok(closeVisible, 'modal close button must be visible');
   });
 
-  await test(`[${width}] modal body: scrollHeight > clientHeight`, async () => {
+  await test(`[${width}] modal body: usable reading height >= 400px and overflow-y ready`, async () => {
     const dims = await page.locator('#modal-agreement-body').evaluate(el => ({
       scrollHeight: el.scrollHeight,
       clientHeight: el.clientHeight,
       overflowY:    getComputedStyle(el).overflowY,
     }));
-    assert.ok(dims.scrollHeight > dims.clientHeight,
-      `modal body scrollHeight ${dims.scrollHeight} must exceed clientHeight ${dims.clientHeight}`);
+    // clientHeight must be a usable reading area — not the collapsed 48px bug.
+    // scrollHeight may equal clientHeight when the full text fits in the panel at a given viewport.
+    assert.ok(dims.clientHeight >= 400,
+      `modal body clientHeight ${dims.clientHeight}px is too short to be usable (min 400px)`);
     assert.ok(['auto','scroll'].includes(dims.overflowY),
       `modal overflow-y must be auto or scroll, got ${dims.overflowY}`);
   });
