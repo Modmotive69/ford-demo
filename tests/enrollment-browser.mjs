@@ -29,6 +29,8 @@ try{
   await page.route(base+'/submit-enrollment',async route=>{calls++;lastPayload=route.request().postDataJSON();if(mode==='error')await route.fulfill({status:503,contentType:'application/json',body:JSON.stringify({ok:false,error:'Synthetic provider failure'})});else if(mode==='network')await route.abort('failed');else {await new Promise(r=>setTimeout(r,250));await route.fulfill({contentType:'application/json',body:JSON.stringify(mockResult(lastPayload))});}});
   await page.goto(base+'/enroll');await page.locator('#inline-agreement p').first().waitFor();
   const text=await page.locator('body').innerText();assert.ok(!/local draft|local JSON|REVIEW DRAFT|localhost|Pricing: unresolved/i.test(text));
+  assert.equal(await page.locator('#configuration').count(),0);
+  assert.ok(!text.includes('Configurations / variations / bundle description (optional)'));
   assert.equal(await page.locator('#submit-btn').innerText(),'Submit Agreement');
   const style=await page.locator('#submit-btn').evaluate(el=>({background:getComputedStyle(el).backgroundColor,height:el.getBoundingClientRect().height}));assert.equal(style.background,'rgb(0, 52, 120)');assert.ok(style.height>=48);
   await page.locator('#submit-btn').click();assert.equal(calls,0);assert.ok((await page.locator('#draft-errors').innerText()).includes('Please correct'));

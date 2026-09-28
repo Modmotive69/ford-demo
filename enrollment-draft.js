@@ -94,8 +94,6 @@
     } else if (priceRow) {
       priceRow.textContent = priceInfo && priceInfo.isQuote ? 'Pricing: Contact sales for custom quote' : '';
     }
-    document.getElementById('print-configuration').textContent =
-      'Configuration: ' + (document.getElementById('configuration').value.trim() || 'Not specified');
     document.getElementById('print-dealership').textContent =
       'Dealership: ' + (document.getElementById('dealer-name').value.trim() || 'Not entered');
     document.getElementById('print-signer').textContent =
@@ -155,7 +153,6 @@
       `Agreement version: ${version}\n` +
       `Selected products: ${selected().join(' + ') || 'None — choose at least one'}\n` +
       (window._priceSummaryLine ? window._priceSummaryLine + '\n' : '') +
-      `Configuration: ${$('configuration').value.trim() || 'Not specified'}\n` +
       `Dealership: ${v('dealer-name')}\n` +
       `Name (Signature): ${v('sig-name')}\n` +
       `Title: ${v('sig-title')}\n` +
@@ -333,7 +330,6 @@
       agreementText:    agreement.terms.join('\n'),
       selectedProducts: selected(),
       pricingSummary:   window.resolveEnrollmentPrice ? window.resolveEnrollmentPrice() : null, // informational only; server re-resolves
-      configuration:    $('configuration') ? $('configuration').value.trim() : '',
       enrollment:       formValues,
       signer:           signer,
       consent: {

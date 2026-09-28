@@ -1,5 +1,5 @@
 {
-  "version": "FE-2026-09-28-review-9",
+  "version": "FE-2026-09-28-review-10",
   "terms": [
     "TECHNOLOGY SERVICES AGREEMENT",
     "(FORD ENGAGE PROGRAM)",
@@ -26,7 +26,7 @@
     "",
     "(c)VDP Widget.The Company’s “vehicle-specific” accessories widget embedded in the Dealer’s website vehicle detail pages allowing dealer customers to request and view the financed  pricing for accessories within the vehicle sales quote.",
     "",
-    "(d) eStore. The Company’s dealer-branded OEM parts and accessories eStore, combining catalog discovery, VIN and vehicle fitment, checkout, and order operations. The eStore is a dealer-branded storefront; a widget on the Dealer’s existing website may direct shoppers to it. The Dealer controls storefront pricing and fulfillment within the platform. Specific configuration is identified in the Product Selection block.",
+    "(d) eStore. The Company’s dealer-branded OEM parts and accessories eStore, combining catalog discovery, VIN and vehicle fitment, checkout, and order operations. The eStore is a dealer-branded storefront; a widget on the Dealer’s existing website may direct shoppers to it. The Dealer controls storefront pricing and fulfillment within the platform. Specific product selection is identified in the Product Selection block.",
     "1.2Technology License.The Company hereby grants The Dealer a limited, non-transferable, non-assignable, non-exclusive license to use only the products selected in the Product Selection block (the “Company Products”) for the purposes contemplated by this Agreement. The license of the Company Products shall include all upgrades, updates, improvements, modifications and enhancements made thereto and all related support services.  ",
     "",
     "1.3Transitioning Dealers and New Dealers.The Company is the owner and developer of the Company Products, including the Existing DSS Solution.  Dealers using the DSS Solution and executing this Agreement on the Effective Date (the “Transitioning Dealers”), shall receive a license for the continued use of the Existing DSS Solution effective upon execution, but provided by the Company instead of Chrome Data.  The Existing DSS Solution will be retired from use by the Company on or about December 31, 2026 (the “DSS Retirement Date”).  The Transitioning Dealers will be upgraded to a license for the Company Products selected in the Product Selection block in the interim period prior to retirement of the Existing DSS Solution.  Dealers executing this Agreement but not using the Existing DSS Solution on the Effective Date (the “New Dealers”) will receive a license for the Company Products selected in the Product Selection block upon execution of this Agreement.",
@@ -68,7 +68,7 @@
     "",
     "Licensee acknowledges and agrees that the monthly fees commence after onboarding of the first user is complete. If Licensee’s onboarding is completed between the first (1st) and the tenth (10th) of the month, the applicable monthly fees will be effective on the first (1st) day of that month. If Licensee’s onboarding is completed after the tenth (10th) of the month, the applicable monthly fees will be effective on the first (1st) day of the following month. All monthly fees, plus applicable taxes, are due and payable to PartSites, LLC, a wholly owned subsidiary of SmartDealer Technologies, Inc. within thirty (30) days of receipt of PartSites invoice."
   ],
-  "sha256": "ab7576825360b7391d9d5870c7fc95364feed828c5bd98a3e74e0d0357ab6b78",
+  "sha256": "fbfd9b4d4a970d389db1b98430d47ad039f5433dc91f4760080c70c9fcc2069e",
   "consent": "I certify I am authorized to submit this information on behalf of the dealership and have read and agree to the terms.",
   "payee": "PartSites, LLC, a wholly owned subsidiary of SmartDealer Technologies, Inc.",
   "payeeResolved": true,

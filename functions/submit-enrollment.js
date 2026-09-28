@@ -57,7 +57,7 @@ export function renderAgreement(r) {
       ['Monthly fee',               p.discountedLabel],
     ]),
     ['One-time setup',              p.setupCents === 0 ? 'Waived' : p.setupLabel],
-    ['Configuration',               r.configuration || 'Not specified'],
+    ...(r.configuration ? [['Configuration', r.configuration]] : []),
     ...Object.entries(r.enrollment).filter(([,v]) => v),
     ['Consent statement',           r.consent.text],
     ['Consent accepted',            'Yes — authorized representative confirmed'],
@@ -145,7 +145,7 @@ export async function onRequestPost({request, env}) {
     return json({ok:false,error:'Complete valid dealership, primary-contact and signer information.'},400);
   if (p.consent.checked!==true||p.consent.text!==agreement.consent)
     return json({ok:false,error:'Read and accept the agreement authorization and consent.'},400);
-  if (typeof p.configuration!=='string'||p.configuration.length>2000)
+  if (p.configuration !== undefined && (typeof p.configuration!=='string' || p.configuration.length>2000))
     return json({ok:false,error:'Configuration is too long or invalid.'},400);
   const captured=p.consent.capturedAtClient;
   if(typeof captured!=='string'||captured.length>40||!Number.isFinite(Date.parse(captured)))
@@ -159,7 +159,8 @@ export async function onRequestPost({request, env}) {
 
   const db=env.ENROLLMENT_DB;
   // Fingerprint includes termId so same entries + different term = different receipt
-  const stable={agreementVersion:agreement.version,selectedProducts:[...products].sort(),termId,configuration:p.configuration.trim(),enrollment,signer};
+  const configuration = typeof p.configuration === 'string' ? p.configuration.trim() : '';
+  const stable={agreementVersion:agreement.version,selectedProducts:[...products].sort(),termId,configuration,enrollment,signer};
   const fingerprint=await hash(JSON.stringify(stable));
   let r;
   try {
