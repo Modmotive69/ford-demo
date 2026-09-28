@@ -111,6 +111,9 @@ export async function onRequestPost({request, env}) {
   if (!Array.isArray(products)||products.length<1||products.length>3||new Set(products).size!==products.length||
       products.some(v=>!['FordEngage','VDP Widget','eStore'].includes(v)))
     return json({ok:false,error:'Select valid products.'},400);
+  // Policy: Engage360 (FordEngage) is mandatory base — reject tampered submissions missing it
+  if (!products.includes('FordEngage'))
+    return json({ok:false,error:'Engage360 is required for all new enrollments. Add-ons cannot be enrolled without the base platform.'},400);
 
   // Term validation — server-authoritative; reject unknown or tampered term
   const termId = p.termId;

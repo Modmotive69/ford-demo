@@ -74,7 +74,9 @@
 
   /* ── Print ───────────────────────────────────────────────────────────── */
   function syncPrintSummary() {
-    const sel = Array.from(document.querySelectorAll('[name=products]:checked'), x => x.value);
+    // Base (FordEngage) always included via hidden input; addons from checked checkboxes
+  const addonSel = Array.from(document.querySelectorAll('.addon-input:checked'), x => x.value);
+  const sel = ['FordEngage', ...addonSel];
     const termEl = document.getElementById('term-select');
     const termId = termEl ? termEl.value : 'month-to-month';
     const priceInfo = window.resolveEnrollmentPrice ? window.resolveEnrollmentPrice() : null;
@@ -131,7 +133,10 @@
 
   /* ── Helpers ─────────────────────────────────────────────────────────── */
   const $ = id => document.getElementById(id);
-  const selected = () => Array.from(document.querySelectorAll('[name=products]:checked'), e => e.value);
+  const selected = () => {
+    const addons = Array.from(document.querySelectorAll('.addon-input:checked'), e => e.value);
+    return ['FordEngage', ...addons];
+  };
   const sigFields = [
     { id: 'sig-name',  label: 'Name (Signature)',  type: 'text'  },
     { id: 'sig-title', label: 'Title',              type: 'text'  },
@@ -192,7 +197,7 @@
 
     const rows = [
       { label: 'Agreement version', value: version },
-      { label: 'Selected products', value: prods.length ? prods.join(' + ') : 'None — choose at least one' },
+      { label: 'Selected products', value: prods.map(p => p === 'FordEngage' ? 'Engage360' : p).join(' + ') },
     ];
 
     // Insert pricing line if price-lookup.js has computed it
@@ -241,6 +246,23 @@
   const form = document.getElementById('enroll-form');
   form.addEventListener('input',  () => { updateSummary(); $('draft-status').textContent = ''; });
   form.addEventListener('change', updateSummary);
+
+  /* Reconsent: uncheck agree-checkbox when addon selection or term changes.
+     Base (Engage360) is fixed — only addon/term changes require re-consent. */
+  function requireReconsent() {
+    const cb = $('agree-checkbox');
+    if (cb && cb.checked) {
+      cb.checked = false;
+      cb.dispatchEvent(new Event('change'));
+      $('agree-checkbox-error').textContent = 'Please re-read and re-confirm your agreement after changing products or terms.';
+    }
+  }
+  document.querySelectorAll('.addon-input').forEach(inp => {
+    inp.addEventListener('change', requireReconsent);
+  });
+  const termSelectEl = document.getElementById('term-select');
+  if (termSelectEl) termSelectEl.addEventListener('change', requireReconsent);
+
   updateSummary();
 
   /* ── Validation ──────────────────────────────────────────────────────── */
@@ -251,10 +273,11 @@
       if (el.id === 'city-text' && el.style.display === 'none') continue;
       if (!el.validity.valid) { errors.push('Complete a valid ' + (form.querySelector('label[for="' + el.id + '"]')?.textContent || el.name) + '.'); el.setAttribute('aria-invalid','true'); }
     }
-    // Products
+    // Products — Engage360 base always included; no empty-selection possible
     $('product-selection').removeAttribute('aria-invalid');
     $('product-error').textContent = '';
-    if (!selected().length) {
+    if (false) {
+      // unreachable — base always in selectedProducts via hidden input
       errors.push('Choose at least one product.');
       $('product-error').textContent = 'Choose at least one product.';
       $('product-selection').setAttribute('aria-invalid', 'true');
