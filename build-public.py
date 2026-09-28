@@ -34,5 +34,11 @@ for name,src in sorted(files.items()):
 '/dealer-agreement\n  Cache-Control: no-cache\n'
 '/images/ford-showroom-render.webp\n  Content-Type: image/webp\n  X-Content-Type-Options: nosniff\n'
 )
-report=root/'test-results/submission-release-manifest.json';report.parent.mkdir(exist_ok=True);report.write_text(json.dumps(manifest,indent=2))
+# _routes.json: include=/* so Worker is ALWAYS invoked (exclude wins over include,
+# so the prior 'include:[submit-enrollment],exclude:[/*]' was silently excluding everything).
+# Worker's internal executeRequest() routes POST /submit-enrollment to the handler;
+# all other requests fall through to env.ASSETS.fetch().
+import json as _json
+(out/'_routes.json').write_text(_json.dumps({'version':1,'include':['/*'],'exclude':[]},indent=2))
+report=root/'test-results/submission-release-manifest.json';report.parent.mkdir(exist_ok=True);report.write_text(_json.dumps(manifest,indent=2))
 print('Staged',len(manifest),'public files; no functions/server/tests/config/secrets in asset directory.')
