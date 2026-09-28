@@ -33,3 +33,34 @@
 }
 
 #see-it-in-action .fe-demo-product-image { display:block; width:100%; max-width:900px; height:auto; margin:0 auto 32px; }
+
+/* ── 3D/AR technology badges ─────────────────────────────── */
+.fe-demo-tech-badges {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 auto 28px;
+  justify-content: center;
+}
+.fe-tech-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 16px 7px 10px;
+  border: 1.5px solid rgba(0,52,120,0.22);
+  border-radius: 999px;
+  background: rgba(0,52,120,0.05);
+  font-family: 'Ford Antenna', 'Barlow Condensed', Arial, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #003478;
+  user-select: none;
+  white-space: nowrap;
+}
+.fe-tech-badge svg { flex-shrink: 0; }
+@media (max-width: 480px) {
+  .fe-demo-tech-badges { gap: 8px; }
+  .fe-tech-badge { font-size: 0.78rem; padding: 6px 12px 6px 8px; }
+}
