@@ -339,12 +339,18 @@
   });
 
   // ── Wire product checkboxes ──────────────────────────────────────────────
-  // Wire BYP term radios
+  // Wire BYP term radios — 'change' fires on radio input, 'click' on label
   form.querySelectorAll('input[name="term"]').forEach(radio => {
     radio.addEventListener('change', () => {
       updatePriceSummary();
-      unconsent('You changed the pricing plan — please re-read and re-check consent.');
+      unconsent('You changed the pricing plan \u2014 please re-read and re-check consent.');
     });
+    // Belt-and-suspenders: also update on click in case change doesn't fire
+    radio.addEventListener('click', () => { setTimeout(updatePriceSummary, 0); });
+  });
+  // Wire clicks on term label rows too (label wraps radio, click propagates)
+  form.querySelectorAll('.byp-term-opt').forEach(lbl => {
+    lbl.addEventListener('click', () => { setTimeout(updatePriceSummary, 0); });
   });
 
   form.querySelectorAll('.product-option-input, .addon-input').forEach(input => {
