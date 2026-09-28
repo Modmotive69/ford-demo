@@ -14,7 +14,7 @@ const phoneValid = s => /^(?:\+1[ .-]?)?(?:\([0-9]{3}\)|[0-9]{3})[ .-]?[0-9]{3}[
 function resolvePricingServer(products, termId) {
   const key   = [...products].sort().join('+');
   const entry = agreement.priceConfig[key];
-  if (!entry || entry.price === null) return null; // quote-required
+  if (!entry || entry.price === null) return null; // should not happen — all catalog entries are priced
   const tc        = agreement.termConfig[termId];
   if (!tc) return null; // unknown term
   const baseCents = Math.round(entry.price * 100);
@@ -120,10 +120,11 @@ export async function onRequestPost({request, env}) {
   // Server resolves price from authoritative config — client price never trusted
   const resolved = resolvePricingServer(products, termId);
   if (!resolved) {
+    // All 7 catalog combinations have a price; null resolution means unknown combo or unknown term
     const entry = agreement.priceConfig[[...products].sort().join('+')];
-    if (!entry || entry.price === null)
-      return json({ok:false,error:'This product combination requires a custom quote.'},400);
-    return json({ok:false,error:'Unknown term. Select a valid commitment option.'},400);
+    if (!entry)
+      return json({ok:false,error:'Product combination not in catalog.'},400);
+    return json({ok:false,error:'Select a valid pricing plan (month-to-month, 1year, or 2year).'},400);
   }
 
   const fields = ['dealer_name','pa_code','address','city','state','zip','pc_first','pc_last','pc_title','pc_email','pc_phone','ap_first','ap_last','ap_email','ap_phone'];

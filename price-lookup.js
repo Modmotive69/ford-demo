@@ -39,13 +39,12 @@
     if (!products.length) return null;
     const key   = combKey(products);
     const entry = PRICES[key];
-    if (!entry || entry.price === null) return { isQuote: true, key };
+    if (!entry) return null; // unknown combo (not in catalog)
     const tc         = TERMS[termId] || TERMS['month-to-month'];
     const baseCents  = Math.round(entry.price * 100);
     const discCents  = Math.round(baseCents * tc.discountFactor);
     const fmtCents   = c => '$' + (c / 100).toFixed(2).replace(/\.00$/, '');
     return {
-      isQuote:        false,
       key,
       products,
       termId,
@@ -106,8 +105,6 @@
         <span style="font-weight:400;font-size:0.8rem;color:#555;margin-left:8px">— incorporated into this Agreement</span>
       </div>
       <div id="pps-content" style="font-size:0.9rem;color:#555;font-style:italic">No products selected yet.</div>
-      <p id="pps-quote-notice" style="display:none;margin:10px 0 0;color:#a56c00;
-         background:#fff8e6;border-left:3px solid #a56c00;padding:8px 12px;font-size:0.85rem"></p>
       <p id="pps-note" style="margin:8px 0 0;font-size:0.78rem;color:#6e6e73">
         Fees invoiced monthly in arrears, payable within 30 days of PartSites invoice.
         Monthly fees commence after first-user onboarding as described in the Agreement.
@@ -120,7 +117,6 @@
     const prods   = selectedProducts();
     const termId  = selectedTerm();
     const content = document.getElementById('pps-content');
-    const notice  = document.getElementById('pps-quote-notice');
     if (!content) return;
 
     if (!prods.length) {
@@ -134,32 +130,25 @@
     content.style.fontStyle = 'normal';
     content.style.color = '#1a1a1a';
 
-    if (r.isQuote) {
-      content.innerHTML =
-        '<strong>' + prods.join(', ') + '</strong> — ' +
-        '<span style="color:#a56c00;font-weight:600">Contact sales for pricing</span><br>' +
-        '<span style="font-size:0.8rem;color:#6e6e73">This combination requires a custom quote. No fee confirmed by submission.</span>';
-      notice.style.display = '';
-      notice.textContent = 'This combination requires a custom quote. Submit to notify the sales team; no fee is implied.';
-    } else {
-      const termLabel = TERMS[termId].label;
-      const rows = [
-        ['Products',       prods.join(' + ')],
-        ['Pricing plan',   termLabel],
-        ['Base monthly',   r.baseLabel],
-      ];
-      if (r.discountPct > 0) {
-        rows.push(['Discount', r.discountPct + '%']);
-        rows.push(['Discounted monthly', '<strong style="color:#003478;font-size:1.05rem">' + r.discountedLabel + '</strong>']);
-      } else {
-        rows.push(['Monthly fee', '<strong style="color:#003478;font-size:1.05rem">' + r.discountedLabel + '</strong>']);
-      }
-      rows.push(['One-time setup', r.setupCents === 0 ? '<span style="color:#1a7a3c;font-weight:600">Waived</span>' : '<strong>' + r.setupLabel + '</strong>']);
-      content.innerHTML = '<table style="border-collapse:collapse;width:100%;font-size:0.9rem">' +
-        rows.map(([k,v]) => `<tr><td style="padding:4px 12px 4px 0;color:#555;white-space:nowrap;vertical-align:top">${k}</td><td style="padding:4px 0">${v}</td></tr>`).join('') +
-        '</table>';
-      notice.style.display = 'none';
+    if (!r) {
+      content.innerHTML = '<span style="color:#a21d16">Product combination not recognised. Reload the page.</span>';
+      return;
     }
+    const rows = [
+      ['Products',       prods.join(' + ')],
+      ['Pricing plan',   r.termLabel],
+      ['Base monthly',   r.baseLabel],
+    ];
+    if (r.discountPct > 0) {
+      rows.push(['Discount', r.discountPct + '%']);
+      rows.push(['Discounted monthly', '<strong style="color:#003478;font-size:1.05rem">' + r.discountedLabel + '</strong>']);
+    } else {
+      rows.push(['Monthly fee', '<strong style="color:#003478;font-size:1.05rem">' + r.discountedLabel + '</strong>']);
+    }
+    rows.push(['One-time setup', r.setupCents === 0 ? '<span style="color:#1a7a3c;font-weight:600">Waived</span>' : '<strong>' + r.setupLabel + '</strong>']);
+    content.innerHTML = '<table style="border-collapse:collapse;width:100%;font-size:0.9rem">' +
+      rows.map(([k,v]) => `<tr><td style="padding:4px 12px 4px 0;color:#555;white-space:nowrap;vertical-align:top">${k}</td><td style="padding:4px 0">${v}</td></tr>`).join('') +
+      '</table>';
 
     updateSigningSummary();
   }
@@ -207,7 +196,6 @@
     const r      = prods.length ? resolvePricing(prods, termId) : null;
     let priceStr;
     if (!r)               priceStr = 'None';
-    else if (r.isQuote)   priceStr = 'Contact sales — custom quote required';
     else if (r.discountPct > 0)
       priceStr = r.discountedLabel + ' (' + r.discountPct + '% off base ' + r.baseLabel + ', ' + TERMS[termId].label + ')' +
                  (r.setupCents > 0 ? ' + ' + r.setupLabel : ', setup waived');

@@ -1,5 +1,5 @@
 {
-  "version": "FE-2026-09-28-review-10",
+  "version": "FE-2026-09-28-review-11",
   "terms": [
     "TECHNOLOGY SERVICES AGREEMENT",
     "(FORD ENGAGE PROGRAM)",
@@ -98,16 +98,16 @@
       "label": "$899/mo"
     },
     "FordEngage+eStore": {
-      "price": null,
-      "label": "Contact sales for pricing"
+      "price": 798,
+      "label": "$798/mo"
     },
     "VDP Widget+eStore": {
-      "price": null,
-      "label": "Contact sales for pricing"
+      "price": 498,
+      "label": "$498/mo"
     }
   },
   "pricingResolved": true,
-  "pricingSource": "Published FordEngage enrollment plan cards, confirmed by user",
+  "pricingSource": "Published individual and bundle plan cards; unlisted combos use additive pricing (sum of standalone prices).",
   "termConfig": {
     "month-to-month": {
       "label": "Month-to-month",

@@ -69,6 +69,8 @@ const pricedCombos = [
   { products:['VDP Widget'],                           baseCents:19900  },
   { products:['FordEngage','VDP Widget'],              baseCents:64900  },
   { products:['eStore','FordEngage','VDP Widget'],     baseCents:89900  },
+  { products:['FordEngage','eStore'],                  baseCents:79800  }, // additive 499+299
+  { products:['VDP Widget','eStore'],                  baseCents:49800  }, // additive 299+199
 ];
 const terms = {
   'month-to-month': { factor:1.00,  setupCents:100000, discountPct:0  },
@@ -103,16 +105,6 @@ for (const {products, baseCents} of pricedCombos) {
   }
 }
 
-// ── 2 quote-required combos ──────────────────────────────────────────────────
-for (const products of [['FordEngage','eStore'], ['VDP Widget','eStore']]) {
-  await test(`quote-required rejected — ${products.join('+')}`, async () => {
-    const p = payload('month-to-month', products);
-    const r = await send(p);
-    assert.equal(r.data.ok, false);
-    assert.ok([400,409].includes(r.status));
-    assert.equal(mail.length, 0);
-  });
-}
 
 // ── Unknown / tampered term rejected ─────────────────────────────────────────
 await test('unknown term rejected', async () => {
@@ -124,6 +116,20 @@ await test('tampered term string rejected', async () => {
   const r = await send(p);
   assert.equal(r.data.ok, false); assert.equal(mail.length, 0);
 });
+
+// ── Previously quote-required combos now have deterministic prices ──────────────
+for (const [products, expectedBaseCents] of [
+  [['FordEngage','eStore'], 79800],
+  [['VDP Widget','eStore'], 49800],
+]) {
+  await test(`${products.join('+')} now priced — no quote block, sends email`, async () => {
+    const p = payload('month-to-month', products);
+    const r = await send(p);
+    assert.equal(r.data.ok, true, r.data.error);
+    assert.equal(r.data.resolved_price.baseCents, expectedBaseCents);
+    assert.equal(mail.length, 1, 'expected exactly one email sent');
+  });
+}
 
 // ── Duplicate / idempotency ──────────────────────────────────────────────────
 await test('same payload + term = one send, same receipt', async () => {
