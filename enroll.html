@@ -498,6 +498,9 @@
       padding: 24px;
       background: linear-gradient(180deg, #fbfcfe 0%, #ffffff 100%);
       box-shadow: 0 8px 30px rgba(0, 52, 120, 0.06);
+      container-type: inline-size;
+      container-name: byp;
+      font-family: 'Ford Antenna', 'FordAntenna', Arial, sans-serif;
     }
 
     .product-selection-fieldset[aria-invalid="true"] {
@@ -1630,134 +1633,124 @@
        Right: sticky plan detail + cart panel
     ════════════════════════════════════════════════════════════════ */
 
+
     .byp-layout {
       display: grid;
-      grid-template-columns: 1fr 360px;
-      gap: 0;
+      grid-template-columns: minmax(0, 1.7fr) minmax(320px, 1fr);
+      gap: 32px;
       align-items: start;
     }
 
-    /* ── LEFT: Product tiles ────────────────────────────── */
     .byp-tiles {
-      padding-right: 32px;
-      border-right: 1px solid #dde4ee;
+      min-width: 0;
+      padding-right: 0;
+      border-right: 0;
+      container-type: inline-size;
+      container-name: byp-tiles;
     }
 
     .byp-tiles-heading {
-      font-size: 0.72rem;
+      font-size: 0.74rem;
       font-weight: 700;
       letter-spacing: 2px;
       text-transform: uppercase;
       color: #8898ae;
-      margin-bottom: 16px;
+      margin: 0 0 16px;
     }
 
-    /* Product tile */
     .ptile {
       display: grid;
-      grid-template-columns: 160px 1fr 32px;
-      gap: 0 20px;
+      grid-template-columns: minmax(170px, 210px) minmax(220px, 1fr) 30px;
+      gap: 0 22px;
       align-items: center;
-      padding: 18px 16px 18px 0;
-      border-bottom: 1px solid #eaeff6;
-      border-radius: 12px;
+      padding: 18px 18px 18px 14px;
+      border: 1px solid #e8edf5;
+      border-radius: 16px;
+      background: #fff;
       cursor: pointer;
-      transition: background 0.15s;
       position: relative;
+      min-width: 0;
     }
-    .ptile:first-child { border-top: 1px solid #eaeff6; }
+    .ptile + .ptile { margin-top: 14px; }
     .ptile--locked { cursor: default; }
-    .ptile--draft  { cursor: default; opacity: 0.80; }
+    .ptile--draft { cursor: default; opacity: 0.88; }
     .ptile.is-selected {
-      background: #f0f5ff;
-      margin: 0 -8px;
-      padding-left: 8px;
-      padding-right: 8px;
+      background: #f3f7ff;
+      border-color: #cfdcf0;
+      box-shadow: 0 8px 24px rgba(0,52,120,0.06);
     }
     @media (prefers-reduced-motion: no-preference) {
-      .ptile { transition: background 0.18s ease; }
-      .ptile-check { transition: background 0.15s, border-color 0.15s; }
+      .ptile, .ptile-check, .byp-term-opt { transition: background .18s ease, border-color .18s ease, box-shadow .18s ease; }
     }
     @media (prefers-reduced-motion: reduce) {
-      .ptile, .ptile-check { transition: none; }
+      .ptile, .ptile-check, .byp-term-opt { transition: none; }
     }
 
-    /* Box art column */
     .ptile-art {
-      width: 160px;
+      width: 100%;
+      min-width: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      flex-shrink: 0;
     }
     .ptile-art img {
-      width: 160px;
+      width: min(100%, 210px);
       height: auto;
-      max-height: 160px;
+      max-height: 240px;
       object-fit: contain;
+      object-position: center center;
       display: block;
       pointer-events: none;
-      filter: drop-shadow(0 4px 14px rgba(0,0,0,0.13));
-    }
-    .ptile--draft .ptile-art img {
-      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.10)) grayscale(0.15);
+      filter: drop-shadow(0 5px 18px rgba(0,0,0,0.12));
+      background: #fff;
+      border-radius: 12px;
     }
 
-    /* Text body */
-    .ptile-body { min-width: 0; }
+    .ptile-body {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+    }
     .ptile-eyebrow {
       font-size: 10px;
       font-weight: 700;
-      letter-spacing: 2.5px;
+      letter-spacing: 2.4px;
       text-transform: uppercase;
       color: #0562D2;
-      margin-bottom: 4px;
+      margin: 0;
     }
     .ptile-title {
-      font-size: 1.15rem;
+      font-size: 1.22rem;
       font-weight: 800;
       color: #003478;
-      line-height: 1.15;
-      margin-bottom: 5px;
+      line-height: 1.12;
+      margin: 0;
     }
     .ptile-benefit {
-      font-size: 0.82rem;
-      color: #5a6479;
-      line-height: 1.5;
-      margin-bottom: 8px;
+      margin: 0;
+      font-size: 0.90rem;
+      color: #5b6577;
+      line-height: 1.42;
+      max-width: 34ch;
     }
     .ptile-state-badge {
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      font-size: 0.72rem;
+      font-size: 0.74rem;
       font-weight: 700;
-      border-radius: 20px;
-      padding: 4px 10px;
+      border-radius: 999px;
+      padding: 5px 10px;
+      margin-top: 2px;
+      font-family: inherit;
     }
-    .ptile-state-badge--included {
-      color: #003478;
-      background: #d0e0f5;
-    }
-    .ptile-state-badge--added {
-      color: #0a6630;
-      background: #d4f0de;
-    }
-    .ptile-state-badge--add {
-      color: #5a6479;
-      background: #eaeff6;
-    }
-    .ptile-state-badge--draft {
-      color: #7a6400;
-      background: #fef5c0;
-    }
-    .ptile-price-hint {
-      font-size: 0.75rem;
-      color: #8898ae;
-      margin-top: 4px;
-    }
+    .ptile-state-badge--included { color: #003478; background: #d9e6f8; }
+    .ptile-state-badge--added { color: #0a6630; background: #d8f2df; }
+    .ptile-state-badge--add { color: #5a6479; background: #edf1f7; }
+    .ptile-state-badge--draft { color: #7a6400; background: #fef3bf; }
 
-    /* Checkbox column */
     .ptile-check {
       width: 26px;
       height: 26px;
@@ -1770,103 +1763,87 @@
       flex-shrink: 0;
       pointer-events: none;
     }
-    .ptile-check--on  { background: #003478; border-color: #003478; }
-    .ptile-check--lock { background: #003478; border-color: #003478; }
-    .ptile-check--off  { background: #fff; border-color: #c4d0df; }
+    .ptile-check--on, .ptile-check--lock { background: #003478; border-color: #003478; }
+    .ptile-check--off { background: #fff; border-color: #c4d0df; }
     .ptile-check--draft { background: #f0f3f8; border-color: #d0d8e5; }
-    label.ptile:focus-within .ptile-check {
-      outline: 3px solid #0562D2;
-      outline-offset: 2px;
-    }
-
-    /* Hidden real checkbox; ptile-check is purely visual */
+    label.ptile:focus-within .ptile-check { outline: 3px solid #0562D2; outline-offset: 2px; }
     label.ptile .addon-input { position: absolute; opacity: 0; width: 1px; height: 1px; }
 
-    /* ── RIGHT: Your Plan panel ─────────────────────────── */
     .byp-plan-col {
-      padding-left: 32px;
+      min-width: 0;
+      padding-left: 0;
       position: sticky;
       top: 108px;
       max-height: calc(100vh - 120px);
       overflow-y: auto;
-      scrollbar-width: thin;
     }
-
     .byp-panel {
       background: #fff;
       border: 1.5px solid #c8d8ee;
       border-radius: 16px;
       overflow: hidden;
+      font-family: 'Ford Antenna', 'FordAntenna', Arial, sans-serif;
     }
-
-    /* Plan header */
     .byp-panel-hdr {
       background: #003478;
       color: #fff;
       padding: 16px 20px 14px;
+      font-family: inherit;
     }
     .byp-panel-hdr-title {
-      font-size: 0.7rem;
+      font-size: 0.72rem;
       font-weight: 700;
       letter-spacing: 2px;
       text-transform: uppercase;
       opacity: 0.72;
-      margin-bottom: 3px;
+      margin-bottom: 4px;
+      font-family: inherit;
     }
     .byp-panel-hdr-name {
-      font-size: 1.15rem;
+      font-size: 1.18rem;
       font-weight: 800;
-      line-height: 1.2;
+      line-height: 1.15;
+      font-family: inherit;
     }
-
-    /* Plan body */
-    .byp-panel-body { padding: 16px 20px; }
-
-    /* Product detail area */
+    .byp-panel-body { padding: 16px 20px; font-family: inherit; }
     .byp-detail {
-      font-size: 0.82rem;
+      font-size: 0.88rem;
       color: #445;
-      line-height: 1.55;
+      line-height: 1.6;
       margin-bottom: 14px;
       padding-bottom: 14px;
       border-bottom: 1px solid #eaeff6;
-      min-height: 48px;
+      min-height: 56px;
+      font-family: inherit;
     }
-    .byp-detail-empty {
-      color: #9aabbf;
-      font-style: italic;
-    }
-
-    /* Term selector */
     .byp-term-wrap {
       margin-bottom: 14px;
       padding-bottom: 14px;
       border-bottom: 1px solid #eaeff6;
+      font-family: inherit;
     }
     .byp-term-label {
-      font-size: 0.72rem;
+      font-size: 0.74rem;
       font-weight: 700;
       letter-spacing: 1px;
       text-transform: uppercase;
       color: #003478;
       margin-bottom: 8px;
+      font-family: inherit;
     }
-    .byp-term-options {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
+    .byp-term-options { display: flex; flex-direction: column; gap: 6px; }
     .byp-term-opt {
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 8px 12px;
+      padding: 10px 12px;
       border: 1.5px solid #dde4ee;
-      border-radius: 8px;
+      border-radius: 10px;
       cursor: pointer;
-      font-size: 0.82rem;
+      font-size: 0.90rem;
       color: #334;
-      transition: border-color 0.12s, background 0.12s;
+      font-family: inherit;
+      min-width: 0;
     }
     .byp-term-opt.byp-term-opt--active {
       border-color: #003478;
@@ -1882,133 +1859,93 @@
     }
     .byp-term-badge {
       margin-left: auto;
-      font-size: 0.68rem;
+      font-size: 0.70rem;
       font-weight: 700;
       color: #0a6630;
       background: #d4f0de;
-      border-radius: 20px;
-      padding: 2px 8px;
+      border-radius: 999px;
+      padding: 3px 8px;
       white-space: nowrap;
+      font-family: inherit;
     }
-
-    /* Cart line items */
-    .byp-cart { margin-bottom: 14px; }
-    .byp-cart-empty {
-      font-size: 0.8rem;
-      color: #9aabbf;
-      font-style: italic;
-      padding: 8px 0;
-    }
+    .byp-cart { margin-bottom: 14px; font-family: inherit; }
     .byp-line {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      gap: 8px;
-      padding: 5px 0;
-      font-size: 0.82rem;
+      gap: 10px;
+      padding: 7px 0;
+      font-size: 0.88rem;
+      font-family: inherit;
     }
     .byp-line + .byp-line { border-top: 1px dashed #dde6f4; }
-    .byp-line-name { color: #445; flex: 1; }
-    .byp-line-name--base { font-weight: 600; color: #003478; }
+    .byp-line-name { color: #445; flex: 1; min-width: 0; }
+    .byp-line-name--base { font-weight: 700; color: #003478; }
     .byp-line-name--save { color: #1a7a3c; font-style: italic; }
-    .byp-line-price { white-space: nowrap; font-weight: 600; color: #003478; }
+    .byp-line-price { white-space: nowrap; font-weight: 700; color: #003478; }
     .byp-line-price--save { color: #1a7a3c; }
-
-    /* Divider */
     .byp-divider { border: none; border-top: 1.5px solid #dde4ee; margin: 12px 0; }
-
-    /* Total block */
     .byp-total-block {
       background: #003478;
       color: #fff;
-      border-radius: 10px;
+      border-radius: 12px;
       padding: 14px 16px;
       margin-bottom: 10px;
+      font-family: inherit;
     }
-    .byp-total-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+    .byp-total-row { display:flex; justify-content:space-between; align-items:center; gap:10px; }
     .byp-total-label {
-      font-size: 0.72rem;
+      font-size: 0.74rem;
       font-weight: 700;
       letter-spacing: 1.5px;
       text-transform: uppercase;
-      opacity: 0.8;
+      opacity: 0.84;
+      font-family: inherit;
     }
     .byp-total-amount {
-      font-size: 1.55rem;
+      font-size: 1.7rem;
       font-weight: 900;
       letter-spacing: -0.5px;
+      font-family: inherit;
     }
     .byp-total-sub {
       font-size: 0.72rem;
-      opacity: 0.7;
+      opacity: 0.75;
       margin-top: 6px;
+      font-family: inherit;
     }
-    .byp-total-placeholder {
-      font-size: 0.82rem;
-      opacity: 0.7;
-      font-style: italic;
-    }
-
-    /* Setup row */
     .byp-setup-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.78rem;
-      color: #6e7f94;
-      padding: 6px 0;
-      border-top: 1px solid #eaeff6;
+      display:flex; justify-content:space-between; align-items:center;
+      font-size:0.80rem; color:#6e7f94; padding:6px 0; border-top:1px solid #eaeff6;
+      font-family: inherit;
     }
-    .byp-setup-val--waived { color: #0a6630; font-weight: 700; }
-    .byp-setup-val--amount { color: #003478; font-weight: 600; }
+    .byp-setup-val--waived { color:#0a6630; font-weight:700; }
+    .byp-setup-val--amount { color:#003478; font-weight:700; }
+    #product-error { font-size:0.82rem; color:#a21d16; margin-top:10px; min-height:0; }
 
-    /* Product error */
-    #product-error {
-      font-size: 0.82rem;
-      color: #a21d16;
-      margin-top: 10px;
-      min-height: 0;
+    @container byp (max-width: 1040px) {
+      .byp-layout { grid-template-columns: 1fr; gap: 20px; }
+      .byp-tiles { border-right: none; padding-right: 0; padding-bottom: 0; }
+      .byp-plan-col { position: static; max-height: none; overflow: visible; }
     }
 
-    /* Mobile */
-    @media (max-width: 780px) {
-      .byp-layout {
+    @container byp-tiles (max-width: 560px) {
+      .ptile {
         grid-template-columns: 1fr;
+        gap: 10px;
+        padding: 18px 18px 16px;
       }
-      .byp-tiles {
-        border-right: none;
-        border-bottom: 1px solid #dde4ee;
-        padding-right: 0;
-        padding-bottom: 20px;
-      }
-      .byp-plan-col {
-        padding-left: 0;
-        position: static;
-        max-height: none;
-        overflow-y: visible;
-        margin-top: 20px;
-      }
+      .ptile-art { width: 100%; justify-content: flex-start; }
+      .ptile-art img { width: min(180px, 100%); max-height: 220px; }
+      .ptile-check { position: absolute; top: 18px; right: 18px; }
+      .ptile-benefit { max-width: none; }
     }
-    @media (max-width: 520px) {
-      .ptile {
-        grid-template-columns: 120px 1fr 26px;
-        gap: 0 14px;
-      }
-      .ptile-art { width: 120px; }
-      .ptile-art img { width: 120px; max-height: 120px; }
-      .ptile-title { font-size: 1rem; }
-    }
-    @media (max-width: 380px) {
-      .ptile {
-        grid-template-columns: 90px 1fr 22px;
-        gap: 0 10px;
-      }
-      .ptile-art { width: 90px; }
-      .ptile-art img { width: 90px; max-height: 90px; }
+
+    @media (max-width: 480px) {
+      .byp-layout { gap: 18px; }
+      .byp-panel-body { padding: 14px 16px; }
+      .byp-term-opt { font-size: 0.86rem; }
+      .byp-total-amount { font-size: 1.55rem; }
     }
     /* ─── SHARED BRANDED FOOTER ─── */
     .site-footer {
@@ -2290,7 +2227,7 @@
         <div class="ptile-body">
           <div class="ptile-eyebrow">Core Platform</div>
           <div class="ptile-title">Engage360</div>
-          <p class="ptile-benefit">Factory-accurate 4D accessory visualization on the showroom floor. Demonstrate any Ford or Lincoln accessory on the customer's actual vehicle — live, in color, from every angle.</p>
+          <p class="ptile-benefit">Show every accessory live on the customer's exact vehicle in the showroom.</p>
           <span class="ptile-state-badge ptile-state-badge--included" id="base-product-required-note">
             <svg width="11" height="9" viewBox="0 0 11 9" fill="none" aria-hidden="true"><path d="M1 4.5l3 3 6-6" stroke="#003478" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             Included
@@ -2312,7 +2249,7 @@
         <div class="ptile-body">
           <div class="ptile-eyebrow">Add-On</div>
           <div class="ptile-title">EnvyPRO eStore</div>
-          <p class="ptile-benefit">Your dealer-branded accessory storefront, open 24/7. Customers browse and buy genuine Ford accessories online — turning every web visit into accessory revenue.</p>
+          <p class="ptile-benefit">Sell genuine Ford accessories online through your branded storefront.</p>
           <span class="ptile-state-badge ptile-state-badge--add" id="ptile-estore-badge">+ Add</span>
         </div>
         <div class="ptile-check ptile-check--off" aria-hidden="true">
@@ -2331,7 +2268,7 @@
         <div class="ptile-body">
           <div class="ptile-eyebrow">Add-On</div>
           <div class="ptile-title">VDP Widget</div>
-          <p class="ptile-benefit">Start the accessory sale before the showroom visit. Customers shop accessories alongside their vehicle on your VDP — with financed pricing, right next to the vehicle price.</p>
+          <p class="ptile-benefit">Start the accessory sale on every VDP before the showroom visit.</p>
           <span class="ptile-state-badge ptile-state-badge--add" id="ptile-vdp-badge">+ Add</span>
         </div>
         <div class="ptile-check ptile-check--off" aria-hidden="true">
@@ -2348,7 +2285,7 @@
         <div class="ptile-body">
           <div class="ptile-eyebrow">Complete Suite — Preview</div>
           <div class="ptile-title" id="wd-title">World Domination</div>
-          <p class="ptile-benefit" id="wd-desc">Engage360 + EnvyPRO eStore + VDP Widget, plus a free 4K kiosk. The complete showroom package. Pending final pricing confirmation — not yet available.</p>
+          <p class="ptile-benefit" id="wd-desc">The full showroom package — preview only pending final pricing.</p>
           <span class="ptile-state-badge ptile-state-badge--draft">Coming soon</span>
         </div>
         <div class="ptile-check ptile-check--draft" aria-hidden="true">
@@ -2374,7 +2311,7 @@
 
           <!-- Product description / feature detail -->
           <div class="byp-detail" id="byp-detail">
-            Factory-accurate 4D accessory visualization on the showroom floor. Demonstrate any Ford or Lincoln accessory on the customer's actual vehicle — live, in color, from every angle.
+            Show every accessory live on the customer's exact vehicle in the showroom.
           </div>
 
           <!-- Term selector -->
