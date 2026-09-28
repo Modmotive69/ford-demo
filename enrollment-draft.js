@@ -78,14 +78,28 @@
   /* ── Print ───────────────────────────────────────────────────────────── */
   function syncPrintSummary() {
     const sel = Array.from(document.querySelectorAll('[name=products]:checked'), x => x.value);
+    const termEl = document.getElementById('term-select');
+    const termId = termEl ? termEl.value : 'month-to-month';
+    const priceInfo = window.resolveEnrollmentPrice ? window.resolveEnrollmentPrice() : null;
     document.getElementById('print-selected-products').textContent =
       'Selected products: ' + (sel.join(' + ') || 'None');
+    // Term and price rows (new)
+    const termRow = document.getElementById('print-term-val');
+    if (termRow) termRow.textContent = 'Term: ' + (termEl ? termEl.options[termEl.selectedIndex]?.text : 'Month-to-month');
+    const priceRow = document.getElementById('print-price-val');
+    if (priceRow && priceInfo && !priceInfo.isQuote) {
+      priceRow.textContent = 'Monthly fee: ' + priceInfo.discountedLabel +
+        (priceInfo.discountPct > 0 ? ' (' + priceInfo.discountPct + '% off ' + priceInfo.baseLabel + ')' : '') +
+        ' — Setup: ' + (priceInfo.setupCents === 0 ? 'Waived' : priceInfo.setupLabel);
+    } else if (priceRow) {
+      priceRow.textContent = priceInfo && priceInfo.isQuote ? 'Pricing: Contact sales for custom quote' : '';
+    }
     document.getElementById('print-configuration').textContent =
       'Configuration: ' + (document.getElementById('configuration').value.trim() || 'Not specified');
     document.getElementById('print-dealership').textContent =
       'Dealership: ' + (document.getElementById('dealer-name').value.trim() || 'Not entered');
     document.getElementById('print-signer').textContent =
-      'Name (Signature): ' + (document.getElementById('sig-name').value.trim() || 'Not entered');
+      'Authorized signer: ' + (document.getElementById('sig-name').value.trim() || 'Not entered');
     document.getElementById('print-title-val').textContent =
       'Title: ' + (document.getElementById('sig-title').value.trim() || 'Not entered');
     document.getElementById('print-phone-val').textContent =
@@ -94,8 +108,17 @@
       'Email: ' + (document.getElementById('sig-email').value.trim() || 'Not entered');
     document.getElementById('print-consent').textContent =
       'Consent: ' + (document.getElementById('agree-checkbox').checked
-        ? 'Checked — not submitted yet'
-        : 'Not checked');
+        ? 'Authorized and agreed — not yet submitted'
+        : 'Not yet checked');
+    // Electronic signature block (pre-submission review copy)
+    const esigName   = document.getElementById('print-esig-name');
+    const esigDealer = document.getElementById('print-esig-dealer');
+    const esigTime   = document.getElementById('print-esig-time');
+    const sigName  = document.getElementById('sig-name').value.trim()  || '(not entered)';
+    const dealerName = document.getElementById('dealer-name').value.trim() || '(not entered)';
+    if (esigName)   esigName.textContent   = sigName;
+    if (esigDealer) esigDealer.textContent = dealerName;
+    if (esigTime)   esigTime.textContent   = new Date().toLocaleString() + ' (device clock — pre-submission review only)';
   }
 
   function triggerPrint() {
@@ -237,7 +260,7 @@
     const priceLines = rp.discountPct > 0
       ? `Base monthly: ${rp.baseLabel}\nDiscount: ${rp.discountPct}%\nDiscounted monthly: ${rp.discountedLabel}\nOne-time setup: ${rp.setupCents === 0 ? 'Waived' : rp.setupLabel}`
       : `Monthly fee: ${rp.discountedLabel}\nOne-time setup: ${rp.setupLabel}`;
-    summary.textContent = `Dealership: ${result.enrollment.dealer_name}\nProducts: ${result.selectedProducts.join(' + ')}\nTerm: ${rp.termLabel}\n${priceLines}\nSigner: ${result.signer.name} (${result.signer.title})\nSubmitted (UTC): ${result.server_timestamp}\nReceipt: ${result.receipt_id}\nAgreement version: ${result.agreementVersion}`;
+    summary.textContent = `Electronically signed by: ${result.signer.name} (${result.signer.title})\nOn behalf of: ${result.enrollment.dealer_name}\nProducts: ${result.selectedProducts.join(' + ')}\nTerm: ${rp.termLabel}\n${priceLines}\nAccepted (UTC): ${result.server_timestamp}\nReceipt: ${result.receipt_id}\nAgreement version: ${result.agreementVersion}`;
     panel.append(summary);
     const email = document.createElement('p');
     email.textContent = 'Agreement copies are queued for ' + result.email_recipients.join(' and ') + '. The email provider accepted the request; inbox delivery is not confirmed.';
@@ -263,7 +286,7 @@
       window.print();
     });
     panel.append(print);
-    const note = document.createElement('p'); note.textContent = 'Keep this receipt and agreement for your records. Submission does not confirm service activation or a Company countersignature.';
+    const note = document.createElement('p'); note.textContent = 'Keep this receipt and agreement for your records. Submission does not confirm service activation. PartSites will be in contact to complete onboarding.';
     panel.append(note);
     form.after(panel); panel.focus(); panel.scrollIntoView({block:'start',behavior:'instant'});
   }

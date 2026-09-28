@@ -1,5 +1,5 @@
 {
-  "version": "FE-2026-09-28-review-7",
+  "version": "FE-2026-09-28-review-8",
   "terms": [
     "TECHNOLOGY SERVICES AGREEMENT",
     "(FORD ENGAGE PROGRAM)",
@@ -63,12 +63,12 @@
     "",
     "9.4Amendments. This Agreement may only be amended by a signed written instrument from both Parties.",
     "",
-    "9.5Counterparts.  This Agreement may be executed electronically at an online  sign-up portal hosted by the Company.  This Agreement may be executed in one or more counterparts and transmitted electronically, each of which shall be deemed an original and all of which taken together shall be considered one and the same agreement.",
+    "9.5Electronic Acceptance.  The Dealer accepts this Agreement electronically by completing and submitting the online enrollment form hosted by the Company.  Electronic submission by an authorized representative of the Dealer constitutes the Dealer's acceptance of and agreement to be bound by the terms herein.  A server-issued receipt confirming the submission timestamp, agreement version, and selected products serves as the record of acceptance.",
     "",
     "",
     "Licensee acknowledges and agrees that the monthly fees commence after onboarding of the first user is complete. If Licensee’s onboarding is completed between the first (1st) and the tenth (10th) of the month, the applicable monthly fees will be effective on the first (1st) day of that month. If Licensee’s onboarding is completed after the tenth (10th) of the month, the applicable monthly fees will be effective on the first (1st) day of the following month. All monthly fees, plus applicable taxes, are due and payable to PartSites, LLC, a SmartDealer Technologies Company within thirty (30) days of receipt of PartSites invoice."
   ],
-  "sha256": "87386516735052a9db7234113567959c104fc150694f25d96da48ada6bd7cc57",
+  "sha256": "bd6e78b42b7592484b6d85561cfbe92b8f77d6b99842c881c913dced9c2f30c3",
   "consent": "I certify I am authorized to submit this information on behalf of the dealership and have read and agree to the terms.",
   "payee": "PartSites, LLC, a SmartDealer Technologies Company",
   "payeeResolved": true,

@@ -43,31 +43,41 @@ function resolvePricingServer(products, termId) {
 export function renderAgreement(r) {
   const p = r.resolved_price;
   const rows = [
-    ['Receipt ID',              r.receipt_id],
-    ['Submitted (UTC)',         r.server_timestamp],
-    ['Agreement version',       r.agreementVersion],
-    ['SHA-256',                 r.agreementSha256],
-    ['Products',                r.selectedProducts.join(' + ')],
-    ['Commitment term',         p.termLabel],
-    ['Base monthly fee',        p.baseLabel],
+    ['Receipt ID',                  r.receipt_id],
+    ['Accepted (UTC)',              r.server_timestamp],
+    ['Agreement version',           r.agreementVersion],
+    ['SHA-256',                     r.agreementSha256],
+    ['Products',                    r.selectedProducts.join(' + ')],
+    ['Commitment term',             p.termLabel],
+    ['Base monthly fee',            p.baseLabel],
     ...(p.discountPct > 0 ? [
-      ['Discount',              p.discountPct + '%'],
-      ['Discounted monthly',    p.discountedLabel],
+      ['Discount',                  p.discountPct + '%'],
+      ['Discounted monthly fee',    p.discountedLabel],
     ] : [
-      ['Monthly fee',           p.discountedLabel],
+      ['Monthly fee',               p.discountedLabel],
     ]),
-    ['One-time setup',          p.setupCents === 0 ? 'Waived' : p.setupLabel + ' ($' + (p.setupCents / 100).toFixed(0) + ')'],
-    ['Configuration',           r.configuration || 'Not specified'],
+    ['One-time setup',              p.setupCents === 0 ? 'Waived' : p.setupLabel],
+    ['Configuration',               r.configuration || 'Not specified'],
     ...Object.entries(r.enrollment).filter(([,v]) => v),
-    ['Typed signature',         r.signer.name],
-    ['Signer title',            r.signer.title],
-    ['Signer phone',            r.signer.phone],
-    ['Signer email',            r.signer.email],
-    ['Consent accepted',        r.consent.text],
-    ['Consent checked',         'Yes'],
-    ['Device timestamp (info)', r.consent.capturedAtClient],
+    ['Consent statement',           r.consent.text],
+    ['Consent accepted',            'Yes — authorized representative confirmed'],
+    ['Device timestamp (info only)', r.consent.capturedAtClient],
   ];
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'"><title>FordEngage Submitted Agreement</title><style>body{font:16px/1.5 Georgia,serif;max-width:900px;margin:24px auto;padding:0 20px;color:#17243a}h1,h2{color:#003478}table{width:100%;border-collapse:collapse}th,td{text-align:left;vertical-align:top;padding:8px;border-bottom:1px solid #ddd;overflow-wrap:anywhere}th{width:32%}pre{font:inherit;white-space:pre-wrap;overflow-wrap:anywhere}@media print{body{margin:0;font-size:10pt}tr{break-inside:avoid}}</style></head><body><h1>FordEngage Submitted Agreement</h1><p>This copy records the dealer's submission. It does not represent a Company countersignature or confirmation of service activation.</p><h2>Product &amp; Price Summary / Dealer Signature</h2><table>${rows.map(([k,v])=>`<tr><th>${esc(k)}</th><td>${esc(v)}</td></tr>`).join('')}</table><h2>Full Accepted Agreement</h2><pre>${esc(r.agreementText)}</pre></body></html>`;
+  const esigBlock = `<div style="margin:28px 0 0;padding:20px;border:2px solid #003478;border-radius:6px;background:#f5f8ff">
+<h2 style="margin:0 0 12px;font-size:1.1rem;color:#003478">Electronic Acceptance</h2>
+<table style="width:100%;border-collapse:collapse">
+<tr><th style="text-align:left;padding:7px 12px 7px 0;width:38%;vertical-align:top;color:#555">Electronically signed by</th><td style="padding:7px 0;font-weight:700">${esc(r.signer.name)}</td></tr>
+<tr><th style="text-align:left;padding:7px 12px 7px 0;vertical-align:top;color:#555">Title</th><td style="padding:7px 0">${esc(r.signer.title)}</td></tr>
+<tr><th style="text-align:left;padding:7px 12px 7px 0;vertical-align:top;color:#555">Email</th><td style="padding:7px 0">${esc(r.signer.email)}</td></tr>
+<tr><th style="text-align:left;padding:7px 12px 7px 0;vertical-align:top;color:#555">Phone</th><td style="padding:7px 0">${esc(r.signer.phone)}</td></tr>
+<tr><th style="text-align:left;padding:7px 12px 7px 0;vertical-align:top;color:#555">On behalf of</th><td style="padding:7px 0">${esc(r.enrollment.dealer_name || '')}</td></tr>
+<tr><th style="text-align:left;padding:7px 12px 7px 0;vertical-align:top;color:#555">Accepted (server timestamp, UTC)</th><td style="padding:7px 0;font-weight:700">${esc(r.server_timestamp)}</td></tr>
+<tr><th style="text-align:left;padding:7px 12px 7px 0;vertical-align:top;color:#555">Receipt ID</th><td style="padding:7px 0;font-family:monospace;font-size:0.9rem">${esc(r.receipt_id)}</td></tr>
+<tr><th style="text-align:left;padding:7px 12px 7px 0;vertical-align:top;color:#555">Agreement version accepted</th><td style="padding:7px 0">${esc(r.agreementVersion)}</td></tr>
+</table>
+<p style="margin:14px 0 0;font-size:0.85rem;color:#555">This record was generated server-side upon successful submission. The full accepted agreement text is appended below. PartSites, LLC has received this submission and will be in contact to complete onboarding.</p>
+</div>`;
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'"><title>FordEngage Submitted Agreement — ${esc(r.signer.name)}</title><style>body{font:16px/1.5 Georgia,serif;max-width:900px;margin:24px auto;padding:0 20px;color:#17243a}h1,h2{color:#003478}table{width:100%;border-collapse:collapse}th,td{text-align:left;vertical-align:top;padding:8px;border-bottom:1px solid #ddd;overflow-wrap:anywhere}th{width:32%}pre{font:inherit;white-space:pre-wrap;overflow-wrap:anywhere;font-size:0.9rem}@media print{body{margin:0;font-size:10pt}tr{break-inside:avoid}h2{page-break-before:auto}}</style></head><body><h1>FordEngage — Submitted Agreement</h1>${esigBlock}<h2 style="margin-top:32px">Product &amp; Price Summary</h2><table>${rows.map(([k,v])=>`<tr><th>${esc(k)}</th><td>${esc(v)}</td></tr>`).join('')}</table><h2 style="margin-top:32px">Full Accepted Agreement Text</h2><pre>${esc(r.agreementText)}</pre></body></html>`;
 }
 
 function replyExisting(row) {
