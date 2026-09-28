@@ -32,8 +32,8 @@
   }
 
   function selectedTerm() {
-    // BYP panel uses radio[name=term]; fallback to old select for compatibility
-    const radio = form ? form.querySelector('input[name="term"]:checked') : null;
+    // Use document-level query to find checked radio regardless of form scope
+    const radio = document.querySelector('#enroll-form input[name="term"]:checked');
     if (radio) return radio.value;
     const el = document.getElementById('term-select');
     return el ? el.value : 'month-to-month';
@@ -60,11 +60,11 @@
         }
       });
     }
-    // Sync BYP term radio label highlights
-    const termVal = selectedTerm();
+    // Sync BYP term radio label highlights — read actual radio checked state
     [['mtm','month-to-month'],['1yr','1year'],['2yr','2year']].forEach(([k,v]) => {
-      const lbl = document.getElementById('byp-term-lbl-' + k);
-      if (lbl) lbl.classList.toggle('byp-term-opt--active', termVal === v);
+      const lbl   = document.getElementById('byp-term-lbl-' + k);
+      const radio = document.getElementById('term-' + k);
+      if (lbl && radio) lbl.classList.toggle('byp-term-opt--active', radio.checked);
     });
   }
 
@@ -355,11 +355,15 @@
       updatePriceSummary();
     }
   });
-  form.querySelectorAll('.byp-term-opt').forEach(lbl => {
-    lbl.addEventListener('click', () => {
-      // Ensure radio is checked before updating
+  // Wire BYP term label clicks: set radio checked, dispatch change, update
+  document.querySelectorAll('.byp-term-opt').forEach(lbl => {
+    lbl.addEventListener('click', (e) => {
       const radio = lbl.querySelector('input[type=radio]');
-      if (radio) radio.checked = true;
+      if (radio && !radio.checked) {
+        radio.checked = true;
+        radio.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+      // Always call updatePriceSummary on label click
       setTimeout(updatePriceSummary, 0);
     });
   });
