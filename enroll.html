@@ -216,7 +216,7 @@
       z-index: 10;
       width: 100%;
       text-align: center;
-      padding: clamp(100px,14vw,160px) clamp(20px,5vw,8.9%) 0;
+      padding: clamp(150px,18vw,210px) clamp(20px,5vw,8.9%) 0;
     }
 
     .enroll-page-heading {
@@ -229,7 +229,7 @@
       text-shadow: 0 2px 16px rgba(0,0,0,0.55);
       font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif !important;
       font-weight: 900 !important;
-      font-size: clamp(2rem, 4.4vw, 3.6rem) !important;
+      font-size: clamp(2.2rem, 4.84vw, 3.96rem) !important;
       line-height: 0.95 !important;
       letter-spacing: -1px !important;
       text-transform: uppercase !important;
@@ -239,7 +239,7 @@
     .enroll-form-overlap {
       position: relative;
       z-index: 20;
-      margin-top: clamp(-280px, -20vw, -220px);
+      margin-top: clamp(-310px, -21vw, -250px);
     }
 
     /* hero-eyebrow/sub/pills removed — copy replaced with single headline */
@@ -752,13 +752,13 @@
 
     /* ─── FORM INTRO HEADING ─── */
     .form-intro-heading {
-      font-family: 'Ford Light Extended', 'Ford Antenna', FordAntenna, Arial, sans-serif;
-      font-weight: 300;
+      font-family: 'Ford Antenna', FordAntenna, 'Arial Black', Arial, sans-serif;
+      font-weight: 700 !important;
       font-size: clamp(1.05rem, 1.8vw, 1.3rem);
       line-height: 1.4;
       color: #003478;
       text-align: center;
-      margin: 0 auto 28px;
+      margin: -20px auto 16px;
       max-width: 680px;
     }
 
@@ -1343,16 +1343,21 @@
       .hero { min-height: 60vh; }
       .hero-bg-img { object-position: 38% 65%; }
       .hero-sand-fade { height: 200px; }
-      .hero-foreground { padding: clamp(80px,12vw,120px) 20px 0; text-align: center; }
+      .hero-foreground { padding: clamp(130px,16vw,160px) 20px 0; text-align: center; }
       .enroll-page-heading { font-size: clamp(1.8rem, 8vw, 3rem) !important; letter-spacing: -0.5px !important; text-align: center; }
-      .enroll-form-overlap { margin-top: clamp(-160px, -14vw, -120px); }
+      .enroll-form-overlap { margin-top: clamp(-140px, -12vw, -100px); }
     }
     @media (max-width: 420px) {
       .hero { min-height: 55vh; }
       .hero-bg-img { object-position: 36% 68%; }
-      .hero-foreground { padding-top: clamp(140px,18vw,180px); }
+      .hero-foreground { padding-top: clamp(180px,24vw,210px); }
       .enroll-page-heading { font-size: clamp(1.6rem, 9vw, 2.6rem) !important; text-align: center; }
-      .enroll-form-overlap { margin-top: clamp(-140px, -13vw, -100px); }
+      .enroll-form-overlap { margin-top: clamp(-120px, -11vw, -80px); }
+    }
+    @media (max-width: 360px) {
+      .hero-foreground { padding-top: 210px; }
+      .enroll-page-heading { font-size: clamp(1.45rem, 9vw, 2rem) !important; }
+      .enroll-form-overlap { margin-top: clamp(-100px, -9vw, -68px); }
     }
 
     /* hero padding-top removed — fixed nav floats; content is flex-aligned to bottom */
