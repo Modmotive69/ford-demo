@@ -56,6 +56,7 @@
     .btn-outline-white { background: transparent; color: #fff !important; border: 2px solid rgba(255,255,255,0.85); }
     .btn-outline-white:hover { background: rgba(255,255,255,0.15); }
     .nav-btn { font-size: 13px !important; padding: 9px 18px !important; }
+    .nav-right { margin-left: auto; }
 
     nav:not(.sidebar).scrolled .nav-fw  { color:#000 !important; text-shadow:none; }
 
@@ -183,5 +184,5 @@
     @media (max-width: 480px) {
       nav:not(.sidebar) .nav-brand img { height: 40px !important; }
       nav:not(.sidebar) .nav-fw, nav:not(.sidebar) .nav-fe { font-size: 24px; }
-      nav:not(.sidebar) .nav-program-text { font-size: 10px; letter-spacing:.5px; }
+      nav:not(.sidebar) .nav-program-text { font-size: 15px; letter-spacing:.5px; }
     }
