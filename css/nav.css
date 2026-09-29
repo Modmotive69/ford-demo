@@ -56,7 +56,7 @@
     .btn-outline-white { background: transparent; color: #fff !important; border: 2px solid rgba(255,255,255,0.85); }
     .btn-outline-white:hover { background: rgba(255,255,255,0.15); }
     .nav-btn { font-size: 13px !important; padding: 9px 18px !important; }
-    .nav-right { margin-left: auto; }
+    .nav-right { margin-left: auto; padding-right: clamp(16px,4vw,40px); }
 
     nav:not(.sidebar).scrolled .nav-fw  { color:#000 !important; text-shadow:none; }
 
