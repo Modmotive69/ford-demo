@@ -149,6 +149,7 @@
 
     zipError.textContent = '';
     zipInput.removeAttribute('aria-invalid');
+    document.dispatchEvent(new CustomEvent('zip-resolved', { detail: { zip: zip5, state: stateAbbr } }));
   }
 
   // ── ZIP input event handler ──────────────────────────────────────────────────
