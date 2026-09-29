@@ -44,13 +44,18 @@
       font-weight: 700;
       font-size: 0.875rem;
       letter-spacing: 0.5px;
-      text-decoration: none;
+      text-decoration: none !important;
       cursor: pointer;
-      border: none;
+      border: 2px solid transparent;
       transition: background 0.18s, transform 0.12s;
       text-transform: uppercase;
       white-space: nowrap;
     }
+    .btn-navy { background: #003478; color: #fff !important; border-color: #003478; }
+    .btn-navy:hover { background: #002060; }
+    .btn-outline-white { background: transparent; color: #fff !important; border: 2px solid rgba(255,255,255,0.85); }
+    .btn-outline-white:hover { background: rgba(255,255,255,0.15); }
+    .nav-btn { font-size: 13px !important; padding: 9px 18px !important; }
 
     nav:not(.sidebar).scrolled .nav-fw  { color:#000 !important; text-shadow:none; }
 
