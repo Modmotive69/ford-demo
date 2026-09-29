@@ -16,6 +16,13 @@ jobs:
       - name: Sync global nav and footer to all pages
         run: python3 sync-nav-footer.py
 
+      - name: Commit synced pages
+        run: |
+          git config user.email "deploy@fordengage.livecode.tech"
+          git config user.name "Deploy Bot"
+          git add -A
+          git diff --cached --quiet || git commit -m "chore: sync nav/footer to all pages [skip ci]"
+
       - name: Deploy to Cloudflare Pages
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
