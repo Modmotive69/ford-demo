@@ -782,16 +782,35 @@
     /* ─── FINAL CTA ─── */
     /* ─── SHOWROOM SECTION ─── */
     .section-showroom {
-      background: #f7f9fc;
-      padding: clamp(64px,8vw,110px) clamp(24px,6vw,64px);
+      position: relative;
+      min-height: 560px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      padding: 0;
+    }
+    .section-showroom .showroom-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      z-index: 0;
+    }
+    .section-showroom .showroom-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(0,10,30,0.88) 0%, rgba(0,10,30,0.72) 50%, rgba(0,10,30,0.15) 100%);
+      z-index: 1;
     }
     .showroom-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      align-items: center;
+      position: relative;
+      z-index: 2;
+      max-width: 680px;
+      margin: 0 auto 0 clamp(32px,8vw,120px);
+      padding: clamp(64px,8vw,110px) clamp(24px,5vw,48px);
+      display: block;
     }
     .showroom-img-wrap {
       position: relative;
@@ -1342,37 +1361,26 @@
 
   <!-- ═══ SHOWROOM DISPLAYS ═══ -->
   <section class="section-showroom" id="showroom-displays" aria-labelledby="showroom-heading">
+    <img
+      class="showroom-bg"
+      src="images/ford-showroom-render.webp?v=f0e4c38f"
+      alt="Ford dealership showroom with curved LED wall, Bronco display, 4K kiosks and AR accessory table"
+      width="1536" height="864"
+      loading="lazy" decoding="async"
+    >
+    <div class="showroom-overlay" aria-hidden="true"></div>
     <div class="showroom-inner">
-
-      <!-- Image -->
-      <div class="showroom-img-wrap">
-        <img
-          src="images/ford-showroom-render.webp?v=f0e4c38f"
-          alt="Curved LED wall with Ford Bronco on display, two kiosks and Yakima AR accessory table in a Ford dealership showroom"
-          width="1536"
-          height="864"
-          loading="lazy"
-          decoding="async"
-        >
-        <span class="showroom-caption">Showroom concept</span>
+      <p class="showroom-kicker" style="color:rgba(255,255,255,0.6);font-size:.8rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin:0 0 16px;">Showroom Experience</p>
+      <h2 class="showroom-heading" id="showroom-heading" style="font-size:clamp(2rem,4.5vw,3.2rem);font-weight:900;color:#fff;line-height:1.1;margin:0 0 20px;max-width:580px;">Create the most profitable square footage in your showroom.</h2>
+      <div class="showroom-mode-pills" style="margin-bottom:20px;">
+        <span class="showroom-pill"><i class="fa-solid fa-user" aria-hidden="true"></i> Sales Agent Mode</span>
+        <span class="showroom-pill"><i class="fa-solid fa-hand-pointer" aria-hidden="true"></i> Self-Drive Mode</span>
       </div>
-
-      <!-- Copy -->
-      <div class="showroom-copy">
-        <p class="showroom-kicker">Showroom Experience</p>
-        <h2 class="showroom-heading" id="showroom-heading">Make 30 square feet your showroom's next profit center.</h2>
-        <div class="showroom-mode-pills">
-          <span class="showroom-pill"><i class="fa-solid fa-user" aria-hidden="true"></i> Sales Agent Mode</span>
-          <span class="showroom-pill"><i class="fa-solid fa-hand-pointer" aria-hidden="true"></i> Self-Drive Mode</span>
-        </div>
-        <p class="showroom-body">Bring accessories into every sales conversation. FordEngage supports Sales Agent mode for guided presentations and Self-Drive mode for customers to explore on their own. Pair the platform with immersive showroom displays and 4K kiosks to turn browsing into accessory sales.</p>
-        <a class="showroom-cta" href="enroll.html">
-          <i class="fa-solid fa-display" aria-hidden="true"></i>
-          Ask about our Display options
-        </a>
-        <p style="margin-top:14px;font-size:.85rem;color:rgba(255,255,255,0.65);font-style:italic;">They will become the most profitable square footage in your showroom by far!</p>
-      </div>
-
+      <p class="showroom-body" style="color:rgba(255,255,255,0.82);font-size:1rem;line-height:1.7;max-width:520px;margin:0 0 28px;">Bring accessories into every sales conversation. FordEngage supports Sales Agent mode for guided presentations and Self-Drive mode for customers to explore on their own. Pair the platform with immersive showroom displays and 4K kiosks to turn browsing into accessory sales.</p>
+      <a class="showroom-cta" href="enroll.html">
+        <i class="fa-solid fa-display" aria-hidden="true"></i>
+        Ask about our Display options
+      </a>
     </div>
   </section>
 
