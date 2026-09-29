@@ -574,7 +574,28 @@ nav:not(.sidebar) .nav-fw, nav:not(.sidebar) .nav-fe { font-size: 24px; }
 nav:not(.sidebar) .nav-program-text { font-size: 18px; letter-spacing:.5px; }
 
 /* @@NAV_CSS_END@@ */
-  </style></head><body><script>
+  </style></head><body>
+
+<!-- @@NAV_START@@ -->
+  <!-- ═══ NAV ═══ -->
+  <nav>
+    <div class="nav-inner">
+      <button class="hamburger-btn" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button>
+      <a class="nav-brand" href="index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;">
+        <img src="images/ford-oval.png" alt="Ford" class="nav-ford-oval" style="height:56px;width:auto;display:block;">
+        <span class="nav-brand-stack" style="display:flex;flex-direction:column;justify-content:center;gap:0;">
+          <span class="nav-wordmark-text"><span class="nav-fw">Ford</span><span class="nav-fe">Engage</span></span>
+          <span class="nav-program-text">Industry&#39;s Only Proven Accessories Sales Program</span>
+        </span>
+      </a>
+      <div class="nav-right">
+        <a class="btn btn-outline-white nav-btn" href="#" onclick="event.preventDefault();openVideo();">Watch Video</a>
+        <a class="btn btn-outline-white nav-btn" href="contact.html">Contact Us</a><a class="btn btn-navy nav-btn" href="enroll.html">Enroll Now</a>
+      </div>
+    </div>
+  </nav>
+  <!-- @@NAV_END@@ -->
+<script>
 // Model-viewer loader, holds until model is actually rendered
 var _mvLoaderSim=null,_mvLoaded=false,_mvScriptLoaded=false;
 function startMVLoader(){
