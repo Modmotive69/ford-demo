@@ -12,89 +12,76 @@
   <script src="https://kit.fontawesome.com/a0d1bd4a2c.js" crossorigin="anonymous"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root { --navy:#003478; --navy-dark:#002060; --white:#fff; --gray:#f7f9fc; --text:#111; --muted:#555; --radius:12px; }
-    html { scroll-behavior: smooth; }
+    :root { --
     body { font-family: 'Barlow', Arial, sans-serif; color: var(--text); background: var(--white); }
 
     /* NAV */
-    nav { position: fixed; top: 0; left: 0; width: 100%; z-index: 900; background: transparent; transition: background .3s, box-shadow .3s; }
-    nav.scrolled { background: rgba(255,255,255,0.97); box-shadow: 0 2px 16px rgba(0,0,0,.1); }
-    .nav-inner { max-width: 1200px; width: 100%; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 14px 40px 14px 24px; }
-    .nav-brand { text-decoration: none; display: flex; align-items: center; gap: 6px; }
-    .nav-brand img { height: 52px; width: auto; display: block; }
-    .nav-brand-stack { display: flex; flex-direction: column; justify-content: center; gap: 2px; }
-    .nav-wordmark-text { display: inline-flex; align-items: baseline; }
-    .nav-fw { font-family: 'Barlow Condensed', Arial, sans-serif; font-weight: 900; font-size: 28px; letter-spacing: -.5px; color: var(--navy); }
-    .nav-fe { font-family: 'Barlow Condensed', Arial, sans-serif; font-weight: 300; font-size: 28px; color: rgba(0,52,120,.55); }
-    .nav-program-text { font-size: 14px; font-weight: 500; letter-spacing: .5px; color: rgba(0,52,120,.55); white-space: nowrap; }
-    .nav-right { display: flex; align-items: center; gap: 12px; }
-    .btn { display: inline-block; padding: 10px 22px; border-radius: 4px; font-weight: 700; font-size: .85rem; letter-spacing: .5px; text-decoration: none !important; cursor: pointer; border: 2px solid transparent; transition: background .18s; text-transform: uppercase; white-space: nowrap; }
-    .btn-navy { background: var(--navy); color: var(--white); border-color: var(--navy); }
-    .btn-navy:hover { background: var(--navy-dark); }
-    .btn-outline { background: transparent; color: var(--navy); border-color: var(--navy); }
-    .btn-outline:hover { background: var(--navy); color: var(--white); }
-    .nav-link { font-size: 14px; color: var(--navy); font-weight: 600; text-decoration: none; }
-    .nav-link:hover { text-decoration: underline; }
-    nav.scrolled .nav-fw, nav.scrolled .nav-fe { color: var(--navy) !important; }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     /* HERO */
-    .contact-hero { background: linear-gradient(135deg, var(--navy) 0%, #001840 100%); color: var(--white); padding: clamp(110px,12vw,150px) clamp(24px,6vw,80px) clamp(60px,6vw,80px); text-align: center; }
-    .eyebrow { font-family: 'Barlow Condensed', Arial, sans-serif; font-size: .8rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,.5); margin-bottom: 16px; }
+    .contact-hero { background: linear-gradient(135deg, var(--
     .contact-hero h1 { font-family: 'Barlow Condensed', Arial, sans-serif; font-weight: 900; font-size: clamp(2.4rem,6vw,4rem); line-height: 1.05; margin-bottom: 20px; }
     .contact-hero p { font-size: 1.1rem; color: rgba(255,255,255,.75); max-width: 520px; margin: 0 auto; line-height: 1.7; }
 
     /* LAYOUT */
     .wrap { max-width: 1100px; margin: 0 auto; padding: clamp(48px,7vw,80px) clamp(24px,5vw,48px); display: grid; grid-template-columns: 1fr 360px; gap: 56px; align-items: start; }
-    @media (max-width: 820px) { .wrap { grid-template-columns: 1fr; gap: 40px; } .sidebar { order: -1; } }
+    @media (max-width: 820px) { .wrap { grid-template-columns: 1fr; gap: 40px; }  }
 
     /* FORM */
-    .form-section h2 { font-family: 'Barlow Condensed', Arial, sans-serif; font-weight: 900; font-size: clamp(1.6rem,3vw,2.2rem); color: var(--navy); margin-bottom: 8px; }
-    .form-sub { color: var(--muted); font-size: .95rem; margin-bottom: 32px; line-height: 1.6; }
+    .form-section h2 { font-family: 'Barlow Condensed', Arial, sans-serif; font-weight: 900; font-size: clamp(1.6rem,3vw,2.2rem); color: var(--
     .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
     @media (max-width: 540px) { .form-grid { grid-template-columns: 1fr; } }
     .field { display: flex; flex-direction: column; gap: 6px; }
     .field.full { grid-column: 1 / -1; }
-    .lbl { font-size: .78rem; font-weight: 700; color: var(--navy); letter-spacing: .5px; text-transform: uppercase; }
-    .field input, .field textarea {
-      padding: 12px 15px; border: 1.5px solid #d0d9ea; border-radius: 8px;
-      font-family: 'Barlow', Arial, sans-serif; font-size: .95rem; color: var(--text);
-      background: var(--white); transition: border-color .15s, box-shadow .15s; width: 100%;
-    }
-    .field input:focus, .field textarea:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(0,52,120,.1); }
-    .field textarea { resize: vertical; min-height: 120px; line-height: 1.6; }
+    .lbl { font-size: .78rem; font-weight: 700; color: var(--
+    .field input:focus, .field textarea:focus { outline: none; border-color: var(--
 
     /* Pills */
     .pills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
     .pill { position: relative; }
     .pill input { position: absolute; opacity: 0; width: 0; height: 0; }
     .pill label { display: flex; align-items: center; gap: 7px; padding: 9px 16px; border: 1.5px solid #d0d9ea; border-radius: 100px; font-size: .85rem; font-weight: 600; color: var(--muted); cursor: pointer; transition: all .15s; user-select: none; }
-    .pill input:checked + label { background: var(--navy); border-color: var(--navy); color: var(--white); }
-    .pill label:hover { border-color: var(--navy); color: var(--navy); }
+    .pill input:checked + label { background: var(--
 
     /* Submit */
     .submit-row { grid-column: 1 / -1; margin-top: 4px; }
-    .submit-btn { width: 100%; background: var(--navy); color: var(--white); border: none; border-radius: 8px; padding: 16px 32px; font-family: 'Barlow Condensed', Arial, sans-serif; font-size: 1.15rem; font-weight: 700; letter-spacing: .5px; cursor: pointer; transition: background .15s, transform .1s; display: flex; align-items: center; justify-content: center; gap: 10px; }
-    .submit-btn:hover { background: var(--navy-dark); transform: translateY(-1px); }
+    .submit-btn { width: 100%; background: var(--
     .form-note { grid-column: 1 / -1; font-size: .78rem; color: var(--muted); text-align: center; line-height: 1.6; }
     .form-success { display: none; text-align: center; padding: 48px 24px; }
     .form-success .icon { font-size: 3rem; color: #16a34a; margin-bottom: 16px; }
-    .form-success h3 { font-family: 'Barlow Condensed', Arial, sans-serif; font-size: 1.8rem; font-weight: 900; color: var(--navy); margin-bottom: 10px; }
-    .form-success p { color: var(--muted); line-height: 1.7; }
+    .form-success h3 { font-family: 'Barlow Condensed', Arial, sans-serif; font-size: 1.8rem; font-weight: 900; color: var(--
 
     /* SIDEBAR */
-    .sidebar { display: flex; flex-direction: column; gap: 20px; }
+    
     .card { background: var(--gray); border-radius: var(--radius); padding: 24px 20px; border: 1px solid #e4eaf4; text-align: center; }
     .card img { width: 100%; max-width: 200px; display: block; margin: 0 auto 14px; object-fit: contain; }
-    .card h3 { font-family: 'Barlow Condensed', Arial, sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--navy); margin-bottom: 6px; }
-    .card p { font-size: .88rem; color: var(--muted); line-height: 1.6; }
+    .card h3 { font-family: 'Barlow Condensed', Arial, sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--
 
     /* FOOTER */
-    .site-footer { background: #001030; color: rgba(255,255,255,.5); text-align: center; padding: 36px 24px; font-size: .82rem; }
-    .site-footer-brand { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 12px; }
-    .site-footer-logo { height: 32px; width: auto; opacity: .85; }
-    .site-footer-tag { font-size: .78rem; color: rgba(255,255,255,.4); }
+    
+    
+    
+    
 
-    @media (max-width: 768px) { .nav-right { display: none; } .nav-program-text { display: none; } }
+    @media (max-width: 768px) {   }
   </style>
 </head>
 <body>
