@@ -185,15 +185,15 @@
     }
     .nav-program-text {
       font-family: 'Ford Light Extended', 'Ford Antenna', Arial, sans-serif;
-      font-size: 15px; font-weight:500; letter-spacing:1px;
-      white-space:normal; margin-left:14px; align-self:center; text-align:center; flex:1;
-      color:#fff; text-shadow:none;
+      font-size: 11px; font-weight:500; letter-spacing:1px;
+      white-space:nowrap; margin:0; text-align:left;
+      color:rgba(255,255,255,0.75); text-shadow:none;
       transition:color .3s;
     }
     /* Sticky — white nav, dark text */
     nav:not(.sidebar).scrolled .nav-fw  { color:#000 !important; text-shadow:none; }
     nav:not(.sidebar).scrolled .nav-fe  { color:#000 !important; text-shadow:none; }
-    nav:not(.sidebar).scrolled .nav-program-text { color:#000 !important; text-shadow:none; }
+    nav:not(.sidebar).scrolled .nav-program-text { color:rgba(0,0,0,0.6) !important; text-shadow:none; }
     nav:not(.sidebar):not(.scrolled) .btn-navy {
       background: transparent !important;
       border: 2px solid rgba(255,255,255,0.9) !important;
@@ -1043,13 +1043,13 @@
     /* Keep the existing header content reachable at narrow widths. */
     @media (max-width: 1100px) {
       nav:not(.sidebar) .nav-inner { flex-wrap: wrap; justify-content: flex-start; gap: 8px; }
-      nav:not(.sidebar) .nav-program-text { order: 2; flex: 0 0 100%; white-space: normal; margin-left: 0; text-align: center; }
+      /* nav-program-text now inside nav-brand-stack */
       nav:not(.sidebar) .nav-right { order: 3; width: 100%; justify-content: center; }
     }
     @media (max-width: 480px) {
       nav:not(.sidebar) .nav-brand img { height: 40px !important; }
       nav:not(.sidebar) .nav-fw, nav:not(.sidebar) .nav-fe { font-size: 24px; }
-      nav:not(.sidebar) .nav-program-text { font-size: 15px; }
+      nav:not(.sidebar) .nav-program-text { font-size: 10px; letter-spacing:.5px; }
     }
     @media (max-width: 600px) {
       .proof-strip-inner { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 0; }
@@ -1072,11 +1072,13 @@
   <nav>
     <div class="nav-inner">
       <button class="hamburger-btn" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button>
-      <a class="nav-brand" href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+      <a class="nav-brand" href="index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;">
         <img src="images/ford-oval.png" alt="Ford" class="nav-ford-oval" style="height:56px;width:auto;display:block;">
-        <span class="nav-wordmark-text"><span class="nav-fw">Ford</span><span class="nav-fe">Engage</span></span>
+        <span class="nav-brand-stack" style="display:flex;flex-direction:column;justify-content:center;gap:1px;">
+          <span class="nav-wordmark-text"><span class="nav-fw">Ford</span><span class="nav-fe">Engage</span></span>
+          <span class="nav-program-text">Industry&#39;s Only Proven Accessories Sales Program</span>
+        </span>
       </a>
-      <span class="nav-program-text">Industry's Only Proven Accessories Sales Program</span>
       <div class="nav-right" style="display:flex;gap:12px;align-items:center;">
         <a class="btn btn-outline-white nav-btn" href="#" onclick="event.preventDefault();openVideo();" style="font-size:14px;padding:10px 20px;border:2px solid rgba(255,255,255,0.8);color:#fff;border-radius:4px;text-decoration:none;font-weight:600;white-space:nowrap;transition:all 0.3s;">Watch Video</a>
         <a href="contact.html" style="font-size:14px;color:#003478;font-weight:600;text-decoration:none;margin-right:16px;">Contact Us</a><a class="btn btn-navy nav-btn" href="enroll.html" style="font-size:14px;padding:10px 20px;white-space:nowrap;">Enroll Now</a>
@@ -1365,7 +1367,7 @@
         <span class="showroom-pill"><i class="fa-solid fa-user" aria-hidden="true"></i> Sales Agent Mode</span>
         <span class="showroom-pill"><i class="fa-solid fa-hand-pointer" aria-hidden="true"></i> Self-Drive Mode</span>
       </div>
-      <p class="showroom-body" style="color:rgba(255,255,255,0.82);font-size:1rem;line-height:1.7;max-width:520px;margin:0 0 28px;">Bring accessories into every sales conversation. FordEngage supports Sales Agent mode for guided presentations and Self-Drive mode for customers to explore on their own. Pair the platform with immersive showroom displays and 4K kiosks to turn browsing into accessory sales.</p>
+      <p class="showroom-body" style="color:rgba(255,255,255,0.82);font-size:1rem;line-height:1.7;max-width:520px;margin:0 0 28px;">Bring accessories into every sales conversation. <span style="font-weight:800;font-family:inherit;">Ford</span><span style="font-weight:300;font-family:inherit;">Engage</span> supports Sales Agent mode for guided presentations and Self-Drive mode for customers to explore on their own. Pair the platform with immersive showroom displays and 4K kiosks to turn browsing into accessory sales.</p>
       <a class="showroom-cta" href="enroll.html">
         <i class="fa-solid fa-display" aria-hidden="true"></i>
         Ask about our Display options
