@@ -8,7 +8,7 @@
 @media(max-width:700px) { #see-it-in-action { padding:48px 12px; } #fe-demo-inline { height:960px; } }
 
 /* Independent full-app dialog; the existing inline viewer and video modal are untouched. */
-#fe-full-launch { margin-top:24px; padding:14px 32px; border:2px solid #003478; border-radius:6px; background:#003478; color:#fff; font:700 18px/1.3 Arial,sans-serif; cursor:pointer; display:inline-block; text-decoration:none; letter-spacing:.3px; }
+#fe-full-launch { margin-top:24px; padding:14px 32px; border:2px solid #003478; border-radius:6px; background:#003478; color:#fff; font:700 18px/1.3 Arial,sans-serif; cursor:pointer; display:inline-block; text-decoration:none !important; letter-spacing:.3px; }
 #fe-full-launch:hover { background:#002653; }
 #fe-full-dialog { box-sizing:border-box; width:calc(100% - 32px); max-width:1600px; height:92vh; height:92dvh; max-height:calc(100% - 24px); margin:auto; padding:0; border:0; border-radius:12px; color:#171717; background:#fff; overflow:hidden; text-align:left; }
 #fe-full-dialog[open] { display:flex; flex-direction:column; }
