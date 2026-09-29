@@ -318,7 +318,263 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 @media(max-width:700px){.nl.site-how-link{display:inline-flex;height:48px;font-size:12px;margin-left:12px}}
 .site-how-link:focus-visible{outline:3px solid #0562D2;outline-offset:3px}
 
-.e360-overlay{position:static;display:flex;padding:0;background:#fff}.e360-modal{width:100%;max-width:100%;height:100dvh;max-height:100dvh;border-radius:0;box-shadow:none}.e360-close{display:none}.e360-tab:focus-visible{outline:3px solid #0562D2;outline-offset:-3px}#fe-viewer-notice{padding:10px;color:#003478;background:#f0f4ff;font-size:13px}.e360-atc:disabled{opacity:.5;cursor:not-allowed}</style></head><body><script>
+.e360-overlay{position:static;display:flex;padding:0;background:#fff}.e360-modal{width:100%;max-width:100%;height:100dvh;max-height:100dvh;border-radius:0;box-shadow:none}.e360-close{display:none}.e360-tab:focus-visible{outline:3px solid #0562D2;outline-offset:-3px}#fe-viewer-notice{padding:10px;color:#003478;background:#f0f4ff;font-size:13px}.e360-atc:disabled{opacity:.5;cursor:not-allowed}/* @@NAV_CSS_START@@ */
+nav:not(.sidebar) {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      z-index: 100;
+      background: transparent;
+      box-shadow: none;
+      padding: 18px clamp(16px, 4vw, 40px) 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      transition: background 0.35s ease, box-shadow 0.35s ease, padding 0.35s ease;
+    }
+nav:not(.sidebar)::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 120px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, transparent 100%);
+      z-index: -1;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+nav:not(.sidebar).scrolled {
+      background: #fff;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+      padding: 8px clamp(16px, 4vw, 40px) 6px;
+    }
+nav:not(.sidebar).scrolled::before { opacity: 0; }
+.nav-inner {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 0 0 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px 4px 24px;
+    }
+.nav-brand {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow: visible;
+    }
+.nav-brand img {
+      height: 48px;
+      width: auto;
+      display: block !important;
+      visibility: visible !important;
+    }
+.nav-brand svg { width: 52px; height: 52px; flex-shrink: 0; }
+.nav-right { display: flex; align-items: center; gap: 24px; }
+.nav-powered { font-size: 15px; font-weight: 700; color: #003478; white-space: nowrap; }
+.btn {
+      display: inline-block;
+      padding: 11px 26px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 0.875rem;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: background 0.18s, transform 0.12s;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+.btn-navy { background: var(--ford-blue); color: var(--white); }
+.btn-navy:hover { background: #002a60; transform: translateY(-1px); }
+.btn-white { background: var(--white); color: var(--ford-blue); }
+.btn-white:hover { background: #e8eef7; transform: translateY(-1px); }
+.btn-lg { padding: 18px 42px; font-size: 1rem; letter-spacing: 0.8px; border-radius: 4px; }
+.nav-wordmark-text { display:inline-flex; align-items:baseline; white-space:nowrap; }
+.nav-wordmark-text { display:inline-flex; align-items:baseline; white-space:nowrap; }
+.nav-fw {
+      font-family: 'Ford Antenna', FordAntenna, 'Arial Black', Arial, sans-serif;
+      font-weight: 800;
+      font-size: 28px;
+      letter-spacing: -0.5px;
+      color: #fff;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.4);
+      transition: color .3s, text-shadow .3s;
+    }
+.nav-fe {
+      font-family: 'Ford Antenna', FordAntenna, Arial, sans-serif;
+      font-weight: 300;
+      font-size: 28px;
+      color: rgba(255,255,255,0.9);
+      text-shadow: 0 1px 6px rgba(0,0,0,0.4);
+      transition: color .3s, text-shadow .3s;
+    }
+.nav-program-text {
+      font-family: 'Ford Light Extended', 'Ford Antenna', Arial, sans-serif;
+      font-size: 15px; font-weight:500; letter-spacing:.5px;
+      white-space:nowrap; margin:0; text-align:left;
+      color:rgba(255,255,255,0.75); text-shadow:none;
+      transition:color .3s;
+    }
+nav:not(.sidebar).scrolled .nav-fw  { color:#000 !important; text-shadow:none; }
+nav:not(.sidebar).scrolled .nav-fe  { color:#000 !important; text-shadow:none; }
+nav:not(.sidebar).scrolled .nav-program-text { color:rgba(0,0,0,0.6) !important; text-shadow:none; }
+nav:not(.sidebar):not(.scrolled) .btn-navy {
+      background: transparent !important;
+      border: 2px solid rgba(255,255,255,0.9) !important;
+      color: #fff !important;
+    }
+nav:not(.sidebar).scrolled .btn-navy {
+      background: var(--ford-blue) !important;
+      border-color: var(--ford-blue) !important;
+      color: #fff !important;
+    }
+nav:not(.sidebar).scrolled .btn-outline-white {
+      border-color: #003478 !important;
+      color: #003478 !important;
+      background: transparent !important;
+    }
+nav:not(.sidebar).scrolled .nav-fw { color: #003478 !important; text-shadow: none; }
+nav:not(.sidebar).scrolled .nav-fe { color: rgba(0,52,120,0.55) !important; text-shadow: none; }
+nav:not(.sidebar).scrolled .nav-program-text { color: rgba(0,52,120,0.55) !important; }
+.nav-wordmark { height: 32px !important; }
+.nav-ford-oval { height: 38px !important; }
+.nav-right { gap: 8px !important; }
+.nav-btn { font-size: 11px !important; padding: 8px 12px !important; }
+.hamburger-btn {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 26px;
+      cursor: pointer;
+      padding: 0 14px 0 0;
+      line-height: 1;
+      flex-shrink: 0;
+      transition: color 0.3s;
+      z-index: 101;
+      align-self: center;
+    }
+nav:not(.sidebar).scrolled .hamburger-btn { color: #111; }
+.sidebar-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 200;
+    }
+.sidebar-overlay.open { display: block; }
+.sidebar {
+      position: fixed;
+      top: 0; left: -300px;
+      width: 280px; height: 100vh;
+      background: #fff;
+      z-index: 201;
+      transition: left 0.35s cubic-bezier(0.4,0,0.2,1);
+      overflow-y: auto;
+      box-shadow: 4px 0 32px rgba(0,52,120,0.18);
+    }
+.sidebar.open { left: 0; }
+.sidebar-header {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 20px 20px;
+      border-bottom: 1px solid #e8eef5;
+    }
+.sidebar-close {
+      background: none; border: none;
+      color: #aaa;
+      font-size: 20px; cursor: pointer;
+      padding: 4px;
+      transition: color 0.2s;
+    }
+.sidebar-close:hover { color: #003478; }
+.sidebar-body { padding: 16px 0; }
+.sidebar-section { margin-bottom: 8px; }
+.sidebar-section-label {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: #aaa;
+      padding: 12px 20px 8px;
+      font-family: 'Ford Antenna', Arial, sans-serif;
+    }
+.sidebar-link {
+      padding: 12px 20px;
+      color: #003478;
+      text-decoration: none;
+      font-size: 15px; font-weight: 600;
+      transition: background 0.18s, color 0.18s;
+      border-left: 3px solid transparent;
+      font-family: 'Ford Antenna', Arial, sans-serif;
+      display: flex; align-items: center; gap: 12px;
+    }
+.sidebar-link:hover {
+      background: #f0f4ff;
+      color: #003478;
+      border-left-color: #003478;
+    }
+.sidebar-link-soon {
+      color: #bbb;
+      font-weight: 400;
+    }
+.sidebar-link-soon::after {
+      content: ', soon';
+      font-size: 11px;
+      opacity: 0.6;
+    }
+.sidebar-link-soon:hover {
+      background: #f8f8f8;
+      border-left-color: transparent;
+      cursor: default;
+    }
+.site-footer {
+      background: #f0f2f5;
+      border-top: 1px solid #dde2ea;
+      padding: clamp(28px,4vw,44px) clamp(20px,5vw,40px) clamp(20px,3vw,32px);
+      text-align: center;
+    }
+.site-footer-brand {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+.site-footer-logo {
+      height: 32px;
+      width: auto;
+      display: block;
+      flex-shrink: 0;
+    }
+.site-footer-tag {
+      font-size: 0.82rem;
+      color: #444;
+      font-family: 'Ford Antenna', FordAntenna, Arial, sans-serif;
+      letter-spacing: 0.2px;
+      white-space: nowrap;
+    }
+.site-footer-copy {
+      font-size: 0.75rem;
+      color: #777;
+      line-height: 1.7;
+      margin: 0;
+    }
+.site-footer-copy + .site-footer-copy {
+      margin-top: 4px;
+    }
+.site-footer-logo { height: 26px; }
+.site-footer-brand { gap: 10px; }
+.nav-powered { font-size: 15px; font-weight: 700; color: #003478; white-space: nowrap; }
+.nav-brand { display: flex; overflow: visible; }
+nav:not(.sidebar) .nav-inner { flex-wrap: wrap; justify-content: flex-start; gap: 8px; }
+nav:not(.sidebar) .nav-right { order: 3; width: 100%; justify-content: center; }
+nav:not(.sidebar) .nav-brand img { height: 40px !important; }
+nav:not(.sidebar) .nav-fw, nav:not(.sidebar) .nav-fe { font-size: 24px; }
+nav:not(.sidebar) .nav-program-text { font-size: 15px; letter-spacing:.5px; }
+
+/* @@NAV_CSS_END@@ */
+  </style></head><body><script>
 // Model-viewer loader, holds until model is actually rendered
 var _mvLoaderSim=null,_mvLoaded=false,_mvScriptLoaded=false;
 function startMVLoader(){
