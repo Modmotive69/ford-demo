@@ -1,6 +1,6 @@
 #see-it-in-action { background:#f5f5f5; padding:60px 24px; text-align:center; scroll-margin-top:220px; }
 #see-it-in-action h2 { font-family:'Barlow Condensed','Arial Narrow',sans-serif; font-size:clamp(28px,4.6vw,56px); line-height:1.04; color:#003478; margin:0 auto 24px; max-width:1100px; text-wrap:balance; overflow-wrap:anywhere; }
-#fe-demo-inline { position:relative; width:100%; max-width:1400px; height:760px; margin:0 auto; background:#fff; color:#111; border:1px solid #ddd; border-radius:12px; overflow:hidden; text-align:left; }
+#fe-demo-inline { display:none; }
 #fe-demo-inline .fe-demo-frame { display:block; width:100%; height:100%; border:0; }
 #fe-demo-inline .fe-demo-status { position:absolute; inset:0; padding:24px; background:#fff; z-index:1; }
 #fe-demo-inline .fe-demo-retry { border:1px solid #003478; border-radius:4px; padding:6px 12px; background:#fff; color:#003478; cursor:pointer; }
@@ -8,7 +8,7 @@
 @media(max-width:700px) { #see-it-in-action { padding:48px 12px; } #fe-demo-inline { height:960px; } }
 
 /* Independent full-app dialog; the existing inline viewer and video modal are untouched. */
-#fe-full-launch { margin-top:24px; padding:14px 24px; border:2px solid #003478; border-radius:6px; background:#003478; color:#fff; font:600 18px/1.3 Arial,sans-serif; cursor:pointer; }
+#fe-full-launch { margin-top:24px; padding:14px 32px; border:2px solid #003478; border-radius:6px; background:#003478; color:#fff; font:700 18px/1.3 Arial,sans-serif; cursor:pointer; display:inline-block; text-decoration:none; letter-spacing:.3px; }
 #fe-full-launch:hover { background:#002653; }
 #fe-full-dialog { box-sizing:border-box; width:calc(100% - 32px); max-width:1600px; height:92vh; height:92dvh; max-height:calc(100% - 24px); margin:auto; padding:0; border:0; border-radius:12px; color:#171717; background:#fff; overflow:hidden; text-align:left; }
 #fe-full-dialog[open] { display:flex; flex-direction:column; }
