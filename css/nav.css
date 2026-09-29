@@ -1,0 +1,182 @@
+/* =============================================================
+   nav.css — GLOBAL NAV + FOOTER
+   Single source of truth. Edit here only.
+   Linked by every page. sync-nav-footer.py keeps HTML in sync.
+   ============================================================= */
+
+    nav:not(.sidebar) {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      z-index: 100;
+      background: transparent;
+      box-shadow: none;
+      padding: 18px clamp(16px, 4vw, 40px) 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      transition: background 0.35s ease, box-shadow 0.35s ease, padding 0.35s ease;
+    }
+
+    nav:not(.sidebar)::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 120px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, transparent 100%);
+      z-index: -1;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+
+    nav:not(.sidebar).scrolled {
+      background: #fff;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+      padding: 8px clamp(16px, 4vw, 40px) 6px;
+    }
+
+    nav:not(.sidebar).scrolled::before { opacity: 0; }
+
+    .btn {
+      display: inline-block;
+      padding: 11px 26px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 0.875rem;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: background 0.18s, transform 0.12s;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    nav:not(.sidebar).scrolled .nav-fw  { color:#000 !important; text-shadow:none; }
+
+    nav:not(.sidebar).scrolled .nav-fe  { color:#000 !important; text-shadow:none; }
+
+    nav:not(.sidebar).scrolled .nav-program-text { color:rgba(0,0,0,0.6) !important; text-shadow:none; }
+
+    nav:not(.sidebar):not(.scrolled) .btn-navy {
+      background: transparent !important;
+      border: 2px solid rgba(255,255,255,0.9) !important;
+      color: #fff !important;
+    }
+
+    nav:not(.sidebar).scrolled .btn-navy {
+      background: var(--ford-blue) !important;
+      border-color: var(--ford-blue) !important;
+      color: #fff !important;
+    }
+
+    nav:not(.sidebar).scrolled .btn-outline-white {
+      border-color: #003478 !important;
+      color: #003478 !important;
+      background: transparent !important;
+    }
+
+    nav:not(.sidebar).scrolled .nav-fw { color: #003478 !important; text-shadow: none; }
+
+    nav:not(.sidebar).scrolled .nav-fe { color: rgba(0,52,120,0.55) !important; text-shadow: none; }
+
+    nav:not(.sidebar).scrolled .nav-program-text { color: rgba(0,52,120,0.55) !important; }
+
+    @media (max-width: 768px) {
+      
+      .nav-wordmark { height: 32px !important; }
+      .nav-ford-oval { height: 38px !important; }
+      .nav-right { gap: 8px !important; }
+      .nav-btn { font-size: 11px !important; padding: 8px 12px !important; }
+    }
+
+    @media (max-width: 768px) {
+      .hero-cta-wrap { pointer-events: auto; bottom: 20px; }
+      .hero-cta-btn { pointer-events: auto; font-size: 16px; padding: 14px 40px; }
+    }
+
+    nav:not(.sidebar).scrolled .hamburger-btn { color: #111; }
+
+    .sidebar {
+      position: fixed;
+      top: 0; left: -300px;
+      width: 280px; height: 100vh;
+      background: #fff;
+      z-index: 201;
+      transition: left 0.35s cubic-bezier(0.4,0,0.2,1);
+      overflow-y: auto;
+      box-shadow: 4px 0 32px rgba(0,52,120,0.18);
+    }
+
+    @media (max-width: 860px) {
+      .showroom-inner {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .showroom-heading { font-size: clamp(28px, 8vw, 40px); }
+      .showroom-body { font-size: 15px; }
+    }
+
+    .site-footer {
+      background: #f0f2f5;
+      border-top: 1px solid #dde2ea;
+      padding: clamp(28px,4vw,44px) clamp(20px,5vw,40px) clamp(20px,3vw,32px);
+      text-align: center;
+    }
+
+    @media (max-width: 480px) {
+      .site-footer-logo { height: 26px; }
+      .site-footer-brand { gap: 10px; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-powered { font-size: 15px; font-weight: 700; color: #003478; white-space: nowrap; }
+      .nav-brand { display: flex; overflow: visible; }
+      .engage-cards { grid-template-columns: 1fr; gap: 16px; }
+      .how-cards { grid-template-columns: 1fr 1fr; gap: 20px; }
+      .testimonial-cards { grid-template-columns: 1fr 1fr; gap: 16px; }
+      .hero-foreground { padding: 120px 24px 60px; flex-direction: column; align-items: flex-start; }
+      .hero-text-col { flex: none; width: 100%; }
+    }
+
+    @media (max-width: 480px) {
+      .proof-strip-inner {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+      .proof-stat {
+      text-align: center;
+      flex: 1;
+      padding: 0 12px;
+      border-right: 1px solid #e0e0e0;
+    }
+      .proof-stat:last-child { border-bottom: none; }
+      .engage-copy .btn,
+      .roi-inner .btn { display: block; width: 100%; text-align: center; box-sizing: border-box; }
+      .section-finalcta .btn { display: inline-block; width: auto; }
+      .roi-results { grid-template-columns: 1fr; }
+      .roi-input-row { flex-direction: column; align-items: stretch; gap: 10px; }
+      .roi-label { text-align: center; }
+      .roi-input { width: 100%; }
+      .how-cards { grid-template-columns: 1fr; }
+      .testimonial-cards { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 1100px) {
+      nav:not(.sidebar) .nav-inner { flex-wrap: wrap; justify-content: flex-start; gap: 8px; }
+      /* nav-program-text now inside nav-brand-stack */
+      nav:not(.sidebar) .nav-right { order: 3; width: 100%; justify-content: center; }
+    }
+
+    @media (max-width: 480px) {
+      nav:not(.sidebar) .nav-brand img { height: 40px !important; }
+      nav:not(.sidebar) .nav-fw, nav:not(.sidebar) .nav-fe { font-size: 24px; }
+      nav:not(.sidebar) .nav-program-text { font-size: 10px; letter-spacing:.5px; }
+    }
