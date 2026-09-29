@@ -38,6 +38,81 @@
     }
 
     /* ─── NAV ─── */
+    nav:not(.sidebar) {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      z-index: 100;
+      background: transparent;
+      box-shadow: none;
+      padding: 18px clamp(16px, 4vw, 40px) 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      transition: background 0.35s ease, box-shadow 0.35s ease, padding 0.35s ease;
+    }
+    nav:not(.sidebar)::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 120px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, transparent 100%);
+      z-index: -1;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+    nav:not(.sidebar).scrolled {
+      background: #fff;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+      padding: 8px clamp(16px, 4vw, 40px) 6px;
+    }
+    nav:not(.sidebar).scrolled::before { opacity: 0; }
+
+    .nav-inner {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 0 0 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px 4px 24px;
+    }
+    .nav-brand {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow: visible;
+    }
+    .nav-brand img {
+      height: 48px;
+      width: auto;
+      display: block !important;
+      visibility: visible !important;
+    }
+    .nav-brand svg { width: 52px; height: 52px; flex-shrink: 0; }
+    .nav-right { display: flex; align-items: center; gap: 24px; }
+    .nav-powered { font-size: 15px; font-weight: 700; color: #003478; white-space: nowrap; }
+
+    .btn {
+      display: inline-block;
+      padding: 11px 26px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 0.875rem;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: background 0.18s, transform 0.12s;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .btn-navy { background: var(--ford-blue); color: var(--white); }
+    .btn-navy:hover { background: #002a60; transform: translateY(-1px); }
+    .btn-white { background: var(--white); color: var(--ford-blue); }
+    .btn-white:hover { background: #e8eef7; transform: translateY(-1px); }
+    .btn-lg { padding: 18px 42px; font-size: 1rem; letter-spacing: 0.8px; border-radius: 4px; }
 
     /* ─── HERO ─── */
     .hero {
@@ -80,8 +155,63 @@
       pointer-events: none;
     }
 
+    
+
+    
+
+    
+
+
+    .nav-wordmark-text { display:inline-flex; align-items:baseline; white-space:nowrap; }
+
     /* ─── NAV TEXT STATES ─── */
+    .nav-wordmark-text { display:inline-flex; align-items:baseline; white-space:nowrap; }
+    .nav-fw {
+      font-family: 'Ford Antenna', FordAntenna, 'Arial Black', Arial, sans-serif;
+      font-weight: 800;
+      font-size: 28px;
+      letter-spacing: -0.5px;
+      color: #fff;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.4);
+      transition: color .3s, text-shadow .3s;
+    }
+    .nav-fe {
+      font-family: 'Ford Antenna', FordAntenna, Arial, sans-serif;
+      font-weight: 300;
+      font-size: 28px;
+      color: rgba(255,255,255,0.9);
+      text-shadow: 0 1px 6px rgba(0,0,0,0.4);
+      transition: color .3s, text-shadow .3s;
+    }
+    .nav-program-text {
+      font-family: 'Ford Light Extended', 'Ford Antenna', Arial, sans-serif;
+      font-size: 15px; font-weight:500; letter-spacing:.5px;
+      white-space:nowrap; margin:0; text-align:left;
+      color:rgba(255,255,255,0.75); text-shadow:none;
+      transition:color .3s;
+    }
     /* Sticky — white nav, dark text */
+    nav:not(.sidebar).scrolled .nav-fw  { color:#000 !important; text-shadow:none; }
+    nav:not(.sidebar).scrolled .nav-fe  { color:#000 !important; text-shadow:none; }
+    nav:not(.sidebar).scrolled .nav-program-text { color:rgba(0,0,0,0.6) !important; text-shadow:none; }
+    nav:not(.sidebar):not(.scrolled) .btn-navy {
+      background: transparent !important;
+      border: 2px solid rgba(255,255,255,0.9) !important;
+      color: #fff !important;
+    }
+    nav:not(.sidebar).scrolled .btn-navy {
+      background: var(--ford-blue) !important;
+      border-color: var(--ford-blue) !important;
+      color: #fff !important;
+    }
+    nav:not(.sidebar).scrolled .btn-outline-white {
+      border-color: #003478 !important;
+      color: #003478 !important;
+      background: transparent !important;
+    }
+    nav:not(.sidebar).scrolled .nav-fw { color: #003478 !important; text-shadow: none; }
+    nav:not(.sidebar).scrolled .nav-fe { color: rgba(0,52,120,0.55) !important; text-shadow: none; }
+    nav:not(.sidebar).scrolled .nav-program-text { color: rgba(0,52,120,0.55) !important; }
 
     .hero-foreground {
       position: absolute;
@@ -130,6 +260,11 @@
     }
 
     @media (max-width: 768px) {
+      
+      .nav-wordmark { height: 32px !important; }
+      .nav-ford-oval { height: 38px !important; }
+      .nav-right { gap: 8px !important; }
+      .nav-btn { font-size: 11px !important; padding: 8px 12px !important; }
     }
 
     
@@ -335,6 +470,90 @@
     }
 
     /* ─── HAMBURGER + SIDEBAR ─── */
+    .hamburger-btn {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 26px;
+      cursor: pointer;
+      padding: 0 14px 0 0;
+      line-height: 1;
+      flex-shrink: 0;
+      transition: color 0.3s;
+      z-index: 101;
+      align-self: center;
+    }
+    nav:not(.sidebar).scrolled .hamburger-btn { color: #111; }
+    .sidebar-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 200;
+    }
+    .sidebar-overlay.open { display: block; }
+    .sidebar {
+      position: fixed;
+      top: 0; left: -300px;
+      width: 280px; height: 100vh;
+      background: #fff;
+      z-index: 201;
+      transition: left 0.35s cubic-bezier(0.4,0,0.2,1);
+      overflow-y: auto;
+      box-shadow: 4px 0 32px rgba(0,52,120,0.18);
+    }
+    .sidebar.open { left: 0; }
+    .sidebar-header {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 20px 20px;
+      border-bottom: 1px solid #e8eef5;
+    }
+    .sidebar-close {
+      background: none; border: none;
+      color: #aaa;
+      font-size: 20px; cursor: pointer;
+      padding: 4px;
+      transition: color 0.2s;
+    }
+    .sidebar-close:hover { color: #003478; }
+    .sidebar-body { padding: 16px 0; }
+    .sidebar-section { margin-bottom: 8px; }
+    .sidebar-section-label {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: #aaa;
+      padding: 12px 20px 8px;
+      font-family: 'Ford Antenna', Arial, sans-serif;
+    }
+    .sidebar-link {
+      padding: 12px 20px;
+      color: #003478;
+      text-decoration: none;
+      font-size: 15px; font-weight: 600;
+      transition: background 0.18s, color 0.18s;
+      border-left: 3px solid transparent;
+      font-family: 'Ford Antenna', Arial, sans-serif;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .sidebar-link:hover {
+      background: #f0f4ff;
+      color: #003478;
+      border-left-color: #003478;
+    }
+    .sidebar-link-soon {
+      color: #bbb;
+      font-weight: 400;
+    }
+    .sidebar-link-soon::after {
+      content: ', soon';
+      font-size: 11px;
+      opacity: 0.6;
+    }
+    .sidebar-link-soon:hover {
+      background: #f8f8f8;
+      border-left-color: transparent;
+      cursor: default;
+    }
     /* ─── PROOF STRIP ─── */
     .proof-strip {
       background: #fff;
@@ -415,6 +634,8 @@
       line-height: 1.1;
       letter-spacing: -0.5px;
       margin-bottom: 24px;
+      color: var(--ford-blue);
+      font-family: 'Ford Antenna', FordAntenna, Arial, sans-serif;
     }
     .section-body {
       font-size: 1.05rem;
@@ -443,92 +664,56 @@
       max-width: 1140px;
       width: 100%;
       margin: 0 auto;
+    }
+    .engage-intro {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .engage-intro h2 {
+      font-size: clamp(1.25rem, 2.8vw, 1.75rem);
+      font-weight: 700;
+      line-height: 1.5;
+      max-width: 860px;
+      margin: 0 auto;
+      /* color: var(--ford-blue) via section h2 base */
+    }
+    .engage-cards {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: clamp(28px, 5vw, 64px);
-      align-items: start;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
     }
-    .engage-main-img {
-      width: 100%;
-      aspect-ratio: 4/3;
-      object-fit: cover;
-      border-radius: 8px;
-      display: block;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-      margin-bottom: 14px;
-    }
-    .engage-thumbs {
+    .engage-card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 32px 28px 36px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.07);
       display: flex;
-      gap: 10px;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-      flex-wrap: nowrap;
-    }
-    .engage-thumbs::-webkit-scrollbar { display: none; }
-    .engage-thumb {
-      flex: 0 0 calc(33.333% - 7px);
-      min-width: 72px;
-      aspect-ratio: 4/3;
-      object-fit: cover;
-      border-radius: 6px;
-      cursor: pointer;
-      opacity: 0.65;
-      transition: opacity 0.18s, box-shadow 0.18s;
-      border: 2px solid transparent;
-    }
-    .engage-thumb.active,
-    .engage-thumb:hover {
-      opacity: 1;
-      border-color: var(--ford-blue);
-      box-shadow: 0 0 0 2px var(--ford-blue);
-    }
-    .engage-copy h2 { margin-bottom: 18px; }
-    .engage-body { font-size: 1rem; color: #555; line-height: 1.72; margin-bottom: 26px; }
-    .engage-bullets { list-style: none; margin-bottom: 36px; }
-    .engage-bullets li {
-      padding: 6px 0;
-      font-size: 0.95rem;
-      color: #333;
-      display: flex;
+      flex-direction: column;
       align-items: flex-start;
-      gap: 10px;
     }
-    .engage-bullets li::before {
-      content: '✓';
+    .engage-card-eyebrow {
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
       color: var(--ford-blue);
-      font-weight: 900;
-      font-size: 1rem;
-      flex-shrink: 0;
-      margin-top: 1px;
+      margin-bottom: 12px;
     }
-
-    /* ─── ENGAGE TABS ─── */
-    .engage-tabs {
-      display: flex;
-      gap: 0;
-      border-radius: 8px;
-      overflow: hidden;
-      border: 1.5px solid var(--ford-blue);
-      margin-bottom: 24px;
-      width: fit-content;
-    }
-    .engage-tab {
-      background: none;
-      border: none;
-      padding: 10px 22px;
-      font-size: 0.85rem;
+    .engage-card h3 {
+      font-size: 1.25rem;
       font-weight: 700;
       color: var(--ford-blue);
-      cursor: pointer;
-      font-family: inherit;
-      letter-spacing: 0.3px;
-      transition: background 0.18s, color 0.18s;
-      border-right: 1.5px solid var(--ford-blue);
+      line-height: 1.3;
+      margin: 0;
     }
-    .engage-tab:last-child { border-right: none; }
-    .engage-tab.active { background: var(--ford-blue); color: var(--white); }
-    .engage-tab:hover:not(.active) { background: rgba(0,52,120,0.07); }
+    .engage-card h3 .fe-bold { font-weight: 900; }
+    .engage-card h3 .fe-light { font-weight: 300; }
+    .engage-card-desc {
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 10px;
+      line-height: 1.5;
+    }
 
     /* ─── ROI CALCULATOR ─── */
     .section-roi { background: var(--white); }
@@ -567,8 +752,8 @@
       grid-template-columns: 1fr 1fr;
       gap: 16px;
     }
-    .roi-card { padding: 24px 16px; background: var(--white); border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-    .roi-card-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1px; color: #888; font-weight: 700; margin-bottom: 8px; }
+    .roi-card { display:grid; grid-template-rows:subgrid; grid-row:span 3; row-gap:0; min-width:0; padding: 24px 16px; background: var(--white); border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+    .roi-card-label { min-height:2lh; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1px; color: #888; font-weight: 700; margin-bottom: 8px; }
     .roi-card-value { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 900; color: var(--ford-blue); letter-spacing: -0.5px; }
     .roi-card.top-rate .roi-card-value { color: var(--ford-bright); }
 
@@ -585,7 +770,7 @@
       box-shadow: 0 2px 12px rgba(0,0,0,0.07);
     }
     .how-step-num { font-size: 0.68rem; font-weight: 900; letter-spacing: 3px; color: var(--ford-blue); text-transform: uppercase; margin-bottom: 14px; }
-    .how-card h3 { font-size: 1.35rem; font-weight: 800; margin-bottom: 12px; color: var(--black); }
+    .how-card h3 { font-size: 1.35rem; font-weight: 800; margin-bottom: 12px; color: var(--ford-blue); }
     .how-card p { font-size: 0.92rem; color: #666; line-height: 1.65; }
 
     /* ─── TESTIMONIALS ─── */
@@ -599,11 +784,179 @@
     .testimonial-attr { font-size: 0.78rem; font-weight: 700; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.8px; }
 
     /* ─── FINAL CTA ─── */
+    /* ─── SHOWROOM SECTION ─── */
+    .section-showroom {
+      position: relative;
+      min-height: 560px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      padding: 0;
+    }
+    .section-showroom .showroom-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      z-index: 0;
+    }
+    .section-showroom .showroom-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(0,10,30,0.88) 0%, rgba(0,10,30,0.72) 50%, rgba(0,10,30,0.15) 100%);
+      z-index: 1;
+    }
+    .showroom-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 680px;
+      margin: 0 auto 0 clamp(32px,8vw,120px);
+      padding: clamp(64px,8vw,110px) clamp(24px,5vw,48px);
+      display: block;
+    }
+    .showroom-img-wrap {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 40px rgba(0,52,120,0.13);
+      aspect-ratio: 16/9;
+      background: #dce6f2;
+    }
+    .showroom-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .showroom-caption {
+      position: absolute;
+      bottom: 10px;
+      right: 14px;
+      font-size: 11px;
+      color: rgba(255,255,255,0.72);
+      letter-spacing: 0.5px;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+      pointer-events: none;
+    }
+    .showroom-copy {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .showroom-kicker {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #0562D2;
+    }
+    .showroom-heading {
+      font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+      font-weight: 900;
+      font-size: clamp(32px, 4vw, 54px);
+      line-height: 1.0;
+      letter-spacing: -0.5px;
+      color: #000e20;
+      margin: 0;
+    }
+    .showroom-body {
+      font-size: 16px;
+      line-height: 1.72;
+      color: #444;
+      margin: 0;
+    }
+    .showroom-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--ford-blue);
+      color: #fff;
+      font-weight: 700;
+      font-size: 15px;
+      padding: 14px 28px;
+      border-radius: 6px;
+      text-decoration: none !important;
+      align-self: flex-start;
+      transition: background 0.2s;
+    }
+    .showroom-cta:hover { background: #002060; }
+    .showroom-mode-pills {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .showroom-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #003478;
+      background: #e8eef8;
+      padding: 6px 14px;
+      border-radius: 20px;
+    }
+    @media (max-width: 860px) {
+      .showroom-inner {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+    }
+    @media (max-width: 480px) {
+      .showroom-heading { font-size: clamp(28px, 8vw, 40px); }
+      .showroom-body { font-size: 15px; }
+    }
+
     .section-finalcta { background: var(--ford-blue); color: var(--white); text-align: center; }
     .section-finalcta h2 { color: var(--white); margin-bottom: 36px; max-width: 680px; margin-left: auto; margin-right: auto; }
     .finalcta-email { display: block; margin-top: 20px; font-size: 0.85rem; color: rgba(255,255,255,0.55); letter-spacing: 0.3px; }
 
     /* ─── FOOTER ─── */
+
+    /* ─── SHARED BRANDED FOOTER ─── */
+    .site-footer {
+      background: #f0f2f5;
+      border-top: 1px solid #dde2ea;
+      padding: clamp(28px,4vw,44px) clamp(20px,5vw,40px) clamp(20px,3vw,32px);
+      text-align: center;
+    }
+    .site-footer-brand {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+    .site-footer-logo {
+      height: 32px;
+      width: auto;
+      display: block;
+      flex-shrink: 0;
+    }
+    .site-footer-tag {
+      font-size: 0.82rem;
+      color: #444;
+      font-family: 'Ford Antenna', FordAntenna, Arial, sans-serif;
+      letter-spacing: 0.2px;
+      white-space: nowrap;
+    }
+    .site-footer-copy {
+      font-size: 0.75rem;
+      color: #777;
+      line-height: 1.7;
+      margin: 0;
+    }
+    .site-footer-copy + .site-footer-copy {
+      margin-top: 4px;
+    }
+    @media (max-width: 480px) {
+      .site-footer-logo { height: 26px; }
+      .site-footer-brand { gap: 10px; }
+    }
+
     footer {
       background: var(--black);
       color: rgba(255,255,255,0.45);
@@ -616,7 +969,9 @@
 
     /* ─── TABLET (≤ 768px) ─── */
     @media (max-width: 768px) {
-      .engage-inner { grid-template-columns: 1fr; gap: 32px; }
+      .nav-powered { font-size: 15px; font-weight: 700; color: #003478; white-space: nowrap; }
+      .nav-brand { display: flex; overflow: visible; }
+      .engage-cards { grid-template-columns: 1fr; gap: 16px; }
       .how-cards { grid-template-columns: 1fr 1fr; gap: 20px; }
       .testimonial-cards { grid-template-columns: 1fr 1fr; gap: 16px; }
       .hero-foreground { padding: 120px 24px 60px; flex-direction: column; align-items: flex-start; }
@@ -691,8 +1046,14 @@
 
     /* Keep the existing header content reachable at narrow widths. */
     @media (max-width: 1100px) {
+      nav:not(.sidebar) .nav-inner { flex-wrap: wrap; justify-content: flex-start; gap: 8px; }
+      /* nav-program-text now inside nav-brand-stack */
+      nav:not(.sidebar) .nav-right { order: 3; width: 100%; justify-content: center; }
     }
     @media (max-width: 480px) {
+      nav:not(.sidebar) .nav-brand img { height: 40px !important; }
+      nav:not(.sidebar) .nav-fw, nav:not(.sidebar) .nav-fe { font-size: 24px; }
+      nav:not(.sidebar) .nav-program-text { font-size: 15px; letter-spacing:.5px; }
     }
     @media (max-width: 600px) {
       .proof-strip-inner { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 0; }
@@ -702,262 +1063,6 @@
     a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
       outline: 3px solid #0562D2; outline-offset: 3px;
     }
-  /* @@NAV_CSS_START@@ */
-nav:not(.sidebar) {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      z-index: 100;
-      background: transparent;
-      box-shadow: none;
-      padding: 18px clamp(16px, 4vw, 40px) 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      transition: background 0.35s ease, box-shadow 0.35s ease, padding 0.35s ease;
-    }
-nav:not(.sidebar)::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 120px;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, transparent 100%);
-      z-index: -1;
-      pointer-events: none;
-      transition: opacity 0.35s ease;
-    }
-nav:not(.sidebar).scrolled {
-      background: #fff;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.10);
-      padding: 8px clamp(16px, 4vw, 40px) 6px;
-    }
-nav:not(.sidebar).scrolled::before { opacity: 0; }
-.nav-inner {
-      max-width: 1200px;
-      width: 100%;
-      margin: 0 0 0 0;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 40px 4px 24px;
-    }
-.nav-brand {
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      overflow: visible;
-    }
-.nav-brand img {
-      height: 48px;
-      width: auto;
-      display: block !important;
-      visibility: visible !important;
-    }
-.nav-brand svg { width: 52px; height: 52px; flex-shrink: 0; }
-.nav-right { display: flex; align-items: center; gap: 24px; }
-.nav-powered { font-size: 15px; font-weight: 700; color: #003478; white-space: nowrap; }
-.btn {
-      display: inline-block;
-      padding: 11px 26px;
-      border-radius: 4px;
-      font-weight: 700;
-      font-size: 0.875rem;
-      letter-spacing: 0.5px;
-      text-decoration: none;
-      cursor: pointer;
-      border: none;
-      transition: background 0.18s, transform 0.12s;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-.btn-navy { background: var(--ford-blue); color: var(--white); }
-.btn-navy:hover { background: #002a60; transform: translateY(-1px); }
-.btn-white { background: var(--white); color: var(--ford-blue); }
-.btn-white:hover { background: #e8eef7; transform: translateY(-1px); }
-.btn-lg { padding: 18px 42px; font-size: 1rem; letter-spacing: 0.8px; border-radius: 4px; }
-.nav-wordmark-text { display:inline-flex; align-items:baseline; white-space:nowrap; }
-.nav-wordmark-text { display:inline-flex; align-items:baseline; white-space:nowrap; }
-.nav-fw {
-      font-family: 'Ford Antenna', FordAntenna, 'Arial Black', Arial, sans-serif;
-      font-weight: 800;
-      font-size: 28px;
-      letter-spacing: -0.5px;
-      color: #fff;
-      text-shadow: 0 1px 6px rgba(0,0,0,0.4);
-      transition: color .3s, text-shadow .3s;
-    }
-.nav-fe {
-      font-family: 'Ford Antenna', FordAntenna, Arial, sans-serif;
-      font-weight: 300;
-      font-size: 28px;
-      color: rgba(255,255,255,0.9);
-      text-shadow: 0 1px 6px rgba(0,0,0,0.4);
-      transition: color .3s, text-shadow .3s;
-    }
-.nav-program-text {
-      font-family: 'Ford Light Extended', 'Ford Antenna', Arial, sans-serif;
-      font-size: 15px; font-weight:500; letter-spacing:.5px;
-      white-space:nowrap; margin:0; text-align:left;
-      color:rgba(255,255,255,0.75); text-shadow:none;
-      transition:color .3s;
-    }
-nav:not(.sidebar).scrolled .nav-fw  { color:#000 !important; text-shadow:none; }
-nav:not(.sidebar).scrolled .nav-fe  { color:#000 !important; text-shadow:none; }
-nav:not(.sidebar).scrolled .nav-program-text { color:rgba(0,0,0,0.6) !important; text-shadow:none; }
-nav:not(.sidebar):not(.scrolled) .btn-navy {
-      background: transparent !important;
-      border: 2px solid rgba(255,255,255,0.9) !important;
-      color: #fff !important;
-    }
-nav:not(.sidebar).scrolled .btn-navy {
-      background: var(--ford-blue) !important;
-      border-color: var(--ford-blue) !important;
-      color: #fff !important;
-    }
-nav:not(.sidebar).scrolled .btn-outline-white {
-      border-color: #003478 !important;
-      color: #003478 !important;
-      background: transparent !important;
-    }
-nav:not(.sidebar).scrolled .nav-fw { color: #003478 !important; text-shadow: none; }
-nav:not(.sidebar).scrolled .nav-fe { color: rgba(0,52,120,0.55) !important; text-shadow: none; }
-nav:not(.sidebar).scrolled .nav-program-text { color: rgba(0,52,120,0.55) !important; }
-.nav-wordmark { height: 32px !important; }
-.nav-ford-oval { height: 38px !important; }
-.nav-right { gap: 8px !important; }
-.nav-btn { font-size: 11px !important; padding: 8px 12px !important; }
-.hamburger-btn {
-      background: none;
-      border: none;
-      color: #fff;
-      font-size: 26px;
-      cursor: pointer;
-      padding: 0 14px 0 0;
-      line-height: 1;
-      flex-shrink: 0;
-      transition: color 0.3s;
-      z-index: 101;
-      align-self: center;
-    }
-nav:not(.sidebar).scrolled .hamburger-btn { color: #111; }
-.sidebar-overlay {
-      display: none;
-      position: fixed; inset: 0;
-      background: rgba(0,0,0,0.55);
-      z-index: 200;
-    }
-.sidebar-overlay.open { display: block; }
-.sidebar {
-      position: fixed;
-      top: 0; left: -300px;
-      width: 280px; height: 100vh;
-      background: #fff;
-      z-index: 201;
-      transition: left 0.35s cubic-bezier(0.4,0,0.2,1);
-      overflow-y: auto;
-      box-shadow: 4px 0 32px rgba(0,52,120,0.18);
-    }
-.sidebar.open { left: 0; }
-.sidebar-header {
-      display: flex; align-items: center;
-      justify-content: space-between;
-      padding: 20px 20px;
-      border-bottom: 1px solid #e8eef5;
-    }
-.sidebar-close {
-      background: none; border: none;
-      color: #aaa;
-      font-size: 20px; cursor: pointer;
-      padding: 4px;
-      transition: color 0.2s;
-    }
-.sidebar-close:hover { color: #003478; }
-.sidebar-body { padding: 16px 0; }
-.sidebar-section { margin-bottom: 8px; }
-.sidebar-section-label {
-      font-size: 10px; font-weight: 700;
-      letter-spacing: 2px; text-transform: uppercase;
-      color: #aaa;
-      padding: 12px 20px 8px;
-      font-family: 'Ford Antenna', Arial, sans-serif;
-    }
-.sidebar-link {
-      padding: 12px 20px;
-      color: #003478;
-      text-decoration: none;
-      font-size: 15px; font-weight: 600;
-      transition: background 0.18s, color 0.18s;
-      border-left: 3px solid transparent;
-      font-family: 'Ford Antenna', Arial, sans-serif;
-      display: flex; align-items: center; gap: 12px;
-    }
-.sidebar-link:hover {
-      background: #f0f4ff;
-      color: #003478;
-      border-left-color: #003478;
-    }
-.sidebar-link-soon {
-      color: #bbb;
-      font-weight: 400;
-    }
-.sidebar-link-soon::after {
-      content: ', soon';
-      font-size: 11px;
-      opacity: 0.6;
-    }
-.sidebar-link-soon:hover {
-      background: #f8f8f8;
-      border-left-color: transparent;
-      cursor: default;
-    }
-.site-footer {
-      background: #f0f2f5;
-      border-top: 1px solid #dde2ea;
-      padding: clamp(28px,4vw,44px) clamp(20px,5vw,40px) clamp(20px,3vw,32px);
-      text-align: center;
-    }
-.site-footer-brand {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 14px;
-      flex-wrap: wrap;
-      margin-bottom: 10px;
-    }
-.site-footer-logo {
-      height: 32px;
-      width: auto;
-      display: block;
-      flex-shrink: 0;
-    }
-.site-footer-tag {
-      font-size: 0.82rem;
-      color: #444;
-      font-family: 'Ford Antenna', FordAntenna, Arial, sans-serif;
-      letter-spacing: 0.2px;
-      white-space: nowrap;
-    }
-.site-footer-copy {
-      font-size: 0.75rem;
-      color: #777;
-      line-height: 1.7;
-      margin: 0;
-    }
-.site-footer-copy + .site-footer-copy {
-      margin-top: 4px;
-    }
-.site-footer-logo { height: 26px; }
-.site-footer-brand { gap: 10px; }
-.nav-powered { font-size: 15px; font-weight: 700; color: #003478; white-space: nowrap; }
-.nav-brand { display: flex; overflow: visible; }
-nav:not(.sidebar) .nav-inner { flex-wrap: wrap; justify-content: flex-start; gap: 8px; }
-nav:not(.sidebar) .nav-right { order: 3; width: 100%; justify-content: center; }
-nav:not(.sidebar) .nav-brand img { height: 40px !important; }
-nav:not(.sidebar) .nav-fw, nav:not(.sidebar) .nav-fe { font-size: 24px; }
-nav:not(.sidebar) .nav-program-text { font-size: 15px; letter-spacing:.5px; }
-
-/* @@NAV_CSS_END@@ */
   </style>
   <link rel="stylesheet" href="css/nav.css">
   <script src="https://kit.fontawesome.com/a0d1bd4a2c.js" crossorigin="anonymous"></script>
