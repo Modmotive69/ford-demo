@@ -1065,94 +1065,75 @@
   
 
     /* ── Contact page ── */
-    .hero {
-      position: relative;
-      overflow: hidden;
-      min-height: 85vh;
-      display: flex;
-      align-items: flex-end;
-      background: #000;
+    .sidebar-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 200;
     }
-    .hero-video {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
-      z-index: 0;
-      opacity: 0;
-      transition: opacity 1.5s ease-in-out;
+    .sidebar-overlay.open { display: block; }
+    .sidebar {
+      position: fixed;
+      top: 0; left: -300px;
+      width: 280px; height: 100vh;
+      background: #fff;
+      z-index: 201;
+      transition: left 0.35s cubic-bezier(0.4,0,0.2,1);
+      overflow-y: auto;
+      box-shadow: 4px 0 32px rgba(0,52,120,0.18);
     }
-    .hero-video-active { opacity: 0.85; }
-    .hero-video-next { opacity: 0; }
-    .hero-bg-panel {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: url('images/hero-bg.jpg') center center / cover no-repeat;
-      z-index: 2;
-      opacity: 1;
-      transition: opacity 2s ease-in-out;
+    .sidebar.open { left: 0; }
+    .sidebar-header {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 20px 20px;
+      border-bottom: 1px solid #e8eef5;
     }
-    .hero-bg-panel.fade-out { opacity: 0; }
-    .hero-sand-fade {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 220px;
-      background: linear-gradient(to bottom, transparent 0%, #fff 100%);
-      z-index: 3;
-      pointer-events: none;
+    .sidebar-close {
+      background: none; border: none;
+      color: #aaa;
+      font-size: 20px; cursor: pointer;
+      padding: 4px;
+      transition: color 0.2s;
     }
-    .hero-foreground {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      z-index: 10;
-      pointer-events: none;
+    .sidebar-close:hover { color: #003478; }
+    .sidebar-body { padding: 16px 0; }
+    .sidebar-section { margin-bottom: 8px; }
+    .sidebar-section-label {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: #aaa;
+      padding: 12px 20px 8px;
+      font-family: 'Ford Antenna', Arial, sans-serif;
     }
-    .hero-text-col {
-      position: absolute;
-      left: 8.9%;
-      top: 17%;
-      pointer-events: auto;
+    .sidebar-link {
+      padding: 12px 20px;
+      color: #003478;
+      text-decoration: none;
+      font-size: 15px; font-weight: 600;
+      transition: background 0.18s, color 0.18s;
+      border-left: 3px solid transparent;
+      font-family: 'Ford Antenna', Arial, sans-serif;
+      display: flex; align-items: center; gap: 12px;
     }
-    .hero-headline {
-      font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
-      font-weight: 900;
-      font-size: clamp(80px, 13vw, 180px);
-      line-height: 0.88;
-      text-transform: uppercase;
-      color: #fff;
-      text-shadow: none;
-      letter-spacing: -1px;
-      margin-bottom: 16px;
+    .sidebar-link:hover {
+      background: #f0f4ff;
+      color: #003478;
+      border-left-color: #003478;
     }
-    .hero-subline {
-      font-size: clamp(18px, 2vw, 28px);
-      color: #fff;
-      font-weight: 700;
-      text-shadow: 0 2px 12px rgba(0,0,0,0.7);
-      margin-top: 6px;
+    .sidebar-link-soon {
+      color: #bbb;
+      font-weight: 400;
     }
-    .hero-accent { color: #FFD700; font-style: italic; }
-    .hero-assets-col {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      pointer-events: none;
+    .sidebar-link-soon::after {
+      content: ', soon';
+      font-size: 11px;
+      opacity: 0.6;
     }
-    .hero-combined-img {
-      position: absolute;
-      right: 3%;
-      top: 22%;
-      width: 54%;
-      max-width: 780px;
-      filter: drop-shadow(0 24px 60px rgba(0,0,0,0.2));
-      pointer-events: none;
-    }
-    .hero-cta-wrap { pointer-events: auto;
-      position: absolute;
-      bottom: 100px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 11;
-      text-align: center;
+    .sidebar-link-soon:hover {
+      background: #f8f8f8;
+      border-left-color: transparent;
+      cursor: default;
     }
     .sidebar-overlay {
       display: none;
@@ -1224,10 +1205,6 @@
       border-left-color: transparent;
       cursor: default;
     }
-    .hero{background:linear-gradient(135deg,var(--navy) 0%,#001840 100%);color:var(--white);padding:clamp(60px,8vw,100px) clamp(24px,6vw,80px);text-align:center}
-    .eyebrow{font-family:var(--head);font-size:.8rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:16px}
-    .hero h1{font-family:var(--head);font-weight:900;font-size:clamp(2.4rem,6vw,4rem);line-height:1.05;margin-bottom:20px}
-    .hero p{font-size:1.1rem;color:rgba(255,255,255,.75);max-width:520px;margin:0 auto;line-height:1.7}
     .wrap{max-width:1100px;margin:0 auto;padding:clamp(48px,7vw,96px) clamp(24px,5vw,48px);display:grid;grid-template-columns:1fr 400px;gap:64px;align-items:start}
     .form-section h2{font-family:var(--head);font-weight:900;font-size:clamp(1.6rem,3vw,2.2rem);color:var(--navy);margin-bottom:8px}
     .form-sub{color:var(--muted);font-size:.95rem;margin-bottom:36px;line-height:1.6}
@@ -1331,6 +1308,18 @@
       border-left-color: transparent;
       cursor: default;
     }
+
+    /* ── Contact hero override (no video, no min-height) ── */
+    .contact-hero {
+      background: linear-gradient(135deg, #003478 0%, #001840 100%);
+      color: #fff;
+      padding: clamp(100px,10vw,130px) clamp(24px,6vw,80px) clamp(60px,6vw,80px);
+      text-align: center;
+    }
+    .contact-hero .eyebrow { font-family:'Barlow Condensed',Arial,sans-serif; font-size:.8rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,.55); margin-bottom:16px; }
+    .contact-hero h1 { font-family:'Barlow Condensed',Arial,sans-serif; font-weight:900; font-size:clamp(2.4rem,6vw,4rem); line-height:1.05; margin-bottom:20px; }
+    .contact-hero p { font-size:1.1rem; color:rgba(255,255,255,.75); max-width:520px; margin:0 auto; line-height:1.7; }
+
   </style>
 </head>
 <body>
@@ -1353,7 +1342,7 @@
     </div>
   </nav>
 
-<section class="hero">
+<section class="contact-hero">
   <p class="eyebrow">Get in touch</p>
   <h1>Let's talk about your dealership.</h1>
   <p>Whether you're ready to enroll, curious about displays and kiosks, or just want to see a demo — we're here.</p>
