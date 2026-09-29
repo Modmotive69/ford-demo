@@ -37,24 +37,18 @@
 
     nav:not(.sidebar).scrolled::before { opacity: 0; }
 
-    .btn {
-      display: inline-block;
-      padding: 11px 26px;
-      border-radius: 4px;
-      font-weight: 700;
-      font-size: 0.875rem;
-      letter-spacing: 0.5px;
-      text-decoration: none !important;
-      cursor: pointer;
-      border: 2px solid transparent;
-      transition: background 0.18s, transform 0.12s;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-    .btn-navy { background: #003478; color: #fff !important; border-color: #003478; }
-    .btn-navy:hover { background: #002060; }
-    .btn-outline-white { background: transparent; color: #fff !important; border: 2px solid rgba(255,255,255,0.85); }
-    .btn-outline-white:hover { background: rgba(255,255,255,0.15); }
+    /* Nav buttons only — scoped to avoid overriding page buttons */
+    nav .btn, .hero-cta-btn { text-decoration: none !important; }
+    nav .btn-navy { background: #003478; color: #fff !important; border: 2px solid #003478; }
+    nav .btn-navy:hover { background: #002060; }
+    nav .btn-outline-white { background: transparent; color: #fff !important; border: 2px solid rgba(255,255,255,0.85); }
+    nav .btn-outline-white:hover { background: rgba(255,255,255,0.15); }
+    /* Hero CTA buttons */
+    .hero-cta-btn { display: inline-block; padding: 18px 42px; border-radius: 4px; font-weight: 700; font-size: 1rem; letter-spacing: 0.8px; text-transform: uppercase; white-space: nowrap; cursor: pointer; border: 2px solid transparent; transition: background 0.18s, transform 0.12s; text-decoration: none !important; }
+    .hero-cta-btn.btn-navy { background: #003478; color: #fff !important; border-color: #003478; }
+    .hero-cta-btn.btn-navy:hover { background: #002060; transform: translateY(-1px); }
+    .hero-cta-btn.btn-outline-white { background: transparent; color: #fff !important; border: 2px solid rgba(255,255,255,0.85); }
+    .hero-cta-btn.btn-outline-white:hover { background: rgba(255,255,255,0.15); transform: translateY(-1px); }
     .nav-btn { font-size: 13px !important; padding: 9px 18px !important; }
     .nav-right { margin-left: auto; padding-right: clamp(16px,4vw,40px); }
 
