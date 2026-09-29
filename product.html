@@ -19,11 +19,11 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .promo-arrow{color:#555;font-size:16px;cursor:pointer}
 
 /* MAIN NAV */
-.
-
+.nav{height:70px;border-bottom:1px solid #e0e0e0;display:flex;align-items:center;padding:0 48px;justify-content:space-between;background:#fff}
+.nav-left{display:flex;align-items:center;gap:30px}
 .nl{font-size:14px;font-weight:500;color:#000;padding:0 2px;height:70px;display:inline-flex;align-items:center;border-bottom:3px solid transparent}
 .nl:hover{border-bottom-color:#003478}
-
+.nav-icons{display:flex;align-items:center;gap:20px}
 .cart-w{position:relative}
 .cart-dot{position:absolute;top:0;right:0;width:8px;height:8px;background:#10599b;border-radius:50%}
 
@@ -57,10 +57,10 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   /* Promo bar */
   .promo{padding:6px 12px;font-size:10px}
   /* Nav: collapse to logo + icons */
-  .
-  
+  .nav{padding:0 12px;height:56px}
+  .nav-left{gap:0}
   .nl{display:none}
-  
+  .nav-icons{gap:12px}
   /* Search row */
   .srow{padding:8px 12px;flex-wrap:wrap;gap:8px}
   .vtag{font-size:11px;padding:4px 8px}
@@ -77,7 +77,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   .e360-btn{left:8px !important;top:8px !important}
   /* Tighter header */
   .promo{display:none}
-  .
+  .nav{height:48px;padding:0 12px}
   .srow{padding:6px 12px}
   .si{padding:6px 10px 6px 32px;font-size:13px}
   .vtag{padding:3px 6px;font-size:10px}
@@ -274,7 +274,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   .e360-panel{position:relative !important;height:60vw;min-height:250px;max-height:360px;flex-shrink:0;width:100%;overflow:hidden}
   /* Download Render button: push below tab overlap zone */
   #e360-download-btn{top:6px !important;right:8px !important;font-size:11px !important;padding:4px 10px !important}
-  /* On Vehicle mobile: hide 
+  /* On Vehicle mobile: hide nav controls, full-bleed image, swipe-driven */
+  .e360-rot-controls{display:none !important}
   .e360-spin-hint{display:none}
   #e360-panel-1{overflow:visible !important}
   #e360-viewer-img{position:absolute !important;inset:0 !important;transform:scale(1.35) !important;width:100% !important;height:100% !important;object-fit:contain !important;pointer-events:none !important}
@@ -321,16 +322,15 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .e360-split-dot{width:7px;height:7px;border-radius:50%;background:#ccc;cursor:pointer;transition:background .15s}.e360-split-dot.on{background:#10599b}
 
 /* Keep the real program page reachable in the storefront mobile menu. */
-@media(max-width:1100px) and (min-width:701px){.}
+@media(max-width:1100px) and (min-width:701px){.nav{padding-left:16px;padding-right:16px}.nav-left{gap:16px}}
 @media(max-width:700px){.nl.site-how-link{display:inline-flex;height:48px;font-size:12px;margin-left:12px}}
 .site-how-link:focus-visible{outline:3px solid #0562D2;outline-offset:3px}
 
-@media(max-width:1100px){..nl.site-action-link{height:36px;font-size:12px}}
+@media(max-width:1100px){.nav{height:auto;min-height:48px;gap:12px}.nav-left{flex-wrap:wrap;min-width:0;flex:1}.nav-icons{flex-shrink:0}.nl.site-action-link{height:36px;font-size:12px}}
 @media(max-width:700px){.nl.site-action-link{display:inline-flex;margin-left:12px}}
 </style>
   <link rel="prefetch" href="js/model-viewer.min.js" as="script">
   <link rel="prefetch" href="models/VKB3Z7855100EB-v2.glb" as="fetch" crossorigin>
-  <link rel="stylesheet" href="css/nav.css">
 </head>
 <body>
 
