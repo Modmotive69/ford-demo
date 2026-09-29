@@ -3,6 +3,7 @@
 <head>
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://kit.fontawesome.com; style-src 'self' 'unsafe-inline' https://kit.fontawesome.com https://ka-f.fontawesome.com https://ka-p.fontawesome.com https://fonts.googleapis.com; font-src 'self' data: https://ka-f.fontawesome.com https://ka-p.fontawesome.com https://fonts.gstatic.com; connect-src https://api.zippopotam.us 'self' https://ka-f.fontawesome.com https://ka-p.fontawesome.com; img-src 'self' data:; object-src 'none'; form-action 'none'">
   <meta charset="UTF-8" />
+  <link rel="stylesheet" href="css/nav.css">
   <script src="https://kit.fontawesome.com/a0d1bd4a2c.js" crossorigin="anonymous"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -152,9 +153,9 @@
     }
     .nav-program-text {
       font-family: 'Ford Light Extended', 'Ford Antenna', Arial, sans-serif;
-      font-size: 15px; font-weight:500; letter-spacing:.5px;
-      white-space:nowrap; margin:0; text-align:left;
-      color:rgba(255,255,255,0.75); text-shadow:none;
+      font-size: 15px; font-weight:500; letter-spacing:1px;
+      white-space:normal; margin-left:14px; align-self:center; text-align:center; flex:1;
+      color:#fff; text-shadow:none;
       transition:color .3s;
     }
     nav:not(.sidebar).scrolled .nav-fw  { color:#000 !important; text-shadow:none; }
