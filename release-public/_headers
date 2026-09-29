@@ -1,0 +1,11 @@
+/enroll
+  Cache-Control: no-store
+/enroll.html
+  Cache-Control: no-store
+/enrollment-draft.js
+  Cache-Control: no-cache
+/dealer-agreement
+  Cache-Control: no-cache
+/images/ford-showroom-render.webp
+  Content-Type: image/webp
+  X-Content-Type-Options: nosniff

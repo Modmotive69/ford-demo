@@ -98,22 +98,25 @@
 </head>
 <body>
 
-  <nav id="main-nav">
+  <!-- @@NAV_START@@ -->
+  <!-- ═══ NAV ═══ -->
+  <nav>
     <div class="nav-inner">
-      <a class="nav-brand" href="index.html">
-        <img src="images/ford-oval.png" alt="Ford">
-        <span class="nav-brand-stack">
+      <button class="hamburger-btn" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button>
+      <a class="nav-brand" href="index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;">
+        <img src="images/ford-oval.png" alt="Ford" class="nav-ford-oval" style="height:56px;width:auto;display:block;">
+        <span class="nav-brand-stack" style="display:flex;flex-direction:column;justify-content:center;gap:1px;">
           <span class="nav-wordmark-text"><span class="nav-fw">Ford</span><span class="nav-fe">Engage</span></span>
-          <span class="nav-program-text">Industry's Only Proven Accessories Sales Program</span>
+          <span class="nav-program-text">Industry&#39;s Only Proven Accessories Sales Program</span>
         </span>
       </a>
-      <div class="nav-right">
-        <a class="btn btn-outline" href="#">Watch Video</a>
-        <a class="btn btn-outline" href="contact.html">Contact Us</a>
-        <a class="btn btn-navy" href="enroll.html">Enroll Now</a>
+      <div class="nav-right" style="display:flex;gap:12px;align-items:center;">
+        <a class="btn btn-outline-white nav-btn" href="#" onclick="event.preventDefault();openVideo();" style="font-size:14px;padding:10px 20px;border:2px solid rgba(255,255,255,0.8);color:#fff;border-radius:4px;text-decoration:none;font-weight:600;white-space:nowrap;transition:all 0.3s;">Watch Video</a>
+        <a class="btn btn-outline-white nav-btn" href="contact.html" style="font-size:14px;padding:10px 20px;white-space:nowrap;">Contact Us</a><a class="btn btn-navy nav-btn" href="enroll.html" style="font-size:14px;padding:10px 20px;white-space:nowrap;">Enroll Now</a>
       </div>
     </div>
   </nav>
+  <!-- @@NAV_END@@ -->
 
   <section class="contact-hero">
     <p class="eyebrow">Get in touch</p>
@@ -201,14 +204,24 @@
     </aside>
   </div>
 
+  <!-- @@FOOTER_START@@ -->
   <footer class="site-footer">
     <div class="site-footer-brand">
-      <img src="images/partsites-logo.png" alt="PartSites, LLC" class="site-footer-logo">
+      <img
+        src="images/partsites-logo.png"
+        alt="PartSites, LLC"
+        class="site-footer-logo"
+        loading="lazy"
+        decoding="async"
+        width="548"
+        height="100"
+      >
       <span class="site-footer-tag">A SmartDealer company</span>
     </div>
-    <p>&copy; 2026 SmartDealer Technologies, Inc. All rights reserved.</p>
-    <p style="margin-top:4px">Dealer performance data verified by J.D. Power across 500+ Ford dealers, 2019&ndash;2026.</p>
+    <p class="site-footer-copy">&copy; 2026 SmartDealer Technologies, Inc. All rights reserved.</p>
+    <p class="site-footer-copy">Dealer performance data verified by J.D. Power across 500+ Ford dealers, 2019&ndash;2026.</p>
   </footer>
+  <!-- @@FOOTER_END@@ -->
 
   <script>
     var nav = document.getElementById('main-nav');
