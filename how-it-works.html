@@ -773,7 +773,7 @@
       outline: 3px solid #0562D2; outline-offset: 3px;
     }
   /* @@NAV_CSS_START@@ */
-    nav:not(.sidebar) {
+nav:not(.sidebar) {
       position: fixed;
       top: 0; left: 0;
       width: 100%;
@@ -896,6 +896,8 @@
     nav:not(.sidebar).scrolled .nav-fe { color: rgba(0,52,120,0.55) !important; text-shadow: none; }
     nav:not(.sidebar).scrolled .nav-program-text { color: rgba(0,52,120,0.55) !important; }
       .hamburger-btn { display: block !important; }
+      .nav-right { display: none !important; }
+      .nav-program-text { display: none !important; }
       .nav-wordmark { height: 32px !important; }
       .nav-ford-oval { height: 38px !important; }
       .nav-inner { flex-direction: row !important; flex-wrap: nowrap !important; padding: 12px 16px !important; }
@@ -922,6 +924,8 @@
       nav:not(.sidebar) .nav-program-text { font-size: 18px; letter-spacing:.5px; }
 @media (max-width: 768px) {
       .hamburger-btn { display: block !important; }
+      .nav-right { display: none !important; }
+      .nav-program-text { display: none !important; }
       .nav-wordmark { height: 32px !important; }
       .nav-ford-oval { height: 38px !important; }
       .nav-inner { flex-direction: row !important; flex-wrap: nowrap !important; padding: 12px 16px !important; }
