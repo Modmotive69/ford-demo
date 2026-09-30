@@ -38,7 +38,11 @@
     }
   });
   // Starts automatically as the inline section approaches the viewport; never needs a launch click.
-  if ('IntersectionObserver' in window) {
+  // Load immediately if already in view, otherwise observe
+  const rect = host.getBoundingClientRect();
+  if (rect.top < window.innerHeight + 300) {
+    load();
+  } else if ('IntersectionObserver' in window) {
     const observer = new IntersectionObserver(entries => {
       if (entries.some(entry => entry.isIntersecting)) { observer.disconnect(); load(); }
     }, {rootMargin:'300px'});
