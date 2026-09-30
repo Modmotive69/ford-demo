@@ -71,17 +71,17 @@
     .nav-inner {
       max-width: 1200px;
       width: 100%;
-      margin: 0 0 0 0;
+      margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 40px 4px 24px;
+      padding-bottom: 4px;
     }
     .nav-brand {
       text-decoration: none;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 10px;
       overflow: visible;
     }
     .nav-brand img {
@@ -185,15 +185,15 @@
     }
     .nav-program-text {
       font-family: 'Ford Light Extended', 'Ford Antenna', Arial, sans-serif;
-      font-size: 15px; font-weight:500; letter-spacing:.5px;
-      white-space:nowrap; margin:0; text-align:left;
-      color:rgba(255,255,255,0.75); text-shadow:none;
+      font-size: 15px; font-weight:500; letter-spacing:1px;
+      white-space:normal; margin-left:14px; align-self:center; text-align:center; flex:1;
+      color:#fff; text-shadow:none;
       transition:color .3s;
     }
     /* Sticky — white nav, dark text */
     nav:not(.sidebar).scrolled .nav-fw  { color:#000 !important; text-shadow:none; }
     nav:not(.sidebar).scrolled .nav-fe  { color:#000 !important; text-shadow:none; }
-    nav:not(.sidebar).scrolled .nav-program-text { color:rgba(0,0,0,0.6) !important; text-shadow:none; }
+    nav:not(.sidebar).scrolled .nav-program-text { color:#000 !important; text-shadow:none; }
     nav:not(.sidebar):not(.scrolled) .btn-navy {
       background: transparent !important;
       border: 2px solid rgba(255,255,255,0.9) !important;
@@ -207,11 +207,7 @@
     nav:not(.sidebar).scrolled .btn-outline-white {
       border-color: #003478 !important;
       color: #003478 !important;
-      background: transparent !important;
     }
-    nav:not(.sidebar).scrolled .nav-fw { color: #003478 !important; text-shadow: none; }
-    nav:not(.sidebar).scrolled .nav-fe { color: rgba(0,52,120,0.55) !important; text-shadow: none; }
-    nav:not(.sidebar).scrolled .nav-program-text { color: rgba(0,52,120,0.55) !important; }
 
     .hero-foreground {
       position: absolute;
@@ -634,8 +630,6 @@
       line-height: 1.1;
       letter-spacing: -0.5px;
       margin-bottom: 24px;
-      color: var(--ford-blue);
-      font-family: 'Ford Antenna', FordAntenna, Arial, sans-serif;
     }
     .section-body {
       font-size: 1.05rem;
@@ -664,56 +658,92 @@
       max-width: 1140px;
       width: 100%;
       margin: 0 auto;
-    }
-    .engage-intro {
-      text-align: center;
-      margin-bottom: 48px;
-    }
-    .engage-intro h2 {
-      font-size: clamp(1.25rem, 2.8vw, 1.75rem);
-      font-weight: 700;
-      line-height: 1.5;
-      max-width: 860px;
-      margin: 0 auto;
-      /* color: var(--ford-blue) via section h2 base */
-    }
-    .engage-cards {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(28px, 5vw, 64px);
+      align-items: start;
     }
-    .engage-card {
-      background: #fff;
-      border-radius: 10px;
-      padding: 32px 28px 36px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+    .engage-main-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      border-radius: 8px;
+      display: block;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+      margin-bottom: 14px;
+    }
+    .engage-thumbs {
       display: flex;
-      flex-direction: column;
+      gap: 10px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      flex-wrap: nowrap;
+    }
+    .engage-thumbs::-webkit-scrollbar { display: none; }
+    .engage-thumb {
+      flex: 0 0 calc(33.333% - 7px);
+      min-width: 72px;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      border-radius: 6px;
+      cursor: pointer;
+      opacity: 0.65;
+      transition: opacity 0.18s, box-shadow 0.18s;
+      border: 2px solid transparent;
+    }
+    .engage-thumb.active,
+    .engage-thumb:hover {
+      opacity: 1;
+      border-color: var(--ford-blue);
+      box-shadow: 0 0 0 2px var(--ford-blue);
+    }
+    .engage-copy h2 { margin-bottom: 18px; }
+    .engage-body { font-size: 1rem; color: #555; line-height: 1.72; margin-bottom: 26px; }
+    .engage-bullets { list-style: none; margin-bottom: 36px; }
+    .engage-bullets li {
+      padding: 6px 0;
+      font-size: 0.95rem;
+      color: #333;
+      display: flex;
       align-items: flex-start;
+      gap: 10px;
     }
-    .engage-card-eyebrow {
-      font-size: 0.65rem;
-      font-weight: 800;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
+    .engage-bullets li::before {
+      content: '✓';
       color: var(--ford-blue);
-      margin-bottom: 12px;
+      font-weight: 900;
+      font-size: 1rem;
+      flex-shrink: 0;
+      margin-top: 1px;
     }
-    .engage-card h3 {
-      font-size: 1.25rem;
+
+    /* ─── ENGAGE TABS ─── */
+    .engage-tabs {
+      display: flex;
+      gap: 0;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1.5px solid var(--ford-blue);
+      margin-bottom: 24px;
+      width: fit-content;
+    }
+    .engage-tab {
+      background: none;
+      border: none;
+      padding: 10px 22px;
+      font-size: 0.85rem;
       font-weight: 700;
       color: var(--ford-blue);
-      line-height: 1.3;
-      margin: 0;
+      cursor: pointer;
+      font-family: inherit;
+      letter-spacing: 0.3px;
+      transition: background 0.18s, color 0.18s;
+      border-right: 1.5px solid var(--ford-blue);
     }
-    .engage-card h3 .fe-bold { font-weight: 900; }
-    .engage-card h3 .fe-light { font-weight: 300; }
-    .engage-card-desc {
-      font-size: 0.9rem;
-      color: #666;
-      margin-top: 10px;
-      line-height: 1.5;
-    }
+    .engage-tab:last-child { border-right: none; }
+    .engage-tab.active { background: var(--ford-blue); color: var(--white); }
+    .engage-tab:hover:not(.active) { background: rgba(0,52,120,0.07); }
 
     /* ─── ROI CALCULATOR ─── */
     .section-roi { background: var(--white); }
@@ -752,8 +782,8 @@
       grid-template-columns: 1fr 1fr;
       gap: 16px;
     }
-    .roi-card { display:grid; grid-template-rows:subgrid; grid-row:span 3; row-gap:0; min-width:0; padding: 24px 16px; background: var(--white); border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-    .roi-card-label { min-height:2lh; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1px; color: #888; font-weight: 700; margin-bottom: 8px; }
+    .roi-card { padding: 24px 16px; background: var(--white); border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+    .roi-card-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1px; color: #888; font-weight: 700; margin-bottom: 8px; }
     .roi-card-value { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 900; color: var(--ford-blue); letter-spacing: -0.5px; }
     .roi-card.top-rate .roi-card-value { color: var(--ford-bright); }
 
@@ -770,7 +800,7 @@
       box-shadow: 0 2px 12px rgba(0,0,0,0.07);
     }
     .how-step-num { font-size: 0.68rem; font-weight: 900; letter-spacing: 3px; color: var(--ford-blue); text-transform: uppercase; margin-bottom: 14px; }
-    .how-card h3 { font-size: 1.35rem; font-weight: 800; margin-bottom: 12px; color: var(--ford-blue); }
+    .how-card h3 { font-size: 1.35rem; font-weight: 800; margin-bottom: 12px; color: var(--black); }
     .how-card p { font-size: 0.92rem; color: #666; line-height: 1.65; }
 
     /* ─── TESTIMONIALS ─── */
@@ -784,179 +814,11 @@
     .testimonial-attr { font-size: 0.78rem; font-weight: 700; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.8px; }
 
     /* ─── FINAL CTA ─── */
-    /* ─── SHOWROOM SECTION ─── */
-    .section-showroom {
-      position: relative;
-      min-height: 560px;
-      display: flex;
-      align-items: center;
-      overflow: hidden;
-      padding: 0;
-    }
-    .section-showroom .showroom-bg {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      z-index: 0;
-    }
-    .section-showroom .showroom-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(90deg, rgba(0,10,30,0.88) 0%, rgba(0,10,30,0.72) 50%, rgba(0,10,30,0.15) 100%);
-      z-index: 1;
-    }
-    .showroom-inner {
-      position: relative;
-      z-index: 2;
-      max-width: 680px;
-      margin: 0 auto 0 clamp(32px,8vw,120px);
-      padding: clamp(64px,8vw,110px) clamp(24px,5vw,48px);
-      display: block;
-    }
-    .showroom-img-wrap {
-      position: relative;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 8px 40px rgba(0,52,120,0.13);
-      aspect-ratio: 16/9;
-      background: #dce6f2;
-    }
-    .showroom-img-wrap img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .showroom-caption {
-      position: absolute;
-      bottom: 10px;
-      right: 14px;
-      font-size: 11px;
-      color: rgba(255,255,255,0.72);
-      letter-spacing: 0.5px;
-      text-shadow: 0 1px 4px rgba(0,0,0,0.5);
-      pointer-events: none;
-    }
-    .showroom-copy {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-    .showroom-kicker {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: #0562D2;
-    }
-    .showroom-heading {
-      font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
-      font-weight: 900;
-      font-size: clamp(32px, 4vw, 54px);
-      line-height: 1.0;
-      letter-spacing: -0.5px;
-      color: #000e20;
-      margin: 0;
-    }
-    .showroom-body {
-      font-size: 16px;
-      line-height: 1.72;
-      color: #444;
-      margin: 0;
-    }
-    .showroom-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: var(--ford-blue);
-      color: #fff;
-      font-weight: 700;
-      font-size: 15px;
-      padding: 14px 28px;
-      border-radius: 6px;
-      text-decoration: none !important;
-      align-self: flex-start;
-      transition: background 0.2s;
-    }
-    .showroom-cta:hover { background: #002060; }
-    .showroom-mode-pills {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .showroom-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px;
-      font-weight: 600;
-      color: #003478;
-      background: #e8eef8;
-      padding: 6px 14px;
-      border-radius: 20px;
-    }
-    @media (max-width: 860px) {
-      .showroom-inner {
-        grid-template-columns: 1fr;
-        gap: 36px;
-      }
-    }
-    @media (max-width: 480px) {
-      .showroom-heading { font-size: clamp(28px, 8vw, 40px); }
-      .showroom-body { font-size: 15px; }
-    }
-
     .section-finalcta { background: var(--ford-blue); color: var(--white); text-align: center; }
     .section-finalcta h2 { color: var(--white); margin-bottom: 36px; max-width: 680px; margin-left: auto; margin-right: auto; }
     .finalcta-email { display: block; margin-top: 20px; font-size: 0.85rem; color: rgba(255,255,255,0.55); letter-spacing: 0.3px; }
 
     /* ─── FOOTER ─── */
-
-    /* ─── SHARED BRANDED FOOTER ─── */
-    .site-footer {
-      background: #f0f2f5;
-      border-top: 1px solid #dde2ea;
-      padding: clamp(28px,4vw,44px) clamp(20px,5vw,40px) clamp(20px,3vw,32px);
-      text-align: center;
-    }
-    .site-footer-brand {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 14px;
-      flex-wrap: wrap;
-      margin-bottom: 10px;
-    }
-    .site-footer-logo {
-      height: 32px;
-      width: auto;
-      display: block;
-      flex-shrink: 0;
-    }
-    .site-footer-tag {
-      font-size: 0.82rem;
-      color: #444;
-      font-family: 'Ford Antenna', FordAntenna, Arial, sans-serif;
-      letter-spacing: 0.2px;
-      white-space: nowrap;
-    }
-    .site-footer-copy {
-      font-size: 0.75rem;
-      color: #777;
-      line-height: 1.7;
-      margin: 0;
-    }
-    .site-footer-copy + .site-footer-copy {
-      margin-top: 4px;
-    }
-    @media (max-width: 480px) {
-      .site-footer-logo { height: 26px; }
-      .site-footer-brand { gap: 10px; }
-    }
-
     footer {
       background: var(--black);
       color: rgba(255,255,255,0.45);
@@ -971,7 +833,7 @@
     @media (max-width: 768px) {
       .nav-powered { font-size: 15px; font-weight: 700; color: #003478; white-space: nowrap; }
       .nav-brand { display: flex; overflow: visible; }
-      .engage-cards { grid-template-columns: 1fr; gap: 16px; }
+      .engage-inner { grid-template-columns: 1fr; gap: 32px; }
       .how-cards { grid-template-columns: 1fr 1fr; gap: 20px; }
       .testimonial-cards { grid-template-columns: 1fr 1fr; gap: 16px; }
       .hero-foreground { padding: 120px 24px 60px; flex-direction: column; align-items: flex-start; }
@@ -1047,13 +909,13 @@
     /* Keep the existing header content reachable at narrow widths. */
     @media (max-width: 1100px) {
       nav:not(.sidebar) .nav-inner { flex-wrap: wrap; justify-content: flex-start; gap: 8px; }
-      /* nav-program-text now inside nav-brand-stack */
+      nav:not(.sidebar) .nav-program-text { order: 2; flex: 0 0 100%; white-space: normal; margin-left: 0; text-align: center; }
       nav:not(.sidebar) .nav-right { order: 3; width: 100%; justify-content: center; }
     }
     @media (max-width: 480px) {
       nav:not(.sidebar) .nav-brand img { height: 40px !important; }
       nav:not(.sidebar) .nav-fw, nav:not(.sidebar) .nav-fe { font-size: 24px; }
-      nav:not(.sidebar) .nav-program-text { font-size: 15px; letter-spacing:.5px; }
+      nav:not(.sidebar) .nav-program-text { font-size: 15px; }
     }
     @media (max-width: 600px) {
       .proof-strip-inner { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 0; }
@@ -1064,7 +926,6 @@
       outline: 3px solid #0562D2; outline-offset: 3px;
     }
   </style>
-  <link rel="stylesheet" href="css/nav.css">
   <script src="https://kit.fontawesome.com/a0d1bd4a2c.js" crossorigin="anonymous"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1073,6 +934,7 @@
     .how-page main { padding-top: var(--page-nav-height, 100px); }
     .how-page-title { padding: 36px 24px 0; text-align: center; font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif; font-weight: 900; font-size: clamp(36px, 5vw, 60px); line-height: 1.1; color: #003478; }
     .how-page #how { scroll-margin-top: calc(var(--page-nav-height, 100px) + 16px); }
+    .sidebar-link[aria-current="page"] { background: #f0f4ff; font-weight: 700; }
   </style>
 
   <style>
@@ -1222,46 +1084,25 @@
       color: #8898ae; letter-spacing: 1.5px; text-transform: uppercase; text-align: center;
     }
 
-    /* Step 2 visual stack — two contained panels, no absolute overflow */
-    .hiw-visual-stack {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 16px;
-      align-items: start;
-    }
-    .hiw-vs-primary { position: relative; min-width: 0; }
+    /* Step 2 visual stack */
+    .hiw-visual-stack { position: relative; }
     .hiw-vs-main {
       width: 100%; height: auto; border-radius: 14px; display: block;
       box-shadow: 0 16px 48px rgba(0,52,120,.15);
     }
     .hiw-vs-badge {
-      position: absolute; bottom: 14px; left: 14px;
+      position: absolute; bottom: 20px; left: 20px;
       background: #003478; color: #fff;
       display: inline-flex; align-items: center; gap: 7px;
-      padding: 7px 14px; border-radius: 999px;
-      font-family: Arial, sans-serif; font-size: 11px; font-weight: 700;
+      padding: 8px 16px; border-radius: 999px;
+      font-family: Arial, sans-serif; font-size: 12px; font-weight: 700;
       letter-spacing: 1.5px; text-transform: uppercase;
       box-shadow: 0 4px 16px rgba(0,0,0,.25);
     }
-    .hiw-vs-secondary {
-      width: 140px; flex-shrink: 0;
-      display: flex; flex-direction: column; align-items: center; gap: 8px;
-    }
-    .hiw-vs-phone-frame {
-      width: 140px; height: 140px;
-      border-radius: 14px; overflow: hidden;
-      border: 2px solid #e4eaf4;
-      box-shadow: 0 8px 24px rgba(0,52,120,.12);
-      display: flex; align-items: center; justify-content: center;
-      background: #f5f7fb;
-    }
-    .hiw-vs-phone-frame img {
-      width: 100%; height: 100%; object-fit: cover; display: block;
-    }
-    .hiw-vs-secondary-label {
-      font-family: Arial, sans-serif; font-size: 10px; font-weight: 700;
-      letter-spacing: 2px; text-transform: uppercase;
-      color: #8898ae; margin: 0; text-align: center;
+    .hiw-vs-phone {
+      position: absolute; right: -10%; bottom: -8%;
+      width: 28%; border-radius: 12px;
+      box-shadow: 0 12px 32px rgba(0,0,0,.22);
     }
 
     .hiw-modes-row {
@@ -1378,10 +1219,10 @@
     }
 
     /* ── data-reveal animation ── */
-    [data-reveal] { transform: translateY(20px); transition: opacity .55s ease, transform .55s ease; }
-    [data-reveal].revealed { transform: none; }
+    [data-reveal] { opacity: 0; transform: translateY(28px); transition: opacity .55s ease, transform .55s ease; }
+    [data-reveal].revealed { opacity: 1; transform: none; }
     @media (prefers-reduced-motion: reduce) {
-      [data-reveal] { transform: none; transition: none; }
+      [data-reveal] { opacity: 1; transform: none; transition: none; }
     }
 
     /* ── Responsive ── */
@@ -1392,7 +1233,7 @@
       .hiw-step--image-left .hiw-step-content,
       .hiw-step--image-right .hiw-step-content { order: 1; }
       .hiw-prod-grid { grid-template-columns: 1fr 1fr; }
-      .hiw-vs-secondary { display: none; }
+      .hiw-vs-phone { display: none; }
     }
     @media (max-width: 600px) {
       .hiw-prod-grid { grid-template-columns: 1fr; }
@@ -1401,178 +1242,6 @@
     }
     @media (max-width: 380px) {
       .hiw-step-inner { gap: 24px; }
-    }
-  </style>
-  <style>
-    /* ── Best Practice callouts ─────────────────────────────── */
-    .hiw-best-practice {
-      margin: 22px 0 4px;
-      padding: 18px 20px;
-      background: #f0f5ff;
-      border-left: 3px solid #003478;
-      border-radius: 0 10px 10px 0;
-    }
-    .hiw-bp-label {
-      font-family: Arial, sans-serif;
-      font-size: 10px; font-weight: 700;
-      letter-spacing: 2.5px; text-transform: uppercase;
-      color: #003478; margin: 0 0 10px;
-    }
-    .hiw-bp-why, .hiw-bp-how {
-      font-family: Arial, sans-serif;
-      font-size: 13.5px; color: #3a4a5e;
-      line-height: 1.6; margin: 0 0 8px;
-    }
-    .hiw-bp-how { margin-bottom: 0; }
-    .hiw-bp-why strong, .hiw-bp-how strong { color: #003478; }
-
-    /* ── Journey diagram ────────────────────────────────────── */
-    .hiw-diagram {
-      background: #001840;
-      padding: clamp(64px,8vw,100px) clamp(24px,5vw,48px);
-    }
-    .hiw-diagram-inner { max-width: 1100px; margin: 0 auto; text-align: center; }
-    .hiw-diagram-heading {
-      font-family: 'Barlow Condensed', 'Arial Narrow', Arial, sans-serif;
-      font-weight: 900; font-size: clamp(28px,4vw,48px);
-      color: #fff; line-height: 1.05; margin: 0 0 12px;
-    }
-    .hiw-diagram-sub {
-      font-family: Arial, sans-serif; font-size: 16px;
-      color: rgba(255,255,255,.7); line-height: 1.6;
-      max-width: 560px; margin: 0 auto 48px;
-    }
-    .hiw-diagram-note {
-      font-family: Arial, sans-serif; font-size: 12px;
-      color: rgba(255,255,255,.4); margin: 32px auto 0;
-      max-width: 560px; line-height: 1.5;
-    }
-
-    .hiw-journey-map {
-      display: flex; align-items: center; justify-content: center;
-      gap: 0; flex-wrap: wrap;
-    }
-    .hiw-jnode {
-      flex: 0 0 210px; max-width: 210px;
-      background: rgba(255,255,255,.07);
-      border: 1px solid rgba(255,255,255,.13);
-      border-radius: 14px; padding: 24px 18px 20px;
-      text-align: center; position: relative;
-      display: flex; flex-direction: column; align-items: center; gap: 8px;
-    }
-    .hiw-jnode--core {
-      background: rgba(5,98,210,.25);
-      border-color: rgba(5,98,210,.45);
-    }
-    .hiw-jnode-icon {
-      width: 48px; height: 48px;
-      background: rgba(255,255,255,.1);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      color: rgba(255,255,255,.85);
-      margin-bottom: 4px;
-    }
-    .hiw-jnode--core .hiw-jnode-icon { background: rgba(5,98,210,.35); }
-    .hiw-jnode-label {
-      font-family: Arial, sans-serif;
-      font-size: 10px; font-weight: 700;
-      letter-spacing: 2px; text-transform: uppercase;
-      color: rgba(255,255,255,.5); margin: 0;
-    }
-    .hiw-jnode-name {
-      font-family: 'Barlow Condensed', 'Arial Narrow', Arial, sans-serif;
-      font-weight: 900; font-size: 20px;
-      color: #fff; margin: 0; line-height: 1.1;
-    }
-    .hiw-jnode-desc {
-      font-family: Arial, sans-serif;
-      font-size: 12.5px; color: rgba(255,255,255,.65);
-      line-height: 1.5; margin: 0;
-    }
-    .hiw-jnode-badge {
-      display: inline-block;
-      font-family: Arial, sans-serif;
-      font-size: 10px; font-weight: 700;
-      letter-spacing: 1.5px; text-transform: uppercase;
-      color: rgba(255,255,255,.6);
-      border: 1px solid rgba(255,255,255,.2);
-      border-radius: 999px; padding: 3px 10px;
-      margin-top: 4px;
-    }
-    .hiw-jnode-badge--core {
-      color: #6bc2ff; border-color: rgba(107,194,255,.4);
-    }
-
-    .hiw-jarrow {
-      display: flex; flex-direction: column;
-      align-items: center; gap: 6px;
-      padding: 0 8px; flex-shrink: 0;
-    }
-    .hiw-jarrow-label {
-      font-family: Arial, sans-serif;
-      font-size: 10px; font-weight: 700;
-      letter-spacing: 2px; text-transform: uppercase;
-      color: rgba(255,255,255,.35);
-    }
-
-    @media (max-width: 780px) {
-      .hiw-journey-map { flex-direction: column; gap: 0; }
-      .hiw-jnode { max-width: 100%; width: 100%; flex: none; border-radius: 12px; }
-      .hiw-jarrow { transform: rotate(90deg); padding: 6px 0; }
-    }
-
-    /* ── Dealer playbook ────────────────────────────────────── */
-    .hiw-playbook {
-      background: #fff;
-      padding: clamp(64px,8vw,100px) clamp(24px,5vw,48px);
-    }
-    .hiw-playbook-inner { max-width: 1100px; margin: 0 auto; }
-    .hiw-playbook-hdr { text-align: center; margin-bottom: 52px; }
-    .hiw-playbook-heading {
-      font-family: 'Barlow Condensed', 'Arial Narrow', Arial, sans-serif;
-      font-weight: 900; font-size: clamp(30px,4vw,52px);
-      color: #003478; line-height: 1.05; margin: 0 0 12px;
-    }
-    .hiw-playbook-sub {
-      font-family: Arial, sans-serif; font-size: 15px;
-      color: #6e7f94; line-height: 1.6;
-      max-width: 520px; margin: 0 auto;
-    }
-
-    .hiw-plays-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-    }
-    .hiw-play {
-      padding: 26px 22px 24px;
-      border: 1.5px solid #e4eaf4;
-      border-radius: 14px;
-      position: relative;
-    }
-    .hiw-play-num {
-      font-family: 'Barlow Condensed', 'Arial Narrow', Arial, sans-serif;
-      font-weight: 900; font-size: 56px;
-      line-height: 1; color: #003478; opacity: .1;
-      margin: 0 0 -8px; user-select: none;
-    }
-    .hiw-play-name {
-      font-family: 'Barlow Condensed', 'Arial Narrow', Arial, sans-serif;
-      font-weight: 900; font-size: 20px;
-      color: #003478; line-height: 1.15;
-      margin: 0 0 10px;
-    }
-    .hiw-play-body {
-      font-family: Arial, sans-serif;
-      font-size: 14px; color: #445;
-      line-height: 1.65; margin: 0;
-    }
-
-    @media (max-width: 900px) {
-      .hiw-plays-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (max-width: 560px) {
-      .hiw-plays-grid { grid-template-columns: 1fr; }
     }
   </style>
   <script>
@@ -1590,15 +1259,28 @@
 </head>
 <body class="how-page">
   <!-- ═══ NAV ═══ -->
-  
+  <nav class="scrolled">
+    <div class="nav-inner">
+      <button class="hamburger-btn" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button>
+      <a class="nav-brand" href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+        <img src="images/ford-oval.png" alt="Ford" class="nav-ford-oval" style="height:56px;width:auto;display:block;">
+        <span class="nav-wordmark-text"><span class="nav-fw">Ford</span><span class="nav-fe">Engage</span></span>
+      </a>
+      <span class="nav-program-text">Industry's Only Proven Accessories Sales Program</span>
+      <div class="nav-right" style="display:flex;gap:12px;align-items:center;">
+        <a class="btn btn-outline-white nav-btn" href="#" onclick="event.preventDefault();openVideo();" style="font-size:14px;padding:10px 20px;border:2px solid rgba(255,255,255,0.8);color:#fff;border-radius:4px;text-decoration:none;font-weight:600;white-space:nowrap;transition:all 0.3s;">Watch Video</a>
+        <a class="btn btn-navy nav-btn" href="enroll.html" style="font-size:14px;padding:10px 20px;white-space:nowrap;">Enroll Now</a>
+      </div>
+    </div>
+  </nav>
 
 
   <main>
 
-    <!-- ═══ HIW HERO v2 ═══ -->
+    <!-- ═══ HIW HERO ═══ -->
     <section class="hiw-hero" id="hiw-hero" aria-label="The customer journey">
       <div class="hiw-hero-bg" aria-hidden="true">
-        <img src="images/ford-showroom-render.jpg" alt="" width="1536" height="864" loading="eager" decoding="sync" fetchpriority="high">
+        <img src="images/ford-showroom-render.webp" alt="" width="1440" height="810" loading="eager" decoding="async" fetchpriority="high">
         <div class="hiw-hero-overlay"></div>
       </div>
       <div class="hiw-hero-inner">
@@ -1630,11 +1312,6 @@
             <li>Accessory inquiry captured and routed to your sales team</li>
             <li>Financed accessory pricing shown alongside vehicle price</li>
           </ul>
-          <div class="hiw-best-practice">
-            <p class="hiw-bp-label">Best Practice</p>
-            <p class="hiw-bp-why"><strong>Why it matters:</strong> Shoppers shortlist vehicles before they visit. Introducing accessories during that research phase means your team walks into a conversation the customer already started, not a cold pitch.</p>
-            <p class="hiw-bp-how"><strong>How FordEngage helps:</strong> The VDP Widget surfaces vehicle-specific accessories inside the listing your customer is already reading, turning passive browsing into an active inquiry your team can act on before the visit.</p>
-          </div>
           <div class="hiw-step-badge hiw-badge--addon">
             <span class="hiw-badge-label">Optional Add-On</span>
             <strong>VDP Widget</strong>
@@ -1654,40 +1331,28 @@
       <div class="hiw-step-inner hiw-step--image-left" data-reveal>
         <div class="hiw-step-visual">
           <div class="hiw-visual-stack">
-            <div class="hiw-vs-primary">
-              <img class="hiw-vs-main" src="images/bronco-kayak-3d.jpg" alt="Ford Bronco with Yakima kayak carrier shown in 3D visualization" width="800" height="600" loading="eager" decoding="async">
-              <div class="hiw-vs-badge">
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M9 1.5L1.5 5.25V12.75L9 16.5L16.5 12.75V5.25L9 1.5Z" stroke="#fff" stroke-width="1.4" stroke-linejoin="round" fill="rgba(255,255,255,0.1)"/><path d="M9 1.5V16.5M1.5 5.25L9 9M16.5 5.25L9 9" stroke="#fff" stroke-width="1.1" stroke-linecap="round"/></svg>
-                <span>3D</span>
-              </div>
+            <img class="hiw-vs-main" src="images/bronco-kayak-3d.jpg" alt="Ford Bronco with Yakima kayak carrier shown in 3D visualization" width="800" height="600" loading="lazy" decoding="async">
+            <div class="hiw-vs-badge">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M9 1.5L1.5 5.25V12.75L9 16.5L16.5 12.75V5.25L9 1.5Z" stroke="#fff" stroke-width="1.4" stroke-linejoin="round" fill="rgba(255,255,255,0.1)"/><path d="M9 1.5V16.5M1.5 5.25L9 9M16.5 5.25L9 9" stroke="#fff" stroke-width="1.1" stroke-linecap="round"/></svg>
+              <span>3D &amp; AR</span>
             </div>
-            <div class="hiw-vs-secondary">
-              <div class="hiw-vs-phone-frame">
-                <img src="images/ar-phone-mockup.jpg" alt="Ford accessory viewed in AR on a mobile device" width="412" height="224" loading="eager" decoding="async">
-              </div>
-              <p class="hiw-vs-secondary-label">AR View</p>
-            </div>
+            <img class="hiw-vs-phone" src="images/ar-phone-mockup.jpg" alt="AR view of Ford accessory on mobile device" width="400" height="600" loading="lazy" decoding="async">
           </div>
         </div>
         <div class="hiw-step-content">
           <p class="hiw-step-num" aria-label="Step 2">02</p>
           <p class="hiw-step-label">In-Showroom Visualization</p>
-          <h2 id="step-2-heading" class="hiw-step-heading">Seeing Is Believing. Bring Accessories to Life in 3D and AR.</h2>
-          <p class="hiw-step-body">Your sales team presents every accessory on the customer's exact vehicle, live in the showroom. Factory-accurate 3D and AR visualization puts the product in front of the customer, in context, on their actual vehicle.</p>
+          <h2 id="step-2-heading" class="hiw-step-heading">Seeing Is Believing. Show Every Accessory in Real 3D and AR.</h2>
+          <p class="hiw-step-body">Your sales team presents every accessory on the customer's exact vehicle, live in the showroom. Factory-accurate 3D and AR visualization removes every objection before it forms. Customers see it. They want it.</p>
           <div class="hiw-modes-row">
             <div class="hiw-mode-card">
               <p class="hiw-mode-name">Sales Agent Mode</p>
-              <p class="hiw-mode-desc">Your associate guides the presentation, asking lifestyle and use-case questions to surface the accessories that fit this customer, on this vehicle.</p>
+              <p class="hiw-mode-desc">Guided presentation flow for your sales team. Every accessory, every vehicle, every deal.</p>
             </div>
             <div class="hiw-mode-card">
               <p class="hiw-mode-name">Self-Drive Mode</p>
-              <p class="hiw-mode-desc">A customer-facing touchscreen or kiosk lets shoppers explore on their own, at their pace, while they wait or browse the floor independently.</p>
+              <p class="hiw-mode-desc">Customer-facing touchscreen experience. Shoppers build their own accessory package while they wait.</p>
             </div>
-          </div>
-          <div class="hiw-best-practice">
-            <p class="hiw-bp-label">Best Practice</p>
-            <p class="hiw-bp-why"><strong>Why it matters:</strong> A catalog recitation closes fewer deals than a conversation. Asking "Do you plan to tow, haul, or go off-road?" and showing that answer on the customer's vehicle is more persuasive than listing options. Customers also respond differently to self-directed exploration versus a guided pitch, so giving both paths converts more buyers.</p>
-            <p class="hiw-bp-how"><strong>How FordEngage helps:</strong> Sales Agent mode gives your associate a structured, question-driven flow. Self-Drive mode hands the touchscreen to the customer. Both paths lead to the same outcome: a visible, configured accessory package the customer chose.</p>
           </div>
           <div class="hiw-step-badge hiw-badge--core">
             <span class="hiw-badge-label">Core Platform</span>
@@ -1702,19 +1367,14 @@
       <div class="hiw-step-inner hiw-step--image-right" data-reveal>
         <div class="hiw-step-content">
           <p class="hiw-step-num" aria-label="Step 3">03</p>
-          <p class="hiw-step-label">Online Purchase and Follow-Through</p>
-          <h2 id="step-3-heading" class="hiw-step-heading">Keep the Sale Moving After They Leave the Lot</h2>
-          <p class="hiw-step-body">Not every customer decides in the showroom. The EnvyPRO eStore gives customers a clear next step: your dealer-branded online storefront where they can browse genuine Ford accessories on their own time and submit an inquiry or order.</p>
+          <p class="hiw-step-label">Selection and Purchase</p>
+          <h2 id="step-3-heading" class="hiw-step-heading">Online Accessory Revenue, 24 Hours a Day</h2>
+          <p class="hiw-step-body">When customers are not in your showroom, they are still buying. The EnvyPRO eStore is your dealer-branded online accessory storefront, open around the clock. Genuine Ford accessories, your branding, your revenue.</p>
           <ul class="hiw-step-bullets">
             <li>Your dealer branding, your storefront, your pricing control</li>
-            <li>Genuine Ford accessories with full catalog and vehicle fitment</li>
-            <li>Accessory inquiry and order operations built in</li>
+            <li>Genuine Ford accessories with full catalog and fitment</li>
+            <li>Order operations built in</li>
           </ul>
-          <div class="hiw-best-practice">
-            <p class="hiw-bp-label">Best Practice</p>
-            <p class="hiw-bp-why"><strong>Why it matters:</strong> Making the next step obvious is the single biggest driver of follow-through. Customers who leave without a clear action rarely return to discuss accessories. An always-available online path keeps the conversation open.</p>
-            <p class="hiw-bp-how"><strong>How FordEngage helps:</strong> The eStore gives you a branded, vehicle-specific destination to hand customers at the end of a showroom visit or share as a follow-up link, so the sale has a place to continue on their schedule.</p>
-          </div>
           <div class="hiw-step-badge hiw-badge--addon">
             <span class="hiw-badge-label">Optional Add-On</span>
             <strong>EnvyPRO eStore</strong>
@@ -1722,113 +1382,9 @@
         </div>
         <div class="hiw-step-visual">
           <div class="hiw-product-card">
-            <img src="images/product/box-envypro-estore.webp" alt="EnvyPRO eStore product box" width="600" height="760" loading="eager" decoding="async">
+            <img src="images/product/box-envypro-estore.webp" alt="EnvyPRO eStore product box" width="600" height="760" loading="lazy" decoding="async">
             <p class="hiw-product-desc">Online parts and accessories</p>
           </div>
-        </div>
-      </div>
-    </section>
-
-
-    <!-- ═══ VISUAL JOURNEY DIAGRAM ═══ -->
-    <section class="hiw-diagram" id="journey-map" aria-labelledby="diagram-heading">
-      <div class="hiw-diagram-inner" data-reveal>
-        <p class="hiw-eyebrow hiw-eyebrow--dark">How the pieces connect</p>
-        <h2 id="diagram-heading" class="hiw-diagram-heading">Discovery to Purchase, One Continuous Journey</h2>
-        <p class="hiw-diagram-sub">Each product occupies a distinct moment in the customer's path. Together they close the gap between online research and in-store sale.</p>
-
-        <div class="hiw-journey-map" role="img" aria-label="Customer journey: VDP discovery leads to Engage360 showroom visualization, then to optional eStore purchase">
-          <div class="hiw-jnode hiw-jnode--addon">
-            <div class="hiw-jnode-icon" aria-hidden="true">
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="2" y="4" width="24" height="18" rx="2.5" stroke="currentColor" stroke-width="1.8" fill="none"/><path d="M2 10h24M9 10v12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-            </div>
-            <p class="hiw-jnode-label">Online</p>
-            <p class="hiw-jnode-name">VDP Widget</p>
-            <p class="hiw-jnode-desc">Customer browses accessories alongside their vehicle on your website and submits an inquiry.</p>
-            <span class="hiw-jnode-badge">Optional</span>
-          </div>
-
-          <div class="hiw-jarrow" aria-hidden="true">
-            <svg width="48" height="24" viewBox="0 0 48 24" fill="none"><path d="M4 12h38M34 5l8 7-8 7" stroke="rgba(255,255,255,.5)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span class="hiw-jarrow-label">Visit</span>
-          </div>
-
-          <div class="hiw-jnode hiw-jnode--core">
-            <div class="hiw-jnode-icon" aria-hidden="true">
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 3L3 8.5V19.5L14 25L25 19.5V8.5L14 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" fill="none"/><path d="M14 3V25M3 8.5L14 14M25 8.5L14 14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-            </div>
-            <p class="hiw-jnode-label">In-Showroom</p>
-            <p class="hiw-jnode-name">Engage360</p>
-            <p class="hiw-jnode-desc">Sales team or customer explores accessories in real 3D and AR on the actual vehicle. Inquiry or selection recorded.</p>
-            <span class="hiw-jnode-badge hiw-jnode-badge--core">Included</span>
-          </div>
-
-          <div class="hiw-jarrow" aria-hidden="true">
-            <svg width="48" height="24" viewBox="0 0 48 24" fill="none"><path d="M4 12h38M34 5l8 7-8 7" stroke="rgba(255,255,255,.5)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span class="hiw-jarrow-label">Follow-up</span>
-          </div>
-
-          <div class="hiw-jnode hiw-jnode--addon">
-            <div class="hiw-jnode-icon" aria-hidden="true">
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="4" y="4" width="20" height="20" rx="2.5" stroke="currentColor" stroke-width="1.8" fill="none"/><path d="M9 14h10M14 9v10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-            </div>
-            <p class="hiw-jnode-label">Online Purchase</p>
-            <p class="hiw-jnode-name">EnvyPRO eStore</p>
-            <p class="hiw-jnode-desc">Customer returns on their own time to browse and purchase on your dealer-branded storefront.</p>
-            <span class="hiw-jnode-badge">Optional</span>
-          </div>
-        </div>
-
-        <p class="hiw-diagram-note">Note: each product functions independently. Customer data is not automatically shared between touchpoints. Your team connects the dots.</p>
-      </div>
-    </section>
-
-    <!-- ═══ DEALER PLAYBOOK ═══ -->
-    <section class="hiw-playbook" id="playbook" aria-labelledby="playbook-heading">
-      <div class="hiw-playbook-inner" data-reveal>
-        <div class="hiw-playbook-hdr">
-          <p class="hiw-eyebrow">Dealer Playbook</p>
-          <h2 id="playbook-heading" class="hiw-playbook-heading">Six Moves That Make It Work</h2>
-          <p class="hiw-playbook-sub">Best practice guidance for getting the most from FordEngage on your floor. These are process recommendations, not guaranteed outcomes.</p>
-        </div>
-        <div class="hiw-plays-grid">
-
-          <div class="hiw-play">
-            <p class="hiw-play-num">1</p>
-            <h3 class="hiw-play-name">Start the conversation before the visit</h3>
-            <p class="hiw-play-body">Enable the VDP Widget so accessory options appear alongside every vehicle listing. When a customer walks in after browsing your site, your associate already has a starting point: what they looked at. Use that to open the accessories conversation naturally rather than pitching cold.</p>
-          </div>
-
-          <div class="hiw-play">
-            <p class="hiw-play-num">2</p>
-            <h3 class="hiw-play-name">Ask lifestyle questions, not catalog questions</h3>
-            <p class="hiw-play-body">Use Sales Agent mode to start with how the customer plans to use their vehicle: towing, off-road, hauling, family, work. Surface accessories that fit their answer. A customer who says they camp every summer will respond to roof racks and cargo solutions far better than a product list read from a screen.</p>
-          </div>
-
-          <div class="hiw-play">
-            <p class="hiw-play-num">3</p>
-            <h3 class="hiw-play-name">Show it on their vehicle, not a generic one</h3>
-            <p class="hiw-play-body">The most effective accessory presentation is one where the customer sees the product on the color and trim they are actually buying. Use Engage360 to configure to their exact vehicle. When Self-Drive mode or a kiosk is available in your waiting area or showroom floor, let customers explore independently while they wait.</p>
-          </div>
-
-          <div class="hiw-play">
-            <p class="hiw-play-num">4</p>
-            <h3 class="hiw-play-name">Give customers a path when they leave undecided</h3>
-            <p class="hiw-play-body">If a customer did not select accessories in the showroom, make the next step concrete. Share a direct link to your EnvyPRO eStore so they have a destination to return to on their own schedule. A customer without a next step rarely comes back to the topic.</p>
-          </div>
-
-          <div class="hiw-play">
-            <p class="hiw-play-num">5</p>
-            <h3 class="hiw-play-name">Treat every deal as an accessories deal</h3>
-            <p class="hiw-play-body">Consistent presentation on every deal matters more than heroic individual efforts. Use Sales Agent mode as a standard step in your delivery process, not an optional add-on. The associate who runs the presentation every time will outperform the one who runs it occasionally.</p>
-          </div>
-
-          <div class="hiw-play">
-            <p class="hiw-play-num">6</p>
-            <h3 class="hiw-play-name">Track what you can and review it weekly</h3>
-            <p class="hiw-play-body">Consider tracking accessory attachment rate, accessory gross per vehicle sold, and inquiry-to-sale conversion as team KPIs. Reviewing these weekly in your sales meeting keeps accessories front of mind without requiring new technology. FordEngage surfaces inquiry activity; how you act on it is a process decision your team owns.</p>
-          </div>
-
         </div>
       </div>
     </section>
@@ -1845,7 +1401,7 @@
 
           <div class="hiw-prod-card hiw-prod-card--core">
             <div class="hiw-prod-art">
-              <img src="images/product/box-engage360.webp" alt="Engage360 product box" width="600" height="760" loading="eager" decoding="async">
+              <img src="images/product/box-engage360.webp" alt="Engage360 product box" width="600" height="760" loading="lazy" decoding="async">
             </div>
             <div class="hiw-prod-body">
               <p class="hiw-prod-eyebrow">Included with every enrollment</p>
@@ -1863,7 +1419,7 @@
 
           <div class="hiw-prod-card">
             <div class="hiw-prod-art">
-              <img src="images/product/box-envypro-estore.webp" alt="EnvyPRO eStore product box" width="600" height="760" loading="eager" decoding="async">
+              <img src="images/product/box-envypro-estore.webp" alt="EnvyPRO eStore product box" width="600" height="760" loading="lazy" decoding="async">
             </div>
             <div class="hiw-prod-body">
               <p class="hiw-prod-eyebrow">Optional add-on</p>
@@ -1881,7 +1437,7 @@
 
           <div class="hiw-prod-card">
             <div class="hiw-prod-art">
-              <img src="images/product/box-vdp-widget.webp" alt="VDP Widget product box" width="600" height="760" loading="eager" decoding="async">
+              <img src="images/product/box-vdp-widget.webp" alt="VDP Widget product box" width="600" height="760" loading="lazy" decoding="async">
             </div>
             <div class="hiw-prod-body">
               <p class="hiw-prod-eyebrow">Optional add-on</p>
@@ -1914,7 +1470,10 @@
   </main>
 
     <!-- ═══ FOOTER ═══ -->
-  
+  <footer>
+    <p><strong>SmartDealer</strong> &copy; 2026 &nbsp;|&nbsp; A Ford Dealer Solutions partner</p>
+    <p style="margin-top:8px;">Dealer performance data verified by J.D. Power across 500+ Ford dealers, 2019–2024.</p>
+  </footer>
   <!-- ═══ VIDEO LIGHTBOX ═══ -->
   <div id="video-modal" class="vmodal-overlay" onclick="if(event.target===this)closeVideo()">
     <div class="vmodal-inner">
