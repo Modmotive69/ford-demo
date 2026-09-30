@@ -28,6 +28,156 @@
       els.forEach(function(el) { obs.observe(el); });
     })();
   </script>
+  <style>
+    /* Page-only refinements; shared navigation and other pages stay untouched. */
+    body.how-page .hiw-hero-inner { padding-top: 65px; }
+    body.how-page .hiw-hero .hiw-eyebrow { color: #ffffff; }
+    body.how-page .hiw-product-card,
+    body.how-page .hiw-product-card img,
+    body.how-page .hiw-prod-art,
+    body.how-page .hiw-prod-art img { background: transparent; }
+    body.how-page .hiw-prod-card { background: transparent; padding: 28px 0 0; box-shadow: none; }
+    body.how-page .hiw-prod-body { background: #ffffff; padding: 24px; border-radius: 16px; }
+    body.how-page .site-footer {
+      background: #f0f2f5;
+      border-top: 1px solid #dde2ea;
+      padding: clamp(28px,4vw,44px) clamp(20px,5vw,40px) clamp(20px,3vw,32px);
+      text-align: center;
+    }
+    body.how-page .site-footer-brand {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+    body.how-page .site-footer-logo {
+      height: 32px;
+      width: auto;
+      display: block;
+      flex-shrink: 0;
+    }
+    body.how-page .site-footer-tag {
+      font-size: 0.82rem;
+      color: #444;
+      font-family: 'Ford Antenna', FordAntenna, Arial, sans-serif;
+      letter-spacing: 0.2px;
+      white-space: nowrap;
+    }
+    body.how-page .site-footer-copy {
+      font-size: 0.75rem;
+      color: #777;
+      line-height: 1.7;
+      margin: 0;
+    }
+    body.how-page .site-footer-copy + .site-footer-copy {
+      margin-top: 4px;
+    }
+    @media (max-width: 480px) {
+      body.how-page .site-footer-logo { height: 26px; }
+      body.how-page .site-footer-brand { gap: 10px; }
+    }
+
+    body.how-page .vmodal-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.88);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+    }
+    body.how-page .vmodal-overlay.open { display: flex; }
+    body.how-page .vmodal-inner {
+      position: relative;
+      width: min(900px, 92vw);
+      background: #000;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.7);
+    }
+    body.how-page .vmodal-frame { position: relative; padding-bottom: 56.25%; height: 0; }
+    body.how-page .vmodal-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; }
+    body.how-page .vmodal-close {
+      position: absolute; top: 12px; right: 14px; z-index: 10;
+      background: rgba(255,255,255,0.15); border: none; color: #fff;
+      font-size: 20px; width: 36px; height: 36px; border-radius: 50%;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    body.how-page .vmodal-close:hover { background: rgba(255,255,255,0.3); }
+
+    body.how-page .sidebar-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 200;
+    }
+    body.how-page .sidebar-overlay.open { display: block; }
+    body.how-page .sidebar {
+      position: fixed;
+      top: 0; left: -300px;
+      width: 280px; height: 100vh;
+      background: #fff;
+      z-index: 201;
+      transition: left 0.35s cubic-bezier(0.4,0,0.2,1);
+      overflow-y: auto;
+      box-shadow: 4px 0 32px rgba(0,52,120,0.18);
+    }
+    body.how-page .sidebar.open { left: 0; }
+    body.how-page .sidebar-header {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 20px 20px;
+      border-bottom: 1px solid #e8eef5;
+    }
+    body.how-page .sidebar-close {
+      background: none; border: none;
+      color: #aaa;
+      font-size: 20px; cursor: pointer;
+      padding: 4px;
+      transition: color 0.2s;
+    }
+    body.how-page .sidebar-close:hover { color: #003478; }
+    body.how-page .sidebar-body { padding: 16px 0; }
+    body.how-page .sidebar-section { margin-bottom: 8px; }
+    body.how-page .sidebar-section-label {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: #aaa;
+      padding: 12px 20px 8px;
+      font-family: 'Ford Antenna', Arial, sans-serif;
+    }
+    body.how-page .sidebar-link {
+      padding: 12px 20px;
+      color: #003478;
+      text-decoration: none;
+      font-size: 15px; font-weight: 600;
+      transition: background 0.18s, color 0.18s;
+      border-left: 3px solid transparent;
+      font-family: 'Ford Antenna', Arial, sans-serif;
+      display: flex; align-items: center; gap: 12px;
+    }
+    body.how-page .sidebar-link:hover {
+      background: #f0f4ff;
+      color: #003478;
+      border-left-color: #003478;
+    }
+    body.how-page .sidebar-link-soon {
+      color: #bbb;
+      font-weight: 400;
+    }
+    body.how-page .sidebar-link-soon::after {
+      content: ', soon';
+      font-size: 11px;
+      opacity: 0.6;
+    }
+    body.how-page .sidebar-link-soon:hover {
+      background: #f8f8f8;
+      border-left-color: transparent;
+      cursor: default;
+    }
+  </style>
 </head>
 <body class="how-page">
   <!-- ═══ NAV ═══ -->
@@ -63,7 +213,7 @@
         <p class="hiw-hero-sub">From the moment a customer researches online to the moment they drive off the lot, FordEngage keeps accessory revenue in your store.</p>
         <div class="hiw-hero-ctas">
           <a href="enroll.html" class="hiw-btn hiw-btn--primary">Enroll Now</a>
-          <a href="#step-1" class="hiw-btn hiw-btn--ghost">See How It Works</a>
+          <a href="#" class="hiw-btn hiw-btn--ghost" onclick="event.preventDefault(); openVideo();">Watch Video</a>
         </div>
       </div>
       <a href="#step-1" class="hiw-scroll-cue" aria-label="Scroll to journey">
@@ -244,13 +394,26 @@
   </main>
 
     <!-- ═══ FOOTER ═══ -->
-  <footer>
-    <p><strong>SmartDealer</strong> &copy; 2026 &nbsp;|&nbsp; A Ford Dealer Solutions partner</p>
-    <p style="margin-top:8px;">Dealer performance data verified by J.D. Power across 500+ Ford dealers, 2019–2024.</p>
+  <footer class="site-footer">
+    <div class="site-footer-brand">
+      <img
+        src="images/partsites-logo.png"
+        alt="PartSites, LLC"
+        class="site-footer-logo"
+        loading="lazy"
+        decoding="async"
+        width="548"
+        height="100"
+      >
+      <span class="site-footer-tag">A SmartDealer company</span>
+    </div>
+
+    <p class="site-footer-copy"><strong style="color:inherit">SmartDealer</strong> &copy; 2026 &nbsp;|&nbsp; A Ford Dealer Solutions partner</p>
+    <p class="site-footer-copy">Dealer performance data verified by J.D. Power across 500+ Ford dealers, 2019–2024.</p>
   </footer>
   <!-- ═══ VIDEO LIGHTBOX ═══ -->
   <div id="video-modal" class="vmodal-overlay" onclick="if(event.target===this)closeVideo()">
-    <div class="vmodal-inner">
+    <div class="vmodal-inner" role="dialog" aria-modal="true" aria-label="FordEngage video">
       <button class="vmodal-close" onclick="closeVideo()" aria-label="Close">&#x2715;</button>
       <div class="vmodal-frame">
         <iframe id="vmodal-iframe"
@@ -265,19 +428,26 @@
 
   <script>
     var YT_ID = 'aHBj-zA7Hqg';
+    var videoTrigger;
+    var videoPreviousOverflow;
     function openVideo() {
+      videoTrigger = document.activeElement;
+      videoPreviousOverflow = document.body.style.overflow;
       var modal = document.getElementById('video-modal');
       var iframe = document.getElementById('vmodal-iframe');
       iframe.src = 'https://www.youtube-nocookie.com/embed/' + YT_ID + '?autoplay=1&rel=0&modestbranding=1';
       modal.classList.add('open');
       document.body.style.overflow = 'hidden';
+      modal.querySelector('.vmodal-close').focus();
     }
     function closeVideo() {
       var modal = document.getElementById('video-modal');
       var iframe = document.getElementById('vmodal-iframe');
+      if (!modal.classList.contains('open')) return;
       modal.classList.remove('open');
       iframe.src = '';
-      document.body.style.overflow = '';
+      document.body.style.overflow = videoPreviousOverflow || '';
+      if (videoTrigger) videoTrigger.focus();
     }
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') closeVideo();
