@@ -17,25 +17,6 @@
     body { font-family: 'Barlow', Arial, sans-serif; color: var(--text); background: var(--white); }
 
     /* NAV */
-    nav { position: fixed; top: 0; left: 0; width: 100%; z-index: 900; background: transparent; transition: background .3s, box-shadow .3s; }
-    nav.scrolled { background: rgba(255,255,255,0.97); box-shadow: 0 2px 16px rgba(0,0,0,.1); }
-    .nav-inner { max-width: 1200px; width: 100%; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 14px 40px 14px 24px; }
-    .nav-brand { text-decoration: none; display: flex; align-items: center; gap: 6px; }
-    .nav-brand img { height: 52px; width: auto; display: block; }
-    .nav-brand-stack { display: flex; flex-direction: column; justify-content: center; gap: 2px; }
-    .nav-wordmark-text { display: inline-flex; align-items: baseline; }
-    .nav-fw { font-family: 'Barlow Condensed', Arial, sans-serif; font-weight: 900; font-size: 28px; letter-spacing: -.5px; color: var(--navy); }
-    .nav-fe { font-family: 'Barlow Condensed', Arial, sans-serif; font-weight: 300; font-size: 28px; color: rgba(0,52,120,.55); }
-    .nav-program-text { font-size: 14px; font-weight: 500; letter-spacing: .5px; color: rgba(0,52,120,.55); white-space: nowrap; }
-    .nav-right { display: flex; align-items: center; gap: 12px; }
-    .btn { display: inline-block; padding: 10px 22px; border-radius: 4px; font-weight: 700; font-size: .85rem; letter-spacing: .5px; text-decoration: none !important; cursor: pointer; border: 2px solid transparent; transition: background .18s; text-transform: uppercase; white-space: nowrap; }
-    .btn-navy { background: var(--navy); color: var(--white); border-color: var(--navy); }
-    .btn-navy:hover { background: var(--navy-dark); }
-    .btn-outline { background: transparent; color: var(--navy); border-color: var(--navy); }
-    .btn-outline:hover { background: var(--navy); color: var(--white); }
-    .nav-link { font-size: 14px; color: var(--navy); font-weight: 600; text-decoration: none; }
-    .nav-link:hover { text-decoration: underline; }
-    nav.scrolled .nav-fw, nav.scrolled .nav-fe { color: var(--navy) !important; }
 
     /* HERO */
     .contact-hero { background: linear-gradient(135deg, var(--navy) 0%, #001840 100%); color: var(--white); padding: clamp(110px,12vw,150px) clamp(24px,6vw,80px) clamp(60px,6vw,80px); text-align: center; }
