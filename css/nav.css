@@ -57,7 +57,7 @@ nav:not(.sidebar).scrolled::before { opacity: 0; }
       display: inline-block;
       padding: 11px 26px;
       border-radius: 4px;
-      font-family: 'Ford Antenna', FordAntenna, Arial, sans-serif;
+      font-family: Arial, sans-serif;
       font-weight: 700;
       font-size: 0.875rem;
       letter-spacing: 0.5px;
@@ -76,7 +76,7 @@ nav:not(.sidebar).scrolled::before { opacity: 0; }
 .nav-wordmark-text { display:inline-flex; align-items:baseline; white-space:nowrap; }
 .nav-wordmark-text { display:inline-flex; align-items:baseline; white-space:nowrap; }
 .nav-fw {
-      font-family: 'Ford Antenna', FordAntenna, 'Arial Black', Arial, sans-serif;
+      font-family: 'Arial Black', 'Arial Bold', Arial, sans-serif;
       font-weight: 800;
       font-size: 28px;
       line-height: 1;
@@ -86,7 +86,7 @@ nav:not(.sidebar).scrolled::before { opacity: 0; }
       transition: color .3s, text-shadow .3s;
     }
 .nav-fe {
-      font-family: 'Ford Antenna', FordAntenna, Arial, sans-serif;
+      font-family: Arial, sans-serif;
       font-weight: 300;
       font-size: 28px;
       line-height: 1;
@@ -95,7 +95,7 @@ nav:not(.sidebar).scrolled::before { opacity: 0; }
       transition: color .3s, text-shadow .3s;
     }
 .nav-program-text {
-      font-family: 'Ford Light Extended', 'Ford Antenna', Arial, sans-serif;
+      font-family: 'Ford Light Extended', Arial, sans-serif;
       font-size: 18px; font-weight:500; letter-spacing:.5px;
       white-space:nowrap; margin:0; text-align:left;
       color:rgba(255,255,255,0.75); text-shadow:none;
