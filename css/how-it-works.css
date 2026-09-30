@@ -968,21 +968,24 @@
     .hiw-prod-card:hover { transform: translateY(-4px); }
     @media (prefers-reduced-motion: reduce) { .hiw-prod-card { transition: none; } }
     .hiw-prod-card--core { border-top: 3px solid #003478; }
-    /* Box left of eyebrow/name/desc; bullets stay inside body below */
-    .hiw-prod-card { flex-direction: column; }
+    /* Card layout: eyebrow top, box+text row, bullets full width below */
+    .hiw-prod-card { flex-direction: column; align-items: stretch; }
+    .hiw-prod-row {
+      display: flex; flex-direction: row; align-items: flex-start;
+      gap: 16px; margin-bottom: 16px;
+    }
     .hiw-prod-art {
-      float: left;
-      width: 90px; margin: 0 16px 8px 0;
+      flex: 0 0 150px;
       display: flex; align-items: flex-start; justify-content: center;
     }
     .hiw-prod-art img {
-      width: 90px; height: auto;
+      width: 150px; height: auto;
       object-fit: contain; display: block;
-      filter: drop-shadow(0 6px 18px rgba(0,52,120,.2));
+      filter: drop-shadow(0 8px 24px rgba(0,52,120,.25));
     }
-    .hiw-prod-body { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
-    .hiw-prod-features { clear: both; }
-    .hiw-prod-price-note { clear: both; }
+    .hiw-prod-body { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+    .hiw-prod-features { margin-top: 4px; }
+    .hiw-prod-price-note { margin-top: auto; }
     .hiw-prod-eyebrow {
       font-family: Arial, sans-serif; font-size: 10px; font-weight: 700;
       letter-spacing: 2px; text-transform: uppercase;
