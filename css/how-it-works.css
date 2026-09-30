@@ -968,14 +968,19 @@
     .hiw-prod-card:hover { transform: translateY(-4px); }
     @media (prefers-reduced-motion: reduce) { .hiw-prod-card { transition: none; } }
     .hiw-prod-card--core { border-top: 3px solid #003478; }
+    /* Card header: box left, text right */
+    .hiw-prod-card { flex-direction: column; }
+    .hiw-prod-header {
+      display: flex; align-items: flex-start; gap: 16px; margin-bottom: 16px;
+    }
     .hiw-prod-art {
-      display: flex; align-items: center; justify-content: center;
-      margin-bottom: 20px;
+      flex: 0 0 auto;
+      display: flex; align-items: flex-start; justify-content: center;
     }
     .hiw-prod-art img {
-      width: 100%; max-width: 180px; height: 220px;
+      width: 90px; height: auto;
       object-fit: contain; display: block;
-      filter: drop-shadow(0 8px 24px rgba(0,52,120,.12));
+      filter: drop-shadow(0 6px 16px rgba(0,52,120,.18));
     }
     .hiw-prod-body { flex: 1; display: flex; flex-direction: column; }
     .hiw-prod-eyebrow {
