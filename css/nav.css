@@ -57,6 +57,7 @@ nav:not(.sidebar).scrolled::before { opacity: 0; }
       display: inline-block;
       padding: 11px 26px;
       border-radius: 4px;
+      font-family: 'Ford Antenna', FordAntenna, Arial, sans-serif;
       font-weight: 700;
       font-size: 0.875rem;
       letter-spacing: 0.5px;
