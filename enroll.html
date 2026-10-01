@@ -87,9 +87,10 @@
 
 
 /* Dealer ZIP hero and confirmation dialog; enrollment-only styles. */
-.page-body.enroll-form-overlap { margin-top:0; }
+.page-body.enroll-form-overlap { margin-top:-100px; }
 .hero { min-height:max(72vh,580px); }
-.hero-foreground { padding-bottom:100px; }
+.hero .hero-foreground { padding-top:calc(var(--actual-nav-h,100px) + 25px); padding-bottom:100px; }
+@media(max-width:768px){.page-body.enroll-form-overlap{margin-top:-40px;}}
 .dealer-zip-hero{text-align:center;margin-top:28px}
 .dealer-zip-hero-label{display:block;color:rgba(255,255,255,.85);font-size:13px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin:0 0 12px;font-family:Arial,sans-serif;text-shadow:0 1px 5px #00142f}
 .dealer-zip-hero-row{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
