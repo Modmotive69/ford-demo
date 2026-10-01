@@ -196,29 +196,7 @@
         <!-- SECTION: DEALERSHIP -->
         
         <!-- ── ZIP LOOKUP (inserted before dealership fields) ── -->
-        <div class="form-section zip-lookup-section">
-          <div class="section-label">Find Your Dealership</div>
-          <p style="font-size:0.84rem;color:#6e6e73;margin-bottom:16px;">
-            Confirm your dealership details below, or use the ZIP lookup above to find your dealership.
-          </p>
-          <div class="zip-row">
-            <div class="field">
-              <label for="zip">ZIP Code</label>
-              <input type="text" id="zip" name="zip"
-                     placeholder="48201"
-                     maxlength="5" pattern="[0-9]{5}"
-                     autocomplete="postal-code"
-                     inputmode="numeric"
-                     aria-describedby="zip-error zip-lookup-status"
-                     required />
-              <p id="zip-error" role="alert" style="color:#a21d16;font-size:0.84rem;margin-top:4px;"></p>
-            </div>
-          </div>
-          <div id="zip-lookup-status" class="zip-status" aria-live="polite" aria-atomic="true"></div>
-          <div id="dealer-results" class="field" aria-label="Matching dealerships"></div>
-          <p id="city-options-note" style="display:none"></p>
-        </div>
-        <div class="section-divider"></div>
+        
 
 <div class="form-section">
           <div class="section-label">Your Dealership</div>
@@ -276,6 +254,15 @@
                 </select>
                   <p id="state-note" style="font-size:0.78rem;color:#6e6e73;margin-top:4px;">Auto-filled from ZIP · editable</p>
                 </div>
+            </div>
+            <div class="field">
+              <label for="zip">ZIP Code</label>
+              <input type="text" id="zip" name="zip"
+                     placeholder="48201"
+                     maxlength="5" pattern="[0-9]{5}"
+                     autocomplete="postal-code"
+                     inputmode="numeric"
+                     required />
             </div>
 
           </div>
