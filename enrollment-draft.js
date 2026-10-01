@@ -492,7 +492,7 @@
     }
     sending = false;
     form.removeAttribute('aria-busy');
-    showConfirmation(result);
+    window.location.href = 'enroll-confirmation.html';
   });
 
 })();
