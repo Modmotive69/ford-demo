@@ -35,6 +35,7 @@ for(const width of [1440,390,320]){
  await page.route(base+'/submit-enrollment',route=>{throw new Error('Unexpected enrollment submission');});
  await page.goto(base+'/enroll');await page.waitForFunction(()=>typeof DEALERS!=='undefined');
  assert.equal(await page.evaluate(()=>DEALERS.length),2720);assert.equal(await page.locator('#regionState').count(),0);
+ assert.equal(await page.locator('nav .nav-brand').count(),1);assert.equal(await page.locator('.site-footer').count(),1);
  assert.equal(await page.evaluate(()=>parseDealerCSV('\uFEFFName,Zip,Street\r\n"A, ""B""",01234,"line1\nline2"\r\n')[0].Name),'A, "B"');
  await page.screenshot({path:out+`/${width}-hero.png`});
  await page.locator('#heroZip').fill('abc');await page.locator('.dealer-zip-btn').click();assert.equal(await page.locator('#dealerModal').isVisible(),false);
