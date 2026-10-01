@@ -1,7 +1,8 @@
 {
   "version": 1,
   "include": [
-    "/submit-enrollment"
+    "/submit-enrollment",
+    "/api/dealer-correction"
   ],
   "exclude": []
 }
