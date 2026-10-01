@@ -401,11 +401,20 @@
       transform: translateX(-50%);
       z-index: 11;
       text-align: center;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      width: max-content;
+      max-width: 90vw;
     }
-    
+    @media (max-width: 1100px) {
+      .hero-cta-wrap { width: 100%; max-width: 600px; left: 40px; transform: none; }
+      .hero-cta-btn { font-size: 15px; padding: 13px 24px; }
+    }
     @media (max-width: 768px) {
-      .hero-cta-wrap { pointer-events: auto; bottom: 20px; }
-      .hero-cta-btn { pointer-events: auto; font-size: 16px; padding: 14px 40px; }
+      .hero-cta-wrap { pointer-events: auto; bottom: 20px; left: 50%; transform: translateX(-50%); max-width: 90vw; }
+      .hero-cta-btn { pointer-events: auto; font-size: 15px; padding: 13px 22px; }
     }
 
     /* ─── SLIDER ─── */
