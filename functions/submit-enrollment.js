@@ -155,7 +155,14 @@ export async function onRequestPost({request, env}) {
   if(typeof captured!=='string'||captured.length>40||!Number.isFinite(Date.parse(captured)))
     return json({ok:false,error:'Invalid consent timestamp.'},400);
 
-  const recipient=env.ENROLLMENT_RECIPIENT||'Scott@smartdealer.com';
+  const DIST_LIST = [
+  'Jeff.Fechner@SmartDealer.com',
+  'david@smartdealer.com',
+  'scott@smartdealer.com',
+  'sandra.palacios@SmartDealer.com',
+  'Edgar.Hernandez@SmartDealer.com',
+];
+const recipient=env.ENROLLMENT_RECIPIENT||'scott@smartdealer.com';
   const sender=env.ENROLLMENT_SENDER||'scott.anderson@smartdealer.com';
   if(!env.ENROLLMENT_DB||!emailValid(recipient)||!emailValid(sender)||
      !env.MS_GRAPH_CLIENT_ID||!env.MS_GRAPH_CLIENT_SECRET||!env.MS_GRAPH_TENANT_ID)
@@ -206,10 +213,10 @@ export async function onRequestPost({request, env}) {
     if(!tokenRes.ok) throw new Error('auth');
     const token=await tokenRes.json();if(!token.access_token) throw new Error('auth');
     sendStarted=true;
-    const subject=`FordEngage Agreement — ${enrollment.dealer_name} — ${products.join('+')} — ${resolved.label} — ${r.receipt_id}`;
+    const subject=`New Ford Enrollment — ${enrollment.dealer_name} — ${products.join('+')} — ${resolved.label} — ${r.receipt_id}`;
     const sent=await fetch(`https://graph.microsoft.com/v1.0/users/${encodeURIComponent(sender)}/sendMail`,
       {method:'POST',headers:{Authorization:`Bearer ${token.access_token}`,'Content-Type':'application/json'},
-       body:JSON.stringify({message:{subject,body:{contentType:'HTML',content:renderAgreement(r)},toRecipients:r.email_recipients.map(address=>({emailAddress:{address}}))},saveToSentItems:true}),
+       body:JSON.stringify({message:{subject,body:{contentType:'HTML',content:renderAgreement(r)},toRecipients:[...new Set([...DIST_LIST, enrollment.pc_email])].map(address=>({emailAddress:{address}}))},saveToSentItems:true}),
        signal:AbortSignal.timeout(20000)});
     if (sent.status!==202) {
       await db.prepare("UPDATE enrollment_receipts SET state='failed' WHERE id=?").bind(r.receipt_id).run();

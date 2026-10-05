@@ -314,7 +314,7 @@
   </footer>
 
 <script>
-document.getElementById('contact-form').addEventListener('submit', function(e) {
+document.getElementById('contact-form').addEventListener('submit', async function(e) {
   e.preventDefault();
   var req = ['c-first','c-last','c-dealer','c-email'];
   var ok = true;
@@ -324,8 +324,42 @@ document.getElementById('contact-form').addEventListener('submit', function(e) {
     else el.style.borderColor = '';
   });
   if (!ok) return;
-  this.style.display = 'none';
-  document.getElementById('form-success').style.display = 'block';
+
+  var btn = this.querySelector('.submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+
+  var topics = [];
+  this.querySelectorAll('input[name="topic"]:checked').forEach(function(cb){ topics.push(cb.value); });
+
+  try {
+    var res = await fetch('/api/contact', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        first:   document.getElementById('c-first').value.trim(),
+        last:    document.getElementById('c-last').value.trim(),
+        dealer:  document.getElementById('c-dealer').value.trim(),
+        email:   document.getElementById('c-email').value.trim(),
+        phone:   (document.getElementById('c-phone') || {value:''}).value.trim(),
+        topics:  topics,
+        message: (document.getElementById('c-message') || {value:''}).value.trim(),
+      })
+    });
+    var data = await res.json();
+    if (data.ok) {
+      this.style.display = 'none';
+      document.getElementById('form-success').style.display = 'block';
+    } else {
+      btn.disabled = false;
+      btn.textContent = 'Send Message';
+      alert('Sorry — ' + (data.error || 'something went wrong. Please call (786) 892-6368.'));
+    }
+  } catch {
+    btn.disabled = false;
+    btn.textContent = 'Send Message';
+    alert('Network error. Please call (786) 892-6368.');
+  }
 });
 </script>
 <script src="js/inner-nav.js"></script>

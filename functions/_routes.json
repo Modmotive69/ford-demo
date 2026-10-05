@@ -2,7 +2,8 @@
   "version": 1,
   "include": [
     "/submit-enrollment",
-    "/api/dealer-correction"
+    "/api/dealer-correction",
+    "/api/contact"
   ],
   "exclude": []
 }
