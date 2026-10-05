@@ -1,4 +1,4 @@
-const ORIGINS = ['https://ford-demo.pages.dev', 'https://fordengage.livecode.tech'];
+const ORIGINS = ['https://ford-demo.pages.dev', 'https://fordengage.livecode.tech', 'https://fordengage.com', 'https://www.fordengage.com'];
 const EMAIL = /^[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?(?:\.[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)+$/;
 const emailValid = s => typeof s === 'string' && s.length <= 254 && EMAIL.test(s);
 const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));

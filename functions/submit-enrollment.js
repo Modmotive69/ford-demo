@@ -1,6 +1,7 @@
 import agreement from '../server/agreement.json';
 
-const ORIGINS = ['https://ford-demo.pages.dev', 'https://fordengage.livecode.tech'];
+const ORIGINS = ['https://ford-demo.pages.dev', 'https://fordengage.livecode.tech', 'https://fordengage.com', 'https://www.fordengage.com'];
+const originOk = o => ORIGINS.includes(o) || (o && o.endsWith('.ford-demo.pages.dev'));
 const EMAIL = /^[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?(?:\.[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)+$/;
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -89,7 +90,7 @@ function replyExisting(row) {
 }
 
 export async function onRequestPost({request, env}) {
-  if (!ORIGINS.includes(request.headers.get('Origin'))) return json({ok:false,error:'Request origin not permitted.'},403);
+  if (!originOk(request.headers.get('Origin'))) return json({ok:false,error:'Request origin not permitted.'},403);
   if (!(request.headers.get('Content-Type')||'').startsWith('application/json')) return json({ok:false,error:'JSON required.'},415);
   if (Number(request.headers.get('Content-Length')||0)>48000) return json({ok:false,error:'Request too large.'},413);
   let p;
