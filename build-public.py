@@ -6,7 +6,7 @@ out = root / 'release-public'
 if out.exists():
     raise SystemExit('release-public already exists; choose/archive the previous stage before building')
 public_roots = {'css','fonts','images','js','models','videos'}
-public_top = {'index.html','enroll-confirmation.html','enroll.html','contact.html','dealer-agreement.html','dealer-agreement.docx','engage360-viewer.html','how-it-works.html','product.html','zip-lookup.js','dealer-suggest.js','price-lookup.js','enrollment-draft.js','price-config.json','.cache-bust'}
+public_top = {'about.html','index.html','enroll-confirmation.html','enroll.html','contact.html','dealer-agreement.html','dealer-agreement.docx','engage360-viewer.html','how-it-works.html','product.html','zip-lookup.js','dealer-suggest.js','price-lookup.js','enrollment-draft.js','price-config.json','.cache-bust'}
 asset_suffixes = {'.css','.otf','.ttf','.woff','.woff2','.jpg','.jpeg','.png','.webp','.svg','.gif','.ico','.js','.glb','.gltf','.mp4','.webm','.bin','.json'}
 def permitted(rel):
     return str(rel) in public_top or (len(rel.parts)>1 and rel.parts[0] in public_roots and rel.suffix.lower() in asset_suffixes and not any(p.startswith('.') for p in rel.parts))
