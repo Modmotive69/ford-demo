@@ -135,8 +135,7 @@
   /* ── Helpers ─────────────────────────────────────────────────────────── */
   const $ = id => document.getElementById(id);
   const selected = () => {
-    const addons = Array.from(document.querySelectorAll('.addon-input:checked'), e => e.value);
-    return ['FordEngage', ...addons];
+    return Array.from(document.querySelectorAll('.addon-input:checked'), e => e.value);
   };
   const sigFields = [
     { id: 'sig-name',  label: 'Name (Signature)',  type: 'text'  },
