@@ -403,7 +403,7 @@
       bottom: 100px;
       left: 50%;
       transform: translateX(-50%);
-      z-index: 11;
+      z-index: 50; /* well above hero-combined-img (z-index:10) */
       text-align: center;
       display: flex;
       flex-wrap: wrap;
@@ -412,13 +412,24 @@
       width: max-content;
       max-width: 90vw;
     }
+    /* Constrain hero image so it never bleeds into left text column */
+    .hero-combined-img {
+      max-width: 50% !important;
+      right: 0 !important;
+      pointer-events: none !important;
+    }
+    @media (min-width: 769px) and (max-width: 1200px) {
+      .hero-cta-wrap { left: 5%; transform: none; bottom: 80px; max-width: 52%; justify-content: flex-start; }
+      .hero-combined-img { max-width: 46% !important; top: 15% !important; }
+    }
     @media (max-width: 1100px) {
-      .hero-cta-wrap { width: 100%; max-width: 600px; left: 40px; transform: none; }
+      .hero-cta-wrap { width: 100%; max-width: 560px; left: 5%; transform: none; }
       .hero-cta-btn { font-size: 15px; padding: 13px 24px; }
     }
     @media (max-width: 768px) {
       .hero-cta-wrap { pointer-events: auto; bottom: 20px; left: 50%; transform: translateX(-50%); max-width: 90vw; }
       .hero-cta-btn { pointer-events: auto; font-size: 15px; padding: 13px 22px; }
+      .hero-combined-img { display: none !important; } /* hide on mobile — doesn't fit */
     }
 
     /* ─── SLIDER ─── */
