@@ -1144,9 +1144,12 @@
 .about-company{background:var(--gray-bg);}
 .about-company address{font-style:normal;font-size:.9rem;color:var(--ford-blue);border-top:1px solid #d4dce7;padding-top:20px;}
 .about-subsidiaries{display:grid;gap:20px;}
-.about-subsidiary{border:2px solid var(--ford-blue);padding:28px;border-radius:4px;background:white;}
+.about-subsidiary{border:2px solid var(--ford-blue);padding:28px;border-radius:4px;background:white;display:flex;align-items:center;justify-content:space-between;gap:24px;}
+.about-subsidiary-content{flex:1;min-width:0;}
 .about-subsidiary h3{font-family:'Barlow Condensed',sans-serif;font-size:1.8rem;color:var(--ford-blue);margin-bottom:8px;}
-.about-subsidiary p{color:#50565e;font-size:.95rem;line-height:1.7;}
+.about-subsidiary p{color:#50565e;font-size:.95rem;line-height:1.7;margin:0;}
+.about-subsidiary-btn{flex-shrink:0;display:inline-block;padding:10px 24px;border:2px solid var(--ford-blue);color:var(--ford-blue);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:.5px;text-transform:uppercase;text-decoration:none;border-radius:4px;transition:background .2s,color .2s;}
+.about-subsidiary-btn:hover{background:var(--ford-blue);color:#fff;}
 .about-cta{background:var(--ford-blue);color:white;padding:80px clamp(20px,5vw,60px);text-align:center;}
 .about-cta h2{color:white;max-width:900px;margin:0 auto 24px;}
 .about-cta p{max-width:840px;margin:0 auto 32px;line-height:1.85;color:rgba(255,255,255,.86);}
@@ -1213,7 +1216,7 @@
 <h2>Built by <a href="https://smartdealer.com" target="_blank" rel="noopener">SmartDealer Technologies</a></h2>
 <p>SmartDealer Technologies is the Miami-based automotive technology company behind FordEngage. With two subsidiaries, PartSites LLC (dealer-facing eCommerce and accessory visualization) and InDesign Data LLC (DMS integration and data management), SmartDealer delivers the complete technology stack modern dealerships need. Every product is built on decades of OEM partnerships and dealer-first engineering.</p>
 <address>175 SW 7th Street, Suite 2010, Miami, Florida 33130</address>
-</div><div class="about-subsidiaries"><div class="about-subsidiary"><h3>PartSites LLC</h3><p>Dealer-facing eCommerce and accessory visualization.</p></div><div class="about-subsidiary"><h3>InDesign Data LLC</h3><p>DMS integration and data management.</p></div></div></div></section>
+</div><div class="about-subsidiaries"><div class="about-subsidiary"><div class="about-subsidiary-content"><h3>PartSites LLC</h3><p>Dealer-facing eCommerce and accessory visualization.</p></div><a href="https://partsites.com" target="_blank" rel="noopener" class="about-subsidiary-btn">Visit</a></div><div class="about-subsidiary"><div class="about-subsidiary-content"><h3>InDesign Data LLC</h3><p>DMS integration and data management.</p></div><a href="https://indesigndata.com" target="_blank" rel="noopener" class="about-subsidiary-btn">Visit</a></div></div></div></section>
 <section class="about-cta"><div class="about-wrap"><h2>Subject Matter Experts. Proven Partners. Built for Ford.</h2><p>FordEngage isn't a startup idea. It's the product of three decades building accessories technology for the world's biggest automotive brands. When you enroll, you're not betting on a new vendor. You're joining a platform with 30 years of proof.</p><a class="btn btn-white btn-lg" href="enroll.html">Enroll Now</a></div></section>
 </main>
   <footer class="site-footer">
