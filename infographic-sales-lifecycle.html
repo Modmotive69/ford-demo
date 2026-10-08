@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FordEngage Lifecycle</title>
+<style>
+  html, body { margin: 0; padding: 0; background: transparent; }
+  svg { width: 560px; height: 560px; overflow: visible; display: block; }
+  .stage-node { opacity: 0; animation: fadeIn 0.5s forwards; }
+  .stage-node:nth-child(1) { animation-delay: 0.2s; }
+  .stage-node:nth-child(2) { animation-delay: 0.4s; }
+  .stage-node:nth-child(3) { animation-delay: 0.6s; }
+  .stage-node:nth-child(4) { animation-delay: 0.8s; }
+  .stage-node:nth-child(5) { animation-delay: 1.0s; }
+  .stage-node:nth-child(6) { animation-delay: 1.2s; }
+  .arcs { opacity: 0; animation: fadeIn 0.6s forwards; animation-delay: 1.5s; }
+  .hub  { opacity: 0; animation: fadeIn 0.5s forwards; animation-delay: 0.0s; }
+  @keyframes fadeIn { to { opacity: 1; } }
+</style>
+</head>
+<body>
+<svg viewBox="0 0 560 560" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="hubg" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#0562D2"/>
+      <stop offset="100%" stop-color="#002060"/>
+    </radialGradient>
+    <radialGradient id="g1" cx="50%" cy="35%" r="65%"><stop offset="0%" stop-color="#1a6bff"/><stop offset="100%" stop-color="#003478"/></radialGradient>
+    <radialGradient id="g2" cx="50%" cy="35%" r="65%"><stop offset="0%" stop-color="#0090d4"/><stop offset="100%" stop-color="#004a80"/></radialGradient>
+    <radialGradient id="g3" cx="50%" cy="35%" r="65%"><stop offset="0%" stop-color="#00b359"/><stop offset="100%" stop-color="#005c2e"/></radialGradient>
+    <radialGradient id="g4" cx="50%" cy="35%" r="65%"><stop offset="0%" stop-color="#0562D2"/><stop offset="100%" stop-color="#003478"/></radialGradient>
+    <radialGradient id="g5" cx="50%" cy="35%" r="65%"><stop offset="0%" stop-color="#0099cc"/><stop offset="100%" stop-color="#005580"/></radialGradient>
+    <radialGradient id="g6" cx="50%" cy="35%" r="65%"><stop offset="0%" stop-color="#00a651"/><stop offset="100%" stop-color="#004d25"/></radialGradient>
+    <marker id="arr" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+      <path d="M0,0.5 L0,6.5 L7,3.5 z" fill="rgba(255,255,255,0.5)"/>
+    </marker>
+  </defs>
+
+  <!-- Orbit ring -->
+  <circle cx="280" cy="280" r="190" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" stroke-dasharray="6 5"/>
+
+  <!-- Arc connectors -->
+  <g class="arcs">
+    <path d="M280,90    A190,190 0 0,1 444.5,185" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1.8" marker-end="url(#arr)"/>
+    <path d="M444.5,185 A190,190 0 0,1 444.5,375" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1.8" marker-end="url(#arr)"/>
+    <path d="M444.5,375 A190,190 0 0,1 280,470"   fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1.8" marker-end="url(#arr)"/>
+    <path d="M280,470   A190,190 0 0,1 115.5,375"  fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1.8" marker-end="url(#arr)"/>
+    <path d="M115.5,375 A190,190 0 0,1 115.5,185"  fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1.8" marker-end="url(#arr)"/>
+    <path d="M115.5,185 A190,190 0 0,1 280,90"     fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1.8" marker-end="url(#arr)"/>
+  </g>
+
+  <!-- HUB -->
+  <g class="hub">
+    <circle cx="280" cy="280" r="82" fill="url(#hubg)" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/>
+    <text x="280" y="272" text-anchor="middle" font-family="Arial" font-weight="900" font-size="18" fill="#fff">Ford<tspan font-weight="300" fill="rgba(255,255,255,0.65)">Engage</tspan></text>
+    <text x="280" y="291" text-anchor="middle" font-family="Arial" font-size="8" fill="rgba(255,255,255,0.45)" letter-spacing="1.8">REVENUE LIFECYCLE</text>
+  </g>
+
+  <!-- STAGE 1 — DISCOVERY (top, 280,90) -->
+  <g class="stage-node" transform="translate(280,90)">
+    <circle r="46" fill="url(#g1)" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+    <text x="0" y="6" text-anchor="middle" font-size="26" fill="#fff">👁</text>
+    <text x="0" y="12" text-anchor="middle" font-family="Arial" font-weight="900" font-size="8.5" fill="#fff" letter-spacing="0.8">DISCOVERY</text>
+    <text x="0" y="23" text-anchor="middle" font-family="Arial" font-size="7" fill="rgba(255,255,255,0.7)">VDP &amp; Showroom</text>
+    <text x="0" y="-31" text-anchor="middle" font-family="Arial" font-weight="900" font-size="8" fill="rgba(255,255,255,0.35)" letter-spacing="1">01</text>
+  </g>
+
+  <!-- STAGE 2 — ENGAGEMENT (top-right, 444.5,185) -->
+  <g class="stage-node" transform="translate(444.5,185)">
+    <circle r="46" fill="url(#g2)" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+    <text x="0" y="6" text-anchor="middle" font-size="24" fill="#fff">▶</text>
+    <text x="0" y="22" text-anchor="middle" font-family="Arial" font-weight="900" font-size="8.5" fill="#fff" letter-spacing="0.8">ENGAGEMENT</text>
+    <text x="0" y="33" text-anchor="middle" font-family="Arial" font-size="7" fill="rgba(255,255,255,0.7)">Engage360 Live</text>
+    <text x="0" y="-31" text-anchor="middle" font-family="Arial" font-weight="900" font-size="8" fill="rgba(255,255,255,0.35)" letter-spacing="1">02</text>
+  </g>
+
+  <!-- STAGE 3 — BUILD (bottom-right, 444.5,375) -->
+  <g class="stage-node" transform="translate(444.5,375)">
+    <circle r="46" fill="url(#g3)" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+    <text x="0" y="6" text-anchor="middle" font-size="24" fill="#fff">⬡</text>
+    <text x="0" y="25" text-anchor="middle" font-family="Arial" font-weight="900" font-size="8.5" fill="#fff" letter-spacing="0.8">BUILD</text>
+    <text x="0" y="36" text-anchor="middle" font-family="Arial" font-size="7" fill="rgba(255,255,255,0.7)">Configure Package</text>
+    <text x="0" y="-31" text-anchor="middle" font-family="Arial" font-weight="900" font-size="8" fill="rgba(255,255,255,0.35)" letter-spacing="1">03</text>
+  </g>
+
+  <!-- STAGE 4 — CLOSE (bottom, 280,470) -->
+  <g class="stage-node" transform="translate(280,470)">
+    <circle r="46" fill="url(#g4)" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+    <text x="0" y="6" text-anchor="middle" font-size="24" fill="#fff">✓</text>
+    <text x="0" y="22" text-anchor="middle" font-family="Arial" font-weight="900" font-size="8.5" fill="#fff" letter-spacing="0.8">CLOSE</text>
+    <text x="0" y="33" text-anchor="middle" font-family="Arial" font-size="7" fill="rgba(255,255,255,0.7)">$800–$1,200/vehicle</text>
+    <text x="0" y="-31" text-anchor="middle" font-family="Arial" font-weight="900" font-size="8" fill="rgba(255,255,255,0.35)" letter-spacing="1">04</text>
+  </g>
+
+  <!-- STAGE 5 — FULFILL (bottom-left, 115.5,375) -->
+  <g class="stage-node" transform="translate(115.5,375)">
+    <circle r="46" fill="url(#g5)" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+    <text x="0" y="6" text-anchor="middle" font-size="24" fill="#fff">📦</text>
+    <text x="0" y="22" text-anchor="middle" font-family="Arial" font-weight="900" font-size="8.5" fill="#fff" letter-spacing="0.8">FULFILL</text>
+    <text x="0" y="33" text-anchor="middle" font-family="Arial" font-size="7" fill="rgba(255,255,255,0.7)">Install &amp; Deliver</text>
+    <text x="0" y="-31" text-anchor="middle" font-family="Arial" font-weight="900" font-size="8" fill="rgba(255,255,255,0.35)" letter-spacing="1">05</text>
+  </g>
+
+  <!-- STAGE 6 — LOYALTY (top-left, 115.5,185) -->
+  <g class="stage-node" transform="translate(115.5,185)">
+    <circle r="46" fill="url(#g6)" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+    <text x="0" y="6" text-anchor="middle" font-size="24" fill="#fff">♾</text>
+    <text x="0" y="23" text-anchor="middle" font-family="Arial" font-weight="900" font-size="8.5" fill="#fff" letter-spacing="0.8">LOYALTY</text>
+    <text x="0" y="34" text-anchor="middle" font-family="Arial" font-size="7" fill="rgba(255,255,255,0.7)">eStore &amp; Repeat</text>
+    <text x="0" y="-31" text-anchor="middle" font-family="Arial" font-weight="900" font-size="8" fill="rgba(255,255,255,0.35)" letter-spacing="1">06</text>
+  </g>
+
+</svg>
+</body>
+</html>
