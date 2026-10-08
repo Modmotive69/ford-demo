@@ -233,10 +233,12 @@
     .hero-text-col {
       position: absolute;
       left: 8.9%;
-      top: 17%;
-      max-width: 48%;
+      top: 14%;
+      max-width: 46%;
       z-index: 15;
       pointer-events: auto;
+      /* Enough bottom padding so buttons don't clip into the sand fade */
+      padding-bottom: 24px;
     }
     .hero-headline {
       font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
@@ -397,39 +399,50 @@
     }
     .vmodal-close:hover { background: rgba(255,255,255,0.3); }
 
-    /* ─── HERO CTA BUTTON ─── */
-    .hero-cta-wrap { pointer-events: auto;
-      position: absolute;
-      bottom: 100px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 50; /* well above hero-combined-img (z-index:10) */
-      text-align: center;
+    /* ─── HERO CTA BUTTONS ───
+       Buttons are IN-FLOW inside .hero-text-col, not absolute.
+       They always sit below the headline, never near the iPad/Bronco image.
+    */
+    .hero-cta-wrap {
+      position: relative;
+      z-index: 20;
       display: flex;
       flex-wrap: wrap;
-      justify-content: center;
       gap: 12px;
-      width: max-content;
-      max-width: 90vw;
+      margin-top: 28px;
+      pointer-events: auto;
     }
+    .hero-cta-btn { pointer-events: auto; }
     /* Constrain hero image so it never bleeds into left text column */
     .hero-combined-img {
       max-width: 50% !important;
-      right: 0 !important;
+      right: 2% !important;
       pointer-events: none !important;
     }
-    @media (min-width: 769px) and (max-width: 1200px) {
-      .hero-cta-wrap { left: 5%; transform: none; bottom: 80px; max-width: 52%; justify-content: flex-start; }
-      .hero-combined-img { max-width: 46% !important; top: 15% !important; }
+    /* Mid-desktop: scale down headline so buttons always stay visible */
+    @media (min-width: 1200px) and (max-width: 1400px) {
+      .hero { min-height: 95vh; }
+      .hero-text-col { top: 12%; }
+      .hero-headline { font-size: clamp(70px, 9vw, 130px) !important; }
     }
-    @media (max-width: 1100px) {
-      .hero-cta-wrap { width: 100%; max-width: 560px; left: 5%; transform: none; }
-      .hero-cta-btn { font-size: 15px; padding: 13px 24px; }
+    @media (min-width: 900px) and (max-width: 1199px) {
+      .hero { min-height: 100vh; }
+      .hero-text-col { top: 10%; max-width: 46%; }
+      .hero-headline { font-size: clamp(56px, 7.5vw, 100px) !important; }
+      .hero-combined-img { max-width: 48% !important; top: 6% !important; }
+      .hero-cta-btn { font-size: 14px; padding: 11px 18px; }
+    }
+    @media (min-width: 769px) and (max-width: 899px) {
+      .hero { min-height: 110vh; }
+      .hero-text-col { top: 9%; max-width: 50%; }
+      .hero-headline { font-size: clamp(50px, 7vw, 90px) !important; }
+      .hero-combined-img { max-width: 46% !important; top: 5% !important; }
+      .hero-cta-btn { font-size: 13px; padding: 10px 16px; }
     }
     @media (max-width: 768px) {
-      .hero-cta-wrap { pointer-events: auto; bottom: 20px; left: 50%; transform: translateX(-50%); max-width: 90vw; }
-      .hero-cta-btn { pointer-events: auto; font-size: 15px; padding: 13px 22px; }
-      .hero-combined-img { display: none !important; } /* hide on mobile — doesn't fit */
+      .hero-cta-wrap { flex-direction: column; align-items: center; margin-top: 20px; }
+      .hero-cta-btn { width: 100%; max-width: 300px; text-align: center; font-size: 15px; padding: 13px 22px; }
+      .hero-combined-img { display: none !important; }
     }
 
     /* ─── SLIDER ─── */
@@ -1166,15 +1179,15 @@
       <div class="hero-text-col">
         <h1 class="hero-headline">BUILT<br>FORD<br>CUSTOM</h1>
         <p class="hero-subline">Stop letting <strong class="hero-accent">$1,000</strong> per car deal walk out your door!</p>
+        <!-- CTAs live INSIDE text col so they never overlap headline or the iPad/Bronco image -->
+        <div class="hero-cta-wrap">
+          <a class="btn btn-navy btn-lg hero-cta-btn" href="enroll.html">Start Today</a>
+          <a class="btn btn-outline-white btn-lg hero-cta-btn" href="#" onclick="event.preventDefault();openVideo();">Watch Video</a>
+          <a class="btn btn-outline-white btn-lg hero-cta-btn" href="how-it-works.html">How It Works</a>
+        </div>
       </div>
       <div class="hero-assets-col">
-      <img src="images/ipadbronco.png" alt="FordEngage platform" class="hero-combined-img">
-    </div>
-
-      <div class="hero-cta-wrap">
-        <a class="btn btn-navy btn-lg hero-cta-btn" href="enroll.html" style="pointer-events:auto;position:relative;z-index:20;">Start Today</a>
-        <a class="btn btn-outline-white btn-lg hero-cta-btn" href="#" onclick="event.preventDefault();openVideo();" style="pointer-events:auto;position:relative;z-index:20;">Watch Video</a>
-        <a class="btn btn-outline-white btn-lg hero-cta-btn" href="how-it-works.html" style="pointer-events:auto;position:relative;z-index:20;">How It Works</a>
+        <img src="images/ipadbronco.png" alt="FordEngage platform" class="hero-combined-img">
       </div>
     </div>
   </section>
