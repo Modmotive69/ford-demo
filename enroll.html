@@ -774,8 +774,8 @@
         <div class="csm-setup-row">One-time setup: <span id="csm-setup"></span></div>
       </div>
       <div class="csm-footer">
-        <button class="csm-btn csm-btn--outline" onclick="closeCartSummary()">&#8592; Keep Shopping</button>
-        <button class="csm-btn csm-btn--navy" onclick="cartContinue()">Yes, Continue to Enrollment &#8594;</button>
+        <button class="csm-btn csm-btn--outline" id="csm-keep-btn" onclick="closeCartSummary()">&#8592; Keep Shopping</button>
+        <button class="csm-btn csm-btn--navy" id="csm-continue-btn" onclick="cartContinue()">Yes, Continue to Enrollment &#8594;</button>
       </div>
     </div>
   </div>
@@ -929,6 +929,21 @@ function closeCartSummary() {
 function cartContinue() {
   closeCartSummary();
   scrollToForm();
+}
+function openCartSummaryForSubmit() {
+  openCartSummary();
+  // Swap the footer buttons for submit context
+  document.getElementById('csm-keep-btn').textContent = '\u2190 Edit My Plan';
+  document.getElementById('csm-continue-btn').textContent = 'Yes, Submit Agreement \u2192';
+  document.getElementById('csm-continue-btn').onclick = function() {
+    closeCartSummary();
+    window._cartConfirmed = true;
+    document.getElementById('enroll-form').requestSubmit();
+  };
+  document.getElementById('csm-keep-btn').onclick = function() {
+    closeCartSummary();
+    document.getElementById('product-selection').scrollIntoView({behavior:'smooth', block:'start'});
+  };
 }
 function scrollToForm() { var form = document.getElementById('enroll-form'); form.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',block:'start'}); document.getElementById('dealer-name').focus({preventScroll:true}); }
 (function() {

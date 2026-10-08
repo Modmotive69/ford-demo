@@ -406,10 +406,13 @@
     form.after(panel); panel.focus(); panel.scrollIntoView({block:'start',behavior:'instant'});
   }
 
-  /* Submit — no changes to validation/payload/re-consent logic */
+  /* Submit — intercept to show cart summary modal first */
   form.addEventListener('submit', async e => {
     e.preventDefault();
     if (sending || submitted) return;
+    // Show cart summary modal on first submit attempt — modal's Yes button sets _cartConfirmed and resubmits
+    if (!window._cartConfirmed) { openCartSummaryForSubmit(); return; }
+    window._cartConfirmed = false;
     $('draft-status').textContent = '';
     const priceInfo = window.resolveEnrollmentPrice ? window.resolveEnrollmentPrice() : null;
     if (priceInfo && priceInfo.isQuoteRequired) {
