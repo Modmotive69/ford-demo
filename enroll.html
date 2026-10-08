@@ -352,10 +352,7 @@
 
 <fieldset class="form-section product-selection-fieldset" id="product-selection" aria-describedby="product-help product-error">
   <legend class="section-label product-selection-legend">Build your plan</legend>
-  <p class="product-selection-help" id="product-help">FordEngage is included with every enrollment. Add products to expand your revenue channels.</p>
-
-  <!-- FordEngage always in payload (disabled checkbox excluded from FormData) -->
-  <input type="hidden" name="products" value="FordEngage" id="product-fordengage-hidden" />
+  <p class="product-selection-help" id="product-help">Select any product below. The complete bundle is the most effective and affordable way to build meaningful PNVR revenue and profits.</p>
 
   <div class="byp-layout">
 
@@ -363,8 +360,10 @@
     <div class="byp-tiles">
       <p class="byp-tiles-heading">Select your products</p>
 
-      <!-- Engage360 — included, locked -->
-      <div class="ptile ptile--locked" role="group" aria-label="FordEngage — required and included">
+      <!-- Engage360 — selectable -->
+      <label class="ptile" for="product-fordengage" id="ptile-fordengage">
+        <input class="addon-input" type="checkbox" id="product-fordengage" name="products" value="FordEngage"
+               aria-describedby="ptile-fordengage-badge" />
         <div class="ptile-art" aria-hidden="true">
           <img src="images/product/box-engage360.webp?v=3"
                alt="" width="400" height="520" loading="eager" decoding="async" />
@@ -373,15 +372,12 @@
           <div class="ptile-eyebrow">Core Platform</div>
           <div class="ptile-title">FordEngage</div>
           <p class="ptile-benefit">Show every accessory live on the customer's exact vehicle in the showroom.</p>
-          <span class="ptile-state-badge ptile-state-badge--included" id="base-product-required-note" data-default-text="Included">
-            <svg width="11" height="9" viewBox="0 0 11 9" fill="none" aria-hidden="true"><path d="M1 4.5l3 3 6-6" stroke="#003478" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Included
-          </span>
+          <span class="ptile-state-badge ptile-state-badge--add" id="ptile-fordengage-badge">+ Add</span>
         </div>
-        <div class="ptile-check ptile-check--lock" aria-hidden="true">
+        <div class="ptile-check ptile-check--off" aria-hidden="true">
           <svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
-      </div>
+      </label>
 
       <!-- EnvyPRO eStore — optional -->
       <label class="ptile" for="product-estore" id="ptile-estore">

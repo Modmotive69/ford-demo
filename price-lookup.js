@@ -4,7 +4,8 @@
  * v review-18: World Domination locked to 2-year term (Scott confirmed 2026-09-28)
  *
  * Two modes:
- *   CUSTOM  — Engage360 always included + any combo of eStore / VDP Widget
+ *   CUSTOM  — Any combo of FordEngage, eStore, VDP Widget (all optional, any selection valid)
+ *             The bundle is the most effective and affordable way to build PNVR revenue.
  *             Term: month-to-month | 1-year | 2-year (user picks)
  *   PACKAGE — World Domination: all three + 32" 4K kiosk, LOCKED 2-year, $999/mo base
  *             → 25% off = $749.25/mo, setup waived
@@ -71,8 +72,7 @@
   // ── Authoritative product list for payload + pricing ──
   function selectedProducts() {
     if (isWDMode()) return ['WorldDomination'];
-    const addons = Array.from(form.querySelectorAll('.addon-input:checked'), e => e.value);
-    return ['FordEngage', ...addons];
+    return Array.from(form.querySelectorAll('.addon-input:checked'), e => e.value);
   }
 
   // ── Term: WD always returns locked term regardless of radio state ──
@@ -115,9 +115,12 @@
 
     const key   = combKey(products);
     const entry = PRICES[key];
-    if (!entry || entry.price === null) return null;
+    // If no bundled price exists, fall back to additive sum of individual prices
+    const basePriceSum = products.reduce((s, p) => s + (PRICES[p]?.price || 0), 0);
+    const effectivePrice = (entry && entry.price !== null) ? entry.price : (basePriceSum > 0 ? basePriceSum : null);
+    if (effectivePrice === null) return null;
     const tc         = TERMS[termId] || TERMS['month-to-month'];
-    const baseCents  = Math.round(entry.price * 100);
+    const baseCents  = Math.round(effectivePrice * 100);
     const discCents  = Math.round(baseCents * tc.discountFactor);
     return {
       key, products, termId,
@@ -247,16 +250,15 @@
     const wd = r?.isWD;
 
     const hdrName = document.getElementById('byp-hdr-name');
-    if (hdrName) hdrName.textContent = wd ? 'World Domination' : prods.map(p => __BYP_PRODUCT_DETAILS__[p]?.name || p).join(' + ');
+    if (hdrName) hdrName.textContent = wd ? 'World Domination' : (prods.length ? prods.map(p => __BYP_PRODUCT_DETAILS__[p]?.name || p).join(' + ') : 'Your Plan');
 
     const detail = document.getElementById('byp-detail');
     if (detail) {
       if (wd) {
         detail.textContent = __BYP_PRODUCT_DETAILS__['WorldDomination'].detail;
       } else {
-        const addons = prods.filter(p => p !== 'FordEngage');
-        const focus = addons.length ? addons[addons.length - 1] : 'FordEngage';
-        detail.textContent = __BYP_PRODUCT_DETAILS__[focus]?.detail || '';
+        const focus = prods.length ? prods[prods.length - 1] : null;
+        detail.textContent = focus ? (__BYP_PRODUCT_DETAILS__[focus]?.detail || '') : 'Select any product above. The complete bundle is the most effective and affordable way to build meaningful PNVR revenue and profits.';
       }
     }
 
@@ -264,7 +266,7 @@
     if (!cart) return;
 
     if (!r) {
-      cart.innerHTML = '<div class="byp-cart-empty">Select add-ons to see pricing.</div>';
+      cart.innerHTML = '<div class="byp-cart-empty">Select a product to see pricing.</div>';
       const ta = document.getElementById('byp-total-amount');
       const sub = document.getElementById('byp-total-sub');
       const sv = document.getElementById('byp-setup-val');
@@ -285,15 +287,15 @@
       const saved = r.baseCents - r.discountedCents;
       html += `<div class="byp-line"><span class="byp-line-name byp-line-name--save">2-year discount (25%)</span><span class="byp-line-price byp-line-price--save">−${fmtC(saved)}/mo</span></div>`;
     } else {
-      const addons = prods.filter(p => p !== 'FordEngage');
-      html += `<div class="byp-line"><span class="byp-line-name byp-line-name--base">FordEngage</span><span class="byp-line-price">${fmtC(__BYP_DISPLAY_PRICES__['FordEngage'])}/mo</span></div>`;
-      addons.forEach(a => {
-        html += `<div class="byp-line"><span class="byp-line-name">${__BYP_PRODUCT_DETAILS__[a]?.name || a}</span><span class="byp-line-price">${fmtC(__BYP_DISPLAY_PRICES__[a])}/mo</span></div>`;
+      prods.forEach(p => {
+        const isBase = p === 'FordEngage';
+        html += `<div class="byp-line"><span class="byp-line-name${isBase ? ' byp-line-name--base' : ''}">${__BYP_PRODUCT_DETAILS__[p]?.name || p}</span><span class="byp-line-price">${fmtC(__BYP_DISPLAY_PRICES__[p] || 0)}/mo</span></div>`;
       });
+      // Show bundle discount if bundled price < sum of individual prices
       const sumParts = prods.reduce((s,p) => s + (__BYP_DISPLAY_PRICES__[p] || 0), 0);
       const adj = r.baseCents - sumParts;
-      if (addons.length && adj < 0) {
-        html += `<div class="byp-line"><span class="byp-line-name byp-line-name--save">Bundle adjustment</span><span class="byp-line-price byp-line-price--save">−${fmtC(Math.abs(adj))}/mo</span></div>`;
+      if (prods.length > 1 && adj < 0) {
+        html += `<div class="byp-line"><span class="byp-line-name byp-line-name--save">Bundle savings</span><span class="byp-line-price byp-line-price--save">−${fmtC(Math.abs(adj))}/mo</span></div>`;
       }
       if (r.discountPct > 0) {
         const saved = r.baseCents - r.discountedCents;
