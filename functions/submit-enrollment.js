@@ -15,10 +15,14 @@ const phoneValid = s => /^(?:\+1[ .-]?)?(?:\([0-9]{3}\)|[0-9]{3})[ .-]?[0-9]{3}[
 function resolvePricingServer(products, termId) {
   const key   = [...products].sort().join('+');
   const entry = agreement.priceConfig[key];
-  if (!entry || entry.price === null) return null; // should not happen — all catalog entries are priced
+  // Fall back to additive sum if no bundled price exists
+  const effectivePrice = (entry && entry.price !== null)
+    ? entry.price
+    : products.reduce((s, p) => s + (agreement.priceConfig[p]?.price || 0), 0);
+  if (!effectivePrice) return null;
   const tc        = agreement.termConfig[termId];
   if (!tc) return null; // unknown term
-  const baseCents = Math.round(entry.price * 100);
+  const baseCents = Math.round(effectivePrice * 100);
   const discCents = Math.round(baseCents * tc.discountFactor);
   const fmt       = c => '$' + (c / 100).toFixed(2).replace(/\.00$/, '');
   return {
@@ -112,10 +116,6 @@ export async function onRequestPost({request, env}) {
   if (!Array.isArray(products)||products.length<1||products.length>3||new Set(products).size!==products.length||
       products.some(v=>!['FordEngage','VDP Widget','eStore'].includes(v)))
     return json({ok:false,error:'Select valid products.'},400);
-  // Policy: Engage360 (FordEngage) is mandatory base — reject tampered submissions missing it
-  if (!products.includes('FordEngage'))
-    return json({ok:false,error:'Engage360 is required for all new enrollments. Add-ons cannot be enrolled without the base platform.'},400);
-
   // Term validation — server-authoritative; reject unknown or tampered term
   const termId = p.termId;
   if (!termId || !agreement.termConfig[termId])
