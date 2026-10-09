@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Invoice — PartSites LLC</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', Arial, sans-serif; font-size: 13px; color: #111; background: #fff; padding: 48px; max-width: 800px; margin: 0 auto; }
+
+  /* Header */
+  .inv-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 40px; padding-bottom: 24px; border-bottom: 2px solid #003478; }
+  .inv-logo-block {}
+  .inv-logo-name { font-size: 22px; font-weight: 700; color: #003478; letter-spacing: -0.3px; }
+  .inv-logo-sub { font-size: 11px; color: #666; margin-top: 2px; }
+  .inv-logo-address { font-size: 11px; color: #555; margin-top: 8px; line-height: 1.6; }
+  .inv-meta { text-align: right; }
+  .inv-title { font-size: 28px; font-weight: 700; color: #003478; letter-spacing: -0.5px; margin-bottom: 8px; }
+  .inv-meta-row { font-size: 11px; color: #555; margin-top: 3px; }
+  .inv-meta-row strong { color: #111; }
+
+  /* Bill To */
+  .inv-parties { display: flex; gap: 40px; margin-bottom: 36px; }
+  .inv-party { flex: 1; }
+  .inv-party-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #003478; margin-bottom: 8px; }
+  .inv-party-name { font-size: 14px; font-weight: 700; color: #111; margin-bottom: 4px; }
+  .inv-party-detail { font-size: 12px; color: #555; line-height: 1.7; }
+
+  /* Table */
+  .inv-table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
+  .inv-table thead tr { background: #003478; color: #fff; }
+  .inv-table thead th { padding: 10px 14px; text-align: left; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  .inv-table thead th:last-child { text-align: right; }
+  .inv-table tbody tr { border-bottom: 1px solid #e8ecf2; }
+  .inv-table tbody tr:last-child { border-bottom: none; }
+  .inv-table tbody td { padding: 12px 14px; font-size: 13px; vertical-align: top; }
+  .inv-table tbody td:last-child { text-align: right; font-weight: 600; }
+  .inv-table tfoot tr { border-top: 2px solid #003478; }
+  .inv-table tfoot td { padding: 12px 14px; font-size: 13px; }
+  .inv-table tfoot .inv-total-label { font-weight: 700; color: #003478; font-size: 14px; }
+  .inv-table tfoot .inv-total-amount { text-align: right; font-weight: 700; color: #003478; font-size: 18px; }
+
+  .inv-desc-sub { font-size: 11px; color: #777; margin-top: 3px; }
+  .inv-waived { color: #1a7f37; font-weight: 600; }
+
+  /* Totals block */
+  .inv-totals { margin-left: auto; width: 300px; margin-bottom: 36px; }
+  .inv-totals-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 13px; border-bottom: 1px solid #e8ecf2; }
+  .inv-totals-row:last-child { border-bottom: none; border-top: 2px solid #003478; margin-top: 4px; padding-top: 10px; font-weight: 700; font-size: 15px; color: #003478; }
+  .inv-totals-row.strike { color: #aaa; text-decoration: line-through; }
+  .inv-savings { color: #1a7f37; font-size: 11px; font-weight: 600; padding: 4px 0 8px; text-align: right; }
+
+  /* Notes */
+  .inv-notes { background: #f4f6fa; border-left: 3px solid #003478; padding: 14px 16px; font-size: 12px; color: #555; line-height: 1.7; margin-bottom: 32px; border-radius: 0 4px 4px 0; }
+  .inv-notes strong { color: #111; }
+
+  /* Footer */
+  .inv-footer { border-top: 1px solid #e8ecf2; padding-top: 20px; display: flex; justify-content: space-between; align-items: flex-end; }
+  .inv-footer-left { font-size: 11px; color: #777; line-height: 1.7; }
+  .inv-footer-right { text-align: right; font-size: 11px; color: #777; }
+  .inv-receipt-id { font-family: monospace; font-size: 10px; color: #aaa; margin-top: 4px; }
+
+  .inv-stamp { display: inline-block; border: 2px solid #1a7f37; color: #1a7f37; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 4px 10px; border-radius: 3px; margin-top: 8px; }
+
+  @media print {
+    body { padding: 24px; }
+    .no-print { display: none; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <div class="inv-header">
+    <div class="inv-logo-block">
+      <div class="inv-logo-name">PartSites, LLC</div>
+      <div class="inv-logo-sub">A wholly owned subsidiary of SmartDealer Technologies, Inc.</div>
+      <div class="inv-logo-address">
+        175 SW 7th Street, Suite 2010<br>
+        Miami, Florida 33130<br>
+        billing@partsites.com
+      </div>
+    </div>
+    <div class="inv-meta">
+      <div class="inv-title">INVOICE</div>
+      <div class="inv-meta-row">Invoice Date: <strong>October 8, 2026</strong></div>
+      <div class="inv-meta-row">Invoice #: <strong>PS-2026-10-0042</strong></div>
+      <div class="inv-meta-row">Due Date: <strong>Due Upon Receipt</strong></div>
+      <div class="inv-stamp">Enrollment Confirmed</div>
+    </div>
+  </div>
+
+  <!-- BILL TO / FROM -->
+  <div class="inv-parties">
+    <div class="inv-party">
+      <div class="inv-party-label">Bill To</div>
+      <div class="inv-party-name">Riverside Ford of Tulsa</div>
+      <div class="inv-party-detail">
+        745 West 51st<br>
+        Tulsa, OK 74107<br>
+        PA Code: 02216<br><br>
+        Attn: Scott Anderson, General Manager<br>
+        scott@smartdealer.com<br>
+        (305) 335-7996
+      </div>
+    </div>
+    <div class="inv-party">
+      <div class="inv-party-label">Remit Payment To</div>
+      <div class="inv-party-name">PartSites, LLC</div>
+      <div class="inv-party-detail">
+        175 SW 7th Street, Suite 2010<br>
+        Miami, Florida 33130<br><br>
+        W-9 on file<br>
+        ACH &amp; check accepted<br>
+        Due upon receipt
+      </div>
+    </div>
+  </div>
+
+  <!-- LINE ITEMS -->
+  <table class="inv-table">
+    <thead>
+      <tr>
+        <th style="width:50%">Description</th>
+        <th>Term</th>
+        <th>Base Rate</th>
+        <th>Discount</th>
+        <th>Amount Due</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <strong>FordEngage Platform</strong>
+          <div class="inv-desc-sub">Engage360 3D visualization and instore digital solution. DMS and FAD integration, reporting tools. Ford and Lincoln franchise dealer license.</div>
+        </td>
+        <td>2-Year<br><span style="font-size:11px;color:#777">24 months</span></td>
+        <td>$499.00/mo</td>
+        <td style="color:#1a7f37">25%</td>
+        <td>$374.25/mo</td>
+      </tr>
+      <tr>
+        <td>
+          <strong>EnvyPRO eStore</strong>
+          <div class="inv-desc-sub">Dealer-branded OEM parts and accessories eStore. Catalog discovery, VIN fitment, checkout, and order operations. 3D visualization and augmented reality included.</div>
+        </td>
+        <td>2-Year<br><span style="font-size:11px;color:#777">24 months</span></td>
+        <td>$299.00/mo</td>
+        <td style="color:#1a7f37">25%</td>
+        <td>$224.25/mo</td>
+      </tr>
+      <tr>
+        <td>
+          <strong>One-Time Setup Fee</strong>
+          <div class="inv-desc-sub">Onboarding, DMS integration, website deployment, and initial team training.</div>
+        </td>
+        <td>N/A</td>
+        <td>$1,000.00</td>
+        <td style="color:#1a7f37">100%</td>
+        <td class="inv-waived">Waived</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- TOTALS -->
+  <div class="inv-totals">
+    <div class="inv-totals-row strike">
+      <span>Bundle Base Rate</span>
+      <span>$798.00/mo</span>
+    </div>
+    <div class="inv-savings">You save $199.50/mo with your 2-year term</div>
+    <div class="inv-totals-row">
+      <span>Monthly Total (First Invoice)</span>
+      <span>$598.50</span>
+    </div>
+  </div>
+
+  <!-- NOTES -->
+  <div class="inv-notes">
+    <strong>Payment Terms:</strong> Due upon receipt. Payment is required to activate onboarding. Monthly invoices will be issued in arrears beginning after onboarding completion. If onboarding is completed between the 1st and 10th of the month, fees are effective the 1st of that month. If completed after the 10th, fees are effective the 1st of the following month.<br><br>
+    <strong>Agreement Reference:</strong> Technology Services Agreement executed electronically on October 8, 2026. Agreement version FE-2026-09-29-review-14. Receipt ID: ca786e9d-bb1f-45ec-b1f7-e06e0aaa4d65.
+  </div>
+
+  <!-- FOOTER -->
+  <div class="inv-footer">
+    <div class="inv-footer-left">
+      Questions? Contact us at billing@partsites.com<br>
+      Please reference Invoice #PS-2026-10-0042 with your payment.<br>
+      W-9 available upon request.
+    </div>
+    <div class="inv-footer-right">
+      PartSites, LLC<br>
+      A SmartDealer Technologies Company<br>
+      <div class="inv-receipt-id">SHA-256: fbfd9b4d4a970d389db1b98430d47ad039f5433dc91f4760080c70c9fcc2069e</div>
+    </div>
+  </div>
+
+</body>
+</html>

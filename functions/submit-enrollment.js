@@ -45,6 +45,96 @@ function resolvePricingServer(products, termId) {
   };
 }
 
+function renderInvoice(r) {
+  const p = r.resolved_price;
+  const e = r.enrollment;
+  const date = new Date(r.server_timestamp);
+  const dateStr = date.toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  const invoiceNum = 'PS-' + r.receipt_id.slice(0,8).toUpperCase();
+  // Build line items from selected products
+  const priceConfig = {FordEngage:{base:499},eStore:{base:299},'VDP Widget':{base:199}};
+  const discount = p.discountPct || 0;
+  const factor = 1 - discount / 100;
+  const productNames = p.products || [p.key];
+  const productDescriptions = {
+    FordEngage: 'Engage360 3D visualization and instore digital solution. DMS and FAD integration, reporting tools. Ford and Lincoln franchise dealer license.',
+    eStore: 'Dealer-branded OEM parts and accessories eStore. Catalog discovery, VIN fitment, checkout, and order operations. 3D visualization and augmented reality included.',
+    'VDP Widget': 'Vehicle-specific accessories widget embedded in dealer website vehicle detail pages.'
+  };
+  const lineItems = productNames.map(name => {
+    const base = (priceConfig[name] || {base:0}).base;
+    const discounted = (base * factor).toFixed(2);
+    return `<tr>
+      <td style="padding:12px 14px;vertical-align:top;border-bottom:1px solid #e8ecf2">
+        <strong>${name}</strong>
+        <div style="font-size:11px;color:#777;margin-top:3px">${productDescriptions[name]||''}</div>
+      </td>
+      <td style="padding:12px 14px;vertical-align:top;border-bottom:1px solid #e8ecf2">${p.termLabel}</td>
+      <td style="padding:12px 14px;vertical-align:top;border-bottom:1px solid #e8ecf2">$${base}.00/mo</td>
+      <td style="padding:12px 14px;vertical-align:top;border-bottom:1px solid #e8ecf2;color:#1a7f37">${discount ? discount+'%' : 'None'}</td>
+      <td style="padding:12px 14px;vertical-align:top;border-bottom:1px solid #e8ecf2;text-align:right;font-weight:600">$${discounted}/mo</td>
+    </tr>`;
+  }).join('');
+  const setupLine = p.setupCents > 0
+    ? `<tr><td style="padding:12px 14px;vertical-align:top"><strong>One-Time Setup Fee</strong><div style="font-size:11px;color:#777;margin-top:3px">Onboarding, DMS integration, website deployment, and initial team training.</div></td><td colspan="3" style="padding:12px 14px">N/A</td><td style="padding:12px 14px;text-align:right;font-weight:600">$${(p.setupCents/100).toFixed(2)}</td></tr>`
+    : `<tr><td style="padding:12px 14px;vertical-align:top"><strong>One-Time Setup Fee</strong><div style="font-size:11px;color:#777;margin-top:3px">Onboarding, DMS integration, website deployment, and initial team training.</div></td><td colspan="3" style="padding:12px 14px">N/A</td><td style="padding:12px 14px;text-align:right;font-weight:600;color:#1a7f37">Waived</td></tr>`;
+  const baseLabel = p.baseCents ? '$'+(p.baseCents/100).toFixed(2)+'/mo' : '';
+  return `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Invoice ${invoiceNum}</title></head>
+<body style="font-family:Arial,sans-serif;font-size:13px;color:#111;background:#fff;padding:48px;max-width:800px;margin:0 auto">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:40px;padding-bottom:24px;border-bottom:2px solid #003478">
+  <div>
+    <div style="font-size:22px;font-weight:700;color:#003478">PartSites, LLC</div>
+    <div style="font-size:11px;color:#666;margin-top:2px">A wholly owned subsidiary of SmartDealer Technologies, Inc.</div>
+    <div style="font-size:11px;color:#555;margin-top:8px;line-height:1.6">175 SW 7th Street, Suite 2010<br>Miami, Florida 33130<br>billing@partsites.com</div>
+  </div>
+  <div style="text-align:right">
+    <div style="font-size:28px;font-weight:700;color:#003478;margin-bottom:8px">INVOICE</div>
+    <div style="font-size:11px;color:#555;margin-top:3px">Invoice Date: <strong>${dateStr}</strong></div>
+    <div style="font-size:11px;color:#555;margin-top:3px">Invoice #: <strong>${invoiceNum}</strong></div>
+    <div style="font-size:11px;color:#555;margin-top:3px">Due: <strong>Upon Receipt</strong></div>
+    <div style="display:inline-block;border:2px solid #1a7f37;color:#1a7f37;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:4px 10px;border-radius:3px;margin-top:8px">Enrollment Confirmed</div>
+  </div>
+</div>
+<div style="display:flex;gap:40px;margin-bottom:36px">
+  <div style="flex:1">
+    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#003478;margin-bottom:8px">Bill To</div>
+    <div style="font-size:14px;font-weight:700">${e.dealer_name||''}</div>
+    <div style="font-size:12px;color:#555;line-height:1.7;margin-top:4px">${e.address||''}<br>${e.city||''}, ${e.state||''} ${e.zip||''}<br>PA Code: ${e.pa_code||''}<br><br>Attn: ${e.pc_first||''} ${e.pc_last||''}, ${e.pc_title||''}<br>${e.pc_email||''}<br>${e.pc_phone||''}</div>
+  </div>
+  <div style="flex:1">
+    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#003478;margin-bottom:8px">Remit Payment To</div>
+    <div style="font-size:14px;font-weight:700">PartSites, LLC</div>
+    <div style="font-size:12px;color:#555;line-height:1.7;margin-top:4px">175 SW 7th Street, Suite 2010<br>Miami, Florida 33130<br><br>ACH and check accepted<br>Due upon receipt</div>
+  </div>
+</div>
+<table style="width:100%;border-collapse:collapse;margin-bottom:24px">
+  <thead>
+    <tr style="background:#003478;color:#fff">
+      <th style="padding:10px 14px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;width:45%">Description</th>
+      <th style="padding:10px 14px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:0.5px">Term</th>
+      <th style="padding:10px 14px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:0.5px">Base Rate</th>
+      <th style="padding:10px 14px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:0.5px">Discount</th>
+      <th style="padding:10px 14px;text-align:right;font-size:11px;text-transform:uppercase;letter-spacing:0.5px">Amount</th>
+    </tr>
+  </thead>
+  <tbody>${lineItems}${setupLine}</tbody>
+</table>
+<div style="margin-left:auto;width:300px;margin-bottom:36px">
+  ${discount ? `<div style="display:flex;justify-content:space-between;padding:6px 0;font-size:13px;border-bottom:1px solid #e8ecf2;color:#aaa;text-decoration:line-through"><span>Bundle Base Rate</span><span>${baseLabel}</span></div>
+  <div style="font-size:11px;color:#1a7f37;font-weight:600;text-align:right;padding:4px 0 8px">You save ${discount}% with your ${p.termLabel} commitment</div>` : ''}
+  <div style="display:flex;justify-content:space-between;padding:10px 0;font-size:15px;font-weight:700;color:#003478;border-top:2px solid #003478"><span>Monthly Total</span><span>${p.discountedLabel}</span></div>
+</div>
+<div style="background:#f4f6fa;border-left:3px solid #003478;padding:14px 16px;font-size:12px;color:#555;line-height:1.7;margin-bottom:32px;border-radius:0 4px 4px 0">
+  <strong>Payment Terms:</strong> Due upon receipt. Payment is required to activate onboarding. Monthly invoices will be issued in arrears beginning after onboarding completion.<br><br>
+  <strong>Agreement Reference:</strong> Technology Services Agreement executed electronically on ${dateStr}. Agreement version ${r.agreementSha256 ? 'FE-2026-09-29-review-14' : ''}. Receipt ID: ${r.receipt_id}.
+</div>
+<div style="border-top:1px solid #e8ecf2;padding-top:20px;display:flex;justify-content:space-between;align-items:flex-end">
+  <div style="font-size:11px;color:#777;line-height:1.7">Questions? Contact us at billing@partsites.com<br>Please reference Invoice #${invoiceNum} with your payment.</div>
+  <div style="text-align:right;font-size:11px;color:#777">PartSites, LLC<br>A SmartDealer Technologies Company<br><span style="font-family:monospace;font-size:10px;color:#aaa">${r.agreementSha256||''}</span></div>
+</div>
+</body></html>`;
+}
+
 function renderCEOLetter(r) {
   const firstName = r.enrollment.pc_first || r.enrollment.dealer_name || 'there';
   const products  = r.resolved_price.key.replace(/\+/g, ', ');
@@ -235,7 +325,7 @@ const recipient=env.ENROLLMENT_RECIPIENT||'scott@smartdealer.com';
     const subject=`New Ford Enrollment — ${enrollment.dealer_name} — ${products.join('+')} — ${resolved.label} — ${r.receipt_id}`;
     const sent=await fetch(`https://graph.microsoft.com/v1.0/users/${encodeURIComponent(sender)}/sendMail`,
       {method:'POST',headers:{Authorization:`Bearer ${token.access_token}`,'Content-Type':'application/json'},
-       body:JSON.stringify({message:{subject,body:{contentType:'HTML',content:renderAgreement(r)},toRecipients:[...new Set([...DIST_LIST, enrollment.pc_email])].map(address=>({emailAddress:{address}}))},saveToSentItems:true}),
+       body:JSON.stringify({message:{subject,body:{contentType:'HTML',content:renderAgreement(r)},attachments:[{"@odata.type":"#microsoft.graph.fileAttachment",name:`PartSites-Invoice-${r.receipt_id.slice(0,8).toUpperCase()}.html`,contentType:'text/html',contentBytes:btoa(unescape(encodeURIComponent(renderInvoice(r))))}],toRecipients:[...new Set([...DIST_LIST, enrollment.pc_email])].map(address=>({emailAddress:{address}}))},saveToSentItems:true}),
        signal:AbortSignal.timeout(20000)});
     if (sent.status!==202) {
       await db.prepare("UPDATE enrollment_receipts SET state='failed' WHERE id=?").bind(r.receipt_id).run();
