@@ -7,20 +7,21 @@
   <link rel="shortcut icon" href="https://www.fordengage.com/favicon.ico?v=3">
   <link rel="apple-touch-icon" sizes="180x180" href="https://www.fordengage.com/apple-touch-icon.png?v=3">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ACCESS VDP Widget | FordEngage</title>
+  <title>EnvyPRO eStore | FordEngage</title>
   <meta name="format-detection" content="telephone=no, address=no, email=no">
-  <meta name="description" content="Embed genuine Ford accessories on every Vehicle Detail Page. The ACCESS VDP Widget starts the accessory sale before customers walk in. $199/month flat rate, unlimited VDPs." />
+  <meta name="description" content="The industry's first 3D + AR parts and accessories eStore. Complete OEM catalog powered by Motor Information Systems. Dealer-branded storefront with VIN fitment accuracy. $299/month flat rate." />
   <link rel="preconnect" href="https://www.ford.com" />
   <link rel="stylesheet" href="https://www.fordengage.com/css/nav.css">
   <script src="https://kit.fontawesome.com/a0d1bd4a2c.js" crossorigin="anonymous"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800;900&family=Merriweather:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://www.ford.com/shared/fonts/ford.css">
 
   <style>
     @font-face {
       font-family: 'Ford Light Extended';
-      src: url('https://www.fordengage.com/fonts/ford-light-extended.otf') format('opentype');
+      src: url('/fonts/ford-light-extended.otf') format('opentype');
       font-weight: 300;
       font-style: normal;
     }
@@ -172,6 +173,8 @@
     .btn-white { background: var(--white); color: var(--ford-blue); }
     .btn-white:hover { background: #e8eef7; transform: translateY(-1px); }
     .btn-lg { padding: 18px 42px; font-size: 1rem; letter-spacing: 0.8px; border-radius: 4px; }
+    .btn-bright { background: var(--ford-bright); color: #fff; }
+    .btn-bright:hover { background: #0452b0; transform: translateY(-1px); }
 
     /* ─── HAMBURGER + SIDEBAR ─── */
     .hamburger-btn {
@@ -274,35 +277,12 @@
     .site-footer-copy { font-size: 0.75rem; color: #777; line-height: 1.7; margin: 0; }
     .site-footer-copy + .site-footer-copy { margin-top: 4px; }
 
-    /* ─── VIDEO MODAL ─── */
-    .vmodal-overlay {
-      display: none; position: fixed; inset: 0;
-      background: rgba(0,0,0,0.88); z-index: 9999;
-      align-items: center; justify-content: center;
-    }
-    .vmodal-overlay.open { display: flex; }
-    .vmodal-inner {
-      position: relative; width: min(900px, 92vw);
-      background: #000; border-radius: 8px;
-      overflow: hidden; box-shadow: 0 24px 80px rgba(0,0,0,0.7);
-    }
-    .vmodal-frame { position: relative; padding-bottom: 56.25%; height: 0; }
-    .vmodal-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; }
-    .vmodal-close {
-      position: absolute; top: 12px; right: 14px; z-index: 10;
-      background: rgba(255,255,255,0.15); border: none; color: #fff;
-      font-size: 20px; width: 36px; height: 36px; border-radius: 50%;
-      cursor: pointer; display: flex; align-items: center; justify-content: center;
-      transition: background 0.2s;
-    }
-    .vmodal-close:hover { background: rgba(255,255,255,0.3); }
-
     /* ─── PAGE SECTIONS ─── */
     section { padding: clamp(64px, 8vw, 100px) clamp(20px, 5vw, 60px); }
 
     /* ─── HERO ─── */
-    .vdp-hero {
-      background: #001a3a;
+    .es-hero {
+      background: var(--navy-dark);
       min-height: 88vh;
       display: flex;
       align-items: center;
@@ -310,33 +290,29 @@
       position: relative;
       overflow: hidden;
     }
-    .vdp-hero-video {
+    .es-hero-video {
       position: absolute; inset: 0;
       width: 100%; height: 100%;
       object-fit: cover;
-      opacity: 0.45;
+      opacity: 0.38;
       pointer-events: none;
       z-index: 0;
     }
-    .vdp-hero::before {
+    .es-hero::before {
       content: '';
       position: absolute; inset: 0;
-      background: linear-gradient(to bottom, rgba(0,10,30,0.45) 0%, rgba(0,20,60,0.35) 100%);
+      background: linear-gradient(to bottom, rgba(0,10,30,0.5) 0%, rgba(0,20,60,0.4) 100%);
       z-index: 1;
       pointer-events: none;
     }
-    .vdp-hero-inner {
+    .es-hero-inner {
       max-width: 1200px;
       margin: 0 auto;
       width: 100%;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 60px;
-      align-items: center;
       position: relative;
       z-index: 2;
     }
-    .vdp-hero-kicker {
+    .es-hero-kicker {
       font-size: 10px;
       font-weight: 800;
       letter-spacing: 3px;
@@ -344,7 +320,7 @@
       color: #5b9bd5;
       margin-bottom: 20px;
     }
-    .vdp-hero h1 {
+    .es-hero h1 {
       font-family: 'Ford Antenna', FordAntenna, Arial, sans-serif;
       font-weight: 900;
       font-size: clamp(2rem, 4.5vw, 3.6rem);
@@ -352,70 +328,51 @@
       color: #fff;
       letter-spacing: -0.5px;
       margin-bottom: 24px;
+      max-width: 820px;
     }
-    .vdp-hero-sub {
+    .es-hero-sub {
       font-family: 'Ford Light Extended', 'Ford Antenna', Arial, sans-serif;
       font-weight: 300;
       font-size: clamp(1rem, 1.6vw, 1.2rem);
       color: rgba(255,255,255,0.82);
       line-height: 1.75;
       margin-bottom: 36px;
+      max-width: 600px;
     }
-    .vdp-hero-ctas {
+    .es-hero-ctas {
       display: flex;
       flex-wrap: wrap;
       gap: 14px;
       align-items: center;
     }
-    .vdp-pricing-badge {
-      display: inline-block;
-      background: var(--ford-bright);
-      color: #fff;
-      font-size: 0.92rem;
-      font-weight: 800;
-      padding: 8px 20px;
-      border-radius: 50px;
-      letter-spacing: 0.4px;
-      margin-top: 24px;
-    }
-    .vdp-hero-img-col {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .vdp-hero-img-col img {
-      width: 100%;
-      max-width: 480px;
-      filter: drop-shadow(0 24px 60px rgba(0,0,0,0.45));
-    }
 
     /* ─── PROOF STRIP ─── */
-    .vdp-proof-strip {
+    .es-proof-strip {
       background: var(--navy-dark);
       padding: 0;
     }
-    .vdp-proof-inner {
+    .es-proof-inner {
       max-width: 1200px;
       margin: 0 auto;
       display: flex;
       align-items: stretch;
       padding: 0 clamp(20px, 5vw, 60px);
     }
-    .vdp-proof-stat {
+    .es-proof-stat {
       flex: 1;
       padding: 44px 20px;
       text-align: center;
       border-right: 1px solid rgba(255,255,255,0.12);
     }
-    .vdp-proof-stat:last-child { border-right: none; }
-    .vdp-proof-num {
-      font-size: clamp(1.6rem, 3vw, 2.4rem);
+    .es-proof-stat:last-child { border-right: none; }
+    .es-proof-num {
+      font-size: clamp(1.1rem, 2.5vw, 1.6rem);
       font-weight: 900;
       color: #fff;
       line-height: 1;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
-    .vdp-proof-label {
+    .es-proof-label {
       font-size: 11px;
       font-weight: 700;
       text-transform: uppercase;
@@ -423,16 +380,8 @@
       color: #5b9bd5;
     }
 
-    /* ─── PROBLEM ─── */
-    .vdp-problem {
-      background: #fff;
-      text-align: center;
-    }
-    .vdp-problem-inner {
-      max-width: 820px;
-      margin: 0 auto;
-    }
-    .vdp-section-eyebrow {
+    /* ─── SECTION SHARED ─── */
+    .es-section-eyebrow {
       font-size: 10px;
       font-weight: 800;
       letter-spacing: 3px;
@@ -440,177 +389,152 @@
       color: var(--ford-blue);
       margin-bottom: 16px;
     }
-    .vdp-problem h2 {
-      font-family: 'Ford Antenna', FordAntenna, Arial, sans-serif;
-      font-weight: 900;
-      font-size: clamp(1.75rem, 3.2vw, 2.6rem);
-      line-height: 1.12;
-      color: var(--black);
-      margin-bottom: 24px;
-      letter-spacing: -0.3px;
-    }
-    .vdp-problem p {
-      font-family: 'Ford Light Extended', 'Ford Antenna', Arial, sans-serif;
-      font-weight: 300;
-      font-size: 1.05rem;
-      color: #444;
-      line-height: 1.8;
-    }
 
-    /* ─── HOW IT WORKS ─── */
-    .vdp-how { background: var(--gray-bg); }
-    .vdp-how-inner {
+    /* ─── WHAT MAKES IT DIFFERENT ─── */
+    .es-different { background: #fff; }
+    .es-different-inner {
       max-width: 1100px;
       margin: 0 auto;
     }
-    .vdp-how-header { text-align: center; margin-bottom: 60px; }
-    .vdp-how-header h2 {
+    .es-different-header { margin-bottom: 52px; }
+    .es-different-header h2 {
       font-family: 'Ford Antenna', FordAntenna, Arial, sans-serif;
       font-weight: 900;
       font-size: clamp(1.75rem, 3vw, 2.4rem);
       color: var(--ford-blue);
       letter-spacing: -0.3px;
     }
-    .vdp-steps {
+    .es-different-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .es-different-bullets {
+      list-style: none;
+      padding: 0;
+    }
+    .es-different-bullets li {
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+      padding: 20px 0;
+      border-bottom: 1px solid #e8eef5;
+    }
+    .es-different-bullets li:last-child { border-bottom: none; }
+    .es-bullet-icon {
+      width: 44px;
+      height: 44px;
+      background: #edf3fa;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      color: var(--ford-blue);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .es-bullet-text h3 {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--ford-blue);
+      margin-bottom: 4px;
+    }
+    .es-bullet-text p {
+      font-family: 'Ford Light Extended', 'Ford Antenna', Arial, sans-serif;
+      font-weight: 300;
+      font-size: 0.9rem;
+      color: #555;
+      line-height: 1.65;
+    }
+    /* TODO: Replace with actual 3D demo screenshot */
+    .es-demo-placeholder {
+      background: var(--navy-dark);
+      border-radius: 12px;
+      aspect-ratio: 4/3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px dashed rgba(5, 98, 210, 0.4);
+    }
+    .es-demo-placeholder-text {
+      text-align: center;
+      color: var(--ford-bright);
+      font-family: 'Ford Antenna', Arial, sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      opacity: 0.85;
+    }
+
+    /* ─── HOW IT WORKS ─── */
+    .es-how { background: var(--gray-bg); }
+    .es-how-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .es-how-header { text-align: center; margin-bottom: 60px; }
+    .es-how-header h2 {
+      font-family: 'Ford Antenna', FordAntenna, Arial, sans-serif;
+      font-weight: 900;
+      font-size: clamp(1.75rem, 3vw, 2.4rem);
+      color: var(--ford-blue);
+      letter-spacing: -0.3px;
+    }
+    .es-steps {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 28px;
     }
-    .vdp-step {
+    .es-step {
       background: #fff;
       border-radius: 10px;
       padding: 40px 32px;
       box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      position: relative;
     }
-    .vdp-step-num {
+    .es-step-num {
       font-size: 11px;
       font-weight: 900;
       letter-spacing: 3px;
-      color: var(--ford-blue);
+      color: var(--ford-bright);
       text-transform: uppercase;
       margin-bottom: 16px;
     }
-    .vdp-step h3 {
-      font-size: 1.25rem;
+    .es-step h3 {
+      font-size: 1.15rem;
       font-weight: 800;
       color: var(--ford-blue);
       margin-bottom: 12px;
       line-height: 1.2;
     }
-    .vdp-step p {
+    .es-step p {
       font-family: 'Ford Light Extended', 'Ford Antenna', Arial, sans-serif;
       font-weight: 300;
       font-size: 0.92rem;
       color: #555;
       line-height: 1.7;
     }
+    .es-step-arrow {
+      position: absolute;
+      top: 50%;
+      right: -20px;
+      transform: translateY(-50%);
+      font-size: 1.4rem;
+      color: #c0cfe8;
+      z-index: 1;
+    }
+    .es-step:last-child .es-step-arrow { display: none; }
 
-    /* ─── FEATURES GRID ─── */
-    .vdp-features { background: #fff; }
-    .vdp-features-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-    .vdp-features-header { text-align: center; margin-bottom: 56px; }
-    .vdp-features-header h2 {
-      font-family: 'Ford Antenna', FordAntenna, Arial, sans-serif;
-      font-weight: 900;
-      font-size: clamp(1.75rem, 3vw, 2.4rem);
-      color: var(--ford-blue);
-      letter-spacing: -0.3px;
-    }
-    .vdp-features-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 28px;
-    }
-    .vdp-feature-card {
-      padding: 32px 28px;
-      border: 1px solid #e8eef5;
-      border-radius: 10px;
-      transition: box-shadow 0.2s;
-    }
-    .vdp-feature-card:hover { box-shadow: 0 4px 20px rgba(0,52,120,0.1); }
-    .vdp-feature-icon {
-      width: 48px;
-      height: 48px;
-      background: #edf3fa;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 18px;
-      font-size: 1.25rem;
-      color: var(--ford-blue);
-    }
-    .vdp-feature-card h3 {
-      font-size: 1.05rem;
-      font-weight: 800;
-      color: var(--ford-blue);
-      margin-bottom: 8px;
-    }
-    .vdp-feature-card p {
-      font-family: 'Ford Light Extended', 'Ford Antenna', Arial, sans-serif;
-      font-weight: 300;
-      font-size: 0.88rem;
-      color: #666;
-      line-height: 1.65;
-    }
-
-    /* ─── JOURNEY CONNECTION ─── */
-    .vdp-journey {
-      background: var(--navy-dark);
-      color: #fff;
-    }
-    .vdp-journey-inner {
+    /* ─── PRICING ─── */
+    .es-pricing { background: var(--gray-bg); }
+    .es-pricing-inner {
       max-width: 860px;
       margin: 0 auto;
       text-align: center;
     }
-    .vdp-journey-kicker {
-      font-size: 10px;
-      font-weight: 800;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: #5b9bd5;
-      margin-bottom: 20px;
-    }
-    .vdp-journey h2 {
-      font-family: 'Ford Antenna', FordAntenna, Arial, sans-serif;
-      font-weight: 900;
-      font-size: clamp(1.75rem, 3.2vw, 2.6rem);
-      color: #fff;
-      line-height: 1.12;
-      margin-bottom: 28px;
-      letter-spacing: -0.3px;
-    }
-    .vdp-journey p {
-      font-family: 'Ford Light Extended', 'Ford Antenna', Arial, sans-serif;
-      font-weight: 300;
-      font-size: 1.05rem;
-      color: rgba(255,255,255,0.78);
-      line-height: 1.8;
-      margin-bottom: 36px;
-    }
-    .vdp-journey-link {
-      display: inline-block;
-      font-size: 1rem;
-      font-weight: 700;
-      color: #5b9bd5;
-      text-decoration: none;
-      letter-spacing: 0.2px;
-      transition: color 0.18s;
-    }
-    .vdp-journey-link:hover { color: #fff; }
-
-    /* ─── PRICING ─── */
-    .vdp-pricing { background: var(--gray-bg); }
-    .vdp-pricing-inner {
-      max-width: 800px;
-      margin: 0 auto;
-      text-align: center;
-    }
-    .vdp-pricing h2 {
+    .es-pricing h2 {
       font-family: 'Ford Antenna', FordAntenna, Arial, sans-serif;
       font-weight: 900;
       font-size: clamp(1.75rem, 3.2vw, 2.6rem);
@@ -618,7 +542,7 @@
       margin-bottom: 20px;
       letter-spacing: -0.3px;
     }
-    .vdp-price-amount {
+    .es-price-amount {
       font-size: clamp(3rem, 6vw, 5rem);
       font-weight: 900;
       color: var(--ford-blue);
@@ -626,23 +550,23 @@
       letter-spacing: -2px;
       margin-bottom: 8px;
     }
-    .vdp-price-period {
+    .es-price-period {
       font-size: 1rem;
       color: #777;
       font-weight: 600;
-      margin-bottom: 28px;
+      margin-bottom: 32px;
     }
-    .vdp-pricing-bullets {
+    .es-pricing-bullets {
       list-style: none;
-      margin: 0 auto 32px;
-      max-width: 560px;
+      margin: 0 auto 36px;
+      max-width: 580px;
       text-align: left;
     }
-    .vdp-pricing-bullets li {
+    .es-pricing-bullets li {
       display: flex;
       align-items: flex-start;
       gap: 12px;
-      padding: 12px 0;
+      padding: 13px 0;
       border-bottom: 1px solid #e0e8f0;
       font-size: 1rem;
       color: #333;
@@ -650,40 +574,59 @@
       font-weight: 300;
       line-height: 1.5;
     }
-    .vdp-pricing-bullets li:last-child { border-bottom: none; }
-    .vdp-pricing-bullets li i {
+    .es-pricing-bullets li:last-child { border-bottom: none; }
+    .es-pricing-bullets li i {
       color: var(--ford-blue);
       margin-top: 3px;
       flex-shrink: 0;
       font-size: 0.9rem;
     }
-    .vdp-bundle-note {
+    .es-bundle-note {
       background: #e8eef8;
       border-left: 4px solid var(--ford-blue);
-      padding: 18px 24px;
+      padding: 20px 24px;
       text-align: left;
       border-radius: 0 8px 8px 0;
       margin-bottom: 36px;
-      font-size: 0.9rem;
+      font-size: 0.92rem;
       color: #444;
       font-family: 'Ford Light Extended', 'Ford Antenna', Arial, sans-serif;
       font-weight: 300;
-      line-height: 1.65;
+      line-height: 1.7;
     }
-    .vdp-bundle-note strong {
+    .es-bundle-note strong {
       font-family: 'Ford Antenna', Arial, sans-serif;
       color: var(--ford-blue);
       font-weight: 800;
     }
+    .es-bundle-highlight {
+      display: inline-block;
+      background: var(--ford-blue);
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 3px;
+      letter-spacing: 0.3px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+    .es-waived-note {
+      font-size: 0.82rem;
+      color: #777;
+      margin-top: -20px;
+      margin-bottom: 36px;
+      font-style: italic;
+    }
 
     /* ─── CTA BANNER ─── */
-    .vdp-cta-banner {
+    .es-cta-banner {
       background: var(--ford-blue);
       color: #fff;
       text-align: center;
       padding: clamp(64px, 8vw, 100px) clamp(20px, 5vw, 60px);
     }
-    .vdp-cta-banner h2 {
+    .es-cta-banner h2 {
       font-family: 'Ford Antenna', FordAntenna, Arial, sans-serif;
       font-weight: 900;
       font-size: clamp(1.75rem, 3.5vw, 2.8rem);
@@ -691,7 +634,7 @@
       margin-bottom: 16px;
       letter-spacing: -0.3px;
     }
-    .vdp-cta-banner p {
+    .es-cta-banner p {
       font-family: 'Ford Light Extended', 'Ford Antenna', Arial, sans-serif;
       font-weight: 300;
       font-size: 1.05rem;
@@ -701,10 +644,9 @@
 
     /* ─── RESPONSIVE ─── */
     @media (max-width: 1024px) {
-      .vdp-hero-inner { grid-template-columns: 1fr; gap: 40px; }
-      .vdp-hero-img-col { display: none; }
-      .vdp-steps { grid-template-columns: 1fr 1fr; }
-      .vdp-features-grid { grid-template-columns: 1fr 1fr; }
+      .es-different-cols { grid-template-columns: 1fr; gap: 40px; }
+      .es-steps { grid-template-columns: 1fr 1fr; }
+      .es-step-arrow { display: none; }
     }
     @media (max-width: 768px) {
       .hamburger-btn { display: block !important; }
@@ -712,14 +654,13 @@
       .nav-program-text { display: none !important; }
       .nav-inner { flex-direction: row !important; flex-wrap: nowrap !important; padding: 12px 16px !important; justify-content: space-between !important; }
       .nav-brand { position: absolute; left: 50%; transform: translateX(-50%); }
-      .vdp-proof-inner { flex-direction: column; }
-      .vdp-proof-stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.12); padding: 28px 20px; }
-      .vdp-proof-stat:last-child { border-bottom: none; }
-      .vdp-steps { grid-template-columns: 1fr; }
-      .vdp-features-grid { grid-template-columns: 1fr; }
+      .es-proof-inner { flex-direction: column; }
+      .es-proof-stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.12); padding: 28px 20px; }
+      .es-proof-stat:last-child { border-bottom: none; }
+      .es-steps { grid-template-columns: 1fr; }
     }
     @media (max-width: 480px) {
-      .vdp-hero { padding-top: 110px; padding-bottom: 60px; }
+      .es-hero { padding-top: 110px; padding-bottom: 60px; }
     }
 
     a:focus-visible, button:focus-visible {
@@ -750,176 +691,147 @@
   <main>
 
     <!-- ═══ 1. HERO ═══ -->
-    <section class="vdp-hero">
-      <video class="vdp-hero-video" autoplay muted playsinline loop poster="/images/vdp-widget-hero.jpg">
+    <section class="es-hero">
+      <video class="es-hero-video" autoplay muted playsinline loop poster="/images/vdp-widget-hero.jpg">
         <source src="https://www.fordengage.com/images/vdp-hero.mp4" type="video/mp4">
       </video>
-      <div class="vdp-hero-inner">
-        <div class="vdp-hero-content">
-          <p class="vdp-hero-kicker">Part of the FordEngage Suite</p>
-          <h1>The Accessory Sale Starts Before They Walk In the Door.</h1>
-          <p class="vdp-hero-sub">The ACCESS VDP Widget embeds genuine Ford accessories directly on every Vehicle Detail Page &mdash; so customers start building their deal online, before they ever visit your showroom.</p>
-          <div class="vdp-hero-ctas">
-            <a class="btn btn-navy btn-lg" href="https://www.fordengage.com/enroll">Enroll Now</a>
-            <a class="btn btn-outline-white btn-lg" href="https://www.fordengage.com/how-it-works">How It Works</a>
-          </div>
-          <div>
-            <span class="vdp-pricing-badge">$199/mo &mdash; Unlimited VDPs</span>
-          </div>
+      <div class="es-hero-inner">
+        <p class="es-hero-kicker">Part of the FordEngage Suite</p>
+        <h1>The Industry&rsquo;s First 3D + AR Parts &amp; Accessories eStore</h1>
+        <p class="es-hero-sub">A dealer-branded storefront with full OEM parts and accessories catalog, immersive 3D visualization, and augmented reality try-on &mdash; powered by Motor Information Systems and built for VIN fitment accuracy.</p>
+        <div class="es-hero-ctas">
+          <a class="btn btn-navy btn-lg" href="https://www.fordengage.com/contact">Request a Demo</a>
+          <a class="btn btn-outline-white btn-lg" href="https://www.fordengage.com/enroll">Enroll Now</a>
         </div>
-
       </div>
     </section>
 
     <!-- ═══ 2. PROOF STRIP ═══ -->
-    <div class="vdp-proof-strip">
-      <div class="vdp-proof-inner">
-        <div class="vdp-proof-stat">
-          <div class="vdp-proof-num">155%</div>
-          <div class="vdp-proof-label">Up to 155% PNVR Increase</div>
+    <div class="es-proof-strip">
+      <div class="es-proof-inner">
+        <div class="es-proof-stat">
+          <div class="es-proof-num">3D + AR</div>
+          <div class="es-proof-label">An eStore First &mdash; No One Else Has It</div>
         </div>
-        <div class="vdp-proof-stat">
-          <div class="vdp-proof-num">$199/mo</div>
-          <div class="vdp-proof-label">Flat Rate &mdash; Unlimited VDPs</div>
+        <div class="es-proof-stat">
+          <div class="es-proof-num">$299/mo</div>
+          <div class="es-proof-label">Flat Rate &mdash; No Per-Transaction Fees</div>
         </div>
-        <div class="vdp-proof-stat">
-          <div class="vdp-proof-num">Minutes</div>
-          <div class="vdp-proof-label">Live in Minutes &mdash; Single Token Install</div>
+        <div class="es-proof-stat">
+          <div class="es-proof-num">Full Catalog</div>
+          <div class="es-proof-label">OEM Parts &amp; Accessories via Motor Info Systems</div>
         </div>
       </div>
     </div>
 
-    <!-- ═══ 3. THE PROBLEM ═══ -->
-    <!-- ═══ SEE IT LIVE ═══ -->
-    <section class="vdp-live" style="background:#f4f6fa;padding:56px clamp(20px,6vw,80px);">
-      <div style="max-width:900px;margin:0 auto;display:flex;align-items:center;gap:48px;flex-wrap:wrap;">
-        <div style="flex:1;min-width:260px;">
-          <p style="font-family:'Ford Antenna',FordAntenna,Arial,sans-serif;font-weight:700;font-size:.75rem;letter-spacing:2px;text-transform:uppercase;color:#0562D2;margin:0 0 12px;">See It Live</p>
-          <h2 style="font-family:'Ford Antenna',FordAntenna,Arial,sans-serif;font-weight:900;font-size:clamp(1.6rem,3vw,2.4rem);color:#003478;line-height:1.15;margin:0 0 16px;">Live on a Real Ford Dealership Website</h2>
-          <p style="font-family:'Ford Light Extended',FordLightExtended,Arial,sans-serif;font-size:1rem;color:#50565e;line-height:1.7;margin:0 0 20px;">Visit <a href="https://www.loveford.com/searchnew.aspx" target="_blank" rel="noopener" style="color:#003478;font-weight:700;">loveford.com</a>, navigate to any new vehicle, and open its detail page. The ACCESS VDP Widget appears automatically in the right sidebar, loaded with genuine Ford accessories tailored to that vehicle's exact year, make, model, and trim.</p>
-          <p style="font-family:'Ford Light Extended',FordLightExtended,Arial,sans-serif;font-size:1rem;color:#50565e;line-height:1.7;margin:0;">One token, installed once on your Vehicle Detail Page template, instantly gives every new car in your inventory its own personalized accessory experience. No manual setup. No per-vehicle configuration. Just more accessory revenue on every deal.</p>
+    <!-- ═══ 3. WHAT MAKES IT DIFFERENT ═══ -->
+    <section class="es-different">
+      <div class="es-different-inner">
+        <div class="es-different-header">
+          <p class="es-section-eyebrow">What Makes It Different</p>
+          <h2>Not Just Another Parts Store. The First True 3D + AR eStore in the Industry.</h2>
         </div>
-        <div style="flex-shrink:0;text-align:center;width:100%;">
-          <a href="https://www.loveford.com/searchnew.aspx" target="_blank" rel="noopener">
-            <img src="https://www.fordengage.com/images/loveland-ford-logo.webp" alt="Loveland Ford Lincoln" style="max-width:220px;width:100%;height:auto;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.12));">
-          </a>
-          <p style="font-size:.8rem;color:#888;margin:10px 0 0;font-family:Arial,sans-serif;">Active Engage VDP Widget</p>
-        </div>
-      </div>
-    </section>
+        <div class="es-different-cols">
+          <ul class="es-different-bullets">
+            <li>
+              <div class="es-bullet-icon"><i class="fa-thin fa-cube" aria-hidden="true"></i></div>
+              <div class="es-bullet-text">
+                <h3>Immersive 3D + Augmented Reality Experience</h3>
+                <p>Customers rotate, zoom, and place accessories on their actual vehicle using their phone camera. No other automotive eStore offers this. It drives engagement, confidence, and higher average order values.</p>
+              </div>
+            </li>
+            <li>
+              <div class="es-bullet-icon"><i class="fa-thin fa-book-open" aria-hidden="true"></i></div>
+              <div class="es-bullet-text">
+                <h3>Motor Information Systems Catalog</h3>
+                <p>The industry&rsquo;s most comprehensive mechanical and collision parts data, integrated directly. Every part, every fitment, every description &mdash; no manual catalog maintenance required.</p>
+              </div>
+            </li>
+            <li>
+              <div class="es-bullet-icon"><i class="fa-thin fa-store" aria-hidden="true"></i></div>
+              <div class="es-bullet-text">
+                <h3>Dealer-Branded Storefront</h3>
+                <p>Your logo, your colors, your domain. Customers experience a seamless extension of your dealership &mdash; not a generic marketplace. Custom pricing, labor markups, and featured items are all dealer-controlled.</p>
+              </div>
+            </li>
+            <li>
+              <div class="es-bullet-icon"><i class="fa-thin fa-car-side" aria-hidden="true"></i></div>
+              <div class="es-bullet-text">
+                <h3>VIN Fitment Accuracy</h3>
+                <p>Every part shown is confirmed to fit the customer&rsquo;s specific vehicle by VIN. No returns from wrong fitments. No frustrated customers. Just confidence that what they&rsquo;re ordering is exactly right.</p>
+              </div>
+            </li>
+          </ul>
 
-    <section class="vdp-problem">
-      <div class="vdp-problem-inner">
-        <p class="vdp-section-eyebrow">The Missed Opportunity</p>
-        <h2>Your Vehicle Detail Page (VDP) Gets Thousands of Visits. Are You Monetizing Any of Them?</h2>
-        <p>Most Ford dealers let customers browse Vehicle Detail Pages with zero accessory exposure. By the time they walk in, the accessory conversation is an afterthought. The ACCESS VDP Widget changes that &mdash; making accessories part of every vehicle page, every visit, every deal.</p>
+          <!-- TODO: Replace this placeholder with an actual 3D demo screenshot -->
+          <div class="es-demo-placeholder">
+            <div class="es-demo-placeholder-text">
+              <i class="fa-thin fa-cube" style="font-size:2.5rem;display:block;margin-bottom:16px;opacity:0.7;"></i>
+              [ 3D Demo Screenshot ]
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
     <!-- ═══ 4. HOW IT WORKS ═══ -->
-    <section class="vdp-how">
-      <div class="vdp-how-inner">
-        <div class="vdp-how-header">
-          <p class="vdp-section-eyebrow">How It Works</p>
-          <h2>Three Steps. One Seamless Accessory Journey.</h2>
+    <section class="es-how">
+      <div class="es-how-inner">
+        <div class="es-how-header">
+          <p class="es-section-eyebrow">How It Works</p>
+          <h2>Three Steps to a Smarter Parts &amp; Accessories Sale.</h2>
         </div>
-        <div class="vdp-steps">
-          <div class="vdp-step">
-            <div class="vdp-step-num">01 &mdash; Customer Lands on Your Vehicle Detail Page (VDP)</div>
-            <h3>Customer Lands on Your Vehicle Detail Page (VDP)</h3>
-            <p>They are already shopping their vehicle. The widget automatically displays the top Ford accessories for that exact year, make, model, and trim.</p>
+        <div class="es-steps">
+          <div class="es-step">
+            <div class="es-step-num">01</div>
+            <h3>Customer Visits Your Dealer Website</h3>
+            <p>They arrive on your site to browse vehicles or book service. The EnvyPRO eStore link is embedded in your site navigation &mdash; naturally extending the shopping experience into parts and accessories.</p>
+            <span class="es-step-arrow" aria-hidden="true">&#8594;</span>
           </div>
-          <div class="vdp-step">
-            <div class="vdp-step-num">02 &mdash; They Start Personalizing</div>
-            <h3>They Start Personalizing</h3>
-            <p>Browse up to 8 accessory categories, see real-time pricing, and use the Payment Impact Calculator to see how accessories fit their monthly budget.</p>
+          <div class="es-step">
+            <div class="es-step-num">02</div>
+            <h3>Opens the Dealer-Branded eStore &amp; Browses by Vehicle</h3>
+            <p>They enter their VIN or select their vehicle. The full OEM parts and accessories catalog loads &mdash; filtered to only show confirmed-fit items. They browse categories, read Motor Information Systems descriptions, and narrow by need.</p>
+            <span class="es-step-arrow" aria-hidden="true">&#8594;</span>
           </div>
-          <div class="vdp-step">
-            <div class="vdp-step-num">03 &mdash; They Walk In Ready to Buy</div>
-            <h3>They Walk In Ready to Buy</h3>
-            <p>Their selections are saved. The salesperson picks up the personalization conversation exactly where the customer left it online. No cold starts. No missed revenue.</p>
+          <div class="es-step">
+            <div class="es-step-num">03</div>
+            <h3>Views Accessories in 3D + AR &amp; Adds to Deal</h3>
+            <p>For accessories, they launch the 3D viewer or point their phone camera at their vehicle to try AR placement. Confident in the fit and look, they add to cart or request dealer contact &mdash; turning a browser into a buyer before they ever visit the showroom.</p>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══ 5. FEATURES GRID ═══ -->
-    <section class="vdp-features">
-      <div class="vdp-features-inner">
-        <div class="vdp-features-header">
-          <p class="vdp-section-eyebrow">Everything Included</p>
-          <h2>Built for Dealers. Designed for Revenue.</h2>
-        </div>
-        <div class="vdp-features-grid">
-
-          <div class="vdp-feature-card">
-            <h3><i class="fa-thin fa-car" aria-hidden="true" style="margin-right:10px;color:#003478;vertical-align:middle;"></i>Vehicle-Specific Accuracy</h3>
-            <p>Year, make, model, and trim matched accessories automatically &mdash; every vehicle, every time, no manual setup required.</p>
-          </div>
-
-          <div class="vdp-feature-card">
-            <h3><i class="fa-thin fa-calculator" aria-hidden="true" style="margin-right:10px;color:#003478;vertical-align:middle;"></i>Payment Impact Calculator</h3>
-            <p>Shows real financing impact in real time, so customers can see exactly how accessories fit their monthly payment before they visit.</p>
-          </div>
-
-          <div class="vdp-feature-card">
-            <h3><i class="fa-thin fa-address-card" aria-hidden="true" style="margin-right:10px;color:#003478;vertical-align:middle;"></i>Instant Lead Capture</h3>
-            <p>Name, email, and phone saved automatically. Auto-fills your accessory request form so your team picks up right where the customer left off.</p>
-          </div>
-
-          <div class="vdp-feature-card">
-            <h3><i class="fa-thin fa-grid-2" aria-hidden="true" style="margin-right:10px;color:#003478;vertical-align:middle;"></i>Full Catalog Access</h3>
-            <p>Up to 8 accessory categories with keyword and part number search &mdash; customers find what they want before they visit your showroom.</p>
-          </div>
-
-          <div class="vdp-feature-card">
-            <h3><i class="fa-thin fa-tag" aria-hidden="true" style="margin-right:10px;color:#003478;vertical-align:middle;"></i>Dealer-Controlled Pricing</h3>
-            <p>Set custom pricing, labor markups, and promotions. Your margin, your rules &mdash; the widget reflects your business, not a generic catalog.</p>
-          </div>
-
-          <div class="vdp-feature-card">
-            <h3><i class="fa-thin fa-chart-line-up" aria-hidden="true" style="margin-right:10px;color:#003478;vertical-align:middle;"></i>Robust Analytics</h3>
-            <p>Tracks widget engagement, leads generated, calls, page visits, and conversion rates so you always know what is working.</p>
-          </div>
-
         </div>
       </div>
     </section>
 
-    <!-- ═══ 6. PURCHASE JOURNEY CONNECTION ═══ -->
-    <section class="vdp-journey">
-      <div class="vdp-journey-inner">
-        <p class="vdp-journey-kicker">The FordEngage Purchase Journey</p>
-        <h2>One Seamless Purchase Journey &mdash; From the Vehicle Detail Page to the Showroom.</h2>
-        <p>The ACCESS VDP Widget is the first step in the <span class="fe-bold" style="font-weight:800;font-family:'Ford Antenna',Arial,sans-serif;">Ford</span><span style="font-weight:300;font-family:'Ford Antenna',Arial,sans-serif;">Engage</span> purchase journey. When customers personalize online, that data travels with them. In the showroom, <span style="font-weight:800;font-family:'Ford Antenna',Arial,sans-serif;">Ford</span><span style="font-weight:300;font-family:'Ford Antenna',Arial,sans-serif;">Engage</span> picks up the conversation where the VDP left it &mdash; turning a cold accessory pitch into a warm, personalized close. Every product in the <span style="font-weight:800;font-family:'Ford Antenna',Arial,sans-serif;">Ford</span><span style="font-weight:300;font-family:'Ford Antenna',Arial,sans-serif;">Engage</span> suite is designed to work together, so dealers never miss a step in the revenue chain.</p>
-        <a class="vdp-journey-link" href="https://www.fordengage.com/how-it-works">See the Full Purchase Journey &rarr;</a>
-      </div>
-    </section>
-
-    <!-- ═══ 7. PRICING ═══ -->
-    <section class="vdp-pricing">
-      <div class="vdp-pricing-inner">
-        <p class="vdp-section-eyebrow">Simple, Flat-Rate Pricing</p>
-        <h2>One Flat Rate. Every Vehicle Detail Page. No Limits.</h2>
-        <div class="vdp-price-amount">$199</div>
-        <div class="vdp-price-period">per month</div>
-        <ul class="vdp-pricing-bullets">
-          <li><i class="fa-thin fa-circle-check" aria-hidden="true"></i> Unlimited new car Vehicle Detail Pages &mdash; whether you have 100 or 1,000</li>
-          <li><i class="fa-thin fa-circle-check" aria-hidden="true"></i> No per-page fees. No traffic tiers. No surprises.</li>
-          <li><i class="fa-thin fa-circle-check" aria-hidden="true"></i> Single-token installation &mdash; live in minutes</li>
-          <li><i class="fa-thin fa-circle-check" aria-hidden="true"></i> Full analytics dashboard included</li>
-          <li><i class="fa-thin fa-circle-check" aria-hidden="true"></i> JSON, SDF, and XML integrations with CRM and DMS</li>
+    <!-- ═══ 5. PRICING ═══ -->
+    <section class="es-pricing">
+      <div class="es-pricing-inner">
+        <p class="es-section-eyebrow">Simple, Transparent Pricing</p>
+        <h2>Flat Rate. No Surprises. No Per-Transaction Cuts.</h2>
+        <div class="es-price-amount">$299</div>
+        <div class="es-price-period">per month, standalone</div>
+        <ul class="es-pricing-bullets">
+          <li><i class="fa-thin fa-circle-check" aria-hidden="true"></i> Full OEM parts &amp; accessories catalog via Motor Information Systems</li>
+          <li><i class="fa-thin fa-circle-check" aria-hidden="true"></i> 3D visualization + Augmented Reality try-on included</li>
+          <li><i class="fa-thin fa-circle-check" aria-hidden="true"></i> Dealer-branded storefront &mdash; your logo, your domain, your pricing</li>
+          <li><i class="fa-thin fa-circle-check" aria-hidden="true"></i> VIN-confirmed fitment on every part and accessory shown</li>
+          <li><i class="fa-thin fa-circle-check" aria-hidden="true"></i> No per-transaction fees &mdash; you keep 100% of your margin</li>
+          <li><i class="fa-thin fa-circle-check" aria-hidden="true"></i> Setup fee waived on 1- or 2-year term agreements</li>
         </ul>
-        <div class="vdp-bundle-note"><strong>Better together:</strong> Most effective when paired with <span style="font-weight:800;font-family:'Ford Antenna',Arial,sans-serif;">Ford</span><span style="font-weight:300;font-family:'Ford Antenna',Arial,sans-serif;">Engage</span> and EnvyPRO eStore for a complete online-to-showroom revenue system.</div>
-        <a class="btn btn-navy btn-lg" href="https://www.fordengage.com/enroll">Enroll Now</a>
+        <p class="es-waived-note">* Setup fee waived on 1-year or 2-year term agreements.</p>
+        <div class="es-bundle-note">
+          <strong>Bundle with FordEngage &mdash; same price, more power.</strong><br>
+          Add EnvyPRO eStore to the full <span style="font-weight:800;font-family:'Ford Antenna',Arial,sans-serif;">Ford</span><span style="font-weight:300;font-family:'Ford Antenna',Arial,sans-serif;">Engage</span> suite at <strong>$798/mo</strong> and get FordEngage + ACCESS VDP Widget + EnvyPRO eStore together &mdash; the same price you&rsquo;d pay adding them separately. You&rsquo;re not paying more for the bundle; you&rsquo;re getting a complete online-to-showroom revenue system at no additive cost. <span class="es-bundle-highlight">Best Value</span>
+        </div>
+        <a class="btn btn-navy btn-lg" href="https://www.fordengage.com/enroll">Enroll Now &mdash; $299/mo</a>
       </div>
     </section>
 
-    <!-- ═══ 8. CTA BANNER ═══ -->
-    <section class="vdp-cta-banner">
-      <h2>Start the Accessory Sale on Every Vehicle Detail Page (VDP).</h2>
-      <p>One token. Five minutes. Unlimited vehicle pages.</p>
-      <a class="btn btn-white btn-lg" href="https://www.fordengage.com/enroll">Enroll Now &mdash; $199/mo</a>
+    <!-- ═══ 6. CTA STRIP ═══ -->
+    <section class="es-cta-banner">
+      <h2>Start Selling Parts in 3D Today.</h2>
+      <p>The industry&rsquo;s first 3D + AR eStore &mdash; dealer-branded, VIN-accurate, and ready to launch.</p>
+      <a class="btn btn-white btn-lg" href="https://www.fordengage.com/enroll">Enroll Now &mdash; $299/mo</a>
     </section>
 
   </main>
@@ -943,19 +855,6 @@
     <p class="site-footer-copy">Verified through actual sales via our partnership with JD Power across 500+ dealers over 5 years.</p>
   </footer>
 
-  <!-- ═══ VIDEO MODAL ═══ -->
-  <div id="video-modal" class="vmodal-overlay" onclick="if(event.target===this)closeVideo()">
-    <div class="vmodal-inner" role="dialog" aria-modal="true" aria-label="FordEngage video">
-      <button class="vmodal-close" onclick="closeVideo()" aria-label="Close">&#x2715;</button>
-      <div class="vmodal-frame">
-        <iframe id="vmodal-iframe" src="" title="FordEngage, Accessories Sales Program"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen></iframe>
-      </div>
-    </div>
-  </div>
-
   <!-- ═══ SIDEBAR ═══ -->
   <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
   <nav class="sidebar" id="sidebar">
@@ -971,9 +870,7 @@
         <a class="sidebar-link" href="https://www.fordengage.com/"><i class="fa-thin fa-house" style="width:18px;"></i> Home</a>
         <a class="sidebar-link" href="https://www.fordengage.com/how-it-works"><i class="fa-thin fa-route" style="width:18px;"></i> How It Works</a>
         <a class="sidebar-link" href="https://www.fordengage.com/vdp-widget"><i class="fa-thin fa-browser" style="width:18px;"></i> VDP Widget</a>
-        <a class="sidebar-link sidebar-link--active" href="https://www.fordengage.com/vdp-widget"><i class="fa-thin fa-browser" style="width:18px;"></i> VDP Widget</a>
-        <a class="sidebar-link" href="https://www.fordengage.com/estore"><i class="fa-thin fa-store" style="width:18px;"></i> EnvyPRO eStore</a>
-        <a class="sidebar-link" href="#see-it-in-action"><i class="fa-thin fa-circle-play" style="width:18px;"></i> Bringing Products to Life</a>
+        <a class="sidebar-link sidebar-link--active" href="https://www.fordengage.com/estore"><i class="fa-thin fa-store" style="width:18px;"></i> EnvyPRO eStore</a>
         <a class="sidebar-link" href="https://www.fordengage.com/contact"><i class="fa-thin fa-envelope" style="width:18px;"></i> Contact Us</a>
         <a class="sidebar-link" href="tel:7868926368"><i class="fa-thin fa-phone" style="width:18px;"></i> (786) 892-6368</a>
         <a class="sidebar-link" href="https://www.fordengage.com/about"><i class="fa-thin fa-building" style="width:18px;"></i> About Us</a>
@@ -1010,32 +907,32 @@
         document.getElementById('sidebar').classList.remove('open');
         document.getElementById('sidebar-overlay').classList.remove('open');
         document.body.style.overflow = '';
-        closeVideo();
       }
     });
 
-    // ── FordEngage brand formatting ──
+    // ── FordEngage brand formatting (splits "FordEngage" into Ford bold / Engage light) ──
     (function() {
-      var spans = document.querySelectorAll('.fe-bold');
-      spans.forEach(function(s) { s.style.fontWeight = '800'; s.style.fontFamily = "'Ford Antenna', Arial, sans-serif"; });
+      function splitFordEngage(el) {
+        el.childNodes.forEach(function(node) {
+          if (node.nodeType === 3) { // text node
+            var txt = node.textContent;
+            if (txt.indexOf('FordEngage') !== -1) {
+              var span = document.createElement('span');
+              span.innerHTML = txt.replace(/FordEngage/g,
+                '<strong style="font-weight:800;font-family:\'Ford Antenna\',Arial,sans-serif;">Ford</strong>' +
+                '<span style="font-weight:300;font-family:\'Ford Antenna\',Arial,sans-serif;">Engage</span>'
+              );
+              node.parentNode.replaceChild(span, node);
+            }
+          } else if (node.nodeType === 1 && node.tagName !== 'SCRIPT' && node.tagName !== 'STYLE') {
+            splitFordEngage(node);
+          }
+        });
+      }
+      document.querySelectorAll('p, h1, h2, h3, li, .es-bundle-note').forEach(function(el) {
+        splitFordEngage(el);
+      });
     })();
-
-    // ── Video modal ──
-    var YT_ID = 'aHBj-zA7Hqg';
-    function openVideo() {
-      var modal = document.getElementById('video-modal');
-      var iframe = document.getElementById('vmodal-iframe');
-      iframe.src = 'https://www.youtube-nocookie.com/embed/' + YT_ID + '?autoplay=1&rel=0&modestbranding=1';
-      modal.classList.add('open');
-      document.body.style.overflow = 'hidden';
-    }
-    function closeVideo() {
-      var modal = document.getElementById('video-modal');
-      var iframe = document.getElementById('vmodal-iframe');
-      if (modal) { modal.classList.remove('open'); }
-      if (iframe) { iframe.src = ''; }
-      document.body.style.overflow = '';
-    }
   </script>
 
 </body>
