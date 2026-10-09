@@ -13,3 +13,7 @@ database_id = "300b047a-fbb5-44f4-812d-df53c62212d2"
 binding = "ENROLLMENT_DB"
 database_name = "fordengage-enrollment"
 database_id = "300b047a-fbb5-44f4-812d-df53c62212d2"
+
+[vars]
+HCTI_USER_ID = "01M4F9G93EAZFPVWJ0FVM66FF2"
+HCTI_API_KEY = "h1-Z5wEIFSkKuI39BMYr3PiDEMQ-5f283967"

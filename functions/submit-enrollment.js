@@ -136,6 +136,30 @@ function renderInvoice(r) {
 </body></html>`;
 }
 
+async function generateInvoicePDF(r, env) {
+  const invoiceHtml = renderInvoice(r);
+  const invoiceNum = 'PS-' + r.receipt_id.slice(0,8).toUpperCase();
+  const filename = `PartSites-Invoice-${invoiceNum}.pdf`;
+  try {
+    const res = await fetch('https://hcti.io/v1/pdf', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Basic ' + btoa(`${env.HCTI_USER_ID}:${env.HCTI_API_KEY}`),
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ html: invoiceHtml }),
+      signal: AbortSignal.timeout(20000)
+    });
+    if (res.ok) {
+      const buf = await res.arrayBuffer();
+      const b64 = btoa(String.fromCharCode(...new Uint8Array(buf)));
+      return { '@odata.type': '#microsoft.graph.fileAttachment', name: filename, contentType: 'application/pdf', contentBytes: b64 };
+    }
+  } catch (e) { /* fall through to HTML fallback */ }
+  // Fallback — attach as HTML if PDF generation fails
+  return { '@odata.type': '#microsoft.graph.fileAttachment', name: filename.replace('.pdf','.html'), contentType: 'text/html', contentBytes: btoa(unescape(encodeURIComponent(invoiceHtml))) };
+}
+
 function renderCEOLetter(r) {
   const firstName = r.enrollment.pc_first || r.enrollment.dealer_name || 'there';
   const products  = r.resolved_price.key.replace(/\+/g, ', ');
@@ -326,7 +350,7 @@ const recipient=env.ENROLLMENT_RECIPIENT||'scott@smartdealer.com';
     const subject=`New Ford Enrollment — ${enrollment.dealer_name} — ${products.join('+')} — ${resolved.label} — ${r.receipt_id}`;
     const sent=await fetch(`https://graph.microsoft.com/v1.0/users/${encodeURIComponent(sender)}/sendMail`,
       {method:'POST',headers:{Authorization:`Bearer ${token.access_token}`,'Content-Type':'application/json'},
-       body:JSON.stringify({message:{subject,body:{contentType:'HTML',content:renderAgreement(r)},attachments:[{"@odata.type":"#microsoft.graph.fileAttachment",name:`PartSites-Invoice-${r.receipt_id.slice(0,8).toUpperCase()}.html`,contentType:'text/html',contentBytes:btoa(unescape(encodeURIComponent(renderInvoice(r))))}],toRecipients:[...new Set([...DIST_LIST, enrollment.pc_email])].map(address=>({emailAddress:{address}}))},saveToSentItems:true}),
+       body:JSON.stringify({message:{subject,body:{contentType:'HTML',content:renderAgreement(r)},attachments:[await generateInvoicePDF(r, env)],toRecipients:[...new Set([...DIST_LIST, enrollment.pc_email])].map(address=>({emailAddress:{address}}))},saveToSentItems:true}),
        signal:AbortSignal.timeout(20000)});
     if (sent.status!==202) {
       await db.prepare("UPDATE enrollment_receipts SET state='failed' WHERE id=?").bind(r.receipt_id).run();
