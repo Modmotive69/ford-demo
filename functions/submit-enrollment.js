@@ -55,24 +55,6 @@ function renderCEOLetter(r) {
 <p>Scott Anderson here, CEO of SmartDealer Technologies.</p>
 <p>I saw your enrollment come in and just had to reach out personally. You made a great call.</p>
 <p>FordEngage dealers are averaging over $800 more gross per vehicle in accessory sales. That's real money, every month, on deals you're already closing. You're going to love what this does for your numbers.</p>
-<p>You signed up for ${products} on a ${term} plan at ${amount}. That's your foundation and we are going to make sure you get every dollar of value out of it.</p>
-<p>My team is already on it and you are in great hands. We'll reach out at your first availability to get everything set up right away.</p>
-<p>If anything comes up before then, just hit reply. I check these.</p>
-<p>Welcome to the program. 🤙</p>
-<p>Scott Anderson<br>CEO, SmartDealer Technologies</p>
-</body></html>`;
-}
-
-function renderCEOLetter(r) {
-  const firstName = r.enrollment.pc_first || r.enrollment.dealer_name || 'there';
-  const products  = r.resolved_price.key.replace(/\+/g, ', ');
-  const term      = r.resolved_price.termLabel;
-  const amount    = r.resolved_price.discountedLabel;
-  return `<!DOCTYPE html><html><body style="font-family:Arial,sans-serif;font-size:15px;line-height:1.7;color:#111;max-width:600px;margin:0 auto;padding:32px 24px">
-<p>Hey ${firstName},</p>
-<p>Scott Anderson here, CEO of SmartDealer Technologies.</p>
-<p>I saw your enrollment come in and just had to reach out personally. You made a great call.</p>
-<p>FordEngage dealers are averaging over $800 more gross per vehicle in accessory sales. That's real money, every month, on deals you're already closing. You're going to love what this does for your numbers.</p>
 <p>You signed up for ${products} on a ${term} plan at ${amount} per month. That's your foundation and we are going to make sure you get every dollar of value out of it.</p>
 <p>My team is already on it and you are in great hands. We'll reach out at your first availability to get everything set up right away.</p>
 <p>If anything comes up before then, just hit reply. I check these.</p>
