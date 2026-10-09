@@ -45,6 +45,42 @@ function resolvePricingServer(products, termId) {
   };
 }
 
+function renderCEOLetter(r) {
+  const firstName = r.enrollment.pc_first || r.enrollment.dealer_name || 'there';
+  const products  = r.resolved_price.key.replace(/\+/g, ', ');
+  const term      = r.resolved_price.termLabel;
+  const amount    = r.resolved_price.discountedLabel;
+  return `<!DOCTYPE html><html><body style="font-family:Arial,sans-serif;font-size:15px;line-height:1.7;color:#111;max-width:600px;margin:0 auto;padding:32px 24px">
+<p>Hey ${firstName},</p>
+<p>Scott Anderson here, CEO of SmartDealer Technologies.</p>
+<p>I saw your enrollment come in and just had to reach out personally. You made a great call.</p>
+<p>FordEngage dealers are averaging over $800 more gross per vehicle in accessory sales. That's real money, every month, on deals you're already closing. You're going to love what this does for your numbers.</p>
+<p>You signed up for ${products} on a ${term} plan at ${amount}. That's your foundation and we are going to make sure you get every dollar of value out of it.</p>
+<p>My team is already on it and you are in great hands. We'll reach out at your first availability to get everything set up right away.</p>
+<p>If anything comes up before then, just hit reply. I check these.</p>
+<p>Welcome to the program. 🤙</p>
+<p>Scott Anderson<br>CEO, SmartDealer Technologies</p>
+</body></html>`;
+}
+
+function renderCEOLetter(r) {
+  const firstName = r.enrollment.pc_first || r.enrollment.dealer_name || 'there';
+  const products  = r.resolved_price.key.replace(/\+/g, ', ');
+  const term      = r.resolved_price.termLabel;
+  const amount    = r.resolved_price.discountedLabel;
+  return `<!DOCTYPE html><html><body style="font-family:Arial,sans-serif;font-size:15px;line-height:1.7;color:#111;max-width:600px;margin:0 auto;padding:32px 24px">
+<p>Hey ${firstName},</p>
+<p>Scott Anderson here, CEO of SmartDealer Technologies.</p>
+<p>I saw your enrollment come in and just had to reach out personally. You made a great call.</p>
+<p>FordEngage dealers are averaging over $800 more gross per vehicle in accessory sales. That's real money, every month, on deals you're already closing. You're going to love what this does for your numbers.</p>
+<p>You signed up for ${products} on a ${term} plan at ${amount} per month. That's your foundation and we are going to make sure you get every dollar of value out of it.</p>
+<p>My team is already on it and you are in great hands. We'll reach out at your first availability to get everything set up right away.</p>
+<p>If anything comes up before then, just hit reply. I check these.</p>
+<p>Welcome to the program. 🤙</p>
+<p>Scott Anderson<br>CEO, SmartDealer Technologies</p>
+</body></html>`;
+}
+
 export function renderAgreement(r) {
   const p = r.resolved_price;
   const rows = [
@@ -93,7 +129,7 @@ function replyExisting(row) {
     : 'Submission is processing or its email status needs confirmation. Retry with the same entries; do not create a second agreement.'}, 409);
 }
 
-export async function onRequestPost({request, env}) {
+export async function onRequestPost({request, env, waitUntil}) {
   if (!originOk(request.headers.get('Origin'))) return json({ok:false,error:'Request origin not permitted.'},403);
   if (!(request.headers.get('Content-Type')||'').startsWith('application/json')) return json({ok:false,error:'JSON required.'},415);
   if (Number(request.headers.get('Content-Length')||0)>48000) return json({ok:false,error:'Request too large.'},413);
@@ -224,6 +260,20 @@ const recipient=env.ENROLLMENT_RECIPIENT||'scott@smartdealer.com';
       return json({ok:false,receipt_id:r.receipt_id,error:`Email provider did not accept the request (${sent.status}). Contact support with this receipt; do not submit a second agreement.`},502);
     }
     await db.prepare("UPDATE enrollment_receipts SET state='queued' WHERE id=?").bind(r.receipt_id).run();
+    // CEO personal welcome letter — fires 5 minutes after the agreement email
+    waitUntil((async () => {
+      await new Promise(res => setTimeout(res, 5 * 60 * 1000));
+      try {
+        const tokenRes2 = await fetch(`https://login.microsoftonline.com/${encodeURIComponent(env.MS_GRAPH_TENANT_ID)}/oauth2/v2.0/token`,
+          {method:'POST',body:new URLSearchParams({grant_type:'client_credentials',client_id:env.MS_GRAPH_CLIENT_ID,client_secret:env.MS_GRAPH_CLIENT_SECRET,scope:'https://graph.microsoft.com/.default'}),signal:AbortSignal.timeout(15000)});
+        if (!tokenRes2.ok) return;
+        const token2 = await tokenRes2.json(); if (!token2.access_token) return;
+        await fetch(`https://graph.microsoft.com/v1.0/users/${encodeURIComponent(sender)}/sendMail`,
+          {method:'POST',headers:{Authorization:`Bearer ${token2.access_token}`,'Content-Type':'application/json'},
+           body:JSON.stringify({message:{subject:'Welcome to FordEngage, a personal note from Scott',body:{contentType:'HTML',content:renderCEOLetter(r)},toRecipients:[{emailAddress:{address:enrollment.pc_email}}]},saveToSentItems:true}),
+           signal:AbortSignal.timeout(15000)});
+      } catch { /* non-fatal */ }
+    })());
     return json({ok:true,...r,email_status:'queued',agreement_html:renderAgreement(r)});
   } catch {
     try {await db.prepare('UPDATE enrollment_receipts SET state=? WHERE id=?').bind(sendStarted?'uncertain':'failed',r.receipt_id).run();}catch{}
