@@ -130,7 +130,7 @@ function renderInvoice(r) {
   <strong>Agreement Reference:</strong> Technology Services Agreement executed electronically on ${dateStr}. Agreement version ${r.agreementSha256 ? 'FE-2026-09-29-review-14' : ''}. Receipt ID: ${r.receipt_id}.
 </div>
 <div style="border-top:1px solid #e8ecf2;padding-top:20px;display:flex;justify-content:space-between;align-items:flex-end">
-  <div style="font-size:11px;color:#777;line-height:1.7">Questions? Contact us at billing@partsites.com<br>Please reference Invoice #${invoiceNum} with your payment.</div>
+  <div style="font-size:11px;color:#777;line-height:1.7">Questions? Call us at <strong style="color:#111">(786) 892-6368</strong> or email billing@partsites.com<br>Please reference Invoice #${invoiceNum} with your payment.</div>
   <div style="text-align:right;font-size:11px;color:#777">PartSites, LLC<br>A SmartDealer Technologies Company<br><span style="font-family:monospace;font-size:10px;color:#aaa">${r.agreementSha256||''}</span></div>
 </div>
 </body></html>`;
