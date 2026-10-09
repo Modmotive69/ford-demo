@@ -80,14 +80,14 @@
     const termEl = document.getElementById('term-select');
     const _tr = document.querySelector('input[name="term"]:checked');
     const termId = _tr ? _tr.value : (termEl ? termEl.value : 'month-to-month');
-    const priceInfo = window.resolveEnrollmentPrice ? window.resolveEnrollmentPrice() : null;
+    const printPriceInfo = window.resolveEnrollmentPrice ? window.resolveEnrollmentPrice() : null;
     document.getElementById('print-selected-products').textContent =
       'Selected products: ' + (sel.join(' + ') || 'None');
     const termRow = document.getElementById('print-term-val');
     if (termRow) termRow.textContent = 'Term: ' + (termEl ? termEl.options[termEl.selectedIndex]?.text : 'Month-to-month');
     const priceRow = document.getElementById('print-price-val');
-    if (priceRow && priceInfo && !priceInfo.isQuote) {
-      priceRow.textContent = 'Monthly fee: ' + priceInfo.discountedLabel +
+    if (priceRow && printPriceInfo && !printPriceInfo.isQuote) {
+      priceRow.textContent = 'Monthly fee: ' + printPriceInfo.discountedLabel +
         (priceInfo.discountPct > 0 ? ' (' + priceInfo.discountPct + '% off ' + priceInfo.baseLabel + ')' : '') +
         ' — Setup: ' + (priceInfo.setupCents === 0 ? 'Waived' : priceInfo.setupLabel);
     } else if (priceRow) {
@@ -414,8 +414,8 @@
     if (!window._cartConfirmed) { openCartSummaryForSubmit(); return; }
     window._cartConfirmed = false;
     $('draft-status').textContent = '';
-    const priceInfo = window.resolveEnrollmentPrice ? window.resolveEnrollmentPrice() : null;
-    if (priceInfo && priceInfo.isQuoteRequired) {
+    const submitPriceInfo = window.resolveEnrollmentPrice ? window.resolveEnrollmentPrice() : null;
+    if (submitPriceInfo && submitPriceInfo.isQuoteRequired) {
       $('draft-status').textContent =
         'This product combination requires a custom quote and cannot be submitted directly. ' +
         'Please contact the sales team.';
