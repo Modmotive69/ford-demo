@@ -964,7 +964,7 @@
     /* ─── FOOTER ─── */
 
     /* ─── SHARED BRANDED FOOTER ─── */
-    .site-footer {
+    .site-footer { background: #f0f2f5 !important; color: #333 !important;
       background: #f0f2f5;
       border-top: 1px solid #dde2ea;
       padding: clamp(28px,4vw,44px) clamp(20px,5vw,40px) clamp(20px,3vw,32px);
@@ -1005,7 +1005,7 @@
       .site-footer-brand { gap: 10px; }
     }
 
-    footer {
+    footer:not(.site-footer) {
       background: var(--black);
       color: rgba(255,255,255,0.45);
       padding: 36px clamp(20px, 5vw, 40px);
