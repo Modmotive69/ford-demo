@@ -122,7 +122,8 @@ function renderInvoice(r) {
 <div style="margin-left:auto;width:300px;margin-bottom:36px">
   ${discount ? `<div style="display:flex;justify-content:space-between;padding:6px 0;font-size:13px;border-bottom:1px solid #e8ecf2;color:#aaa;text-decoration:line-through"><span>Bundle Base Rate</span><span>${baseLabel}</span></div>
   <div style="font-size:11px;color:#1a7f37;font-weight:600;text-align:right;padding:4px 0 8px">You save ${discount}% with your ${p.termLabel} commitment</div>` : ''}
-  <div style="display:flex;justify-content:space-between;padding:10px 0;font-size:15px;font-weight:700;color:#003478;border-top:2px solid #003478"><span>Monthly Total</span><span>${p.discountedLabel}</span></div>
+  ${p.setupCents > 0 ? `<div style="display:flex;justify-content:space-between;padding:6px 0;font-size:13px;border-bottom:1px solid #e8ecf2"><span>Monthly Fee</span><span>${p.discountedLabel}</span></div><div style="display:flex;justify-content:space-between;padding:6px 0;font-size:13px;border-bottom:1px solid #e8ecf2"><span>One-Time Setup Fee</span><span>$${(p.setupCents/100).toFixed(2)}</span></div>` : ''}
+  <div style="display:flex;justify-content:space-between;padding:10px 0;font-size:15px;font-weight:700;color:#003478;border-top:2px solid #003478"><span>${p.setupCents > 0 ? 'First Invoice Total' : 'Monthly Total'}</span><span>${p.setupCents > 0 ? '$'+(p.discountedCents/100 + p.setupCents/100).toFixed(2) : p.discountedLabel}</span></div>
 </div>
 <div style="background:#f4f6fa;border-left:3px solid #003478;padding:14px 16px;font-size:12px;color:#555;line-height:1.7;margin-bottom:32px;border-radius:0 4px 4px 0">
   <strong>Payment Terms:</strong> Due upon receipt. Payment is required to activate onboarding. Monthly invoices will be issued in arrears beginning after onboarding completion.<br><br>
