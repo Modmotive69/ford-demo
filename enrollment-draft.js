@@ -77,14 +77,14 @@
     // Base via hidden input + checked addon-inputs
   const addonSel = Array.from(document.querySelectorAll('.addon-input:checked'), x => x.value);
   const sel = ['FordEngage', ...addonSel];
-    const termEl = document.getElementById('term-select');
+    const printTermEl = document.getElementById('term-select');
     const _tr = document.querySelector('input[name="term"]:checked');
-    const termId = _tr ? _tr.value : (termEl ? termEl.value : 'month-to-month');
+    const termId = _tr ? _tr.value : (printTermEl ? printTermEl.value : 'month-to-month');
     const printPriceInfo = window.resolveEnrollmentPrice ? window.resolveEnrollmentPrice() : null;
     document.getElementById('print-selected-products').textContent =
       'Selected products: ' + (sel.join(' + ') || 'None');
     const termRow = document.getElementById('print-term-val');
-    if (termRow) termRow.textContent = 'Term: ' + (termEl ? termEl.options[termEl.selectedIndex]?.text : 'Month-to-month');
+    if (termRow) termRow.textContent = 'Term: ' + (termEl ? printTermEl.options[printTermEl.selectedIndex]?.text : 'Month-to-month');
     const priceRow = document.getElementById('print-price-val');
     if (priceRow && printPriceInfo && !printPriceInfo.isQuote) {
       priceRow.textContent = 'Monthly fee: ' + printPriceInfo.discountedLabel +
@@ -437,9 +437,9 @@
     signer.phone = signer.phone || ($('sig-phone') ? $('sig-phone').value.trim() : '');
     signer.email = signer.email || ($('sig-email') ? $('sig-email').value.trim() : '');
 
-    const termEl = document.getElementById('term-select');
+    const submitTermEl = document.getElementById('term-select');
     const _tr = document.querySelector('input[name="term"]:checked');
-    let termId = _tr ? _tr.value : (termEl ? termEl.value : 'month-to-month');
+    let termId = _tr ? _tr.value : (submitTermEl ? submitTermEl.value : 'month-to-month');
     // WD: force locked term in payload regardless of radio state
     if (priceInfo && priceInfo.isWD) termId = window.WD_LOCKED_TERM || agreement.wdTermLocked || '2year';
     const payload = {
