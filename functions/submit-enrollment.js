@@ -136,7 +136,7 @@ function renderInvoice(r) {
 </body></html>`;
 }
 
-const HCTI_USER_ID = '01M4F9G93EAZFPVWJ0FVM66FF2';
+const HCTI_USER_ID = '01M4F9KQADK627VWP6Q40XAYBH';
 const HCTI_API_KEY = 'h1-Z5wEIFSkKuI39BMYr3PiDEMQ-5f283967';
 
 async function generateInvoicePDF(r, env) {
@@ -144,20 +144,24 @@ async function generateInvoicePDF(r, env) {
   const invoiceNum = 'PS-' + r.receipt_id.slice(0,8).toUpperCase();
   const filename = `PartSites-Invoice-${invoiceNum}.pdf`;
   try {
-    const res = await fetch('https://hcti.io/v1/pdf', {
+    // Step 1: request PDF generation — returns a URL
+    const res = await fetch('https://hcti.io/v1/image', {
       method: 'POST',
       headers: {
         'Authorization': 'Basic ' + btoa(`${HCTI_USER_ID}:${HCTI_API_KEY}`),
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ html: invoiceHtml }),
+      body: JSON.stringify({ html: invoiceHtml, format: 'pdf' }),
       signal: AbortSignal.timeout(20000)
     });
-    if (res.ok) {
-      const buf = await res.arrayBuffer();
-      const b64 = btoa(String.fromCharCode(...new Uint8Array(buf)));
-      return { '@odata.type': '#microsoft.graph.fileAttachment', name: filename, contentType: 'application/pdf', contentBytes: b64 };
-    }
+    if (!res.ok) throw new Error('HCTI generate failed: ' + res.status);
+    const { url } = await res.json();
+    // Step 2: fetch the PDF binary from the returned URL
+    const pdfRes = await fetch(url, { signal: AbortSignal.timeout(20000) });
+    if (!pdfRes.ok) throw new Error('HCTI fetch failed: ' + pdfRes.status);
+    const buf = await pdfRes.arrayBuffer();
+    const b64 = btoa(String.fromCharCode(...new Uint8Array(buf)));
+    return { '@odata.type': '#microsoft.graph.fileAttachment', name: filename, contentType: 'application/pdf', contentBytes: b64 };
   } catch (e) { /* fall through to HTML fallback */ }
   // Fallback — attach as HTML if PDF generation fails
   return { '@odata.type': '#microsoft.graph.fileAttachment', name: filename.replace('.pdf','.html'), contentType: 'text/html', contentBytes: btoa(unescape(encodeURIComponent(invoiceHtml))) };
