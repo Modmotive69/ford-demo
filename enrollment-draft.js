@@ -494,6 +494,30 @@
     }
     sending = false;
     form.removeAttribute('aria-busy');
+    // Stash receipt data for confirmation page
+    try {
+      var priceInfo = window.resolveEnrollmentPrice ? window.resolveEnrollmentPrice() : null;
+      var termEl = document.querySelector('input[name="term"]:checked');
+      var termLabels = {'month-to-month':'Month-to-Month','1year':'1-Year Contract','2year':'2-Year Contract'};
+      var lines = Array.from(document.querySelectorAll('.byp-line')).map(function(el) {
+        return {
+          name: el.querySelector('.byp-line-name') ? el.querySelector('.byp-line-name').textContent : '',
+          price: el.querySelector('.byp-line-price') ? el.querySelector('.byp-line-price').textContent : '',
+          savings: !!el.querySelector('.byp-line-price--savings')
+        };
+      });
+      sessionStorage.setItem('fe_receipt', JSON.stringify({
+        dealer:   (document.getElementById('dealer-name') || {}).value || '',
+        contact:  [(document.getElementById('pc-first')||{}).value||'', (document.getElementById('pc-last')||{}).value||''].filter(Boolean).join(' '),
+        email:    (document.getElementById('pc-email') || {}).value || '',
+        phone:    (document.getElementById('pc-phone') || {}).value || '',
+        term:     termEl ? (termLabels[termEl.value] || termEl.value) : 'Month-to-Month',
+        lines:    lines,
+        total:    (document.getElementById('byp-total-amount') || {}).textContent || '',
+        setup:    (document.getElementById('byp-setup-val') || {}).textContent || '',
+        hasSetupFee: priceInfo ? priceInfo.setupCents > 0 : false
+      }));
+    } catch(e) {}
     window.location.href = 'enroll-confirmation.html';
   });
 
