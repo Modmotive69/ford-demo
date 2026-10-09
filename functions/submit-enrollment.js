@@ -136,6 +136,9 @@ function renderInvoice(r) {
 </body></html>`;
 }
 
+const HCTI_USER_ID = '01M4F9G93EAZFPVWJ0FVM66FF2';
+const HCTI_API_KEY = 'h1-Z5wEIFSkKuI39BMYr3PiDEMQ-5f283967';
+
 async function generateInvoicePDF(r, env) {
   const invoiceHtml = renderInvoice(r);
   const invoiceNum = 'PS-' + r.receipt_id.slice(0,8).toUpperCase();
@@ -144,7 +147,7 @@ async function generateInvoicePDF(r, env) {
     const res = await fetch('https://hcti.io/v1/pdf', {
       method: 'POST',
       headers: {
-        'Authorization': 'Basic ' + btoa(`${env.HCTI_USER_ID}:${env.HCTI_API_KEY}`),
+        'Authorization': 'Basic ' + btoa(`${HCTI_USER_ID}:${HCTI_API_KEY}`),
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ html: invoiceHtml }),
