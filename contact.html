@@ -346,7 +346,7 @@ document.getElementById('contact-form').addEventListener('submit', async functio
         email:   document.getElementById('c-email').value.trim(),
         phone:   (document.getElementById('c-phone') || {value:''}).value.trim(),
         topics:  topics,
-        message: (document.getElementById('c-message') || {value:''}).value.trim(),
+        message: (document.getElementById('c-msg') || {value:''}).value.trim(),
       })
     });
     var data = await res.json();
