@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <script src="https://kit.fontawesome.com/a0d1bd4a2c.js" crossorigin="anonymous"></script>
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=3">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png?v=3">
+  <link rel="shortcut icon" href="favicon.ico?v=3">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=3">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FordEngage DSS Enrollment | SmartDealer</title>
+  <meta name="description" content="Existing Ford DSS dealers: sign your SmartDealer Technologies agreement in 60 seconds. Your Showroom Advance tool continues working normally." />
+  <link rel="stylesheet" href="css/nav.css">
+  <style>
+    /* ── Reset & Root ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ford-blue: #003478;
+      --ford-bright: #0562D2;
+      --white: #ffffff;
+      --black: #111111;
+      --gray-bg: #f5f8ff;
+      --border: #dce8ff;
+      --radius: 8px;
+      --shadow: 0 4px 24px rgba(0,52,120,0.10);
+    }
+    html, body { overflow-x: hidden; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Ford Antenna', FordAntenna, Arial, sans-serif;
+      color: var(--black);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      background: #f0f4fa;
+    }
+
+    /* ── Nav override: logo-only static ── */
+    nav:not(.sidebar) {
+      position: sticky;
+      top: 0;
+      background: var(--ford-blue) !important;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+      padding: 12px clamp(16px,4vw,40px);
+      z-index: 100;
+    }
+    nav:not(.sidebar)::before { display: none; }
+    .nav-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0;
+    }
+    .nav-brand { text-decoration: none; display: flex; align-items: center; gap: 8px; }
+    .nav-ford-oval { height: 44px; width: auto; display: block; }
+    .nav-wordmark-text { display: inline-flex; align-items: baseline; white-space: nowrap; }
+    .nav-fw {
+      font-family: 'Arial Black', Arial, sans-serif;
+      font-weight: 900; font-size: 24px; color: #fff;
+      letter-spacing: -0.5px; line-height: 1;
+    }
+    .nav-fe {
+      font-family: Arial, sans-serif;
+      font-weight: 300; font-size: 24px;
+      color: rgba(255,255,255,0.88); line-height: 1;
+    }
+    .nav-right { display: none; } /* no full nav on DSS page */
+    .hamburger-btn { display: none; } /* no hamburger */
+
+    /* ── Reassurance Banner ── */
+    .reassurance-banner {
+      background: #e6f4ea;
+      border-bottom: 1.5px solid #b2dfcb;
+      padding: 10px 20px;
+      text-align: center;
+    }
+    .reassurance-banner p {
+      font-size: 0.875rem;
+      color: #1a5c35;
+      font-family: Arial, sans-serif;
+      font-weight: 600;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .reassurance-banner i { margin-right: 6px; }
+
+    /* ── Page wrapper ── */
+    .dss-page {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 40px 20px 80px;
+    }
+
+    /* ── Hero heading ── */
+    .dss-hero {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .dss-hero h1 {
+      font-family: Arial, sans-serif;
+      font-size: clamp(1.8rem, 5vw, 2.6rem);
+      font-weight: 900;
+      color: var(--ford-blue);
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+    .dss-hero h1 .fe-bold { font-weight: 900; }
+    .dss-hero h1 .fe-thin { font-weight: 300; color: rgba(0,52,120,0.65); }
+    .dss-hero .subhead {
+      font-size: 1.05rem;
+      color: #444;
+      font-family: Arial, sans-serif;
+      font-weight: 400;
+    }
+    .dss-hero .subhead strong {
+      color: var(--ford-blue);
+      font-weight: 700;
+    }
+
+    /* ── Summary box ── */
+    .upgrade-summary {
+      background: var(--ford-blue);
+      color: #fff;
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      margin-bottom: 28px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .upgrade-summary-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 10px;
+    }
+    .upgrade-summary-lines { display: flex; flex-direction: column; gap: 6px; }
+    .upgrade-line {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.9);
+      font-family: Arial, sans-serif;
+    }
+    .upgrade-line i { color: #5ce87d; width: 16px; text-align: center; }
+    .upgrade-price-block { text-align: right; flex-shrink: 0; }
+    .upgrade-price-amount {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1;
+      font-family: Arial, sans-serif;
+    }
+    .upgrade-price-label {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.65);
+      font-family: Arial, sans-serif;
+    }
+    @media (max-width: 500px) {
+      .upgrade-summary { flex-direction: column; }
+      .upgrade-price-block { text-align: left; }
+    }
+
+    /* ── Form card ── */
+    .form-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      padding: clamp(20px, 5vw, 44px);
+    }
+
+    /* ── Section labels ── */
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--ford-blue);
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #e8eef5;
+    }
+    .form-section { margin-bottom: 28px; }
+    .section-divider {
+      border: none;
+      border-top: 1px solid #e8eef5;
+      margin: 24px 0;
+    }
+
+    /* ── Fields ── */
+    .field { display: flex; flex-direction: column; gap: 4px; }
+    .field label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #50565e;
+      letter-spacing: 0.3px;
+      font-family: Arial, sans-serif;
+    }
+    .field input, .field select {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid #ccd8ee;
+      border-radius: var(--radius);
+      font-size: 0.95rem;
+      font-family: Arial, sans-serif;
+      color: #111;
+      background: #fff;
+      transition: border-color 0.15s;
+      -webkit-appearance: none;
+    }
+    .field input:focus, .field select:focus {
+      outline: none;
+      border-color: var(--ford-blue);
+    }
+    .field input[aria-invalid="true"], .field select[aria-invalid="true"] {
+      border-color: #c0392b;
+    }
+    .field-helper {
+      font-size: 0.75rem;
+      color: #888;
+      font-family: Arial, sans-serif;
+    }
+    .field-error {
+      font-size: 0.78rem;
+      color: #c0392b;
+      font-family: Arial, sans-serif;
+      min-height: 1em;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 480px) { .grid-2 { grid-template-columns: 1fr; } }
+    .fields-stack { display: flex; flex-direction: column; gap: 12px; }
+
+    /* ── Pre-fill checkbox ── */
+    .prefill-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      padding: 10px 14px;
+      background: #f0f4ff;
+      border-radius: var(--radius);
+      border: 1.5px solid #dce8ff;
+    }
+    .prefill-row input[type="checkbox"] { width: 16px; height: 16px; cursor: pointer; }
+    .prefill-row label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--ford-blue);
+      cursor: pointer;
+      font-family: Arial, sans-serif;
+    }
+
+    /* ── Agreement scroll box ── */
+    .agreement-scroll-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .agreement-scroll-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #50565e;
+      font-family: Arial, sans-serif;
+      letter-spacing: 0.3px;
+    }
+    .agreement-btn {
+      background: none;
+      border: 1.5px solid #ccd8ee;
+      border-radius: 4px;
+      color: var(--ford-blue);
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 4px 10px;
+      font-family: Arial, sans-serif;
+      transition: background 0.15s;
+    }
+    .agreement-btn:hover { background: #f0f4ff; }
+    .agreement-scroll-box {
+      height: 220px;
+      overflow-y: auto;
+      border: 1.5px solid #ccd8ee;
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      font-size: 0.82rem;
+      line-height: 1.7;
+      color: #333;
+      background: #f9fbff;
+      font-family: Arial, sans-serif;
+    }
+    .agreement-scroll-box .ag-heading {
+      font-weight: 700;
+      color: var(--ford-blue);
+      margin: 10px 0 4px;
+      font-size: 0.78rem;
+    }
+    .agreement-scroll-box p { margin: 4px 0; }
+
+    /* ── Consent row ── */
+    .checkbox-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-top: 14px;
+      margin-bottom: 18px;
+    }
+    .checkbox-row input[type="checkbox"] {
+      width: 18px; height: 18px; flex-shrink: 0;
+      margin-top: 2px; cursor: pointer;
+    }
+    .checkbox-row label {
+      font-size: 0.85rem;
+      color: #333;
+      line-height: 1.5;
+      font-family: Arial, sans-serif;
+      cursor: pointer;
+    }
+
+    /* ── Sig fields ── */
+    .sig-input {
+      font-style: italic;
+      font-size: 1.05rem !important;
+    }
+
+    /* ── Errors ── */
+    #draft-errors {
+      background: #fff3f3;
+      border: 1.5px solid #f5c6c6;
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      font-size: 0.85rem;
+      color: #c0392b;
+      font-family: Arial, sans-serif;
+      margin-bottom: 16px;
+      display: none;
+    }
+    #draft-errors.visible { display: block; }
+    #draft-status {
+      font-size: 0.85rem;
+      color: #333;
+      font-family: Arial, sans-serif;
+      margin-bottom: 12px;
+      min-height: 1.2em;
+    }
+
+    /* ── Submit button ── */
+    .btn-submit {
+      width: 100%;
+      padding: 18px;
+      background: var(--ford-blue);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius);
+      font-family: Arial, sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: background 0.18s;
+      margin-top: 8px;
+    }
+    .btn-submit:hover { background: #002a60; }
+    .btn-submit:disabled { background: #7a9cc0; cursor: not-allowed; }
+
+    /* ── Agreement modal ── */
+    #agreement-modal {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.65);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    #agreement-modal[aria-hidden="false"] { display: flex; }
+    .modal-panel {
+      background: #fff;
+      border-radius: 12px;
+      width: 100%; max-width: 720px;
+      max-height: 88vh;
+      display: flex; flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    .modal-header {
+      background: var(--ford-blue);
+      color: #fff;
+      padding: 18px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .modal-title { font-weight: 700; font-size: 1rem; font-family: Arial, sans-serif; }
+    .modal-header-actions { display: flex; gap: 8px; align-items: center; }
+    .modal-close-btn {
+      background: none; border: none; color: rgba(255,255,255,0.8);
+      font-size: 1.4rem; cursor: pointer; line-height: 1;
+      transition: color 0.15s; padding: 0 2px;
+    }
+    .modal-close-btn:hover { color: #fff; }
+    .modal-body {
+      padding: 20px 24px;
+      overflow-y: auto;
+      font-size: 0.85rem;
+      line-height: 1.75;
+      color: #333;
+      font-family: Arial, sans-serif;
+    }
+    .modal-body .ag-heading {
+      font-weight: 700; color: var(--ford-blue);
+      margin: 12px 0 4px; font-size: 0.82rem;
+    }
+    .modal-body p { margin: 4px 0; }
+
+    /* ── Print ── */
+    #print-agreement-only { display: none; }
+    @media print {
+      body > *:not(#print-agreement-only) { display: none !important; }
+      #print-agreement-only { display: block !important; font-family: Arial, sans-serif; font-size: 10pt; }
+      .print-title { font-size: 14pt; font-weight: bold; margin-bottom: 4pt; }
+      .print-meta { font-size: 9pt; color: #555; margin-bottom: 16pt; }
+    }
+
+    /* ── Footer ── */
+    .site-footer {
+      text-align: center;
+      padding: 32px 20px;
+      color: #888;
+      font-family: Arial, sans-serif;
+      font-size: 0.8rem;
+      border-top: 1px solid #dce8ff;
+      margin-top: 40px;
+      background: #fff;
+    }
+    .site-footer a { color: #888; text-decoration: none; }
+    .site-footer a:hover { color: var(--ford-blue); }
+    .site-footer p { margin: 3px 0; }
+
+    /* ── Prefill animation ── */
+    .prefilled { background: #e8f0ff !important; transition: background 0.4s; }
+
+    /* ── Step counter ── */
+    .step-counter {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 28px;
+      justify-content: center;
+    }
+    .step-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      flex: 1;
+      max-width: 110px;
+    }
+    .step-dot {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: #dce8ff;
+      color: var(--ford-blue);
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      font-family: Arial, sans-serif;
+    }
+    .step-dot.active { background: var(--ford-blue); color: #fff; }
+    .step-dot.done { background: #2dbe6c; color: #fff; }
+    .step-label {
+      font-size: 0.65rem;
+      color: #888;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .step-line {
+      flex: 1; height: 2px; background: #dce8ff;
+      margin-bottom: 18px;
+      max-width: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV: Logo only ── -->
+  <nav>
+    <div class="nav-inner">
+      <a class="nav-brand" href="index.html">
+        <img src="images/ford-oval.png" alt="Ford" class="nav-ford-oval">
+        <span class="nav-wordmark-text">
+          <span class="nav-fw">Ford</span><span class="nav-fe">Engage</span>
+        </span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- ── Reassurance banner ── -->
+  <div class="reassurance-banner">
+    <p>
+      <i class="fa-solid fa-circle-check"></i>
+      Your Showroom Advance tool continues working normally. This agreement simply moves your support directly to SmartDealer.
+    </p>
+  </div>
+
+  <!-- ── Page ── -->
+  <div class="dss-page">
+
+    <!-- Hero -->
+    <div class="dss-hero">
+      <h1>Welcome to <span class="fe-bold">Ford</span><span class="fe-thin">Engage</span></h1>
+      <p class="subhead">You are already on our platform. <strong>This takes 60 seconds.</strong></p>
+    </div>
+
+    <!-- Steps -->
+    <div class="step-counter" aria-hidden="true">
+      <div class="step-item">
+        <div class="step-dot active">1</div>
+        <div class="step-label">Dealership</div>
+      </div>
+      <div class="step-line"></div>
+      <div class="step-item">
+        <div class="step-dot active">2</div>
+        <div class="step-label">Contact</div>
+      </div>
+      <div class="step-line"></div>
+      <div class="step-item">
+        <div class="step-dot active">3</div>
+        <div class="step-label">Sign</div>
+      </div>
+      <div class="step-line"></div>
+      <div class="step-item">
+        <div class="step-dot active">4</div>
+        <div class="step-label">Done</div>
+      </div>
+    </div>
+
+    <!-- Upgrade summary -->
+    <div class="upgrade-summary">
+      <div>
+        <div class="upgrade-summary-title">Your Upgrade Summary</div>
+        <div class="upgrade-summary-lines">
+          <div class="upgrade-line">
+            <i class="fa-solid fa-circle-check"></i>
+            FordEngage platform — Engage360 with 3D visualization
+          </div>
+          <div class="upgrade-line">
+            <i class="fa-solid fa-circle-check"></i>
+            Showroom Advance — continued, uninterrupted
+          </div>
+          <div class="upgrade-line">
+            <i class="fa-solid fa-circle-check"></i>
+            Term: Month-to-month · cancel anytime with 30 days notice
+          </div>
+          <div class="upgrade-line">
+            <i class="fa-solid fa-circle-check"></i>
+            Support moves directly to SmartDealer Technologies
+          </div>
+        </div>
+      </div>
+      <div class="upgrade-price-block">
+        <div class="upgrade-price-amount">$499</div>
+        <div class="upgrade-price-label">per month</div>
+      </div>
+    </div>
+
+    <!-- Form card -->
+    <div class="form-card">
+      <form id="dss-form" novalidate>
+
+        <!-- Honeypot -->
+        <div style="position:absolute;left:-10000px" aria-hidden="true">
+          <label>Leave blank<input name="website" tabindex="-1" autocomplete="off"></label>
+        </div>
+
+        <!-- ── SECTION 1: Dealership ── -->
+        <div class="form-section">
+          <div class="section-label">1. Your Dealership</div>
+          <div class="fields-stack">
+            <div class="field">
+              <label for="dealer-name">Dealership Name <span style="color:#c0392b">*</span></label>
+              <input type="text" id="dealer-name" name="dealer_name" placeholder="Anderson Ford of Anytown" required autocomplete="organization" />
+              <span class="field-error" id="dealer-name-error"></span>
+            </div>
+            <div class="field">
+              <label for="pa-code">P&amp;A Code (Dealer Code) <span style="color:#c0392b">*</span></label>
+              <input type="text" id="pa-code" name="pa_code" placeholder="e.g. 123456" maxlength="10" required />
+              <span class="field-helper">Your Ford Parts &amp; Accessories dealer code — found on your FAD portal</span>
+              <span class="field-error" id="pa-code-error"></span>
+            </div>
+          </div>
+        </div>
+
+        <hr class="section-divider">
+
+        <!-- ── SECTION 2: Primary Contact ── -->
+        <div class="form-section">
+          <div class="section-label">2. Primary Contact</div>
+          <div class="fields-stack">
+            <div class="grid-2">
+              <div class="field">
+                <label for="pc-first">First Name <span style="color:#c0392b">*</span></label>
+                <input type="text" id="pc-first" name="pc_first" placeholder="Jane" required autocomplete="given-name" />
+                <span class="field-error" id="pc-first-error"></span>
+              </div>
+              <div class="field">
+                <label for="pc-last">Last Name <span style="color:#c0392b">*</span></label>
+                <input type="text" id="pc-last" name="pc_last" placeholder="Smith" required autocomplete="family-name" />
+                <span class="field-error" id="pc-last-error"></span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="pc-title">Title <span style="color:#c0392b">*</span></label>
+              <select id="pc-title" name="pc_title" required>
+                <option value="" disabled selected>Select title</option>
+                <option>General Manager</option>
+                <option>Dealer Principal</option>
+                <option>Finance Director</option>
+                <option>Other</option>
+              </select>
+              <span class="field-error" id="pc-title-error"></span>
+            </div>
+            <div class="grid-2">
+              <div class="field">
+                <label for="pc-email">Email <span style="color:#c0392b">*</span></label>
+                <input type="email" id="pc-email" name="pc_email" placeholder="jane@dealership.com" required autocomplete="email" />
+                <span class="field-error" id="pc-email-error"></span>
+              </div>
+              <div class="field">
+                <label for="pc-phone">Phone <span style="color:#c0392b">*</span></label>
+                <input type="tel" id="pc-phone" name="pc_phone" placeholder="(555) 000-0000" required autocomplete="tel" />
+                <span class="field-error" id="pc-phone-error"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="section-divider">
+
+        <!-- ── SECTION 3: Signature ── -->
+        <div class="form-section">
+          <div class="section-label">3. Authorized Signature</div>
+
+          <div class="prefill-row">
+            <input type="checkbox" id="same-as-primary" />
+            <label for="same-as-primary">Same as primary contact — pre-fill my information</label>
+          </div>
+
+          <div class="fields-stack">
+            <div class="field">
+              <label for="sig-name">Full Legal Name <span style="color:#c0392b">*</span></label>
+              <input type="text" id="sig-name" name="sig_name" class="sig-input" placeholder="Your full legal name" required />
+              <span class="field-error" id="sig-name-error"></span>
+            </div>
+            <div class="grid-2">
+              <div class="field">
+                <label for="sig-title">Title <span style="color:#c0392b">*</span></label>
+                <input type="text" id="sig-title" name="sig_title" placeholder="General Manager" required />
+                <span class="field-error" id="sig-title-error"></span>
+              </div>
+              <div class="field">
+                <label for="sig-email">Email <span style="color:#c0392b">*</span></label>
+                <input type="email" id="sig-email" name="sig_email" placeholder="you@dealership.com" required />
+                <span class="field-error" id="sig-email-error"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="section-divider">
+
+        <!-- ── SECTION 4: Agreement ── -->
+        <div class="form-section">
+          <div class="section-label">4. Technology Services Agreement</div>
+
+          <div class="agreement-scroll-header">
+            <span class="agreement-scroll-title">Read the full agreement below</span>
+            <div style="display:flex;gap:6px;">
+              <button type="button" class="agreement-btn" id="btn-expand-modal">Expand</button>
+              <button type="button" class="agreement-btn" id="btn-print-agreement">Print</button>
+            </div>
+          </div>
+          <div
+            id="inline-agreement"
+            class="agreement-scroll-box"
+            role="region"
+            aria-label="Technology Services Agreement"
+            tabindex="0"
+          ><!-- populated by JS --></div>
+
+          <div class="checkbox-row" style="margin-top:16px;">
+            <input type="checkbox" id="agree-checkbox" name="agreement" required />
+            <label for="agree-checkbox">
+              I certify I am authorized to submit this information on behalf of the dealership and have read and agree to the Technology Services Agreement terms.
+            </label>
+          </div>
+          <span class="field-error" id="agree-checkbox-error"></span>
+        </div>
+
+        <!-- Errors + status -->
+        <div id="draft-errors" role="alert" tabindex="-1"></div>
+        <p id="draft-status" role="status"></p>
+
+        <!-- Submit -->
+        <button type="submit" class="btn-submit" id="submit-btn">
+          <i class="fa-solid fa-lock"></i>
+          Sign My Agreement
+        </button>
+
+      </form>
+    </div><!-- /form-card -->
+  </div><!-- /dss-page -->
+
+  <!-- ── Agreement modal ── -->
+  <div id="agreement-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title-text" aria-hidden="true">
+    <div class="modal-panel">
+      <div class="modal-header">
+        <span class="modal-title" id="modal-title-text">Technology Services Agreement</span>
+        <div class="modal-header-actions">
+          <button type="button" class="agreement-btn" id="modal-btn-print" style="border-color:rgba(255,255,255,0.4);color:#fff;">Print</button>
+          <button type="button" class="modal-close-btn" id="modal-close" aria-label="Close">&#x2715;</button>
+        </div>
+      </div>
+      <div class="modal-body" id="modal-agreement-body" tabindex="0"><!-- populated by JS --></div>
+    </div>
+  </div>
+
+  <!-- ── Print-only ── -->
+  <div id="print-agreement-only">
+    <div class="print-title">Technology Services Agreement</div>
+    <div class="print-meta">FordEngage Program · Version: <span id="print-version"></span></div>
+    <div id="print-terms-body"></div>
+  </div>
+
+  <!-- ── Footer ── -->
+  <footer class="site-footer">
+    <p>A SmartDealer Technologies Company</p>
+    <p><a href="tel:7868926368">(786) 892-6368</a></p>
+    <p>&copy; 2026 SmartDealer Technologies, Inc. All rights reserved.</p>
+  </footer>
+
+  <!-- ── Agreement JSON (same source as enroll.html) ── -->
+  <script>
+  // Fetch agreement from /server/agreement.json; fall back to embedded JSON
+  (function() {
+    const EMBEDDED_AGREEMENT = {"version":"FE-2026-09-29-review-14","terms":["TECHNOLOGY SERVICES AGREEMENT","(FORD ENGAGE PROGRAM)","","THIS TECHNOLOGY SERVICES AGREEMENT (the \"Agreement\") dated as of the date set forth in the signature block affixed hereto (the \"Effective Date\"), is entered into between PartSites, LLC, a wholly owned subsidiary of SmartDealer Technologies, Inc., a Florida limited liability company with offices located at 175 SW 7th Street, Suite 2010, Miami, Florida 33130 (the \"Company\") and the undersigned Ford or Lincoln franchise dealer (the \"Dealer\").  the Company and the Dealer are sometimes referred to herein respectively as a \"Party,\" and collectively as the \"Parties.\"","","RECITALS","","WHEREAS, the Company designs, develops, and provides certain technology products and related services to facilitate the online sale of automotive parts and accessories by automotive manufacturers and franchised automotive dealers (the \"Company Technology\"); and","","WHEREAS, The Dealer desires to license certain products of the Company Technology (the \"Company Products\") for use in its automotive dealership enterprise.","","NOW THEREFORE, in consideration of the foregoing, the mutual covenants contained in this Agreement, and of other good and valuable consideration, the receipt and sufficiency of which are hereby acknowledged, the Parties agree as follows:","","AGREEMENT","","Licensed Technology and Services.","","Licensed Products Defined.","","(a) Ford Accessories Digital Solution. The Company's accessories instore digital solution including DMS and FAD integration and reporting tools presently deployed by certain Dealers and branded for Ford and Lincoln Dealers in connection with an agreement between the Dealer and Chrome Data Solutions (the \"Existing DSS Solution\").","","(b) FordEngage. The Company's Engage360 platform with 3D visualization and instore digital solution including DMS and FAD integration and reporting tools, branded for Ford and Lincoln franchise dealers.","","1.2 Technology License. The Company hereby grants The Dealer a limited, non-transferable, non-assignable, non-exclusive license to use only the products selected in the Product Selection block (the \"Company Products\") for the purposes contemplated by this Agreement.","","1.3 Transitioning Dealers and New Dealers. The Company is the owner and developer of the Company Products, including the Existing DSS Solution. Dealers using the DSS Solution and executing this Agreement on the Effective Date (the \"Transitioning Dealers\"), shall receive a license for the continued use of the Existing DSS Solution effective upon execution, but provided by the Company instead of Chrome Data. The Existing DSS Solution will be retired from use by the Company on or about December 31, 2026 (the \"DSS Retirement Date\"). The Transitioning Dealers will be upgraded to a license for the Company Products selected in the Product Selection block in the interim period prior to retirement of the Existing DSS Solution.","","Ownership and Acceptable Use.","","2.1 Ownership of Company Technology. The Company retains all right, title and interest, including all copyright, patent, trade secret, trademark, and any other intellectual property rights, in and to the Company Technology. The Dealer acknowledges and agrees that it gains no right, title or interest in the Company Technology by virtue of this Agreement, other than the license granted in connection with this Agreement.","","2.2 Acceptable Use. The Dealer agrees not to: (i) resell, sublicense, or permit unauthorized access to the Company Products; (ii) reverse engineer, copy, or create derivative works from the Company Products; (iii) use the Company Products in violation of applicable law or third-party rights; (iv) interfere with platform performance or other dealers' access.","","3. Term and Termination.","","3.1 Term. The term of this Agreement shall commence upon the Effective Date and shall continue unless terminated by the Dealer with thirty (30) days' prior written notice. The Company may terminate this Agreement for a material breach by the Dealer of any term in this Agreement upon thirty (30) days' written notice.","","3.2 Termination and Survival. Upon termination: (i) the Dealer shall immediately pay all License Fees owed; (ii) rights and licenses granted hereunder shall automatically terminate; (iii) each Party agrees to return or destroy Confidential Information.","","4. Confidentiality. Each Party will protect the other's non-public confidential information using reasonable care and will not disclose it to third parties without written consent, except as required by law. This obligation survives termination for three (3) years.","","5. License Fees. The Dealer shall pay the Company the monthly license fee of $499/month for the FordEngage platform. The Company shall invoice the Dealer monthly in arrears. Invoices are payable within 30 days of receipt.","","6. Technology Warranty. The Company warrants that the Company Products shall meet industry standards and be free from disabling programming codes or items that may damage or interfere with permitted use.","","7. Onboarding and Support. The Company will provide onboarding services including product setup, initial training, and interface with the Dealer's website and DMS providers. Customer support is provided during regular business hours.","","8. Limitations of Liability. THE COMPANY PRODUCTS ARE PROVIDED \"AS IS.\" THE TOTAL LIABILITY OF EITHER PARTY SHALL NOT EXCEED FEES PAID BY DEALER IN THE PRIOR TWELVE (12) MONTHS. THE PARTIES ARE NOT LIABLE FOR INDIRECT, INCIDENTAL, OR CONSEQUENTIAL DAMAGES. This limitation does not apply to gross negligence, willful misconduct, or breach of confidentiality.","","9. General Provisions.","","9.1 Governing Law. This Agreement is governed by the laws of the State of Florida. Disputes shall be resolved in Miami-Dade County, Florida.","","9.2 Entire Agreement. This Agreement supersedes all prior agreements pertaining to such subject matter.","","9.3 Assignment. The Dealer may not assign this Agreement without Company's prior written consent.","","9.4 Amendments. This Agreement may only be amended by a signed written instrument from both Parties.","","9.5 Electronic Acceptance. The Dealer accepts this Agreement electronically by completing and submitting the online enrollment form. Electronic submission by an authorized representative constitutes the Dealer's acceptance of and agreement to be bound by the terms herein. A server-issued receipt confirming the submission timestamp, agreement version, and selected products serves as the record of acceptance.","","Monthly fees commence after onboarding of the first user is complete. All monthly fees, plus applicable taxes, are due and payable to PartSites, LLC, a wholly owned subsidiary of SmartDealer Technologies, Inc. within thirty (30) days of receipt of PartSites invoice."],"sha256":"fbfd9b4d4a970d389db1b98430d47ad039f5433dc91f4760080c70c9fcc2069e","consent":"I certify I am authorized to submit this information on behalf of the dealership and have read and agree to the terms."};
+
+    window._DSS_AGREEMENT = EMBEDDED_AGREEMENT;
+
+    // Try to load from server; silently fall back to embedded
+    fetch('/server/agreement.json')
+      .then(r => r.ok ? r.json() : Promise.reject())
+      .then(data => { if (data && data.terms) window._DSS_AGREEMENT = data; })
+      .catch(() => {})
+      .finally(() => { if (window._dssAgreementReady) window._dssAgreementReady(); });
+  })();
+  </script>
+
+  <!-- ── FordEngage brand rule ── -->
+  <script>
+  (function() {
+    function applyFEBrandRule(root) {
+      var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+      var node;
+      var toProcess = [];
+      while ((node = walker.nextNode())) {
+        if (node.nodeValue && node.nodeValue.indexOf('FordEngage') !== -1) {
+          toProcess.push(node);
+        }
+      }
+      toProcess.forEach(function(n) {
+        if (n.parentNode.classList && (n.parentNode.classList.contains('nav-fw') || n.parentNode.classList.contains('nav-fe'))) return;
+        var span = document.createElement('span');
+        span.innerHTML = n.nodeValue.replace(/FordEngage/g,
+          '<span style="font-weight:900">Ford</span><span style="font-weight:300;opacity:0.75">Engage</span>');
+        n.parentNode.replaceChild(span, n);
+      });
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+      applyFEBrandRule(document.body);
+    });
+  })();
+  </script>
+
+  <!-- ── Main DSS JS ── -->
+  <script>
+  'use strict';
+  (function() {
+
+    /* ── Agreement rendering ── */
+    function buildAgreementHTML(terms) {
+      return terms.map(function(t) {
+        if (!t.trim()) return '';
+        var isHeading = t.length < 95 && /^[A-Z0-9(]/.test(t.trim());
+        var cls = isHeading ? ' class="ag-heading"' : '';
+        var tag = isHeading ? 'div' : 'p';
+        return '<' + tag + cls + '>' + t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</' + tag + '>';
+      }).join('');
+    }
+
+    function initAgreement(agreement) {
+      var agreeHTML = buildAgreementHTML(agreement.terms);
+      document.getElementById('inline-agreement').innerHTML = agreeHTML;
+      document.getElementById('modal-agreement-body').innerHTML = agreeHTML;
+      document.getElementById('print-terms-body').innerHTML = agreeHTML;
+      document.getElementById('print-version').textContent = agreement.version;
+    }
+
+    // Wire up after agreement loaded (may be immediate or async)
+    window._dssAgreementReady = function() {
+      if (window._DSS_AGREEMENT) initAgreement(window._DSS_AGREEMENT);
+    };
+    // If already available (embedded), init immediately on DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', function() {
+      if (window._DSS_AGREEMENT) initAgreement(window._DSS_AGREEMENT);
+    });
+
+    /* ── Modal ── */
+    var modal = document.getElementById('agreement-modal');
+    var inlineBox = document.getElementById('inline-agreement');
+    var modalBody = document.getElementById('modal-agreement-body');
+    var lastFocus = null;
+
+    function openModal() {
+      lastFocus = document.activeElement;
+      modal.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+      var ratio = inlineBox.scrollTop / Math.max(1, inlineBox.scrollHeight - inlineBox.clientHeight);
+      modalBody.scrollTop = ratio * Math.max(0, modalBody.scrollHeight - modalBody.clientHeight);
+      var ff = modal.querySelector('button,[tabindex="0"]');
+      if (ff) ff.focus();
+    }
+    function closeModal() {
+      modal.setAttribute('aria-hidden','true');
+      document.body.style.overflow = '';
+      if (lastFocus) lastFocus.focus();
+    }
+
+    document.getElementById('btn-expand-modal').addEventListener('click', openModal);
+    document.getElementById('modal-close').addEventListener('click', closeModal);
+    modal.addEventListener('click', function(e) { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') closeModal();
+    });
+
+    /* ── Print ── */
+    function triggerPrint() {
+      document.getElementById('print-agreement-only').style.display = 'block';
+      window.print();
+      var restore = function() {
+        document.getElementById('print-agreement-only').style.display = 'none';
+        window.removeEventListener('afterprint', restore);
+      };
+      window.addEventListener('afterprint', restore);
+      setTimeout(restore, 8000);
+    }
+    document.getElementById('btn-print-agreement').addEventListener('click', triggerPrint);
+    document.getElementById('modal-btn-print').addEventListener('click', triggerPrint);
+
+    /* ── Same-as-primary prefill ── */
+    document.getElementById('same-as-primary').addEventListener('change', function() {
+      if (!this.checked) return;
+      var first = document.getElementById('pc-first').value.trim();
+      var last  = document.getElementById('pc-last').value.trim();
+      var title = document.getElementById('pc-title').value;
+      var email = document.getElementById('pc-email').value.trim();
+
+      var sigName  = document.getElementById('sig-name');
+      var sigTitle = document.getElementById('sig-title');
+      var sigEmail = document.getElementById('sig-email');
+
+      if (first || last) { sigName.value = (first + ' ' + last).trim(); sigName.classList.add('prefilled'); }
+      if (title) { sigTitle.value = title; sigTitle.classList.add('prefilled'); }
+      if (email) { sigEmail.value = email; sigEmail.classList.add('prefilled'); }
+
+      setTimeout(function() {
+        [sigName, sigTitle, sigEmail].forEach(function(el) { el.classList.remove('prefilled'); });
+      }, 1500);
+
+      // Require re-consent if already checked
+      var cb = document.getElementById('agree-checkbox');
+      if (cb.checked) { cb.checked = false; clearErr('agree-checkbox-error'); }
+    });
+
+    // Uncheck prefill if signer fields are manually edited
+    ['sig-name','sig-title','sig-email'].forEach(function(id) {
+      document.getElementById(id).addEventListener('input', function() {
+        document.getElementById('same-as-primary').checked = false;
+        clearErr(id + '-error');
+        this.removeAttribute('aria-invalid');
+      });
+    });
+
+    /* ── Validation helpers ── */
+    var phoneRe = /^(?:\+1[ .-]?)?(?:\([0-9]{3}\)|[0-9]{3})[ .-]?[0-9]{3}[ .-]?[0-9]{4}$/;
+
+    function $id(id) { return document.getElementById(id); }
+    function setErr(id, msg) {
+      var el = $id(id);
+      if (el) { el.textContent = msg; }
+      var inp = $id(id.replace('-error',''));
+      if (inp) inp.setAttribute('aria-invalid', msg ? 'true' : 'false');
+    }
+    function clearErr(id) { setErr(id, ''); }
+
+    var fieldDefs = [
+      { id: 'dealer-name',   label: 'Dealership Name',   type: 'text'  },
+      { id: 'pa-code',       label: 'P&A Code',          type: 'text'  },
+      { id: 'pc-first',      label: 'First Name',        type: 'text'  },
+      { id: 'pc-last',       label: 'Last Name',         type: 'text'  },
+      { id: 'pc-title',      label: 'Title',             type: 'select'},
+      { id: 'pc-email',      label: 'Email',             type: 'email' },
+      { id: 'pc-phone',      label: 'Phone',             type: 'tel'   },
+      { id: 'sig-name',      label: 'Full Legal Name',   type: 'text'  },
+      { id: 'sig-title',     label: 'Title',             type: 'text'  },
+      { id: 'sig-email',     label: 'Email',             type: 'email' },
+    ];
+
+    // Clear errors on input/change
+    fieldDefs.forEach(function(f) {
+      var el = $id(f.id);
+      if (!el) return;
+      el.addEventListener('input',  function() { clearErr(f.id + '-error'); this.removeAttribute('aria-invalid'); });
+      el.addEventListener('change', function() { clearErr(f.id + '-error'); this.removeAttribute('aria-invalid'); });
+    });
+    $id('agree-checkbox').addEventListener('change', function() { clearErr('agree-checkbox-error'); this.removeAttribute('aria-invalid'); });
+
+    function validate() {
+      var errors = [];
+      fieldDefs.forEach(function(f) {
+        var el = $id(f.id);
+        if (!el) return;
+        var val = el.value.trim();
+        if (!val) {
+          errors.push(f.label + ' is required.');
+          setErr(f.id + '-error', f.label + ' is required.');
+          return;
+        }
+        if (f.type === 'email' && !el.validity.valid) {
+          errors.push('Enter a valid email for ' + f.label + '.');
+          setErr(f.id + '-error', 'Enter a valid email address.');
+        } else if (f.type === 'tel' && !phoneRe.test(val)) {
+          errors.push('Enter a valid 10-digit phone number.');
+          setErr(f.id + '-error', 'Enter a valid phone, e.g. (555) 000-0000.');
+        }
+      });
+
+      var cb = $id('agree-checkbox');
+      if (!cb.checked) {
+        errors.push('Read the agreement and check the authorization checkbox.');
+        setErr('agree-checkbox-error', 'You must read and agree to the terms before signing.');
+        cb.setAttribute('aria-invalid','true');
+      }
+
+      var errEl = $id('draft-errors');
+      if (errors.length) {
+        errEl.textContent = 'Please correct: ' + errors.join(' ');
+        errEl.classList.add('visible');
+        errEl.focus();
+      } else {
+        errEl.textContent = '';
+        errEl.classList.remove('visible');
+      }
+      return errors.length === 0;
+    }
+
+    /* ── Submit ── */
+    var sending = false;
+    var submitted = false;
+    var submissionId = (typeof crypto !== 'undefined' && crypto.randomUUID) ? crypto.randomUUID() : Math.random().toString(36).slice(2);
+
+    $id('dss-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      if (sending || submitted) return;
+      if (!validate()) return;
+
+      var agreement = window._DSS_AGREEMENT || {};
+
+      var payload = {
+        submissionId: submissionId,
+        termId: 'month-to-month',
+        website: ($id('dss-form').querySelector('[name="website"]') || {}).value || '',
+        agreementVersion: agreement.version || '',
+        agreementSha256:  agreement.sha256  || '',
+        agreementText:    (agreement.terms  || []).join('\n'),
+        selectedProducts: ['FordEngage'],
+        pricingSummary: {
+          termLabel: 'Month-to-month',
+          baseLabel: '$499/mo',
+          discountedLabel: '$499/mo',
+          discountPct: 0,
+          setupCents: 100000,
+          setupLabel: '$1,000 one-time setup',
+        },
+        enrollment: {
+          dealer_name: $id('dealer-name').value.trim(),
+          pa_code:     $id('pa-code').value.trim(),
+        },
+        signer: {
+          name:  $id('sig-name').value.trim(),
+          title: $id('sig-title').value.trim(),
+          email: $id('sig-email').value.trim(),
+          phone: '',
+        },
+        primaryContact: {
+          first: $id('pc-first').value.trim(),
+          last:  $id('pc-last').value.trim(),
+          title: $id('pc-title').value,
+          email: $id('pc-email').value.trim(),
+          phone: $id('pc-phone').value.trim(),
+        },
+        consent: {
+          checked: true,
+          text: agreement.consent || 'I certify I am authorized to submit this information on behalf of the dealership and have read and agree to the terms.',
+          capturedAtClient: new Date().toISOString(),
+        },
+        dssTransition: true,
+      };
+
+      sending = true;
+      $id('draft-status').textContent = 'Submitting…';
+      var btn = $id('submit-btn');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Submitting…';
+
+      var result;
+      try {
+        var resp = await fetch('/submit-enrollment', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        result = await resp.json();
+        if (!resp.ok || !result.ok) {
+          throw new Error((result.error || 'HTTP ' + resp.status) + (result.receipt_id ? ' Receipt: ' + result.receipt_id : ''));
+        }
+        if (!result.receipt_id || !result.server_timestamp) throw new Error('Server confirmation is incomplete.');
+      } catch (err) {
+        $id('draft-status').textContent = 'Submission not confirmed: ' + err.message + ' Your entries are preserved. Please retry.';
+        $id('draft-errors').textContent = 'Submission error — ' + err.message;
+        $id('draft-errors').classList.add('visible');
+        sending = false;
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-lock"></i> Retry Submission';
+        return;
+      }
+
+      // Success — stash receipt and redirect
+      try {
+        sessionStorage.setItem('fe_receipt', JSON.stringify({
+          dealer:  $id('dealer-name').value.trim(),
+          contact: [$id('pc-first').value.trim(), $id('pc-last').value.trim()].filter(Boolean).join(' '),
+          email:   $id('pc-email').value.trim(),
+          phone:   $id('pc-phone').value.trim(),
+          term:    'Month-to-Month',
+          lines:   [
+            { name: 'FordEngage Platform', price: '$499/mo', savings: false },
+            { name: 'Showroom Advance (continued)', price: 'Included', savings: false },
+          ],
+          total:      '$499',
+          setup:      '$1,000',
+          hasSetupFee: true,
+          dssTransition: true,
+        }));
+      } catch(ex) {}
+
+      submitted = true;
+      window.location.href = 'enroll-confirmation.html';
+    });
+
+  })();
+  </script>
+
+</body>
+</html>
