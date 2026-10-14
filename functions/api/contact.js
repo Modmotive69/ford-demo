@@ -76,6 +76,22 @@ export async function onRequestPost({request, env}) {
        signal: AbortSignal.timeout(20000)}
     );
     if (sent.status !== 202) return json({ok:false,error:`Mail provider error (${sent.status}).`},502);
+    // Fire webhook to Sales Command Center — non-blocking
+    if (env.SALES_WEBHOOK_URL && env.SALES_WEBHOOK_SECRET) {
+      ctx.waitUntil((async () => {
+        try {
+          await fetch(env.SALES_WEBHOOK_URL, {
+            method: 'POST',
+            headers: {'Content-Type':'application/json','X-Webhook-Secret':env.SALES_WEBHOOK_SECRET},
+            body: JSON.stringify({
+              type: 'contact',
+              data: { first, last, email, phone, dealer, topics, message }
+            }),
+            signal: AbortSignal.timeout(10000)
+          });
+        } catch { /* non-fatal */ }
+      })());
+    }
     return json({ok:true});
   } catch {
     return json({ok:false,error:'Email service unavailable. Please call (786) 892-6368.'},503);

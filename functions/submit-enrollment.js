@@ -379,6 +379,32 @@ const recipient=env.ENROLLMENT_RECIPIENT||'scott@smartdealer.com';
            signal:AbortSignal.timeout(15000)});
       } catch { /* non-fatal */ }
     })());
+    // Fire webhook to Sales Command Center — non-blocking, cannot affect enrollment
+    if (env.SALES_WEBHOOK_URL && env.SALES_WEBHOOK_SECRET) {
+      ctx.waitUntil((async () => {
+        try {
+          await fetch(env.SALES_WEBHOOK_URL, {
+            method: 'POST',
+            headers: {'Content-Type':'application/json','X-Webhook-Secret':env.SALES_WEBHOOK_SECRET},
+            body: JSON.stringify({
+              type: 'enrollment',
+              data: {
+                pa_code: enrollment.pa_code || '',
+                dealer_name: enrollment.dealer_name || '',
+                first: enrollment.pc_first || '',
+                last: enrollment.pc_last || '',
+                email: enrollment.pc_email || '',
+                phone: enrollment.pc_phone || '',
+                products: r.products || [],
+                term: r.term || '',
+                mrr_cents: r.total_cents || 0,
+              }
+            }),
+            signal: AbortSignal.timeout(10000)
+          });
+        } catch { /* non-fatal — never block enrollment */ }
+      })());
+    }
     return json({ok:true,...r,email_status:'queued',agreement_html:renderAgreement(r)});
   } catch {
     try {await db.prepare('UPDATE enrollment_receipts SET state=? WHERE id=?').bind(sendStarted?'uncertain':'failed',r.receipt_id).run();}catch{}
