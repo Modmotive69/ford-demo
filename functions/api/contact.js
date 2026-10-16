@@ -56,16 +56,20 @@ export async function onRequestPost({request, env}) {
   </body></html>`;
 
   // 1. Write to Sales CRM DB — synchronous, before email
+  // Always creates an inquiry record. Also updates existing dealer if found.
   if (env.SALES_DB) {
     try {
       const existing = email
         ? await env.SALES_DB.prepare('SELECT id FROM dealers WHERE primary_email=?').bind(email).first()
         : null;
       if (existing) {
-        await env.SALES_DB.prepare(`UPDATE dealers SET last_contacted=datetime('now'), updated_at=datetime('now'), source_tab='fordengage.com contact form' WHERE id=?`).bind(existing.id).run();
+        // Update last contacted on the existing record
+        await env.SALES_DB.prepare(`UPDATE dealers SET last_contacted=datetime('now'), updated_at=datetime('now') WHERE id=?`).bind(existing.id).run();
+        // Always log the inquiry as an activity
         await env.SALES_DB.prepare(`INSERT INTO activities (dealer_id, agent_id, type, body, created_at) VALUES (?,'','note',?,datetime('now'))`
-        ).bind(existing.id, '📩 Contact form inquiry — Topics: '+(topics||'N/A')+(message?' — Message: '+message:'')).run();
+        ).bind(existing.id, '📩 Contact form — Dealer: '+(dealer||'N/A')+' | Topics: '+(topics||'N/A')+(message?' | '+message:'')).run();
       } else {
+        // New lead — create dealer record
         await env.SALES_DB.prepare(`INSERT INTO dealers (
           dealer_name, primary_email, primary_phone,
           pipeline_status, source_tab, notes, last_contacted, created_at, updated_at
