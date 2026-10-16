@@ -226,9 +226,30 @@ export function renderAgreement(r) {
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'"><title>FordEngage Submitted Agreement — ${esc(r.signer.name)}</title><style>body{font:16px/1.5 Georgia,serif;max-width:900px;margin:24px auto;padding:0 20px;color:#17243a}h1,h2{color:#003478}table{width:100%;border-collapse:collapse}th,td{text-align:left;vertical-align:top;padding:8px;border-bottom:1px solid #ddd;overflow-wrap:anywhere}th{width:32%}pre{font:inherit;white-space:pre-wrap;overflow-wrap:anywhere;font-size:0.9rem}@media print{body{margin:0;font-size:10pt}tr{break-inside:avoid}h2{page-break-before:auto}}</style></head><body><h1>FordEngage — Submitted Agreement</h1><h2 style="margin:0 0 24px;font-size:1.4rem;color:#17243a;border-bottom:3px solid #003478;padding-bottom:8px">${esc(r.enrollment.dealer_name||"")}</h2>${esigBlock}<h2 style="margin-top:32px">Product &amp; Price Summary</h2><table>${rows.map(([k,v])=>`<tr><th>${esc(k)}</th><td>${esc(v)}</td></tr>`).join('')}</table><h2 style="margin-top:32px">Full Accepted Agreement Text</h2><pre>${esc(r.agreementText)}</pre></body></html>`;
 }
 
-function replyExisting(row) {
+function replyExisting(row, env, ctx) {
   const r = JSON.parse(row.receipt);
-  if (row.state === 'queued') return json({ok:true,...r, email_status:'queued', agreement_html:renderAgreement(r)});
+  // Always re-fire the webhook in case it was missed
+  if (env && ctx && env.SALES_WEBHOOK_URL && env.SALES_WEBHOOK_SECRET) {
+    const enrollment = r.enrollment || {};
+    ctx.waitUntil((async () => {
+      try {
+        await fetch(env.SALES_WEBHOOK_URL, {
+          method: 'POST',
+          headers: {'Content-Type':'application/json','X-Webhook-Secret':env.SALES_WEBHOOK_SECRET,'User-Agent':'FordEngage-Webhook/1.0'},
+          body: JSON.stringify({type:'enrollment',data:{
+            pa_code: enrollment.pa_code||'',
+            dealer_name: enrollment.dealer_name||'',
+            first: enrollment.pc_first||'', last: enrollment.pc_last||'',
+            email: enrollment.pc_email||'', phone: enrollment.pc_phone||'',
+            products: r.selectedProducts||[], term: r.termId||'',
+            mrr_cents: r.resolved_price?.discountedCents||0, setup_fee_cents: r.resolved_price?.setupCents||0
+          }}),
+          signal: AbortSignal.timeout(10000)
+        });
+      } catch { /* non-fatal */ }
+    })());
+  }
+  if (row.state === 'queued' || row.state === 'sent') return json({ok:true,...r, email_status:'queued', agreement_html:renderAgreement(r)});
   return json({ok:false, receipt_id:r.receipt_id, error: row.state === 'failed'
     ? 'The email provider rejected this submission. Contact support with this receipt; do not submit a second agreement.'
     : 'Submission is processing or its email status needs confirmation. Retry with the same entries; do not create a second agreement.'}, 409);
@@ -329,7 +350,7 @@ const recipient=env.ENROLLMENT_RECIPIENT||'scott@smartdealer.com';
     const prior=await db.prepare('SELECT * FROM enrollment_receipts WHERE id=? OR fingerprint=?').bind(p.submissionId,fingerprint).first();
     if (prior) {
       if (prior.fingerprint!==fingerprint) return json({ok:false,error:'Submission identifier conflict.'},409);
-      return replyExisting(prior);
+      return replyExisting(prior, env, ctx);
     }
     r={
       receipt_id:        crypto.randomUUID(),
@@ -344,7 +365,7 @@ const recipient=env.ENROLLMENT_RECIPIENT||'scott@smartdealer.com';
     const insert=await db.prepare("INSERT OR IGNORE INTO enrollment_receipts(id,fingerprint,state,receipt,created_at) VALUES (?,?,'sending',?,?)").bind(r.receipt_id,fingerprint,JSON.stringify(r),r.server_timestamp).run();
     if (!insert.meta.changes) {
       const prior=await db.prepare('SELECT * FROM enrollment_receipts WHERE id=? OR fingerprint=?').bind(p.submissionId,fingerprint).first();
-      return replyExisting(prior);
+      return replyExisting(prior, env, ctx);
     }
   } catch { return json({ok:false,error:'Submission storage unavailable. Keep your entries and retry with the same submission.'},503); }
 
