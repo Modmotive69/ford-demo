@@ -401,62 +401,33 @@ const recipient=env.ENROLLMENT_RECIPIENT||'scott@smartdealer.com';
            body:JSON.stringify({message:{subject:'Welcome to FordEngage, a personal note from Scott',body:{contentType:'HTML',content:renderCEOLetter(r)},toRecipients:[{emailAddress:{address:enrollment.pc_email}}]},saveToSentItems:true}),
            signal:AbortSignal.timeout(15000)});
       } catch { /* non-fatal */ }
-    // Write directly to Sales CRM DB — guaranteed, no webhook needed
-    if (env.SALES_DB) {
-      ctx.waitUntil((async () => {
-        try {
-          const pa = (enrollment.pa_code||'').trim().replace(/^0+/,'') || (enrollment.pa_code||'').trim();
-          const name = (enrollment.dealer_name||'').trim();
-          const products = Array.isArray(r.selectedProducts) ? r.selectedProducts.join(', ') : (r.selectedProducts||'');
-          const mrr = r.resolved_price?.discountedCents || 0;
-          const setup = r.resolved_price?.setupCents || 0;
-          const term = r.termId || 'month-to-month';
-
-          // Match on PA code + dealer name
-          let existing = null;
-          if (pa) {
-            const byPA = await env.SALES_DB.prepare('SELECT * FROM dealers WHERE pa_code=?').bind(pa).first();
-            if (byPA && byPA.dealer_name && name &&
-                byPA.dealer_name.toLowerCase().trim() === name.toLowerCase().trim()) {
-              existing = byPA;
-            }
-          }
-
-          if (existing) {
-            await env.SALES_DB.prepare(`UPDATE dealers SET
-              pipeline_status='enrolled', contract_status='signed', payment_status='pending',
-              transferred_date=datetime('now'), sd_product_selection=?, sd_term=?,
-              enrolled_mrr=?, setup_fee=?,
-              authorizer_name=?, authorizer_title=?, authorizer_email=?, authorizer_phone=?,
-              primary_first=?, primary_last=?, primary_email=?, primary_phone=?,
-              updated_at=datetime('now') WHERE id=?`
-            ).bind(products, term, mrr, setup,
-              (enrollment.pc_first+' '+enrollment.pc_last).trim(),
-              enrollment.pc_title||'', enrollment.pc_email||'', enrollment.pc_phone||'',
-              enrollment.pc_first||'', enrollment.pc_last||'',
-              enrollment.pc_email||'', enrollment.pc_phone||'',
-              existing.id).run();
-          } else {
-            await env.SALES_DB.prepare(`INSERT INTO dealers (
-              pa_code, dealer_name, primary_first, primary_last, primary_email, primary_phone,
-              authorizer_name, authorizer_title, authorizer_email, authorizer_phone,
-              pipeline_status, sd_product_selection, sd_term, enrolled_mrr, setup_fee,
-              contract_status, payment_status, transferred_date,
-              source_tab, notes, created_at, updated_at
-            ) VALUES (?,?,?,?,?,?,?,?,?,?,'enrolled',?,?,?,?,'signed','pending',datetime('now'),
-              'fordengage.com','Enrolled via fordengage.com',datetime('now'),datetime('now'))`
-            ).bind(
-              pa||null, name,
-              enrollment.pc_first||'', enrollment.pc_last||'',
-              enrollment.pc_email||'', enrollment.pc_phone||'',
-              (enrollment.pc_first+' '+enrollment.pc_last).trim(),
-              enrollment.pc_title||'', enrollment.pc_email||'', enrollment.pc_phone||'',
-              products, term, mrr, setup
-            ).run();
-          }
-        } catch(e) { /* non-fatal — enrollment already confirmed */ }
-      })());
-    }
+    // Push enrollment to Sales CRM via API — synchronous inline call before responding
+    try {
+      const salesPayload = {
+        type: 'enrollment',
+        data: {
+          pa_code: enrollment.pa_code || '',
+          dealer_name: enrollment.dealer_name || '',
+          first: enrollment.pc_first || '',
+          last: enrollment.pc_last || '',
+          email: enrollment.pc_email || '',
+          phone: enrollment.pc_phone || '',
+          title: enrollment.pc_title || '',
+          products: r.selectedProducts || [],
+          term: r.termId || 'month-to-month',
+          mrr_cents: r.resolved_price?.discountedCents || 0,
+          setup_fee_cents: r.resolved_price?.setupCents || 0,
+        }
+      };
+      const salesUrl = env.SALES_WEBHOOK_URL || 'https://fordengage-sales.pages.dev/api/webhooks/enrollment';
+      const salesSecret = env.SALES_WEBHOOK_SECRET || '';
+      await fetch(salesUrl, {
+        method: 'POST',
+        headers: {'Content-Type':'application/json','X-Webhook-Secret':salesSecret,'User-Agent':'FordEngage-Webhook/1.0'},
+        body: JSON.stringify(salesPayload),
+        signal: AbortSignal.timeout(8000)
+      });
+    } catch { /* non-fatal */ }
     } catch { /* email failed — receipt is already saved, user already got success */ }
   })());
 
