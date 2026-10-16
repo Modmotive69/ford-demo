@@ -8,11 +8,21 @@ binding = "ENROLLMENT_DB"
 database_name = "fordengage-enrollment"
 database_id = "300b047a-fbb5-44f4-812d-df53c62212d2"
 
+[[d1_databases]]
+binding = "SALES_DB"
+database_name = "fordengage-sales"
+database_id = "f09fca43-6f1b-4f20-a0d1-3f91ebb892ce"
+
 [env.production]
 [[env.production.d1_databases]]
 binding = "ENROLLMENT_DB"
 database_name = "fordengage-enrollment"
 database_id = "300b047a-fbb5-44f4-812d-df53c62212d2"
+
+[[env.production.d1_databases]]
+binding = "SALES_DB"
+database_name = "fordengage-sales"
+database_id = "f09fca43-6f1b-4f20-a0d1-3f91ebb892ce"
 
 [vars]
 HCTI_USER_ID = "01M4F9G93EAZFPVWJ0FVM66FF2"
