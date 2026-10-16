@@ -386,7 +386,7 @@ const recipient=env.ENROLLMENT_RECIPIENT||'scott@smartdealer.com';
         try {
           await fetch(env.SALES_WEBHOOK_URL, {
             method: 'POST',
-            headers: {'Content-Type':'application/json','X-Webhook-Secret':env.SALES_WEBHOOK_SECRET},
+            headers: {'Content-Type':'application/json','X-Webhook-Secret':env.SALES_WEBHOOK_SECRET,'User-Agent':'FordEngage-Webhook/1.0'},
             body: JSON.stringify({
               type: 'enrollment',
               data: {
