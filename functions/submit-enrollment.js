@@ -404,57 +404,53 @@ const recipient=env.ENROLLMENT_RECIPIENT||'scott@smartdealer.com';
     } catch { /* email failed — receipt is already saved, user already got success */ }
   })());
 
-  // Write to Sales CRM DB — own waitUntil, independent of email
-  waitUntil((async () => {
-    try {
-      const pa = (enrollment.pa_code||'').trim().replace(/^0+/,'') || (enrollment.pa_code||'').trim();
-      const name = (enrollment.dealer_name||'').trim();
-      const products = (r.selectedProducts||[]).join(', ');
-      const mrr = r.resolved_price?.discountedCents || 0;
-      const setup = r.resolved_price?.setupCents || 0;
-      const term = r.termId || 'month-to-month';
-
-      let existing = null;
-      if (pa) {
-        const byPA = await env.SALES_DB.prepare('SELECT id, dealer_name FROM dealers WHERE pa_code=?').bind(pa).first();
-        if (byPA && byPA.dealer_name?.toLowerCase().trim() === name.toLowerCase().trim()) existing = byPA;
-      }
-
-      if (existing) {
-        await env.SALES_DB.prepare(`UPDATE dealers SET
-          pipeline_status='enrolled', contract_status='signed', payment_status='pending',
-          transferred_date=datetime('now'), sd_product_selection=?, sd_term=?,
-          enrolled_mrr=?, setup_fee=?,
-          primary_first=?, primary_last=?, primary_email=?, primary_phone=?,
-          authorizer_name=?, authorizer_title=?, authorizer_email=?,
-          updated_at=datetime('now') WHERE id=?`
-        ).bind(products, term, mrr, setup,
-          enrollment.pc_first||'', enrollment.pc_last||'',
-          enrollment.pc_email||'', enrollment.pc_phone||'',
-          ((enrollment.pc_first||'')+' '+(enrollment.pc_last||'')).trim(),
-          enrollment.pc_title||'', enrollment.pc_email||'',
-          existing.id).run();
-      } else {
-        await env.SALES_DB.prepare(`INSERT INTO dealers (
-          pa_code, dealer_name, primary_first, primary_last, primary_email, primary_phone,
-          authorizer_name, authorizer_title, authorizer_email, authorizer_phone,
-          pipeline_status, sd_product_selection, sd_term, enrolled_mrr, setup_fee,
-          contract_status, payment_status, transferred_date,
-          source_tab, notes, created_at, updated_at
-        ) VALUES (?,?,?,?,?,?,?,?,?,?,
-          'enrolled',?,?,?,?,'signed','pending',datetime('now'),
-          'fordengage.com','Enrolled via fordengage.com',datetime('now'),datetime('now'))`
-        ).bind(
-          pa||null, name,
-          enrollment.pc_first||'', enrollment.pc_last||'',
-          enrollment.pc_email||'', enrollment.pc_phone||'',
-          ((enrollment.pc_first||'')+' '+(enrollment.pc_last||'')).trim(),
-          enrollment.pc_title||'', enrollment.pc_email||'', enrollment.pc_phone||'',
-          products, term, mrr, setup
-        ).run();
-      }
-    } catch(e) { console.error('SALES_DB write failed:', e.message); }
-  })());
+  // Write to Sales CRM DB — synchronous before response, guaranteed
+  try {
+    const pa = (enrollment.pa_code||'').trim().replace(/^0+/,'') || (enrollment.pa_code||'').trim();
+    const name = (enrollment.dealer_name||'').trim();
+    const products = (r.selectedProducts||[]).join(', ');
+    const mrr = r.resolved_price?.discountedCents || 0;
+    const setup = r.resolved_price?.setupCents || 0;
+    const term = r.termId || 'month-to-month';
+    let existing = null;
+    if (pa) {
+      const byPA = await env.SALES_DB.prepare('SELECT id, dealer_name FROM dealers WHERE pa_code=?').bind(pa).first();
+      if (byPA && byPA.dealer_name?.toLowerCase().trim() === name.toLowerCase().trim()) existing = byPA;
+    }
+    if (existing) {
+      await env.SALES_DB.prepare(`UPDATE dealers SET
+        pipeline_status='enrolled', contract_status='signed', payment_status='pending',
+        transferred_date=datetime('now'), sd_product_selection=?, sd_term=?,
+        enrolled_mrr=?, setup_fee=?,
+        primary_first=?, primary_last=?, primary_email=?, primary_phone=?,
+        authorizer_name=?, authorizer_title=?, authorizer_email=?,
+        updated_at=datetime('now') WHERE id=?`
+      ).bind(products, term, mrr, setup,
+        enrollment.pc_first||'', enrollment.pc_last||'',
+        enrollment.pc_email||'', enrollment.pc_phone||'',
+        ((enrollment.pc_first||'')+' '+(enrollment.pc_last||'')).trim(),
+        enrollment.pc_title||'', enrollment.pc_email||'',
+        existing.id).run();
+    } else {
+      await env.SALES_DB.prepare(`INSERT INTO dealers (
+        pa_code, dealer_name, primary_first, primary_last, primary_email, primary_phone,
+        authorizer_name, authorizer_title, authorizer_email, authorizer_phone,
+        pipeline_status, sd_product_selection, sd_term, enrolled_mrr, setup_fee,
+        contract_status, payment_status, transferred_date,
+        source_tab, notes, created_at, updated_at
+      ) VALUES (?,?,?,?,?,?,?,?,?,?,
+        'enrolled',?,?,?,?,'signed','pending',datetime('now'),
+        'fordengage.com','Enrolled via fordengage.com',datetime('now'),datetime('now'))`
+      ).bind(
+        pa||null, name,
+        enrollment.pc_first||'', enrollment.pc_last||'',
+        enrollment.pc_email||'', enrollment.pc_phone||'',
+        ((enrollment.pc_first||'')+' '+(enrollment.pc_last||'')).trim(),
+        enrollment.pc_title||'', enrollment.pc_email||'', enrollment.pc_phone||'',
+        products, term, mrr, setup
+      ).run();
+    }
+  } catch(e) { console.error('SALES_DB write failed:', e.message); }
 
   return json({ok:true,...r,email_status:'queued',agreement_html:renderAgreement(r)});
 }
