@@ -348,25 +348,27 @@ const recipient=env.ENROLLMENT_RECIPIENT||'scott@smartdealer.com';
     }
   } catch { return json({ok:false,error:'Submission storage unavailable. Keep your entries and retry with the same submission.'},503); }
 
-  let sendStarted=false;
-  try {
-    const tokenRes=await fetch(`https://login.microsoftonline.com/${encodeURIComponent(env.MS_GRAPH_TENANT_ID)}/oauth2/v2.0/token`,
-      {method:'POST',body:new URLSearchParams({grant_type:'client_credentials',client_id:env.MS_GRAPH_CLIENT_ID,client_secret:env.MS_GRAPH_CLIENT_SECRET,scope:'https://graph.microsoft.com/.default'}),signal:AbortSignal.timeout(15000)});
-    if(!tokenRes.ok) throw new Error('auth');
-    const token=await tokenRes.json();if(!token.access_token) throw new Error('auth');
-    sendStarted=true;
-    const subject=`New Ford Enrollment — ${enrollment.dealer_name} — ${products.join('+')} — ${resolved.label} — ${r.receipt_id}`;
-    const sent=await fetch(`https://graph.microsoft.com/v1.0/users/${encodeURIComponent(sender)}/sendMail`,
-      {method:'POST',headers:{Authorization:`Bearer ${token.access_token}`,'Content-Type':'application/json'},
-       body:JSON.stringify({message:{subject,body:{contentType:'HTML',content:renderAgreement(r)},attachments:[await generateInvoicePDF(r, env),{"@odata.type":"#microsoft.graph.fileAttachment",name:"PartSites-W9.pdf",contentType:"application/pdf",contentBytes:W9_B64}],toRecipients:[...new Set([...DIST_LIST, enrollment.pc_email])].map(address=>({emailAddress:{address}}))},saveToSentItems:true}),
-       signal:AbortSignal.timeout(20000)});
-    if (sent.status!==202) {
-      await db.prepare("UPDATE enrollment_receipts SET state='failed' WHERE id=?").bind(r.receipt_id).run();
-      return json({ok:false,receipt_id:r.receipt_id,error:`Email provider did not accept the request (${sent.status}). Contact support with this receipt; do not submit a second agreement.`},502);
-    }
-    await db.prepare("UPDATE enrollment_receipts SET state='queued' WHERE id=?").bind(r.receipt_id).run();
-    // CEO personal welcome letter — fires 5 minutes after the agreement email
-    waitUntil((async () => {
+  // Respond immediately — email fires in background via waitUntil
+  await db.prepare("UPDATE enrollment_receipts SET state='queued' WHERE id=?").bind(r.receipt_id).run();
+
+  // Background: send agreement email + CEO letter
+  waitUntil((async () => {
+    try {
+      const tokenRes=await fetch(`https://login.microsoftonline.com/${encodeURIComponent(env.MS_GRAPH_TENANT_ID)}/oauth2/v2.0/token`,
+        {method:'POST',body:new URLSearchParams({grant_type:'client_credentials',client_id:env.MS_GRAPH_CLIENT_ID,client_secret:env.MS_GRAPH_CLIENT_SECRET,scope:'https://graph.microsoft.com/.default'}),signal:AbortSignal.timeout(15000)});
+      if(!tokenRes.ok) return;
+      const token=await tokenRes.json();if(!token.access_token) return;
+      const subject=`New Ford Enrollment — ${enrollment.dealer_name} — ${products.join('+')} — ${resolved.label} — ${r.receipt_id}`;
+      const sent=await fetch(`https://graph.microsoft.com/v1.0/users/${encodeURIComponent(sender)}/sendMail`,
+        {method:'POST',headers:{Authorization:`Bearer ${token.access_token}`,'Content-Type':'application/json'},
+         body:JSON.stringify({message:{subject,body:{contentType:'HTML',content:renderAgreement(r)},attachments:[await generateInvoicePDF(r, env),{"@odata.type":"#microsoft.graph.fileAttachment",name:"PartSites-W9.pdf",contentType:"application/pdf",contentBytes:W9_B64}],toRecipients:[...new Set([...DIST_LIST, enrollment.pc_email])].map(address=>({emailAddress:{address}}))},saveToSentItems:true}),
+         signal:AbortSignal.timeout(25000)});
+      if(sent.status===202){
+        await db.prepare("UPDATE enrollment_receipts SET state='sent' WHERE id=?").bind(r.receipt_id).run();
+      } else {
+        await db.prepare("UPDATE enrollment_receipts SET state='email_failed' WHERE id=?").bind(r.receipt_id).run();
+      }
+      // CEO personal welcome letter — 5 min delay
       await new Promise(res => setTimeout(res, 5 * 60 * 1000));
       try {
         const tokenRes2 = await fetch(`https://login.microsoftonline.com/${encodeURIComponent(env.MS_GRAPH_TENANT_ID)}/oauth2/v2.0/token`,
@@ -378,7 +380,6 @@ const recipient=env.ENROLLMENT_RECIPIENT||'scott@smartdealer.com';
            body:JSON.stringify({message:{subject:'Welcome to FordEngage, a personal note from Scott',body:{contentType:'HTML',content:renderCEOLetter(r)},toRecipients:[{emailAddress:{address:enrollment.pc_email}}]},saveToSentItems:true}),
            signal:AbortSignal.timeout(15000)});
       } catch { /* non-fatal */ }
-    })());
     // Fire webhook to Sales Command Center — non-blocking, cannot affect enrollment
     if (env.SALES_WEBHOOK_URL && env.SALES_WEBHOOK_SECRET) {
       ctx.waitUntil((async () => {
@@ -405,12 +406,9 @@ const recipient=env.ENROLLMENT_RECIPIENT||'scott@smartdealer.com';
         } catch { /* non-fatal — never block enrollment */ }
       })());
     }
-    return json({ok:true,...r,email_status:'queued',agreement_html:renderAgreement(r)});
-  } catch {
-    try {await db.prepare('UPDATE enrollment_receipts SET state=? WHERE id=?').bind(sendStarted?'uncertain':'failed',r.receipt_id).run();}catch{}
-    return json({ok:false,receipt_id:r.receipt_id,error:sendStarted
-      ?'Provider confirmation unavailable. Retry with the same entries to check status; do not create a second agreement.'
-      :'Email service unavailable. Contact support with this receipt; your entries are preserved.'},503);
-  }
+    } catch { /* email failed — receipt is already saved, user already got success */ }
+  })());
+
+  return json({ok:true,...r,email_status:'queued',agreement_html:renderAgreement(r)});
 }
 
