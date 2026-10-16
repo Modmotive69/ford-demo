@@ -62,9 +62,9 @@ export async function onRequestPost({request, env}) {
         ? await env.SALES_DB.prepare('SELECT id FROM dealers WHERE primary_email=?').bind(email).first()
         : null;
       if (existing) {
-        await env.SALES_DB.prepare(`UPDATE dealers SET last_contacted=datetime('now'), updated_at=datetime('now') WHERE id=?`).bind(existing.id).run();
+        await env.SALES_DB.prepare(`UPDATE dealers SET last_contacted=datetime('now'), updated_at=datetime('now'), source_tab='fordengage.com contact form' WHERE id=?`).bind(existing.id).run();
         await env.SALES_DB.prepare(`INSERT INTO activities (dealer_id, agent_id, type, body, created_at) VALUES (?,'','note',?,datetime('now'))`
-        ).bind(existing.id, '📩 Contact form — Topics: '+(topics||'N/A')+(message?' — '+message:'')).run();
+        ).bind(existing.id, '📩 Contact form inquiry — Topics: '+(topics||'N/A')+(message?' — Message: '+message:'')).run();
       } else {
         await env.SALES_DB.prepare(`INSERT INTO dealers (
           dealer_name, primary_email, primary_phone,
