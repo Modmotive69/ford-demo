@@ -76,21 +76,28 @@ export async function onRequestPost({request, env}) {
        signal: AbortSignal.timeout(20000)}
     );
     if (sent.status !== 202) return json({ok:false,error:`Mail provider error (${sent.status}).`},502);
-    // Fire webhook to Sales Command Center — non-blocking
-    if (env.SALES_WEBHOOK_URL && env.SALES_WEBHOOK_SECRET) {
-      ctx.waitUntil((async () => {
-        try {
-          await fetch(env.SALES_WEBHOOK_URL, {
-            method: 'POST',
-            headers: {'Content-Type':'application/json','X-Webhook-Secret':env.SALES_WEBHOOK_SECRET},
-            body: JSON.stringify({
-              type: 'contact',
-              data: { first, last, email, phone, dealer, topics, message }
-            }),
-            signal: AbortSignal.timeout(10000)
-          });
-        } catch { /* non-fatal */ }
-      })());
+    // Write directly to Sales CRM DB
+    if (env.SALES_DB) {
+      try {
+        const existing = email
+          ? await env.SALES_DB.prepare('SELECT id FROM dealers WHERE primary_email=?').bind(email).first()
+          : null;
+        if (existing) {
+          await env.SALES_DB.prepare(`UPDATE dealers SET last_contacted=datetime('now'), updated_at=datetime('now') WHERE id=?`).bind(existing.id).run();
+          await env.SALES_DB.prepare(`INSERT INTO activities (dealer_id, agent_id, type, body, created_at) VALUES (?,'','note',?,datetime('now'))`
+          ).bind(existing.id, '📩 Contact form — Topics: '+(topics||'N/A')+(message?' — '+message:'')).run();
+        } else {
+          await env.SALES_DB.prepare(`INSERT INTO dealers (
+            dealer_name, primary_email, primary_phone,
+            pipeline_status, source_tab, notes, last_contacted, created_at, updated_at
+          ) VALUES (?,?,?,'contacted','fordengage.com contact form',?,datetime('now'),datetime('now'),datetime('now'))`
+          ).bind(
+            dealer||((first||'')+' '+(last||'')).trim()||'New Lead',
+            email||null, phone||null,
+            [topics?'Topics: '+topics:'', message?'Message: '+message:''].filter(Boolean).join(' · ')
+          ).run();
+        }
+      } catch(e) { console.error('SALES_DB contact write failed:', e.message); }
     }
     return json({ok:true});
   } catch {
