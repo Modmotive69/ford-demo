@@ -76,7 +76,11 @@ export async function onRequestPost({request, env}) {
        signal: AbortSignal.timeout(20000)}
     );
     if (sent.status !== 202) return json({ok:false,error:`Mail provider error (${sent.status}).`},502);
-    // Write directly to Sales CRM DB
+    return json({ok:true});
+  } catch {
+    return json({ok:false,error:'Email service unavailable. Please call (786) 892-6368.'},503);
+  } finally {
+    // Write to Sales CRM DB — always runs, even if email fails
     if (env.SALES_DB) {
       try {
         const existing = email
@@ -99,8 +103,5 @@ export async function onRequestPost({request, env}) {
         }
       } catch(e) { console.error('SALES_DB contact write failed:', e.message); }
     }
-    return json({ok:true});
-  } catch {
-    return json({ok:false,error:'Email service unavailable. Please call (786) 892-6368.'},503);
   }
 }
