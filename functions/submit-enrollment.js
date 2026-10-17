@@ -389,18 +389,20 @@ const recipient=env.ENROLLMENT_RECIPIENT||'scott@smartdealer.com';
       } else {
         await db.prepare("UPDATE enrollment_receipts SET state='email_failed' WHERE id=?").bind(r.receipt_id).run();
       }
-      // CEO personal welcome letter — 5 min delay
-      await new Promise(res => setTimeout(res, 5 * 60 * 1000));
+      // Queue CEO personal letter — stored in D1, sent by OpenClaw automation 5 min later
       try {
-        const tokenRes2 = await fetch(`https://login.microsoftonline.com/${encodeURIComponent(env.MS_GRAPH_TENANT_ID)}/oauth2/v2.0/token`,
-          {method:'POST',body:new URLSearchParams({grant_type:'client_credentials',client_id:env.MS_GRAPH_CLIENT_ID,client_secret:env.MS_GRAPH_CLIENT_SECRET,scope:'https://graph.microsoft.com/.default'}),signal:AbortSignal.timeout(15000)});
-        if (!tokenRes2.ok) return;
-        const token2 = await tokenRes2.json(); if (!token2.access_token) return;
-        await fetch(`https://graph.microsoft.com/v1.0/users/${encodeURIComponent(sender)}/sendMail`,
-          {method:'POST',headers:{Authorization:`Bearer ${token2.access_token}`,'Content-Type':'application/json'},
-           body:JSON.stringify({message:{subject:'Welcome to FordEngage, a personal note from Scott',body:{contentType:'HTML',content:renderCEOLetter(r)},toRecipients:[{emailAddress:{address:enrollment.pc_email}}]},saveToSentItems:true}),
-           signal:AbortSignal.timeout(15000)});
-      } catch { /* non-fatal */ }
+        const sendAfter = new Date(Date.now() + 5 * 60 * 1000).toISOString().replace('T',' ').slice(0,19);
+        await db.prepare(`INSERT INTO ceo_letters (receipt_id, to_email, to_name, dealer_name, products, html_body, send_after)
+          VALUES (?,?,?,?,?,?,?)`).bind(
+          r.receipt_id,
+          enrollment.pc_email||'',
+          ((enrollment.pc_first||'')+' '+(enrollment.pc_last||'')).trim()||'',
+          enrollment.dealer_name||'',
+          (r.selectedProducts||[]).join(', '),
+          renderCEOLetter(r),
+          sendAfter
+        ).run();
+      } catch(e) { console.error('CEO letter queue failed:', e.message); }
     } catch { /* email failed — receipt is already saved, user already got success */ }
   })());
 
