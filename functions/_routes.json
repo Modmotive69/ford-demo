@@ -5,5 +5,8 @@
     "/api/dealer-correction",
     "/api/contact"
   ],
-  "exclude": []
+  "exclude": [
+    "/enroll",
+    "/enroll.html"
+  ]
 }
