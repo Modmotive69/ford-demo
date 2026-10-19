@@ -1,0 +1,3 @@
+# FordEngage Cloudflare Pages redirects
+/enroll  /enroll.html  200
+/enroll/ /enroll.html  200
