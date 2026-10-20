@@ -10,8 +10,8 @@ database_id = "300b047a-fbb5-44f4-812d-df53c62212d2"
 
 [[d1_databases]]
 binding = "SALES_DB"
-database_name = "fordengage-sales"
-database_id = "f09fca43-6f1b-4f20-a0d1-3f91ebb892ce"
+database_name = "fordengage-sales-2"
+database_id = "9ed1b906-fa6a-466d-a913-7fa70bfb51d0"
 
 [env.production]
 [[env.production.d1_databases]]
@@ -21,8 +21,8 @@ database_id = "300b047a-fbb5-44f4-812d-df53c62212d2"
 
 [[env.production.d1_databases]]
 binding = "SALES_DB"
-database_name = "fordengage-sales"
-database_id = "f09fca43-6f1b-4f20-a0d1-3f91ebb892ce"
+database_name = "fordengage-sales-2"
+database_id = "9ed1b906-fa6a-466d-a913-7fa70bfb51d0"
 
 [vars]
 HCTI_USER_ID = "01M4F9G93EAZFPVWJ0FVM66FF2"
