@@ -53,14 +53,15 @@ function renderInvoice(r) {
   const dateStr = date.toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
   const invoiceNum = 'PS-' + r.receipt_id.slice(0,8).toUpperCase();
   // Build line items from selected products
-  const priceConfig = {FordEngage:{base:499},eStore:{base:299},'VDP Widget':{base:199}};
+  const priceConfig = {FordEngage:{base:499},eStore:{base:299},'VDP Widget':{base:199},WorldDomination:{base:999}};
   const discount = p.discountPct || 0;
   const factor = 1 - discount / 100;
   const productNames = p.products || [p.key];
   const productDescriptions = {
     FordEngage: 'Engage360 3D visualization and instore digital solution. DMS and FAD integration, reporting tools. Ford and Lincoln franchise dealer license.',
     eStore: 'Dealer-branded OEM parts and accessories eStore. Catalog discovery, VIN fitment, checkout, and order operations. 3D visualization and augmented reality included.',
-    'VDP Widget': 'Vehicle-specific accessories widget embedded in dealer website vehicle detail pages.'
+    'VDP Widget': 'Vehicle-specific accessories widget embedded in dealer website vehicle detail pages.',
+    WorldDomination: 'World Domination bundle — FordEngage + EnvyPRO eStore + VDP Widget + 32\" 4K Kiosk ($1,000 value). Complete dealer digital solution.'
   };
   const lineItems = productNames.map(name => {
     const base = (priceConfig[name] || {base:0}).base;
