@@ -174,16 +174,31 @@ function renderCEOLetter(r) {
   const products  = r.resolved_price.key.replace(/\+/g, ', ');
   const term      = r.resolved_price.termLabel;
   const amount    = r.resolved_price.discountedLabel;
+  const sig = `
+<table style="margin-top:24px;font-family:'Book Antiqua',Palatino,serif;font-size:13px;color:#666699;border-top:1px solid #ccc;padding-top:12px">
+  <tr><td style="font-weight:bold;font-size:15px;color:#333">Scott Anderson</td></tr>
+  <tr><td style="color:#666699">CEO &amp; Founder | SmartDealer Technologies, Inc. / PartSites LLC &amp; InDesign Data LLC</td></tr>
+  <tr><td style="padding-top:4px">175 SW 7th St. Suite #2010 | Miami, FL 33130-2960</td></tr>
+  <tr><td>Cell: (305) 335.7996 | Main: 800.915.3353 ext. 101</td></tr>
+  <tr><td style="padding-top:6px">
+    <a href="https://smartdealer.com" style="color:#666699">smartdealer.com</a> |
+    <a href="https://linkedin.com/in/scottandersonsd" style="color:#666699">LinkedIn</a> |
+    <a href="https://indesigndata.com" style="color:#666699">indesigndata.com</a> |
+    <a href="https://partsites.com" style="color:#666699">partsites.com</a> |
+    <a href="https://dmsbackups.com" style="color:#666699">dmsbackups.com</a> |
+    <a href="https://docevolution.com" style="color:#666699">docevolution.com</a>
+  </td></tr>
+  <tr><td style="padding-top:10px;font-size:11px;color:#999;border-top:1px solid #eee;margin-top:8px">This message and any attachments are intended solely for the use of the named recipient(s) and may contain confidential and/or privileged information. Any unauthorized use, disclosure or copying is strictly prohibited. If you have received this message in error, please notify the sender and permanently delete it.</td></tr>
+</table>`;
   return `<!DOCTYPE html><html><body style="font-family:Arial,sans-serif;font-size:15px;line-height:1.7;color:#111;max-width:600px;margin:0 auto;padding:32px 24px">
 <p>Hey ${firstName},</p>
-<p>Scott Anderson here, CEO of SmartDealer Technologies.</p>
 <p>I saw your enrollment come in and just had to reach out personally. You made a great call.</p>
 <p>FordEngage dealers are averaging over $800 more gross per vehicle in accessory sales. That's real money, every month, on deals you're already closing. You're going to love what this does for your numbers.</p>
 <p>You signed up for ${products} on a ${term} plan at ${amount} per month. That's your foundation and we are going to make sure you get every dollar of value out of it.</p>
 <p>My team is already on it and you are in great hands. We'll reach out at your first availability to get everything set up right away.</p>
 <p>If anything comes up before then, just hit reply. I check these.</p>
 <p>Welcome to the program. 🤙</p>
-<p>Scott Anderson<br>CEO, SmartDealer Technologies</p>
+${sig}
 </body></html>`;
 }
 
