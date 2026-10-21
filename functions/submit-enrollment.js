@@ -275,8 +275,11 @@ export async function onRequestPost({request, env, waitUntil}) {
     return json({ok:false,error:'Agreement version changed. Reload and review the current terms before submitting.'},409);
 
   const products = p.selectedProducts;
-  if (!Array.isArray(products)||products.length<1||products.length>3||new Set(products).size!==products.length||
-      products.some(v=>!['FordEngage','VDP Widget','eStore'].includes(v)))
+  const VALID_PRODUCTS = ['FordEngage','VDP Widget','eStore','WorldDomination'];
+  const isWD = products.length === 1 && products[0] === 'WorldDomination';
+  if (!Array.isArray(products)||products.length<1||
+      (!isWD && (products.length>3||new Set(products).size!==products.length))||
+      products.some(v=>!VALID_PRODUCTS.includes(v)))
     return json({ok:false,error:'Select valid products.'},400);
   // Term validation — server-authoritative; reject unknown or tampered term
   const termId = p.termId;
