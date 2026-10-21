@@ -75,7 +75,7 @@
   /* ── Print ───────────────────────────────────────────────────────────── */
   function syncPrintSummary() {
     // Base via hidden input + checked addon-inputs
-  const addonSel = Array.from(document.querySelectorAll('.addon-input:checked'), x => x.value);
+  const addonSel = Array.from(document.querySelectorAll('.addon-input:checked, .wd-input:checked'), x => x.value);
   const sel = ['FordEngage', ...addonSel];
     const printTermEl = document.getElementById('term-select');
     const _tr = document.querySelector('input[name="term"]:checked');
@@ -135,7 +135,8 @@
   /* ── Helpers ─────────────────────────────────────────────────────────── */
   const $ = id => document.getElementById(id);
   const selected = () => {
-    return Array.from(document.querySelectorAll('.addon-input:checked'), e => e.value);
+    // Include both .addon-input checkboxes AND the .wd-input (WorldDomination)
+    return Array.from(document.querySelectorAll('.addon-input:checked, .wd-input:checked'), e => e.value);
   };
   const sigFields = [
     { id: 'sig-name',  label: 'Name (Signature)',  type: 'text'  },
@@ -257,7 +258,7 @@
       $('agree-checkbox-error').textContent = 'Please re-read and re-confirm your agreement after changing products or terms.';
     }
   }
-  document.querySelectorAll('.addon-input').forEach(inp => {
+  document.querySelectorAll('.addon-input, .wd-input').forEach(inp => {
     inp.addEventListener('change', requireReconsent);
   });
   const termSelectEl = document.getElementById('term-select');
