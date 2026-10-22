@@ -212,13 +212,7 @@
     <!-- Foreground content (z-index: 10) -->
     <div class="hero-foreground">
       <h1 class="enroll-page-heading">Ready to capture your share of<br>the $50B accessories market?</h1>
-      <div class="dealer-zip-hero">
-        <label for="heroZip" class="dealer-zip-hero-label">Enter your zip to find your dealership</label>
-        <div class="dealer-zip-hero-row">
-          <input type="text" id="heroZip" class="dealer-zip-input" maxlength="5" placeholder="ZIP code" inputmode="numeric" pattern="[0-9]{5}" autocomplete="postal-code" onkeydown="if(event.key==='Enter'){event.preventDefault();lookupDealer()}">
-          <button type="button" class="dealer-zip-btn" onclick="lookupDealer()">Find My Dealership</button>
-        </div>
-      </div>
+
     </div>
   </section>
 
@@ -228,6 +222,14 @@
 <div class="form-card">
       <p class="form-intro-heading">Congratulations! In 60 seconds, you're on your way to unlocking your dealership's $4 million accessories opportunity.</p>
 
+<div class="dealer-zip-hero" style="margin:0 0 28px;text-align:center">
+        <label for="heroZip" class="dealer-zip-hero-label" style="color:#003478;text-shadow:none;margin-bottom:12px;display:block;font-size:13px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase">Enter your zip to find your dealership</label>
+        <div class="dealer-zip-hero-row" style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap">
+          <input type="text" id="heroZip" class="dealer-zip-input" maxlength="5" placeholder="ZIP code" inputmode="numeric" pattern="[0-9]{5}" autocomplete="postal-code" onkeydown="if(event.key==='Enter'){event.preventDefault();lookupDealer()}" style="width:160px;padding:12px 16px;font-size:16px;border:2px solid #003478;border-radius:8px;background:#fff;color:#003478;outline:none;font-family:Arial,sans-serif;text-align:center;letter-spacing:2px">
+          <button type="button" class="dealer-zip-btn" onclick="lookupDealer()" style="padding:12px 24px;background:#003478;color:#fff;border:2px solid #003478;border-radius:8px;font-size:15px;font-weight:700;font-family:Arial,sans-serif;cursor:pointer">Find My Dealership</button>
+        </div>
+        <div id="zip-lookup-status" aria-live="polite" style="margin-top:10px;font-size:13px;color:#003478;font-weight:600;min-height:18px"></div>
+      </div>
 <form id="enroll-form" novalidate>
         <input type="hidden" id="selected-dealer-name" name="dealer_name">
         <input type="hidden" id="selected-pa-code" name="pa_code">
@@ -628,7 +630,7 @@
 
       
   <p id="zip-error" role="alert" style="display:none;color:#a21d16;font-size:0.84rem;"></p>
-  <div id="zip-lookup-status" aria-live="polite" style="display:none;"></div>
+
 </form>
 
       <!-- FOOTER NOTE -->
