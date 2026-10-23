@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Schedule Your FordEngage Training</title>
+<link rel="icon" type="image/png" href="/images/fordengage-favicon.png">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Arial,sans-serif;background:#f4f6fa;min-height:100vh;color:#111827}
+  .header{background:#003478;padding:20px 32px;display:flex;align-items:center;gap:16px}
+  .header img{height:36px}
+  .header-title{color:#fff;font-size:18px;font-weight:800;letter-spacing:.3px}
+  .container{max-width:900px;margin:32px auto;padding:0 16px}
+  .card{background:#fff;border-radius:16px;padding:28px;box-shadow:0 4px 24px rgba(0,0,0,.08);margin-bottom:20px}
+  .hero{text-align:center;padding:32px 28px}
+  .hero h1{font-size:26px;font-weight:800;color:#003478;margin-bottom:8px}
+  .hero p{font-size:15px;color:#6b7280;line-height:1.6;max-width:500px;margin:0 auto}
+  .dealer-badge{display:inline-flex;align-items:center;gap:8px;background:#f0f7ff;border:1.5px solid #bfdbfe;border-radius:10px;padding:10px 16px;margin-top:16px;font-weight:700;color:#003478;font-size:15px}
+  .section-title{font-size:13px;font-weight:800;color:#6b7280;text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px}
+  .cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+  .cal-nav button{background:none;border:1.5px solid #e2e8f0;border-radius:8px;padding:6px 14px;cursor:pointer;font-size:16px;color:#003478}
+  .cal-nav button:hover{background:#f0f7ff}
+  .cal-title{font-size:17px;font-weight:800;color:#111827}
+  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+  .cal-header{text-align:center;font-size:11px;font-weight:700;color:#9ca3af;padding:4px 0}
+  .cal-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:10px;cursor:pointer;font-size:14px;font-weight:700;border:1.5px solid #e2e8f0;background:#fff;color:#111827;transition:all .15s}
+  .cal-day:hover{border-color:#003478;background:#f0f7ff}
+  .cal-day.available{border-color:#003478;background:#fff;color:#003478}
+  .cal-day.selected{background:#003478;color:#fff;border-color:#003478}
+  .cal-day.today{border-color:#0284c7;font-weight:900}
+  .cal-day.empty,.cal-day.unavailable{background:#f9fafb;color:#d1d5db;cursor:default;border-color:#f1f5f9}
+  .slots-grid{display:flex;flex-direction:column;gap:8px}
+  .slot{padding:12px 16px;border-radius:10px;border:1.5px solid #e2e8f0;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:all .15s}
+  .slot:hover{border-color:#003478;background:#f0f7ff}
+  .slot.selected{border-color:#003478;background:#003478;color:#fff}
+  .slot-time{font-size:15px;font-weight:700}
+  .slot-badge{font-size:11px;font-weight:700;padding:2px 10px;border-radius:10px;background:#dcfce7;color:#16a34a}
+  .slot.selected .slot-badge{background:rgba(255,255,255,.2);color:#fff}
+  .btn{width:100%;padding:14px;background:#003478;color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer;transition:background .2s}
+  .btn:hover{background:#0562D2}
+  .btn:disabled{background:#9ca3af;cursor:not-allowed}
+  .btn-secondary{background:#f4f6fa;color:#374151;border:1.5px solid #e2e8f0}
+  .btn-secondary:hover{background:#e5e7eb}
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:100;align-items:center;justify-content:center}
+  .modal-overlay.open{display:flex}
+  .modal{background:#fff;border-radius:16px;padding:28px;max-width:480px;width:95vw;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+  .modal h2{font-size:20px;font-weight:800;color:#111827;margin-bottom:20px}
+  .confirm-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f1f5f9;font-size:14px}
+  .confirm-row:last-of-type{border:none}
+  .confirm-label{color:#6b7280;font-weight:600}
+  .confirm-value{color:#111827;font-weight:700;text-align:right}
+  .modal-btns{display:flex;gap:10px;margin-top:20px}
+  .success-screen{text-align:center;padding:40px 20px}
+  .success-icon{font-size:64px;margin-bottom:16px}
+  .success-screen h2{font-size:24px;font-weight:800;color:#003478;margin-bottom:8px}
+  .success-screen p{font-size:15px;color:#6b7280;line-height:1.6}
+  .loading{text-align:center;padding:40px;color:#9ca3af;font-size:15px}
+  .error-screen{text-align:center;padding:40px;color:#dc2626}
+  textarea{width:100%;padding:10px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:14px;font-family:Arial,sans-serif;resize:vertical;min-height:80px}
+  textarea:focus{outline:none;border-color:#003478}
+  label{display:block;font-size:12px;font-weight:700;color:#374151;margin-bottom:6px;margin-top:14px}
+  .info-box{background:#f0f7ff;border-radius:10px;padding:14px 16px;border-left:4px solid #003478;font-size:13px;color:#1e3a5f;line-height:1.6;margin-top:12px}
+  @media(max-width:600px){.container{padding:0 8px}.card{padding:18px}.hero h1{font-size:20px}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <svg width="140" height="32" viewBox="0 0 140 32" fill="none"><rect width="140" height="32" rx="4" fill="none"/><text x="0" y="24" font-family="Arial" font-weight="800" font-size="22" fill="#fff">FordEngage</text></svg>
+  <div class="header-title">Training Scheduler</div>
+</div>
+
+<div class="container" id="main-container">
+  <div class="loading">Loading your scheduling link...</div>
+</div>
+
+<!-- Confirm Modal -->
+<div class="modal-overlay" id="confirm-modal">
+  <div class="modal">
+    <h2><i style="color:#003478;margin-right:8px">&#128197;</i>Confirm Your Session</h2>
+    <div class="confirm-row"><span class="confirm-label">Dealership</span><span class="confirm-value" id="cm-dealer"></span></div>
+    <div class="confirm-row"><span class="confirm-label">Date</span><span class="confirm-value" id="cm-date"></span></div>
+    <div class="confirm-row"><span class="confirm-label">Time</span><span class="confirm-value" id="cm-time"></span></div>
+    <div class="confirm-row"><span class="confirm-label">Trainer</span><span class="confirm-value">SmartDealer Team</span></div>
+    <label for="cm-notes">Notes for your trainer (optional)</label>
+    <textarea id="cm-notes" placeholder="Anything we should know before the session..."></textarea>
+    <div class="info-box">Your session is 60 minutes. You will receive a confirmation email with connection details.</div>
+    <div class="modal-btns">
+      <button class="btn btn-secondary" onclick="closeModal()" style="flex:1">Cancel</button>
+      <button class="btn" id="confirm-btn" onclick="confirmBook()" style="flex:2">Confirm Booking</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var SC = {
+  token: null,
+  dealerName: null,
+  availableDays: [],
+  year: new Date().getFullYear(),
+  month: new Date().getMonth(),
+  selectedDate: null,
+  selectedSlot: null
+};
+
+function qs(name) {
+  var m = new RegExp('[?&]'+name+'=([^&]*)').exec(window.location.search);
+  return m ? decodeURIComponent(m[1]) : null;
+}
+
+function fmt(t) {
+  var p=t.split(':'), h=parseInt(p[0]), m=p[1], ap=h>=12?'PM':'AM';
+  return (h>12?h-12:(h||12))+':'+m+' '+ap+' ET';
+}
+
+async function init() {
+  SC.token = qs('token');
+  if (!SC.token) { showError('Invalid scheduling link. Please contact your account manager.'); return; }
+  var r = await fetch('https://sales.fordengage.com/api/training/public-slot?token='+encodeURIComponent(SC.token));
+  if (!r.ok) { showError('This scheduling link is invalid or has expired. Please contact your account manager.'); return; }
+  var data = await r.json();
+  SC.dealerName = data.dealer_name;
+  SC.availableDays = data.available_days || [];
+  renderMain();
+}
+
+function showError(msg) {
+  document.getElementById('main-container').innerHTML = '<div class="card error-screen"><div style="font-size:48px;margin-bottom:16px">&#9888;</div><h2 style="font-size:20px;margin-bottom:8px">Unable to Load</h2><p>'+msg+'</p></div>';
+}
+
+function renderMain() {
+  document.getElementById('main-container').innerHTML =
+    '<div class="card hero">'
+    +'<div style="font-size:48px;margin-bottom:12px">&#128203;</div>'
+    +'<h1>Schedule Your Training Session</h1>'
+    +'<p>Your payment has been received. Pick a date and time that works for you and we\'ll see you on the call.</p>'
+    +'<div class="dealer-badge">&#127970; '+esc(SC.dealerName)+'</div>'
+    +'</div>'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px" id="booking-grid">'
+    +'<div class="card" id="cal-card">'
+    +'<div class="section-title">Pick a Date</div>'
+    +'<div class="cal-nav"><button onclick="calPrev()">&#9664;</button><div class="cal-title" id="cal-title"></div><button onclick="calNext()">&#9654;</button></div>'
+    +'<div class="cal-grid"><div class="cal-header">Su</div><div class="cal-header">Mo</div><div class="cal-header">Tu</div><div class="cal-header">We</div><div class="cal-header">Th</div><div class="cal-header">Fr</div><div class="cal-header">Sa</div>'
+    +'<div id="cal-days"></div></div>'
+    +'</div>'
+    +'<div class="card" id="slots-card">'
+    +'<div class="section-title">Pick a Time</div>'
+    +'<div id="slots-content"><div style="color:#9ca3af;font-size:14px;text-align:center;padding:40px 0">Select a date to see available times</div></div>'
+    +'</div>'
+    +'</div>'
+    +'<div id="book-bar" style="display:none" class="card">'
+    +'<button class="btn" onclick="openModal()">Continue to Confirm &#8594;</button>'
+    +'</div>';
+
+  // Fix cal-grid layout
+  document.querySelector('.cal-grid').style.display = 'grid';
+  document.querySelector('.cal-grid').style.gridTemplateColumns = 'repeat(7,1fr)';
+  document.querySelector('.cal-grid').style.gap = '6px';
+
+  renderCal();
+}
+
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function calPrev() { SC.month--; if(SC.month<0){SC.month=11;SC.year--;} renderCal(); }
+function calNext() { SC.month++; if(SC.month>11){SC.month=0;SC.year++;} renderCal(); }
+
+function renderCal() {
+  var months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('cal-title').textContent = months[SC.month]+' '+SC.year;
+  var first=new Date(SC.year,SC.month,1).getDay(), days=new Date(SC.year,SC.month+1,0).getDate();
+  var today=new Date().toISOString().slice(0,10);
+  var html='';
+  for(var i=0;i<first;i++) html+='<div class="cal-day empty"></div>';
+  for(var d=1;d<=days;d++){
+    var ds=SC.year+'-'+String(SC.month+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+    var hasSlots=SC.availableDays.some(function(x){return x.date===ds;});
+    var isSel=SC.selectedDate===ds, isToday=ds===today;
+    var cls='cal-day'+(hasSlots?' available':'  unavailable')+(isSel?' selected':'')+(isToday?' today':'');
+    html+='<div class="'+cls+'"'+(hasSlots?' onclick="selectDate(\''+ds+'\')"':'')+'>'+d+'</div>';
+  }
+  document.getElementById('cal-days').innerHTML = html;
+}
+
+function selectDate(ds) {
+  SC.selectedDate=ds; SC.selectedSlot=null;
+  document.getElementById('book-bar').style.display='none';
+  renderCal();
+  var day=SC.availableDays.find(function(x){return x.date===ds;});
+  var slots=day?day.slots:[];
+  if(!slots.length){document.getElementById('slots-content').innerHTML='<div style="color:#9ca3af;font-size:14px;text-align:center;padding:40px 0">No slots available this day</div>';return;}
+  var label=new Date(ds+'T12:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+  var morning=slots.filter(function(s){return s.slot_start<'12:00';}), afternoon=slots.filter(function(s){return s.slot_start>='12:00';});
+  function slotH(s){
+    var active=SC.selectedSlot===s.slot_start;
+    return '<div class="slot'+(active?' selected':'')+'" onclick="selectSlot(\''+s.slot_start+'\')">'
+      +'<span class="slot-time">'+fmt(s.slot_start)+'</span>'
+      +'<span class="slot-badge">Available</span></div>';
+  }
+  var h='<div style="font-size:13px;font-weight:700;color:#003478;margin-bottom:12px">'+esc(label)+'</div>';
+  if(morning.length) h+='<div style="font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;margin-bottom:6px">Morning</div>'+morning.map(slotH).join('');
+  if(afternoon.length) h+='<div style="font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;margin:12px 0 6px">Afternoon</div>'+afternoon.map(slotH).join('');
+  document.getElementById('slots-content').innerHTML=h;
+}
+
+function selectSlot(slotStart) {
+  SC.selectedSlot=slotStart;
+  // Re-render slots to show selection
+  selectDate(SC.selectedDate);
+  document.getElementById('book-bar').style.display='block';
+}
+
+function openModal() {
+  if(!SC.selectedDate||!SC.selectedSlot) return;
+  document.getElementById('cm-dealer').textContent=SC.dealerName;
+  document.getElementById('cm-date').textContent=new Date(SC.selectedDate+'T12:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+  document.getElementById('cm-time').textContent=fmt(SC.selectedSlot);
+  document.getElementById('cm-notes').value='';
+  document.getElementById('confirm-modal').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('confirm-modal').classList.remove('open');
+}
+
+async function confirmBook() {
+  var btn=document.getElementById('confirm-btn');
+  btn.disabled=true; btn.textContent='Booking...';
+  var r=await fetch('https://sales.fordengage.com/api/training/public-book',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({token:SC.token,scheduled_date:SC.selectedDate,scheduled_time:SC.selectedSlot,notes:document.getElementById('cm-notes').value})
+  });
+  var data=await r.json();
+  if(r.ok&&data.ok){
+    closeModal();
+    showSuccess();
+  } else {
+    btn.disabled=false; btn.textContent='Confirm Booking';
+    alert(data.error||'Something went wrong. Please try again.');
+  }
+}
+
+function showSuccess() {
+  document.getElementById('main-container').innerHTML=
+    '<div class="card success-screen">'
+    +'<div class="success-icon">&#127881;</div>'
+    +'<h2>You\'re Booked!</h2>'
+    +'<p style="font-size:17px;font-weight:700;color:#111827;margin:8px 0">'+new Date(SC.selectedDate+'T12:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'})+' at '+fmt(SC.selectedSlot)+'</p>'
+    +'<p style="margin-top:12px">Your SmartDealer trainer will reach out with connection details shortly. Check your email for confirmation.</p>'
+    +'<div class="info-box" style="margin-top:20px;text-align:left"><strong>What to have ready:</strong><ul style="margin-top:8px;padding-left:18px;line-height:2"><li>DMS login credentials</li><li>FAD portal access</li><li>Key staff members available (F&amp;I, Parts, Sales)</li></ul></div>'
+    +'<p style="margin-top:20px;font-size:13px;color:#9ca3af">Questions? Email <a href="mailto:support@smartdealer.com" style="color:#003478">support@smartdealer.com</a></p>'
+    +'</div>';
+}
+
+init();
+</script>
+</body>
+</html>
