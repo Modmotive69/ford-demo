@@ -3,413 +3,1299 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Schedule Your FordEngage Session</title>
-<link rel="icon" href="/favicon.png">
-<link rel="stylesheet" href="https://kit.fontawesome.com/a0d1bd4a2c.css" crossorigin="anonymous">
+<title>Schedule a Session | FordEngage</title>
+<link rel="icon" href="/favicon.ico">
+<script src="https://kit.fontawesome.com/a0d1bd4a2c.js" crossorigin="anonymous"></script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,sans-serif;background:#f0f4f8;min-height:100vh;color:#111827}
-.site-header{background:#003478;padding:16px 32px;display:flex;align-items:center;justify-content:space-between}
-.logo{color:#fff;font-size:22px;font-weight:800;text-decoration:none}
-.logo span{font-weight:300;opacity:.8}
-.back-link{color:#93c5fd;font-size:13px;font-weight:600;text-decoration:none}
-.back-link:hover{color:#fff}
-.container{max-width:860px;margin:0 auto;padding:32px 16px 60px}
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-bottom:24px;background:#fff;border-radius:12px;padding:6px;box-shadow:0 2px 8px rgba(0,0,0,.07)}
-.step{text-align:center;padding:10px 6px;border-radius:8px;font-size:12px;font-weight:700;color:#9ca3af;transition:all .2s}
-.step.active{background:#003478;color:#fff}
-.step.done{color:#16a34a}
-.card{background:#fff;border-radius:16px;padding:28px 32px;box-shadow:0 4px 20px rgba(0,0,0,.08);margin-bottom:20px}
-.section-title{font-size:18px;font-weight:800;color:#111827;margin-bottom:4px}
-.section-sub{font-size:13px;color:#6b7280;margin-bottom:22px}
-/* Purpose */
-.purpose-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
-.pblock{background:#f8fafc;border-radius:10px;padding:16px 18px;border-left:4px solid #003478}
-.pblock.green{border-left-color:#16a34a}
-.pblock.amber{border-left-color:#d97706;grid-column:1/-1}
-.pblock h4{font-size:11px;font-weight:800;color:#6b7280;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
-.pblock li{font-size:13px;color:#374151;line-height:1.9;list-style:none}
-.pblock li::before{content:"✓ ";color:#16a34a;font-weight:700}
-.pblock.amber li{display:inline-block;width:48%;vertical-align:top}
-.pblock.amber li::before{content:"• ";color:#d97706}
-.purpose-cta{background:#003478;color:#fff;border-radius:10px;padding:13px 18px;font-size:13px;text-align:center;line-height:1.6}
-/* Type */
-.type-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.type-card{padding:22px;border-radius:12px;border:2px solid #e2e8f0;cursor:pointer;text-align:left;transition:all .15s}
-.type-card:hover{border-color:#003478;background:#f0f7ff}
-.type-card.sel{border-color:#003478;background:#003478;color:#fff}
-.tc-icon{font-size:26px;margin-bottom:10px}
-.tc-title{font-size:15px;font-weight:800}
-.tc-desc{font-size:12px;opacity:.7;margin-top:6px;line-height:1.55}
-/* Calendar */
-.cal-layout{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-.cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-.cal-nav-btn{background:none;border:1.5px solid #e2e8f0;border-radius:8px;padding:6px 13px;cursor:pointer;font-size:15px;color:#003478}
-.cal-nav-btn:hover{background:#f0f7ff}
-.cal-month{font-size:16px;font-weight:800;color:#111827}
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
-.cal-hdr{text-align:center;font-size:10px;font-weight:700;color:#9ca3af;padding:3px 0}
-.cal-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:8px;font-size:13px;font-weight:700;border:1.5px solid #f1f5f9;background:#f9fafb;color:#d1d5db;transition:all .15s}
-.cal-day.avail{border-color:#003478;background:#fff;color:#003478;cursor:pointer}
-.cal-day.avail:hover{background:#f0f7ff}
-.cal-day.sel{background:#003478;color:#fff;border-color:#003478;cursor:pointer}
-.cal-day.today{border-color:#0284c7}
-.cal-day.empty{border-color:transparent;background:transparent}
-.slot-group-title{font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.05em;margin:12px 0 6px}
-.slot-btn{width:100%;padding:11px 14px;border-radius:10px;border:1.5px solid #e2e8f0;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:space-between;margin-bottom:7px;font-family:Arial,sans-serif;transition:all .15s;text-align:left}
-.slot-btn:hover{border-color:#003478;background:#f0f7ff}
-.slot-btn.sel{background:#003478;border-color:#003478;color:#fff}
-.slot-time{font-size:14px;font-weight:700}
-.slot-avail{font-size:11px;font-weight:700;padding:2px 10px;border-radius:10px;background:#dcfce7;color:#16a34a}
-.slot-btn.sel .slot-avail{background:rgba(255,255,255,.2);color:#fff}
-.no-slots{color:#9ca3af;font-size:13px;text-align:center;padding:48px 10px;line-height:1.7}
-/* Confirm */
-.field-label{display:block;font-size:12px;font-weight:700;color:#374151;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;margin-top:16px}
-.field-input{width:100%;padding:11px 14px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:14px;font-family:Arial,sans-serif;color:#111827;transition:border .15s}
-.field-input:focus{outline:none;border-color:#003478}
-.confirm-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f1f5f9;font-size:14px}
-.confirm-row:last-of-type{border:none}
-.cl{color:#6b7280;font-weight:600}.cv{color:#111827;font-weight:700;text-align:right}
-/* Buttons */
-.btn-primary{padding:12px 24px;background:#003478;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;transition:background .2s;font-family:Arial,sans-serif}
-.btn-primary:hover{background:#0254ad}
-.btn-primary:disabled{background:#9ca3af;cursor:not-allowed}
-.btn-back{padding:10px 18px;background:#f1f5f9;color:#374151;border:1.5px solid #e2e8f0;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:Arial,sans-serif}
-.btn-back:hover{background:#e5e7eb}
-.btn-row{display:flex;gap:10px;margin-top:22px}
-.err{background:#fee2e2;color:#dc2626;border-radius:8px;padding:11px 14px;font-size:13px;font-weight:600;margin-top:12px;display:none}
-.err.show{display:block}
-.spinner{display:inline-block;width:16px;height:16px;border:3px solid rgba(255,255,255,.3);border-radius:50%;border-top-color:#fff;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px}
-@keyframes spin{to{transform:rotate(360deg)}}
-/* Success */
-.success-wrap{text-align:center;padding:32px 16px}
-.success-wrap h2{font-size:24px;font-weight:800;color:#003478;margin-bottom:8px}
-.success-wrap p{font-size:15px;color:#6b7280;line-height:1.6}
-.success-detail{background:#f0f7ff;border-radius:12px;padding:18px 22px;margin:18px auto;max-width:420px;text-align:left}
-.sd-row{display:flex;justify-content:space-between;padding:6px 0;font-size:13px;border-bottom:1px solid #e2e8f0}
-.sd-row:last-child{border:none}
-.sd-l{color:#6b7280;font-weight:600}.sd-v{color:#111827;font-weight:700}
-.checklist{background:#f8fafc;border-radius:10px;padding:14px 18px;margin:14px auto;max-width:420px;text-align:left;font-size:13px;color:#374151;line-height:2}
-@media(max-width:640px){
-  .purpose-grid,.type-grid,.cal-layout{grid-template-columns:1fr}
-  .pblock.amber{grid-column:auto}
-  .pblock.amber li{display:block;width:100%}
-  .card{padding:20px 16px}
-  .container{padding:16px 10px 40px}
-}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #003478;
+    --navy-light: #004a9f;
+    --navy-pale: #e8eef7;
+    --grey: #f0f2f5;
+    --grey-mid: #ccd3de;
+    --grey-text: #8a9ab0;
+    --text: #1a2233;
+    --white: #ffffff;
+    --green: #1a8a4a;
+    --green-pale: #e8f5ed;
+    --radius: 10px;
+    --shadow: 0 2px 12px rgba(0,52,120,0.10);
+    --shadow-lg: 0 8px 32px rgba(0,52,120,0.16);
+  }
+
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--grey);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    background: var(--navy);
+    padding: 0 24px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  }
+  .header-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+  .header-brand img {
+    height: 40px;
+    width: auto;
+  }
+  .header-brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+  }
+  .header-brand-text .fw { color: var(--white); font-size: 18px; font-weight: 700; }
+  .header-brand-text .fe { color: #6eb3ff; font-size: 18px; font-weight: 700; }
+  .header-brand-text .tagline { color: rgba(255,255,255,0.65); font-size: 10px; letter-spacing: 0.03em; margin-top: 1px; }
+  .header-back {
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.15s;
+  }
+  .header-back:hover { color: var(--white); }
+
+  /* ── MAIN ── */
+  main {
+    flex: 1;
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 32px 20px 60px;
+  }
+
+  /* ── PAGE TITLE ── */
+  .page-title {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  .page-title h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+  .page-title p {
+    color: var(--grey-text);
+    font-size: 15px;
+  }
+
+  /* ── STEP INDICATOR ── */
+  .step-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 36px;
+    gap: 0;
+  }
+  .step-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .step-circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--grey-mid);
+    color: var(--grey-text);
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s;
+    flex-shrink: 0;
+  }
+  .step-circle.active {
+    background: var(--navy);
+    color: var(--white);
+  }
+  .step-circle.done {
+    background: var(--green);
+    color: var(--white);
+  }
+  .step-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--grey-text);
+    white-space: nowrap;
+    transition: color 0.2s;
+  }
+  .step-label.active { color: var(--navy); }
+  .step-label.done { color: var(--green); }
+  .step-connector {
+    width: 48px;
+    height: 2px;
+    background: var(--grey-mid);
+    margin: 0 8px;
+    flex-shrink: 0;
+    transition: background 0.2s;
+  }
+  .step-connector.done { background: var(--green); }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 32px;
+  }
+
+  /* ── STEP 1: SESSION TYPE ── */
+  .session-type-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .session-card {
+    border: 2px solid var(--grey-mid);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    cursor: pointer;
+    text-align: center;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+    background: var(--white);
+    position: relative;
+    overflow: hidden;
+  }
+  .session-card:hover {
+    border-color: var(--navy);
+    box-shadow: var(--shadow-lg);
+    background: #fafcff;
+  }
+  .session-card .session-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--navy-pale);
+    color: var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin: 0 auto 16px;
+    transition: background 0.2s, color 0.2s;
+  }
+  .session-card:hover .session-icon {
+    background: var(--navy);
+    color: var(--white);
+  }
+  .session-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+  .session-card .duration {
+    display: inline-block;
+    background: var(--navy-pale);
+    color: var(--navy);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+    letter-spacing: 0.03em;
+  }
+  .session-card p {
+    font-size: 14px;
+    color: var(--grey-text);
+    line-height: 1.5;
+  }
+  .session-card .arrow {
+    position: absolute;
+    bottom: 14px;
+    right: 18px;
+    color: var(--navy);
+    opacity: 0;
+    transition: opacity 0.2s, transform 0.2s;
+    font-size: 16px;
+  }
+  .session-card:hover .arrow {
+    opacity: 1;
+    transform: translateX(3px);
+  }
+
+  /* ── STEP 2: DATE & TIME ── */
+  .datetime-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+  }
+
+  /* Calendar */
+  .calendar-panel {}
+  .calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .cal-month-label {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--navy);
+  }
+  .cal-nav-btn {
+    background: none;
+    border: 1.5px solid var(--grey-mid);
+    border-radius: 6px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .cal-nav-btn:hover { background: var(--navy-pale); border-color: var(--navy); }
+  .cal-nav-btn:disabled { opacity: 0.35; cursor: default; }
+  .cal-grid {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .cal-grid th {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--grey-text);
+    text-align: center;
+    padding: 4px 0 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .cal-grid td {
+    text-align: center;
+    padding: 3px;
+  }
+  .cal-day {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: default;
+    color: var(--grey-text);
+    transition: background 0.15s, color 0.15s;
+    user-select: none;
+  }
+  .cal-day.available {
+    background: var(--navy);
+    color: var(--white);
+    cursor: pointer;
+    font-weight: 700;
+  }
+  .cal-day.available:hover {
+    background: var(--navy-light);
+    box-shadow: 0 2px 8px rgba(0,52,120,0.25);
+  }
+  .cal-day.selected {
+    background: var(--navy-light);
+    color: var(--white);
+    box-shadow: 0 0 0 3px rgba(0,74,159,0.3);
+    font-weight: 700;
+  }
+  .cal-day.today-marker {
+    border: 2px solid var(--navy);
+    color: var(--navy);
+    font-weight: 700;
+  }
+  .cal-day.today-marker.available {
+    border: none;
+  }
+
+  /* Time Slots Panel */
+  .slots-panel {}
+  .slots-date-label {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1.5px solid var(--grey-mid);
+  }
+  .slots-empty {
+    color: var(--grey-text);
+    font-size: 14px;
+    text-align: center;
+    padding: 40px 0;
+  }
+  .slots-group-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--grey-text);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 16px 0 8px;
+  }
+  .slots-group-label:first-child { margin-top: 0; }
+  .slots-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .slot-pill {
+    padding: 8px 16px;
+    border-radius: 24px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+    border: 2px solid transparent;
+    white-space: nowrap;
+  }
+  .slot-pill.available {
+    background: var(--navy);
+    color: var(--white);
+  }
+  .slot-pill.available:hover {
+    background: var(--navy-light);
+    box-shadow: 0 2px 8px rgba(0,52,120,0.25);
+  }
+  .slot-pill.selected {
+    background: var(--navy-light);
+    color: var(--white);
+    border-color: rgba(110,179,255,0.6);
+    box-shadow: 0 0 0 3px rgba(0,74,159,0.25);
+  }
+  .slot-pill.booked {
+    background: var(--grey);
+    color: var(--grey-text);
+    cursor: not-allowed;
+    font-size: 13px;
+  }
+
+  /* Step 2 back bar */
+  .step-back-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .step-back-btn {
+    background: none;
+    border: none;
+    color: var(--navy);
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    transition: color 0.15s;
+  }
+  .step-back-btn:hover { color: var(--navy-light); }
+  .step-back-sep { color: var(--grey-mid); }
+  .step-back-current { color: var(--grey-text); font-size: 14px; }
+
+  /* ── STEP 3: YOUR INFO ── */
+  .form-section h2 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+  .form-section .booking-summary {
+    background: var(--navy-pale);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 24px;
+    font-size: 14px;
+    color: var(--navy);
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .booking-summary span { display: flex; align-items: center; gap: 6px; }
+  .booking-summary .bicon { font-size: 15px; }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .form-group.full { grid-column: 1 / -1; }
+  .form-group label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--navy);
+  }
+  .form-group label .opt {
+    font-weight: 400;
+    color: var(--grey-text);
+    margin-left: 4px;
+  }
+  .form-group input,
+  .form-group textarea {
+    border: 1.5px solid var(--grey-mid);
+    border-radius: 7px;
+    padding: 10px 13px;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--text);
+    transition: border-color 0.15s, box-shadow 0.15s;
+    outline: none;
+    background: var(--white);
+  }
+  .form-group input:focus,
+  .form-group textarea:focus {
+    border-color: var(--navy);
+    box-shadow: 0 0 0 3px rgba(0,52,120,0.10);
+  }
+  .form-group input.error,
+  .form-group textarea.error {
+    border-color: #c0392b;
+    box-shadow: 0 0 0 3px rgba(192,57,43,0.10);
+  }
+  .form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+  .form-error-msg {
+    font-size: 12px;
+    color: #c0392b;
+    margin-top: 2px;
+    display: none;
+  }
+  .form-error-msg.visible { display: block; }
+
+  .submit-row {
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .btn-confirm {
+    background: var(--navy);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    padding: 13px 32px;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: Arial, Helvetica, sans-serif;
+    cursor: pointer;
+    transition: background 0.15s, box-shadow 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-confirm:hover { background: var(--navy-light); box-shadow: var(--shadow); }
+  .btn-confirm:disabled { opacity: 0.55; cursor: not-allowed; }
+  .submit-note {
+    font-size: 12px;
+    color: var(--grey-text);
+    line-height: 1.4;
+  }
+  .global-error {
+    background: #fdf0ee;
+    border: 1.5px solid #e74c3c;
+    border-radius: 7px;
+    padding: 10px 14px;
+    font-size: 14px;
+    color: #c0392b;
+    margin-top: 16px;
+    display: none;
+  }
+  .global-error.visible { display: block; }
+
+  /* ── STEP 4: SUCCESS ── */
+  .success-card {
+    text-align: center;
+    padding: 56px 32px;
+  }
+  .success-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--green-pale);
+    color: var(--green);
+    font-size: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+  }
+  .success-card h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+  .success-card .sub {
+    color: var(--grey-text);
+    font-size: 15px;
+    margin-bottom: 28px;
+  }
+  .success-summary {
+    background: var(--navy-pale);
+    border-radius: 10px;
+    padding: 20px 24px;
+    text-align: left;
+    margin: 0 auto 28px;
+    max-width: 480px;
+  }
+  .success-summary h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--navy);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 12px;
+  }
+  .success-summary .srow {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: var(--text);
+  }
+  .success-summary .srow:last-child { margin-bottom: 0; }
+  .success-summary .srow i { color: var(--navy); margin-top: 1px; width: 16px; flex-shrink: 0; }
+  .checklist {
+    text-align: left;
+    max-width: 440px;
+    margin: 0 auto 32px;
+    border: 1.5px solid var(--grey-mid);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .checklist-title {
+    background: var(--grey);
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--navy);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .checklist ul {
+    list-style: none;
+    padding: 0;
+  }
+  .checklist ul li {
+    padding: 10px 16px;
+    font-size: 14px;
+    color: var(--text);
+    border-top: 1px solid var(--grey);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .checklist ul li i {
+    color: var(--green);
+    margin-top: 1px;
+    flex-shrink: 0;
+  }
+  .btn-schedule-another {
+    background: var(--navy);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    padding: 12px 28px;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: Arial, Helvetica, sans-serif;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .btn-schedule-another:hover { background: var(--navy-light); }
+
+  /* ── LOADING SPINNER ── */
+  .loading-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(255,255,255,0.75);
+    z-index: 500;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .loading-overlay.visible { display: flex; }
+  .spinner {
+    width: 44px;
+    height: 44px;
+    border: 4px solid var(--navy-pale);
+    border-top-color: var(--navy);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-text { color: var(--navy); font-size: 15px; font-weight: 600; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    main { padding: 20px 12px 48px; }
+    .session-type-grid { grid-template-columns: 1fr; gap: 14px; }
+    .session-card { padding: 22px 18px; }
+    .datetime-layout { grid-template-columns: 1fr; gap: 20px; }
+    .form-grid { grid-template-columns: 1fr; }
+    .form-group.full { grid-column: 1; }
+    .card { padding: 22px 18px; }
+    .success-card { padding: 36px 18px; }
+    .step-connector { width: 24px; }
+    .step-label { font-size: 11px; }
+    .submit-row { flex-direction: column; align-items: stretch; }
+    .btn-confirm { justify-content: center; }
+  }
 </style>
 </head>
 <body>
 
-<div class="site-header">
-  <a href="/" class="logo">Ford<span>Engage</span></a>
-  <a href="/" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to fordengage.com</a>
+<!-- HEADER -->
+<header class="site-header">
+  <a class="header-brand" href="https://www.fordengage.com">
+    <img src="/images/ford-oval.png" alt="Ford">
+    <div class="header-brand-text">
+      <span><span class="fw">Ford</span><span class="fe">Engage</span></span>
+      <span class="tagline">Industry's Only Proven Accessories Sales Program</span>
+    </div>
+  </a>
+  <a class="header-back" href="https://www.fordengage.com">
+    <i class="fa-solid fa-arrow-left"></i> Back to Site
+  </a>
+</header>
+
+<!-- LOADING OVERLAY -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="spinner"></div>
+  <div class="loading-text" id="loadingText">Loading availability…</div>
 </div>
 
-<div class="container">
-
-  <div class="steps" id="steps-bar">
-    <div class="step active" id="stp1">1 · Session Type</div>
-    <div class="step" id="stp2">2 · Pick a Time</div>
-    <div class="step" id="stp3">3 · Confirm</div>
+<main>
+  <div class="page-title">
+    <h1>Schedule a Session</h1>
+    <p>Pick a session type, choose a time that works, and we'll take it from there.</p>
   </div>
 
-  <!-- STEP 1: PURPOSE + SESSION TYPE -->
-  <div id="scr-type">
-    <div class="card">
-      <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px">
-        <div style="width:48px;height:48px;background:#003478;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px;flex-shrink:0"><i class="fa-solid fa-chalkboard-user"></i></div>
-        <div>
-          <div style="font-size:20px;font-weight:800;color:#111827">Schedule Your FordEngage Session</div>
-          <div style="font-size:13px;color:#6b7280;margin-top:2px">Book your training or demo — takes 2 minutes</div>
-        </div>
-      </div>
-      <div class="purpose-grid">
-        <div class="pblock">
-          <h4><i class="fa-solid fa-bullseye" style="margin-right:5px"></i>What This Session Is</h4>
-          <ul>
-            <li>Live session with your SmartDealer trainer</li>
-            <li>FordEngage platform walkthrough</li>
-            <li>Full activation of your account</li>
-            <li>Q&amp;A with your trainer</li>
-          </ul>
-        </div>
-        <div class="pblock green">
-          <h4><i class="fa-solid fa-circle-check" style="margin-right:5px"></i>What Happens After</h4>
-          <ul>
-            <li>FordEngage account goes live</li>
-            <li>Staff portal access activated</li>
-            <li>DMS &amp; FAD integration confirmed</li>
-            <li>Dedicated support contact assigned</li>
-          </ul>
-        </div>
-        <div class="pblock amber">
-          <h4><i class="fa-solid fa-clipboard-list" style="margin-right:5px"></i>Have These Ready</h4>
-          <ul>
-            <li>DMS login credentials</li>
-            <li>FAD portal access</li>
-            <li>F&amp;I manager available</li>
-            <li>Parts &amp; Sales managers available</li>
-          </ul>
-        </div>
-      </div>
-      <div class="purpose-cta"><strong>Sessions run Monday–Friday, 9 AM–4 PM ET.</strong><br>You'll receive a confirmation email with connection details after booking.</div>
+  <!-- STEP INDICATOR -->
+  <div class="step-indicator" id="stepIndicator">
+    <div class="step-item">
+      <div class="step-circle active" id="stepCircle1">1</div>
+      <div class="step-label active" id="stepLabel1">Session Type</div>
     </div>
+    <div class="step-connector" id="stepConn1"></div>
+    <div class="step-item">
+      <div class="step-circle" id="stepCircle2">2</div>
+      <div class="step-label" id="stepLabel2">Date &amp; Time</div>
+    </div>
+    <div class="step-connector" id="stepConn2"></div>
+    <div class="step-item">
+      <div class="step-circle" id="stepCircle3">3</div>
+      <div class="step-label" id="stepLabel3">Your Info</div>
+    </div>
+  </div>
 
+  <!-- STEP 1 -->
+  <div id="step1">
     <div class="card">
-      <div class="section-title">What would you like to schedule?</div>
-      <div class="section-sub">Choose the session that fits where you are in the process.</div>
-      <div class="type-grid">
-        <div class="type-card" id="tc-training">
-          <div class="tc-icon"><i class="fa-solid fa-graduation-cap" style="color:#003478"></i></div>
-          <div class="tc-title">Onboarding Training</div>
-          <div class="tc-desc">Full activation — DMS integration, FAD setup, staff walkthrough. 60 minutes. For dealerships ready to go live.</div>
+      <div class="session-type-grid" id="sessionTypeGrid">
+        <div class="session-card" data-type="Platform Demo" data-duration="45">
+          <div class="session-icon"><i class="fa-solid fa-display"></i></div>
+          <h3>Platform Demo</h3>
+          <div class="duration"><i class="fa-regular fa-clock"></i> 45 min</div>
+          <p>See FordEngage in action. We'll walk through the full platform and show you exactly how dealers are driving accessory revenue.</p>
+          <div class="arrow"><i class="fa-solid fa-arrow-right"></i></div>
         </div>
-        <div class="type-card" id="tc-demo">
-          <div class="tc-icon"><i class="fa-solid fa-presentation-screen" style="color:#7c3aed"></i></div>
-          <div class="tc-title">Platform Demo</div>
-          <div class="tc-desc">See FordEngage before full activation. 30–45 minutes. Great for GMs and decision-makers evaluating the program.</div>
+        <div class="session-card" data-type="Onboarding Training" data-duration="60">
+          <div class="session-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+          <h3>Onboarding Training</h3>
+          <div class="duration"><i class="fa-regular fa-clock"></i> 60 min</div>
+          <p>Get your team up and running. A hands-on training session covering setup, workflow, and best practices for your dealership.</p>
+          <div class="arrow"><i class="fa-solid fa-arrow-right"></i></div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- STEP 2: CALENDAR + SLOTS -->
-  <div id="scr-calendar" style="display:none">
+  <!-- STEP 2 -->
+  <div id="step2" style="display:none;">
+    <div class="step-back-bar">
+      <button class="step-back-btn" id="backToStep1Btn">
+        <i class="fa-solid fa-chevron-left"></i> Change Session Type
+      </button>
+      <span class="step-back-sep">|</span>
+      <span class="step-back-current" id="selectedTypeLabel"></span>
+    </div>
     <div class="card">
-      <div style="font-size:16px;font-weight:800;color:#111827;margin-bottom:4px" id="cal-session-label"></div>
-      <div class="section-sub">Pick a date then choose your time slot.</div>
-      <div class="cal-layout">
-        <div>
-          <div class="cal-nav">
-            <button class="cal-nav-btn" id="cal-prev"><i class="fa-solid fa-chevron-left"></i></button>
-            <div class="cal-month" id="cal-month-label"></div>
-            <button class="cal-nav-btn" id="cal-next"><i class="fa-solid fa-chevron-right"></i></button>
+      <div class="datetime-layout">
+        <!-- Calendar -->
+        <div class="calendar-panel">
+          <div class="calendar-header">
+            <button class="cal-nav-btn" id="calPrevBtn" aria-label="Previous month">&#8249;</button>
+            <div class="cal-month-label" id="calMonthLabel"></div>
+            <button class="cal-nav-btn" id="calNextBtn" aria-label="Next month">&#8250;</button>
           </div>
-          <div class="cal-grid">
-            <div class="cal-hdr">Su</div><div class="cal-hdr">Mo</div><div class="cal-hdr">Tu</div>
-            <div class="cal-hdr">We</div><div class="cal-hdr">Th</div><div class="cal-hdr">Fr</div><div class="cal-hdr">Sa</div>
-            <div id="cal-days" style="display:contents"></div>
+          <table class="cal-grid" id="calGrid">
+            <thead>
+              <tr>
+                <th>Mo</th><th>Tu</th><th>We</th><th>Th</th><th>Fr</th><th>Sa</th><th>Su</th>
+              </tr>
+            </thead>
+            <tbody id="calBody"></tbody>
+          </table>
+        </div>
+
+        <!-- Slots -->
+        <div class="slots-panel">
+          <div class="slots-date-label" id="slotsDateLabel">Select a date</div>
+          <div id="slotsContent">
+            <div class="slots-empty">
+              <i class="fa-regular fa-calendar fa-2x" style="color:var(--grey-mid);margin-bottom:10px;display:block;"></i>
+              Choose a date on the left to see available times.
+            </div>
           </div>
         </div>
-        <div id="slots-panel">
-          <div class="no-slots"><i class="fa-regular fa-calendar" style="font-size:32px;display:block;margin-bottom:10px;opacity:.3"></i>Select a date<br>to see available times</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div id="step3" style="display:none;">
+    <div class="step-back-bar">
+      <button class="step-back-btn" id="backToStep2Btn">
+        <i class="fa-solid fa-chevron-left"></i> Change Date &amp; Time
+      </button>
+    </div>
+    <div class="card form-section">
+      <h2>Your Information</h2>
+      <div class="booking-summary" id="bookingSummary"></div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="fieldDealership">Dealership Name</label>
+          <input type="text" id="fieldDealership" placeholder="e.g. Suncoast Ford" autocomplete="organization">
+          <div class="form-error-msg" id="errDealership">Please enter your dealership name.</div>
+        </div>
+        <div class="form-group">
+          <label for="fieldName">Your Name</label>
+          <input type="text" id="fieldName" placeholder="First &amp; Last Name" autocomplete="name">
+          <div class="form-error-msg" id="errName">Please enter your name.</div>
+        </div>
+        <div class="form-group">
+          <label for="fieldEmail">Email Address</label>
+          <input type="email" id="fieldEmail" placeholder="you@dealership.com" autocomplete="email">
+          <div class="form-error-msg" id="errEmail">Please enter a valid email address.</div>
+        </div>
+        <div class="form-group">
+          <label for="fieldPA">Ford PA Code <span class="opt">(optional)</span></label>
+          <input type="text" id="fieldPA" placeholder="e.g. 12345" autocomplete="off">
+        </div>
+        <div class="form-group full">
+          <label for="fieldNotes">Notes <span class="opt">(optional)</span></label>
+          <textarea id="fieldNotes" placeholder="Anything we should know ahead of time?"></textarea>
         </div>
       </div>
-      <div class="btn-row">
-        <button class="btn-back" id="back-to-type"><i class="fa-solid fa-arrow-left"></i> Back</button>
-        <button class="btn-primary" id="continue-btn" style="display:none;flex:1"><i class="fa-solid fa-arrow-right"></i> Continue</button>
+
+      <div class="submit-row">
+        <button class="btn-confirm" id="confirmBtn">
+          <i class="fa-solid fa-calendar-check"></i> Confirm Booking
+        </button>
+        <div class="submit-note">We'll send a confirmation to the email you provide.</div>
       </div>
+      <div class="global-error" id="globalError"></div>
     </div>
   </div>
 
-  <!-- STEP 3: CONFIRM -->
-  <div id="scr-confirm" style="display:none">
-    <div class="card">
-      <div class="section-title"><i class="fa-solid fa-calendar-check" style="color:#003478;margin-right:8px"></i>Confirm Your Booking</div>
-      <div class="section-sub">Fill in your details and confirm your session.</div>
-      <div id="confirm-rows"></div>
-      <label class="field-label" for="inp-dealer">Dealership Name</label>
-      <input class="field-input" type="text" id="inp-dealer" placeholder="e.g. Bellingham Ford">
-      <label class="field-label" for="inp-name">Your Name</label>
-      <input class="field-input" type="text" id="inp-name" placeholder="e.g. Jeremy Morris">
-      <label class="field-label" for="inp-email">Email Address</label>
-      <input class="field-input" type="email" id="inp-email" placeholder="you@dealership.com">
-      <label class="field-label" for="confirm-notes">Notes for your trainer <span style="font-weight:400;color:#9ca3af;text-transform:none;letter-spacing:0">(optional)</span></label>
-      <textarea class="field-input" id="confirm-notes" style="min-height:70px;resize:vertical" placeholder="DMS system, staff attending, specific questions..."></textarea>
-      <div class="btn-row">
-        <button class="btn-back" id="back-to-cal"><i class="fa-solid fa-arrow-left"></i> Back</button>
-        <button class="btn-primary" id="confirm-btn" style="flex:2"><i class="fa-solid fa-check"></i> Confirm Booking</button>
+  <!-- STEP 4 -->
+  <div id="step4" style="display:none;">
+    <div class="card success-card">
+      <div class="success-icon">
+        <i class="fa-solid fa-circle-check"></i>
       </div>
-      <div class="err" id="confirm-err"></div>
-    </div>
-  </div>
+      <h2>You're all set!</h2>
+      <p class="sub">Your session has been booked. Check your inbox for a confirmation.</p>
 
-  <!-- SUCCESS -->
-  <div id="scr-success" style="display:none">
-    <div class="card success-wrap">
-      <div style="font-size:60px;margin-bottom:16px">🎉</div>
-      <h2>You're Booked!</h2>
-      <p>Your FordEngage session is confirmed.<br>A SmartDealer trainer will reach out with connection details.</p>
-      <div class="success-detail" id="success-rows"></div>
+      <div class="success-summary" id="successSummary"></div>
+
       <div class="checklist">
-        <strong style="display:block;margin-bottom:4px;color:#111827"><i class="fa-solid fa-clipboard-list" style="color:#003478;margin-right:6px"></i>Have These Ready</strong>
-        ✅ DMS login credentials<br>✅ FAD portal access<br>✅ F&amp;I, Parts &amp; Sales managers available<br>✅ Stable internet connection
+        <div class="checklist-title"><i class="fa-solid fa-list-check"></i> What to have ready</div>
+        <ul>
+          <li><i class="fa-solid fa-check"></i> Your Ford dealer login credentials</li>
+          <li><i class="fa-solid fa-check"></i> A list of your top accessory categories</li>
+          <li><i class="fa-solid fa-check"></i> Any current accessory pricing / part numbers</li>
+          <li><i class="fa-solid fa-check"></i> Your primary point of contact for the program</li>
+          <li id="checklistPAItem" style="display:none;"><i class="fa-solid fa-check"></i> Your Ford PA Code (bring to verify eligibility)</li>
+        </ul>
       </div>
-      <p style="margin-top:16px;font-size:13px;color:#9ca3af">Questions? <a href="mailto:support@smartdealer.com" style="color:#003478">support@smartdealer.com</a></p>
+
+      <button class="btn-schedule-another" id="scheduleAnotherBtn">
+        <i class="fa-solid fa-plus"></i> Schedule Another Session
+      </button>
     </div>
   </div>
-
-</div>
+</main>
 
 <script>
-var API = 'https://fordengage-sales.pages.dev/api/training';
-var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-
-var SC = {
-  sessionType: null,
-  calYear: new Date().getFullYear(),
-  calMonth: new Date().getMonth(),
-  availableDays: [],
-  selectedDate: null,
-  selectedSlot: null,
-  loadedMonths: {}
+// ─── State ───────────────────────────────────────────────────────────────────
+var STATE = {
+  step: 1,
+  sessionType: '',
+  sessionDuration: 0,
+  selectedDate: '',        // "YYYY-MM-DD"
+  selectedTime: '',        // "09:00"
+  availabilityMap: {},     // { "2026-10-27": ["09:00","10:00",...], ... }
+  calYear: 0,
+  calMonth: 0              // 0-based
 };
 
-function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-function fmtTime(t){ var p=t.split(':'),h=parseInt(p[0]),m=p[1],ap=h>=12?'PM':'AM'; return (h>12?h-12:(h||12))+':'+m+' '+ap+' ET'; }
-function fmtDate(ds){ return new Date(ds+'T12:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'}); }
-function cRow(l,v){ return '<div class="confirm-row"><span class="cl">'+esc(l)+'</span><span class="cv">'+esc(v)+'</span></div>'; }
-function sRow(l,v){ return '<div class="sd-row"><span class="sd-l">'+esc(l)+'</span><span class="sd-v">'+esc(v)+'</span></div>'; }
+var API_BASE = 'https://fordengage-sales.pages.dev/api/training';
 
-function showScreen(name){
-  ['type','calendar','confirm','success'].forEach(function(s){
-    document.getElementById('scr-'+s).style.display = s===name?'block':'none';
-  });
-  var stepMap={type:1,calendar:2,confirm:3,success:3};
-  var cur=stepMap[name]||1;
-  [1,2,3].forEach(function(n){
-    var el=document.getElementById('stp'+n);
-    if(n===cur) el.className='step active';
-    else if(n<cur) el.className='step done';
-    else el.className='step';
-  });
-  if(name==='success') document.getElementById('steps-bar').style.display='none';
-  window.scrollTo({top:0,behavior:'smooth'});
+// ─── Utilities ────────────────────────────────────────────────────────────────
+function fmtMonthYear(year, month) {
+  var d = new Date(year, month, 1);
+  return d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
 }
 
-// Step 1 — type selection
-document.getElementById('tc-training').addEventListener('click', function(){ selectType('training'); });
-document.getElementById('tc-demo').addEventListener('click', function(){ selectType('demo'); });
-
-function selectType(type){
-  SC.sessionType=type;
-  SC.selectedDate=null; SC.selectedSlot=null;
-  document.getElementById('tc-training').className='type-card'+(type==='training'?' sel':'');
-  document.getElementById('tc-demo').className='type-card'+(type==='demo'?' sel':'');
-  document.getElementById('cal-session-label').innerHTML = type==='training'
-    ? '<i class="fa-solid fa-graduation-cap" style="color:#003478;margin-right:8px"></i>Onboarding Training — 60 minutes'
-    : '<i class="fa-solid fa-presentation-screen" style="color:#7c3aed;margin-right:8px"></i>Platform Demo — 30–45 minutes';
-  document.getElementById('continue-btn').style.display='none';
-  document.getElementById('slots-panel').innerHTML='<div class="no-slots"><i class="fa-regular fa-calendar" style="font-size:32px;display:block;margin-bottom:10px;opacity:.3"></i>Select a date<br>to see available times</div>';
-  loadMonthSlots(SC.calYear, SC.calMonth, function(){ renderCal(); showScreen('calendar'); });
+function fmtDisplayDate(iso) {
+  // iso = "YYYY-MM-DD"
+  var parts = iso.split('-');
+  var d = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+  return d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
 }
 
-// Load all available days (next 45 days, weekdays only)
-function loadMonthSlots(year, month, cb){
-  if(SC.availableDays.length){ if(cb) cb(); return; }
-  fetch(API+'/public-availability')
-    .then(function(r){ return r.json(); })
-    .then(function(data){
-      SC.availableDays = data.available_days||[];
-      if(cb) cb();
-    }).catch(function(){ if(cb) cb(); });
+function fmtTime(t) {
+  // t = "09:00"
+  var parts = t.split(':');
+  var h = parseInt(parts[0]);
+  var ampm = h >= 12 ? 'PM' : 'AM';
+  var h12 = h % 12 || 12;
+  return h12 + ':00 ' + ampm + ' ET';
 }
 
-// Calendar
-document.getElementById('cal-prev').addEventListener('click', function(){
-  SC.calMonth--; if(SC.calMonth<0){SC.calMonth=11;SC.calYear--;}
-  loadMonthSlots(SC.calYear,SC.calMonth,renderCal);
-});
-document.getElementById('cal-next').addEventListener('click', function(){
-  SC.calMonth++; if(SC.calMonth>11){SC.calMonth=0;SC.calYear++;}
-  loadMonthSlots(SC.calYear,SC.calMonth,renderCal);
-});
-document.getElementById('back-to-type').addEventListener('click', function(){ showScreen('type'); });
-document.getElementById('continue-btn').addEventListener('click', function(){ buildConfirm(); showScreen('confirm'); });
+function showLoading(msg) {
+  document.getElementById('loadingText').textContent = msg || 'Loading…';
+  document.getElementById('loadingOverlay').classList.add('visible');
+}
 
-function renderCal(){
-  document.getElementById('cal-month-label').textContent=MONTHS[SC.calMonth]+' '+SC.calYear;
-  var first=new Date(SC.calYear,SC.calMonth,1).getDay();
-  var days=new Date(SC.calYear,SC.calMonth+1,0).getDate();
-  var today=new Date().toISOString().slice(0,10);
-  var html='';
-  for(var i=0;i<first;i++) html+='<div class="cal-day empty"></div>';
-  for(var d=1;d<=days;d++){
-    var ds=SC.calYear+'-'+String(SC.calMonth+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
-    var has=SC.availableDays.some(function(x){return x.date===ds && x.slots && x.slots.length;});
-    var sel=SC.selectedDate===ds;
-    var cls='cal-day'+(has?' avail':'')+(sel?' sel':'')+(ds===today?' today':'');
-    html+='<div class="'+cls+'"'+(has?' data-date="'+ds+'"':'')+'>'+d+'</div>';
+function hideLoading() {
+  document.getElementById('loadingOverlay').classList.remove('visible');
+}
+
+// ─── Step Indicator ───────────────────────────────────────────────────────────
+function updateStepIndicator(active) {
+  for (var i = 1; i <= 3; i++) {
+    var circ = document.getElementById('stepCircle' + i);
+    var lbl = document.getElementById('stepLabel' + i);
+    circ.classList.remove('active', 'done');
+    lbl.classList.remove('active', 'done');
+    if (i < active) {
+      circ.classList.add('done');
+      lbl.classList.add('done');
+      circ.innerHTML = '<i class="fa-solid fa-check" style="font-size:12px;"></i>';
+    } else if (i === active) {
+      circ.classList.add('active');
+      lbl.classList.add('active');
+      circ.textContent = i;
+    } else {
+      circ.textContent = i;
+    }
   }
-  document.getElementById('cal-days').innerHTML=html;
-  document.getElementById('cal-days').parentElement.onclick=function(e){
-    var el=e.target.closest('.avail');
-    if(!el||!el.dataset.date) return;
-    selectDate(el.dataset.date);
-  };
+  for (var j = 1; j <= 2; j++) {
+    var conn = document.getElementById('stepConn' + j);
+    conn.classList.remove('done');
+    if (j < active) conn.classList.add('done');
+  }
 }
 
-function selectDate(ds){
-  SC.selectedDate=ds; SC.selectedSlot=null;
-  document.getElementById('continue-btn').style.display='none';
-  renderCal();
-  var day=SC.availableDays.find(function(x){return x.date===ds;});
-  renderSlots(day?day.slots:[]);
+// ─── Navigation ───────────────────────────────────────────────────────────────
+function goToStep(n) {
+  STATE.step = n;
+  document.getElementById('step1').style.display = n === 1 ? '' : 'none';
+  document.getElementById('step2').style.display = n === 2 ? '' : 'none';
+  document.getElementById('step3').style.display = n === 3 ? '' : 'none';
+  document.getElementById('step4').style.display = n === 4 ? '' : 'none';
+  document.getElementById('stepIndicator').style.display = n === 4 ? 'none' : '';
+  updateStepIndicator(n);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function renderSlots(slots){
-  if(!slots||!slots.length){
-    document.getElementById('slots-panel').innerHTML='<div class="no-slots">No available slots this day.<br>Try another date.</div>';
+// ─── Availability Fetch ───────────────────────────────────────────────────────
+function fetchAvailability() {
+  showLoading('Loading availability…');
+  fetch(API_BASE + '/public-availability')
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      hideLoading();
+      var map = {};
+      var days = data.available_days || [];
+      for (var i = 0; i < days.length; i++) {
+        var day = days[i];
+        var seen = {};
+        var slots = [];
+        for (var j = 0; j < (day.slots || []).length; j++) {
+          var s = day.slots[j].slot_start;
+          if (!seen[s]) { seen[s] = true; slots.push(s); }
+        }
+        slots.sort();
+        map[day.date] = slots;
+      }
+      STATE.availabilityMap = map;
+
+      // Init calendar to current month
+      var now = new Date();
+      STATE.calYear = now.getFullYear();
+      STATE.calMonth = now.getMonth();
+      renderCalendar();
+      goToStep(2);
+    })
+    .catch(function(err) {
+      hideLoading();
+      alert('Could not load availability. Please try again in a moment.');
+      console.error(err);
+    });
+}
+
+// ─── STEP 1 — Session Type ────────────────────────────────────────────────────
+document.getElementById('sessionTypeGrid').addEventListener('click', function(e) {
+  var card = e.target.closest('.session-card');
+  if (!card) return;
+  STATE.sessionType = card.getAttribute('data-type');
+  STATE.sessionDuration = parseInt(card.getAttribute('data-duration'), 10);
+  document.getElementById('selectedTypeLabel').textContent =
+    STATE.sessionType + ' — ' + STATE.sessionDuration + ' min';
+  fetchAvailability();
+});
+
+// ─── STEP 2 — Calendar ───────────────────────────────────────────────────────
+function renderCalendar() {
+  var year = STATE.calYear;
+  var month = STATE.calMonth;
+  document.getElementById('calMonthLabel').textContent = fmtMonthYear(year, month);
+
+  // Prev/next controls: don't go before current month
+  var now = new Date();
+  var isCurrentMonth = (year === now.getFullYear() && month === now.getMonth());
+  document.getElementById('calPrevBtn').disabled = isCurrentMonth;
+
+  var tbody = document.getElementById('calBody');
+  tbody.innerHTML = '';
+
+  // First day of month (adjust so Mon=0)
+  var firstDay = new Date(year, month, 1);
+  var startDow = (firstDay.getDay() + 6) % 7; // Mon=0, Sun=6
+
+  var daysInMonth = new Date(year, month + 1, 0).getDate();
+  var today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  var cellNum = 0;
+  var row;
+
+  for (var day = 1; day <= daysInMonth || cellNum % 7 !== 0; day++) {
+    if (cellNum % 7 === 0) {
+      row = document.createElement('tr');
+      tbody.appendChild(row);
+    }
+
+    var td = document.createElement('td');
+    if (day === 1 && startDow > 0 && cellNum < startDow) {
+      // Leading empty cells
+      td.innerHTML = '';
+      cellNum++;
+      row.appendChild(td);
+      day--;
+    } else if (day > daysInMonth) {
+      // Trailing empty cells
+      td.innerHTML = '';
+      cellNum++;
+      row.appendChild(td);
+    } else {
+      var iso = year + '-' + String(month + 1).padStart(2, '0') + '-' + String(day).padStart(2, '0');
+      var dow = (new Date(year, month, day).getDay() + 6) % 7; // Mon=0
+      var isWeekend = dow >= 5;
+      var date = new Date(year, month, day);
+      date.setHours(0, 0, 0, 0);
+      var isPast = date < today;
+      var isAvail = !isWeekend && !isPast && !!STATE.availabilityMap[iso];
+      var isToday = (date.getTime() === today.getTime());
+      var isSelected = (iso === STATE.selectedDate);
+
+      var div = document.createElement('div');
+      div.className = 'cal-day';
+      div.textContent = day;
+
+      if (isAvail) {
+        div.className += ' available';
+        if (isSelected) div.className += ' selected';
+        div.setAttribute('data-date', iso);
+      } else if (isToday && !isAvail) {
+        div.className += ' today-marker';
+      }
+
+      td.appendChild(div);
+      cellNum++;
+      row.appendChild(td);
+    }
+  }
+}
+
+document.getElementById('calPrevBtn').addEventListener('click', function() {
+  STATE.calMonth--;
+  if (STATE.calMonth < 0) { STATE.calMonth = 11; STATE.calYear--; }
+  renderCalendar();
+});
+document.getElementById('calNextBtn').addEventListener('click', function() {
+  STATE.calMonth++;
+  if (STATE.calMonth > 11) { STATE.calMonth = 0; STATE.calYear++; }
+  renderCalendar();
+});
+
+// Calendar day click — event delegation
+document.getElementById('calBody').addEventListener('click', function(e) {
+  var el = e.target.closest('.cal-day.available');
+  if (!el) return;
+  STATE.selectedDate = el.getAttribute('data-date');
+  STATE.selectedTime = '';
+  renderCalendar();
+  renderSlots();
+});
+
+function renderSlots() {
+  var dateLabel = document.getElementById('slotsDateLabel');
+  var content = document.getElementById('slotsContent');
+
+  if (!STATE.selectedDate) {
+    dateLabel.textContent = 'Select a date';
+    content.innerHTML = '<div class="slots-empty"><i class="fa-regular fa-calendar fa-2x" style="color:var(--grey-mid);margin-bottom:10px;display:block;"></i>Choose a date on the left to see available times.</div>';
     return;
   }
-  var label=fmtDate(SC.selectedDate);
-  var morning=slots.filter(function(s){return (s.slot_start||s.scheduled_time||'12:00')<'12:00';});
-  var afternoon=slots.filter(function(s){return (s.slot_start||s.scheduled_time||'12:00')>='12:00';});
-  function slotEl(s){
-    var st=s.slot_start||s.scheduled_time;
-    var sel=SC.selectedSlot===st;
-    return '<button class="slot-btn'+(sel?' sel':'')+'" data-slot="'+st+'">'
-      +'<span class="slot-time">'+fmtTime(st)+'</span>'
-      +'<span class="slot-avail">Available</span></button>';
+
+  dateLabel.textContent = fmtDisplayDate(STATE.selectedDate);
+  var slots = STATE.availabilityMap[STATE.selectedDate] || [];
+
+  if (slots.length === 0) {
+    content.innerHTML = '<div class="slots-empty">No times available for this date.</div>';
+    return;
   }
-  var h='<div style="font-size:13px;font-weight:700;color:#003478;margin-bottom:12px">'+esc(label)+'</div>';
-  if(morning.length) h+='<div class="slot-group-title"><i class="fa-solid fa-sun"></i> Morning</div>'+morning.map(slotEl).join('');
-  if(afternoon.length) h+='<div class="slot-group-title"><i class="fa-solid fa-cloud-sun"></i> Afternoon</div>'+afternoon.map(slotEl).join('');
-  document.getElementById('slots-panel').innerHTML=h;
-  document.getElementById('slots-panel').onclick=function(e){
-    var btn=e.target.closest('.slot-btn');
-    if(!btn) return;
-    SC.selectedSlot=btn.dataset.slot;
-    renderSlots(slots);
-    document.getElementById('continue-btn').style.display='flex';
+
+  // Group: Morning = before 12:00, Afternoon = 12:00+
+  var morning = [];
+  var afternoon = [];
+  for (var i = 0; i < slots.length; i++) {
+    var h = parseInt(slots[i].split(':')[0], 10);
+    if (h < 12) morning.push(slots[i]);
+    else afternoon.push(slots[i]);
+  }
+
+  var html = '';
+  if (morning.length) {
+    html += '<div class="slots-group-label"><i class="fa-solid fa-sun"></i> Morning</div>';
+    html += '<div class="slots-list" id="slotsMorning">';
+    for (var m = 0; m < morning.length; m++) {
+      var t = morning[m];
+      var sel = t === STATE.selectedTime ? ' selected' : '';
+      html += '<div class="slot-pill available' + sel + '" data-time="' + t + '">' + fmtTime(t) + '</div>';
+    }
+    html += '</div>';
+  }
+  if (afternoon.length) {
+    html += '<div class="slots-group-label" style="margin-top:' + (morning.length ? '16' : '0') + 'px;"><i class="fa-solid fa-cloud-sun"></i> Afternoon</div>';
+    html += '<div class="slots-list" id="slotsAfternoon">';
+    for (var a = 0; a < afternoon.length; a++) {
+      var ta = afternoon[a];
+      var sela = ta === STATE.selectedTime ? ' selected' : '';
+      html += '<div class="slot-pill available' + sela + '" data-time="' + ta + '">' + fmtTime(ta) + '</div>';
+    }
+    html += '</div>';
+  }
+
+  content.innerHTML = html;
+}
+
+// Slot click — event delegation
+document.getElementById('slotsContent').addEventListener('click', function(e) {
+  var el = e.target.closest('.slot-pill.available');
+  if (!el) return;
+  STATE.selectedTime = el.getAttribute('data-time');
+  renderSlots();
+  // Auto-advance after brief pause
+  setTimeout(function() { showStep3(); }, 300);
+});
+
+function showStep3() {
+  if (!STATE.selectedDate || !STATE.selectedTime) return;
+  // Populate booking summary
+  var summary = document.getElementById('bookingSummary');
+  summary.innerHTML =
+    '<span><span class="bicon"><i class="fa-solid fa-display"></i></span> <strong>' + STATE.sessionType + '</strong> &nbsp;|&nbsp; ' + STATE.sessionDuration + ' min</span>' +
+    '<span><span class="bicon"><i class="fa-solid fa-calendar-day"></i></span> ' + fmtDisplayDate(STATE.selectedDate) + '</span>' +
+    '<span><span class="bicon"><i class="fa-regular fa-clock"></i></span> ' + fmtTime(STATE.selectedTime) + '</span>';
+  goToStep(3);
+}
+
+document.getElementById('backToStep1Btn').addEventListener('click', function() {
+  STATE.selectedDate = '';
+  STATE.selectedTime = '';
+  goToStep(1);
+});
+
+document.getElementById('backToStep2Btn').addEventListener('click', function() {
+  goToStep(2);
+  renderCalendar();
+  renderSlots();
+});
+
+// ─── STEP 3 — Form & Submit ───────────────────────────────────────────────────
+function validateEmail(v) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+}
+
+function setFieldError(fieldId, errId, hasError) {
+  var field = document.getElementById(fieldId);
+  var err = document.getElementById(errId);
+  if (hasError) {
+    field.classList.add('error');
+    err.classList.add('visible');
+  } else {
+    field.classList.remove('error');
+    err.classList.remove('visible');
+  }
+}
+
+// Clear errors on input
+['fieldDealership','fieldName','fieldEmail'].forEach(function(id) {
+  document.getElementById(id).addEventListener('input', function() {
+    this.classList.remove('error');
+    var errMap = { fieldDealership: 'errDealership', fieldName: 'errName', fieldEmail: 'errEmail' };
+    var errEl = document.getElementById(errMap[id]);
+    if (errEl) errEl.classList.remove('visible');
+    document.getElementById('globalError').classList.remove('visible');
+  });
+});
+
+document.getElementById('confirmBtn').addEventListener('click', function() {
+  var dealership = document.getElementById('fieldDealership').value.trim();
+  var name = document.getElementById('fieldName').value.trim();
+  var email = document.getElementById('fieldEmail').value.trim();
+  var pa = document.getElementById('fieldPA').value.trim();
+  var notes = document.getElementById('fieldNotes').value.trim();
+
+  var valid = true;
+  setFieldError('fieldDealership', 'errDealership', !dealership);
+  if (!dealership) valid = false;
+  setFieldError('fieldName', 'errName', !name);
+  if (!name) valid = false;
+  setFieldError('fieldEmail', 'errEmail', !validateEmail(email));
+  if (!validateEmail(email)) valid = false;
+
+  if (!valid) return;
+
+  var btn = document.getElementById('confirmBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Booking…';
+
+  var body = {
+    dealer_name: dealership,
+    contact_name: name,
+    email: email,
+    pa_code: pa || undefined,
+    session_type: STATE.sessionType,
+    scheduled_date: STATE.selectedDate,
+    scheduled_time: STATE.selectedTime,
+    notes: notes || undefined
   };
+  // Remove undefined keys
+  Object.keys(body).forEach(function(k) { if (body[k] === undefined) delete body[k]; });
+
+  fetch(API_BASE + '/public-walkin', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  })
+  .then(function(r) {
+    if (!r.ok) return r.json().then(function(d) { throw new Error(d.error || 'Server error ' + r.status); });
+    return r.json();
+  })
+  .then(function() {
+    showSuccess(name, dealership, pa);
+  })
+  .catch(function(err) {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fa-solid fa-calendar-check"></i> Confirm Booking';
+    var ge = document.getElementById('globalError');
+    ge.textContent = err.message || 'Something went wrong. Please try again.';
+    ge.classList.add('visible');
+  });
+});
+
+function showSuccess(name, dealership, pa) {
+  var sumEl = document.getElementById('successSummary');
+  sumEl.innerHTML = '<h4><i class="fa-solid fa-circle-check" style="color:var(--green);"></i> Booking Confirmed</h4>' +
+    '<div class="srow"><i class="fa-solid fa-display"></i><span><strong>' + STATE.sessionType + '</strong> &mdash; ' + STATE.sessionDuration + ' min</span></div>' +
+    '<div class="srow"><i class="fa-solid fa-calendar-day"></i><span>' + fmtDisplayDate(STATE.selectedDate) + '</span></div>' +
+    '<div class="srow"><i class="fa-regular fa-clock"></i><span>' + fmtTime(STATE.selectedTime) + '</span></div>' +
+    '<div class="srow"><i class="fa-solid fa-building"></i><span>' + dealership + '</span></div>' +
+    '<div class="srow"><i class="fa-regular fa-user"></i><span>' + name + '</span></div>';
+
+  // Show PA checklist item if code provided
+  document.getElementById('checklistPAItem').style.display = pa ? '' : 'none';
+
+  goToStep(4);
 }
 
-// Step 3 — confirm
-document.getElementById('back-to-cal').addEventListener('click', function(){ showScreen('calendar'); });
-document.getElementById('confirm-btn').addEventListener('click', doBook);
-
-function buildConfirm(){
-  var typeLabel=SC.sessionType==='training'?'Onboarding Training (60 min)':'Platform Demo (30–45 min)';
-  document.getElementById('confirm-rows').innerHTML=
-    cRow('Session',typeLabel)+cRow('Date',fmtDate(SC.selectedDate))+cRow('Time',fmtTime(SC.selectedSlot)+' Eastern')+cRow('Trainer','SmartDealer Team');
-}
-
-function doBook(){
-  var dealer=document.getElementById('inp-dealer').value.trim();
-  var name=document.getElementById('inp-name').value.trim();
-  var email=document.getElementById('inp-email').value.trim();
-  var errEl=document.getElementById('confirm-err');
-  errEl.className='err';
-  if(!dealer||!name||!email){ errEl.textContent='Please fill in dealership name, your name, and email.'; errEl.className='err show'; return; }
-  var btn=document.getElementById('confirm-btn');
-  btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Booking...';
-  var notes=(document.getElementById('confirm-notes').value||'')+' ['+dealer+' | '+name+' | '+email+'] ['+(SC.sessionType==='demo'?'Demo':'Training')+']';
-  // Use public-book with a guest token approach — post as a walk-in booking
-  fetch(API+'/public-walkin', {
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({dealer_name:dealer,contact_name:name,email:email,session_type:SC.sessionType,scheduled_date:SC.selectedDate,scheduled_time:SC.selectedSlot,notes:notes})
-  }).then(function(r){ return r.json().then(function(d){return{ok:r.ok,data:d};}); })
-  .then(function(res){
-    btn.disabled=false; btn.innerHTML='<i class="fa-solid fa-check"></i> Confirm Booking';
-    if(!res.ok){ errEl.textContent=res.data.error||'Something went wrong. Please try again.'; errEl.className='err show'; return; }
-    var typeLabel=SC.sessionType==='training'?'Onboarding Training':'Platform Demo';
-    document.getElementById('success-rows').innerHTML=sRow('Dealership',dealer)+sRow('Contact',name)+sRow('Session',typeLabel)+sRow('Date',fmtDate(SC.selectedDate))+sRow('Time',fmtTime(SC.selectedSlot)+' ET');
-    showScreen('success');
-  }).catch(function(){ btn.disabled=false; btn.innerHTML='<i class="fa-solid fa-check"></i> Confirm Booking'; errEl.textContent='Connection error. Please try again.'; errEl.className='err show'; });
-}
+document.getElementById('scheduleAnotherBtn').addEventListener('click', function() {
+  // Reset state
+  STATE.sessionType = '';
+  STATE.sessionDuration = 0;
+  STATE.selectedDate = '';
+  STATE.selectedTime = '';
+  STATE.availabilityMap = {};
+  // Reset form
+  document.getElementById('fieldDealership').value = '';
+  document.getElementById('fieldName').value = '';
+  document.getElementById('fieldEmail').value = '';
+  document.getElementById('fieldPA').value = '';
+  document.getElementById('fieldNotes').value = '';
+  document.getElementById('confirmBtn').disabled = false;
+  document.getElementById('confirmBtn').innerHTML = '<i class="fa-solid fa-calendar-check"></i> Confirm Booking';
+  document.getElementById('globalError').classList.remove('visible');
+  ['fieldDealership','fieldName','fieldEmail'].forEach(function(id) {
+    document.getElementById(id).classList.remove('error');
+  });
+  ['errDealership','errName','errEmail'].forEach(function(id) {
+    document.getElementById(id).classList.remove('visible');
+  });
+  goToStep(1);
+});
 </script>
 </body>
 </html>
