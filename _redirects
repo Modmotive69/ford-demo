@@ -1,3 +1,5 @@
 # FordEngage Cloudflare Pages redirects
 /enroll  /enroll.html  200
 /enroll/ /enroll.html  200
+/schedule  /schedule.html  200
+/schedule/ /schedule.html  200
