@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Schedule Your FordEngage Session — fordengage.com</title>
+<link rel="icon" href="/favicon.png">
+<link rel="stylesheet" href="https://kit.fontawesome.com/a0d1bd4a2c.css" crossorigin="anonymous">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f4f6fa;min-height:100vh;color:#111827}
+
+/* Header */
+.site-header{background:#003478;padding:16px 32px;display:flex;align-items:center;justify-content:space-between}
+.site-header .logo{color:#fff;font-size:22px;font-weight:800;text-decoration:none;letter-spacing:.3px}
+.site-header .logo span{font-weight:300;opacity:.8}
+.site-header a.back{color:#93c5fd;font-size:13px;text-decoration:none;font-weight:600}
+.site-header a.back:hover{color:#fff}
+
+.container{max-width:960px;margin:0 auto;padding:32px 16px 60px}
+
+/* Cards */
+.card{background:#fff;border-radius:16px;padding:32px;box-shadow:0 4px 24px rgba(0,0,0,.08);margin-bottom:24px}
+
+/* Purpose section */
+.purpose-header{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.purpose-icon{width:48px;height:48px;background:#003478;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px;flex-shrink:0}
+.purpose-title{font-size:20px;font-weight:800;color:#111827}
+.purpose-sub{font-size:13px;color:#6b7280;margin-top:2px}
+.purpose-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
+.purpose-block{background:#f8fafc;border-radius:10px;padding:16px 18px;border-left:4px solid #003478}
+.purpose-block.green{border-left-color:#16a34a}
+.purpose-block.amber{border-left-color:#d97706}
+.purpose-block h4{font-size:12px;font-weight:800;color:#6b7280;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+.purpose-block li{font-size:13px;color:#374151;line-height:1.7;list-style:none;padding-left:0}
+.purpose-block li::before{content:"✓ ";color:#16a34a;font-weight:700}
+.purpose-block.amber li::before{content:"• ";color:#d97706}
+.purpose-cta{background:#003478;color:#fff;border-radius:10px;padding:14px 20px;margin-top:20px;font-size:14px;line-height:1.6;text-align:center}
+
+/* Lookup */
+.lookup-title{font-size:20px;font-weight:800;color:#111827;margin-bottom:6px}
+.lookup-sub{font-size:13px;color:#6b7280;margin-bottom:24px}
+.form-row{display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap}
+.form-group{flex:1;min-width:180px}
+.form-group label{display:block;font-size:12px;font-weight:700;color:#374151;margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em}
+.form-group input{width:100%;padding:11px 14px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:14px;color:#111827;transition:border .15s}
+.form-group input:focus{outline:none;border-color:#003478}
+.or-divider{font-size:12px;font-weight:700;color:#9ca3af;padding-bottom:11px;flex-shrink:0}
+.btn-primary{padding:11px 28px;background:#003478;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;transition:background .2s;white-space:nowrap}
+.btn-primary:hover{background:#0254ad}
+.btn-primary:disabled{background:#9ca3af;cursor:not-allowed}
+.error-msg{background:#fee2e2;color:#dc2626;border-radius:8px;padding:12px 16px;font-size:13px;font-weight:600;margin-top:12px;display:none}
+.error-msg.show{display:block}
+
+/* Dealer badge */
+.dealer-badge{background:#f0f7ff;border:1.5px solid #bfdbfe;border-radius:10px;padding:14px 18px;display:flex;align-items:center;gap:12px;margin-bottom:24px}
+.dealer-badge i{color:#003478;font-size:20px}
+.dealer-badge-name{font-size:17px;font-weight:800;color:#003478}
+.dealer-badge-sub{font-size:12px;color:#6b7280;margin-top:2px}
+
+/* Session type */
+.session-type-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:0}
+.session-type-btn{padding:18px 16px;border-radius:12px;border:2px solid #e2e8f0;background:#fff;cursor:pointer;text-align:left;transition:all .15s}
+.session-type-btn:hover{border-color:#003478;background:#f0f7ff}
+.session-type-btn.selected{border-color:#003478;background:#003478;color:#fff}
+.session-type-btn .st-icon{font-size:24px;margin-bottom:8px}
+.session-type-btn .st-title{font-size:15px;font-weight:800}
+.session-type-btn .st-desc{font-size:12px;opacity:.7;margin-top:4px;line-height:1.5}
+
+/* Calendar */
+.cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.cal-nav button{background:none;border:1.5px solid #e2e8f0;border-radius:8px;padding:6px 14px;cursor:pointer;font-size:16px;color:#003478;transition:background .15s}
+.cal-nav button:hover{background:#f0f7ff}
+.cal-title{font-size:17px;font-weight:800;color:#111827}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.cal-header{text-align:center;font-size:11px;font-weight:700;color:#9ca3af;padding:4px 0}
+.cal-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:10px;font-size:14px;font-weight:700;border:1.5px solid #e2e8f0;background:#fff;color:#111827;transition:all .15s;cursor:default}
+.cal-day.available{border-color:#003478;color:#003478;cursor:pointer}
+.cal-day.available:hover{background:#f0f7ff}
+.cal-day.selected{background:#003478;color:#fff;border-color:#003478}
+.cal-day.today{border-color:#0284c7}
+.cal-day.empty,.cal-day.unavailable{background:#f9fafb;color:#d1d5db;border-color:#f1f5f9}
+
+/* Slots */
+.slot-section-title{font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.06em;margin:12px 0 6px}
+.slot-btn{width:100%;padding:12px 16px;border-radius:10px;border:1.5px solid #e2e8f0;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;transition:all .15s;text-align:left}
+.slot-btn:hover{border-color:#003478;background:#f0f7ff}
+.slot-btn.selected{border-color:#003478;background:#003478;color:#fff}
+.slot-time{font-size:15px;font-weight:700}
+.slot-avail{font-size:11px;font-weight:700;padding:2px 10px;border-radius:10px;background:#dcfce7;color:#16a34a}
+.slot-btn.selected .slot-avail{background:rgba(255,255,255,.2);color:#fff}
+
+/* Confirm */
+.confirm-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f1f5f9;font-size:14px}
+.confirm-row:last-of-type{border:none}
+.confirm-label{color:#6b7280;font-weight:600}
+.confirm-value{color:#111827;font-weight:700}
+.notes-label{font-size:12px;font-weight:700;color:#374151;display:block;margin-bottom:6px;margin-top:16px}
+textarea{width:100%;padding:10px 14px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:14px;font-family:Arial,sans-serif;resize:vertical;min-height:70px}
+textarea:focus{outline:none;border-color:#003478}
+.modal-btns{display:flex;gap:10px;margin-top:20px}
+.btn-secondary{flex:1;padding:12px;background:#f4f6fa;color:#374151;border:1.5px solid #e2e8f0;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer}
+.btn-secondary:hover{background:#e5e7eb}
+
+/* Success */
+.success-screen{text-align:center;padding:40px 20px}
+.success-icon{font-size:64px;margin-bottom:16px}
+.success-screen h2{font-size:24px;font-weight:800;color:#003478;margin-bottom:8px}
+.success-screen p{font-size:15px;color:#6b7280;line-height:1.6}
+.success-details{background:#f0f7ff;border-radius:12px;padding:20px 24px;margin:20px auto;max-width:400px;text-align:left}
+.success-details div{display:flex;justify-content:space-between;padding:6px 0;font-size:14px;border-bottom:1px solid #e2e8f0}
+.success-details div:last-child{border:none}
+.success-details .sl{color:#6b7280;font-weight:600}
+.success-details .sv{color:#111827;font-weight:700}
+.checklist{background:#f8fafc;border-radius:12px;padding:16px 20px;margin:16px auto;max-width:400px;text-align:left;font-size:13px;color:#374151;line-height:2}
+
+/* Loading */
+.spinner{display:inline-block;width:18px;height:18px;border:3px solid rgba(255,255,255,.3);border-radius:50%;border-top-color:#fff;animation:spin .7s linear infinite;vertical-align:middle;margin-right:8px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Steps */
+.steps{display:flex;gap:0;margin-bottom:28px;background:#fff;border-radius:12px;padding:6px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.step{flex:1;text-align:center;padding:10px 8px;border-radius:8px;font-size:12px;font-weight:700;color:#9ca3af;transition:all .2s}
+.step.active{background:#003478;color:#fff}
+.step.done{color:#16a34a}
+.step-num{display:inline-block;width:20px;height:20px;border-radius:50%;background:currentColor;opacity:.2;margin-right:4px;line-height:20px;font-size:11px;vertical-align:middle}
+.step.active .step-num,.step.done .step-num{opacity:1;background:rgba(255,255,255,.3)}
+
+@media(max-width:600px){
+  .purpose-grid{grid-template-columns:1fr}
+  .session-type-grid{grid-template-columns:1fr}
+  .form-row{flex-direction:column}
+  .container{padding:16px 10px 40px}
+  .card{padding:20px 16px}
+}
+</style>
+</head>
+<body>
+
+<div class="site-header">
+  <a href="/" class="logo">Ford<span>Engage</span></a>
+  <a href="/" class="back"><i class="fa-solid fa-arrow-left"></i> Back to fordengage.com</a>
+</div>
+
+<div class="container">
+
+  <!-- Steps indicator -->
+  <div class="steps" id="steps-bar">
+    <div class="step active" id="step-1">1 Find Your Dealership</div>
+    <div class="step" id="step-2">2 Session Type</div>
+    <div class="step" id="step-3">3 Pick a Time</div>
+    <div class="step" id="step-4">4 Confirm</div>
+  </div>
+
+  <!-- SCREEN 1: Purpose + Lookup -->
+  <div id="screen-lookup">
+
+    <!-- Purpose section -->
+    <div class="card">
+      <div class="purpose-header">
+        <div class="purpose-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
+        <div>
+          <div class="purpose-title">Schedule Your FordEngage Session</div>
+          <div class="purpose-sub">Training & onboarding for Ford dealerships — book your time in 2 minutes</div>
+        </div>
+      </div>
+
+      <div class="purpose-grid">
+        <div class="purpose-block">
+          <h4><i class="fa-solid fa-bullseye" style="margin-right:6px"></i>What This Session Is</h4>
+          <ul>
+            <li>60-minute live onboarding with your SmartDealer trainer</li>
+            <li>Walkthrough of the FordEngage platform</li>
+            <li>Full activation of your dealership account</li>
+            <li>Q&amp;A time with your trainer</li>
+          </ul>
+        </div>
+        <div class="purpose-block green">
+          <h4><i class="fa-solid fa-circle-check" style="margin-right:6px"></i>What Happens After</h4>
+          <ul>
+            <li>Your FordEngage account goes live</li>
+            <li>Staff portal access activated</li>
+            <li>DMS &amp; FAD integration confirmed</li>
+            <li>Dedicated support contact assigned</li>
+          </ul>
+        </div>
+        <div class="purpose-block amber" style="grid-column:1/-1">
+          <h4><i class="fa-solid fa-clipboard-list" style="margin-right:6px"></i>Have These Ready</h4>
+          <ul style="display:grid;grid-template-columns:1fr 1fr;gap:0 24px">
+            <li>DMS login credentials</li>
+            <li>FAD portal access</li>
+            <li>F&amp;I manager available</li>
+            <li>Parts &amp; Sales manager available</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="purpose-cta">
+        <strong>Sessions are held Monday–Friday, 9 AM–4 PM ET.</strong><br>
+        You'll receive a confirmation email with connection details after booking.
+      </div>
+    </div>
+
+    <!-- Lookup form -->
+    <div class="card">
+      <div class="lookup-title">Find Your Dealership</div>
+      <div class="lookup-sub">Enter your Ford PA code or the email address used during enrollment.</div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Ford PA Code</label>
+          <input type="text" id="input-pa" placeholder="e.g. 12345" maxlength="10">
+        </div>
+        <div class="or-divider">— or —</div>
+        <div class="form-group">
+          <label>Enrollment Email</label>
+          <input type="email" id="input-email" placeholder="dealer@example.com">
+        </div>
+        <button class="btn-primary" id="lookup-btn" onclick="doLookup()">
+          <i class="fa-solid fa-magnifying-glass"></i> Find My Dealership
+        </button>
+      </div>
+      <div class="error-msg" id="lookup-error"></div>
+    </div>
+
+  </div>
+
+  <!-- SCREEN 2: Session type -->
+  <div id="screen-type" style="display:none">
+    <div class="card">
+      <div id="dealer-badge-type" class="dealer-badge"></div>
+      <div style="font-size:18px;font-weight:800;color:#111827;margin-bottom:6px">What would you like to schedule?</div>
+      <div style="font-size:13px;color:#6b7280;margin-bottom:20px">Choose the session that fits where you are in the process.</div>
+      <div class="session-type-grid">
+        <button class="session-type-btn" onclick="selectType('training')" id="type-training">
+          <div class="st-icon"><i class="fa-solid fa-graduation-cap" style="color:#003478"></i></div>
+          <div class="st-title">Onboarding Training</div>
+          <div class="st-desc">Full activation session. DMS integration, FAD setup, staff walkthrough. 60 minutes. Best for new enrollments.</div>
+        </button>
+        <button class="session-type-btn" onclick="selectType('demo')" id="type-demo">
+          <div class="st-icon"><i class="fa-solid fa-presentation-screen" style="color:#7c3aed"></i></div>
+          <div class="st-title">Platform Demo</div>
+          <div class="st-desc">See FordEngage in action before committing to full activation. 30-45 minutes. Great for decision-makers.</div>
+        </button>
+      </div>
+      <div style="margin-top:16px;display:flex;gap:10px">
+        <button class="btn-secondary" style="max-width:120px" onclick="showScreen('lookup')"><i class="fa-solid fa-arrow-left"></i> Back</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN 3: Calendar + slots -->
+  <div id="screen-calendar" style="display:none">
+    <div class="card">
+      <div id="dealer-badge-cal" class="dealer-badge"></div>
+      <div style="font-size:16px;font-weight:800;color:#111827;margin-bottom:4px" id="session-type-label"></div>
+      <div style="font-size:13px;color:#6b7280;margin-bottom:20px">Pick a date then choose your time slot.</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px" id="cal-slot-grid">
+        <!-- Calendar -->
+        <div>
+          <div class="cal-nav">
+            <button onclick="calPrev()"><i class="fa-solid fa-chevron-left"></i></button>
+            <div class="cal-title" id="cal-title"></div>
+            <button onclick="calNext()"><i class="fa-solid fa-chevron-right"></i></button>
+          </div>
+          <div class="cal-grid">
+            <div class="cal-header">Su</div><div class="cal-header">Mo</div><div class="cal-header">Tu</div>
+            <div class="cal-header">We</div><div class="cal-header">Th</div><div class="cal-header">Fr</div>
+            <div class="cal-header">Sa</div>
+            <div id="cal-days" style="display:contents"></div>
+          </div>
+        </div>
+        <!-- Slots -->
+        <div>
+          <div id="slots-content" style="min-height:200px">
+            <div style="color:#9ca3af;font-size:14px;text-align:center;margin-top:60px"><i class="fa-regular fa-calendar" style="font-size:32px;display:block;margin-bottom:12px;opacity:.4"></i>Select a date to see available times</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;display:flex;gap:10px">
+        <button class="btn-secondary" style="max-width:120px" onclick="showScreen('type')"><i class="fa-solid fa-arrow-left"></i> Back</button>
+        <button class="btn-primary" id="continue-btn" style="display:none;flex:1" onclick="showScreen('confirm')"><i class="fa-solid fa-arrow-right"></i> Continue to Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN 4: Confirm -->
+  <div id="screen-confirm" style="display:none">
+    <div class="card">
+      <div style="font-size:20px;font-weight:800;color:#111827;margin-bottom:4px"><i class="fa-solid fa-calendar-check" style="color:#003478;margin-right:8px"></i>Confirm Your Booking</div>
+      <div style="font-size:13px;color:#6b7280;margin-bottom:20px">Review your details and confirm your session.</div>
+
+      <div id="confirm-details"></div>
+
+      <label class="notes-label" for="confirm-notes">Notes for your trainer <span style="font-weight:400;color:#9ca3af">(optional)</span></label>
+      <textarea id="confirm-notes" placeholder="Anything we should know — staff count, specific questions, DMS system you use..."></textarea>
+
+      <div class="modal-btns">
+        <button class="btn-secondary" onclick="showScreen('calendar')"><i class="fa-solid fa-arrow-left"></i> Back</button>
+        <button class="btn-primary" id="confirm-btn" onclick="confirmBook()" style="flex:2"><i class="fa-solid fa-check"></i> Confirm Booking</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUCCESS screen -->
+  <div id="screen-success" style="display:none">
+    <div class="card success-screen">
+      <div class="success-icon">🎉</div>
+      <h2>You're Booked!</h2>
+      <p>Your FordEngage session is confirmed. Check your email for connection details from your SmartDealer trainer.</p>
+
+      <div class="success-details" id="success-details"></div>
+
+      <div class="checklist">
+        <strong style="color:#111827;display:block;margin-bottom:6px"><i class="fa-solid fa-clipboard-list" style="color:#003478;margin-right:6px"></i>Have These Ready for Your Session</strong>
+        ✅ DMS login credentials<br>
+        ✅ FAD portal access<br>
+        ✅ F&amp;I, Parts, and Sales managers available<br>
+        ✅ Stable internet connection
+      </div>
+
+      <p style="margin-top:16px;font-size:13px;color:#9ca3af">
+        Questions? Email <a href="mailto:support@smartdealer.com" style="color:#003478">support@smartdealer.com</a>
+      </p>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<script>
+var SC = {
+  pa: null, email: null, token: null,
+  dealerName: null, dealerState: null,
+  availableDays: [],
+  sessionType: null,
+  year: new Date().getFullYear(),
+  month: new Date().getMonth(),
+  selectedDate: null,
+  selectedSlot: null
+};
+
+var API = 'https://sales.fordengage.com/api/training';
+
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function fmt(t){ var p=t.split(':'),h=parseInt(p[0]),m=p[1],ap=h>=12?'PM':'AM'; return (h>12?h-12:(h||12))+':'+m+' '+ap+' ET'; }
+
+function showScreen(name) {
+  ['lookup','type','calendar','confirm','success'].forEach(function(s){
+    document.getElementById('screen-'+s).style.display = s===name ? 'block' : 'none';
+  });
+  var stepMap = {lookup:1, type:2, calendar:3, confirm:4, success:4};
+  var cur = stepMap[name]||1;
+  [1,2,3,4].forEach(function(n){
+    var el = document.getElementById('step-'+n);
+    el.className = 'step' + (n===cur?' active':n<cur?' done':'');
+  });
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// ── STEP 1: LOOKUP ──────────────────────────────────────────────────────────
+async function doLookup() {
+  var pa = document.getElementById('input-pa').value.trim();
+  var email = document.getElementById('input-email').value.trim();
+  var errEl = document.getElementById('lookup-error');
+  errEl.className = 'error-msg';
+
+  if (!pa && !email) {
+    errEl.textContent = 'Please enter your Ford PA code or enrollment email.';
+    errEl.className = 'error-msg show'; return;
+  }
+
+  var btn = document.getElementById('lookup-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Looking up...';
+
+  var r = await fetch(API+'/public-lookup', {
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({pa_code: pa||undefined, email: email||undefined})
+  });
+  var data = await r.json();
+  btn.disabled = false;
+  btn.innerHTML = '<i class="fa-solid fa-magnifying-glass"></i> Find My Dealership';
+
+  if (!r.ok) {
+    errEl.textContent = data.error || 'Dealership not found. Please check your PA code or email.';
+    errEl.className = 'error-msg show'; return;
+  }
+
+  SC.dealerName = data.dealer_name;
+  SC.dealerState = data.state;
+  SC.token = ***;
+  SC.availableDays = data.available_days||[];
+  SC.year = new Date().getFullYear();
+  SC.month = new Date().getMonth();
+
+  showScreen('type');
+  renderDealerBadge('dealer-badge-type');
+}
+
+function renderDealerBadge(elId) {
+  var el = document.getElementById(elId);
+  if (!el) return;
+  el.innerHTML = '<i class="fa-solid fa-building" style="color:#003478;font-size:20px"></i>'
+    +'<div><div class="dealer-badge-name">'+esc(SC.dealerName)+'</div>'
+    +'<div class="dealer-badge-sub">'+esc(SC.dealerState||'')+(SC.sessionType?' &nbsp;·&nbsp; '+(SC.sessionType==='training'?'Onboarding Training':'Platform Demo'):'')+'</div></div>';
+}
+
+// ── STEP 2: SESSION TYPE ─────────────────────────────────────────────────────
+function selectType(type) {
+  SC.sessionType = type;
+  document.getElementById('type-training').className = 'session-type-btn'+(type==='training'?' selected':'');
+  document.getElementById('type-demo').className = 'session-type-btn'+(type==='demo'?' selected':'');
+  setTimeout(function(){ showScreen('calendar'); renderDealerBadge('dealer-badge-cal'); renderSessionTypeLabel(); renderCal(); }, 200);
+}
+
+function renderSessionTypeLabel() {
+  var el = document.getElementById('session-type-label');
+  if (!el) return;
+  el.innerHTML = SC.sessionType==='training'
+    ? '<i class="fa-solid fa-graduation-cap" style="color:#003478;margin-right:8px"></i>Onboarding Training — 60 min'
+    : '<i class="fa-solid fa-presentation-screen" style="color:#7c3aed;margin-right:8px"></i>Platform Demo — 30-45 min';
+}
+
+// ── STEP 3: CALENDAR ─────────────────────────────────────────────────────────
+function calPrev() { SC.month--; if(SC.month<0){SC.month=11;SC.year--;} renderCal(); }
+function calNext() { SC.month++; if(SC.month>11){SC.month=0;SC.year++;} renderCal(); }
+
+function renderCal() {
+  var months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('cal-title').textContent = months[SC.month]+' '+SC.year;
+  var first=new Date(SC.year,SC.month,1).getDay(), days=new Date(SC.year,SC.month+1,0).getDate();
+  var today=new Date().toISOString().slice(0,10);
+  var html='';
+  for(var i=0;i<first;i++) html+='<div class="cal-day empty"></div>';
+  for(var d=1;d<=days;d++){
+    var ds=SC.year+'-'+String(SC.month+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+    var hasSlots=SC.availableDays.some(function(x){return x.date===ds;});
+    var isSel=SC.selectedDate===ds, isToday=ds===today;
+    var cls='cal-day'+(hasSlots?' available':'  unavailable')+(isSel?' selected':'')+(isToday?' today':'');
+    html+='<div class="'+cls+'"'+(hasSlots?' onclick="selectDate(\''+ds+'\')"':'')+'>'+d+'</div>';
+  }
+  document.getElementById('cal-days').innerHTML = html;
+}
+
+function selectDate(ds) {
+  SC.selectedDate = ds; SC.selectedSlot = null;
+  document.getElementById('continue-btn').style.display = 'none';
+  renderCal();
+  var day = SC.availableDays.find(function(x){return x.date===ds;});
+  var slots = day ? day.slots : [];
+  if (!slots.length) { document.getElementById('slots-content').innerHTML='<div style="color:#9ca3af;font-size:14px;text-align:center;margin-top:40px">No slots available this day</div>'; return; }
+  var label = new Date(ds+'T12:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+  var morning=slots.filter(function(s){return s.slot_start<'12:00';}), afternoon=slots.filter(function(s){return s.slot_start>='12:00';});
+  function slotHTML(s){
+    var active=SC.selectedSlot===s.slot_start;
+    return '<button class="slot-btn'+(active?' selected':'')+'" onclick="selectSlot(\''+s.slot_start+'\')">'
+      +'<span class="slot-time">'+fmt(s.slot_start)+'</span>'
+      +'<span class="slot-avail">Available</span></button>';
+  }
+  var h='<div style="font-size:14px;font-weight:700;color:#003478;margin-bottom:12px">'+esc(label)+'</div>';
+  if(morning.length) h+='<div class="slot-section-title"><i class="fa-solid fa-sun"></i> Morning</div>'+morning.map(slotHTML).join('');
+  if(afternoon.length) h+='<div class="slot-section-title"><i class="fa-solid fa-cloud-sun"></i> Afternoon</div>'+afternoon.map(slotHTML).join('');
+  document.getElementById('slots-content').innerHTML = h;
+}
+
+function selectSlot(slotStart) {
+  SC.selectedSlot = slotStart;
+  selectDate(SC.selectedDate); // re-render to show selection
+  document.getElementById('continue-btn').style.display = 'flex';
+}
+
+// ── STEP 4: CONFIRM ──────────────────────────────────────────────────────────
+function showScreen_confirm() {
+  showScreen('confirm');
+  var typeLabel = SC.sessionType==='training' ? 'Onboarding Training (60 min)' : 'Platform Demo (30-45 min)';
+  var dateLabel = new Date(SC.selectedDate+'T12:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+  document.getElementById('confirm-details').innerHTML =
+    '<div class="confirm-row"><span class="confirm-label">Dealership</span><span class="confirm-value">'+esc(SC.dealerName)+'</span></div>'
+    +'<div class="confirm-row"><span class="confirm-label">Session</span><span class="confirm-value">'+typeLabel+'</span></div>'
+    +'<div class="confirm-row"><span class="confirm-label">Date</span><span class="confirm-value">'+dateLabel+'</span></div>'
+    +'<div class="confirm-row"><span class="confirm-label">Time</span><span class="confirm-value">'+fmt(SC.selectedSlot)+' Eastern</span></div>'
+    +'<div class="confirm-row"><span class="confirm-label">Trainer</span><span class="confirm-value">SmartDealer Team</span></div>';
+}
+
+// Override showScreen for confirm to render details
+var _showScreen = showScreen;
+showScreen = function(name) {
+  _showScreen(name);
+  if (name==='confirm') showScreen_confirm();
+};
+
+async function confirmBook() {
+  var btn = document.getElementById('confirm-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Booking...';
+
+  var typeLabel = SC.sessionType==='training' ? 'Onboarding Training' : 'Platform Demo';
+  var r = await fetch(API+'/public-book', {
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({
+      token: SC.token,
+      scheduled_date: SC.selectedDate,
+      scheduled_time: SC.selectedSlot,
+      notes: (document.getElementById('confirm-notes').value||'') + (SC.sessionType==='demo' ? ' [SESSION TYPE: Demo]' : ' [SESSION TYPE: Training]')
+    })
+  });
+  var data = await r.json();
+
+  btn.disabled = false;
+  btn.innerHTML = '<i class="fa-solid fa-check"></i> Confirm Booking';
+
+  if (!r.ok) {
+    alert(data.error||'Something went wrong. Please try again or call your account manager.');
+    return;
+  }
+
+  // Success
+  var dateLabel = new Date(SC.selectedDate+'T12:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+  document.getElementById('success-details').innerHTML =
+    '<div><span class="sl">Dealership</span><span class="sv">'+esc(SC.dealerName)+'</span></div>'
+    +'<div><span class="sl">Session</span><span class="sv">'+typeLabel+'</span></div>'
+    +'<div><span class="sl">Date</span><span class="sv">'+dateLabel+'</span></div>'
+    +'<div><span class="sl">Time</span><span class="sv">'+fmt(SC.selectedSlot)+' ET</span></div>';
+
+  _showScreen('success');
+  document.getElementById('steps-bar').style.display = 'none';
+}
+
+// Handle Enter key on lookup inputs
+document.addEventListener('keydown', function(e){
+  if (e.key==='Enter' && document.getElementById('screen-lookup').style.display!=='none') doLookup();
+});
+
+// Auto-fill from URL token if present (backward compat)
+(function(){
+  var m = /[?&]token=([^&]*)/.exec(window.location.search);
+  if (m) {
+    var token = decodeURIComponent(m[1]);
+    fetch(API+'/public-slot?token='+encodeURIComponent(token))
+      .then(function(r){return r.json();})
+      .then(function(data){
+        if (data.dealer_name) {
+          SC.dealerName=data.dealer_name; SC.dealerState=data.state;
+          SC.token=token; SC.availableDays=data.available_days||[];
+          showScreen('type'); renderDealerBadge('dealer-badge-type');
+        }
+      }).catch(function(){});
+  }
+})();
+</script>
+</body>
+</html>
