@@ -386,11 +386,7 @@ const recipient=env.ENROLLMENT_RECIPIENT||'scott@smartdealer.com';
       const prior=await db.prepare('SELECT * FROM enrollment_receipts WHERE id=? OR fingerprint=?').bind(p.submissionId,fingerprint).first();
       return replyExisting(prior, env, ctx);
     }
-  } catch (e) {
-    const msg = (e && e.message) ? e.message : String(e);
-    console.error('submit-enrollment storage error:', msg);
-    return json({ok:false,error:'Submission storage unavailable. Keep your entries and retry with the same submission. (' + msg.slice(0,120) + ')'},503);
-  }
+  } catch { return json({ok:false,error:'Submission storage unavailable. Keep your entries and retry with the same submission.'},503); }
 
   // Respond immediately — email fires in background via waitUntil
   await db.prepare("UPDATE enrollment_receipts SET state='queued' WHERE id=?").bind(r.receipt_id).run();

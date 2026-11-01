@@ -487,10 +487,15 @@
       }
       if (!result.receipt_id || !result.server_timestamp || !result.agreement_html || result.email_status !== 'queued') throw new Error('Server confirmation is incomplete.');
     } catch (err) {
-      $('draft-status').textContent = 'Submission not confirmed: ' + err.message + ' Your entries are preserved. Retry checks the same submission; a network error does not prove that no email was queued.';
+      // Check if this was a network error (fetch failed) vs a server error
+      var isNetworkErr = err instanceof TypeError || (err.message && err.message.toLowerCase().includes('fetch'));
+      var msg = isNetworkErr
+        ? 'Connection interrupted — your submission may still have been received. Click Retry to check.'
+        : 'Submission error: ' + err.message + ' Your entries are preserved — please retry.';
+      $('draft-status').textContent = msg;
       sending = false;
       form.removeAttribute('aria-busy');
-      if (submitBtn) {submitBtn.disabled = false; submitBtn.textContent = 'Check / Retry Submission';}
+      if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = isNetworkErr ? 'Retry / Check Status' : 'Retry Submission'; }
       return;
     }
     sending = false;
